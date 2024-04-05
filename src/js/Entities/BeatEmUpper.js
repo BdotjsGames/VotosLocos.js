@@ -1,5 +1,5 @@
 class BeatEmUpper {
-    constructor(x, y, w, h, color,color2) {
+    constructor(x, y, w, h, color,color2,model) {
         this.x = x; this.y = y; this.w = w; this.h = h;
         this.z = 0;
         this.airPosition = 0;
@@ -26,7 +26,12 @@ class BeatEmUpper {
         this.wallCollidingWith = null;
         this.standingOn = null;
         this.canAttack = true;
-        this.initModel(w, h, color,color2);
+        if(model) {
+            this.model = model;
+            model.parent = this;
+        } else {
+            this.initModel(w, h, color,color2);
+        }
         this.health = 30;
         this.maxHealth = 30;
         this.invul = 0;
@@ -41,6 +46,12 @@ class BeatEmUpper {
         this.shadow = canvas.createRadialGradient(0, 0, 5, 0, 0, 15);
         this.shadow.addColorStop(0, "#000000aa");
         this.shadow.addColorStop(1, "#00000000");
+        this.canCrawl = false;
+        this.crawlSpeedMultiplier = 0.6;
+        this.crouchFallSpeed = 7;
+        this.highFiveDistance = 40;
+        this.groundAcceleration = 1;
+        this.groundDeceleration = 1;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -103,7 +114,7 @@ class BeatEmUpper {
     }
     crouch() {
         if (!this.grounded) {
-            this.vy += 10;
+            this.vz += this.crouchFallSpeed;
         }
     }
     update() {
@@ -124,14 +135,32 @@ class BeatEmUpper {
         }
 
         var terminalSideVelocity = 44;
-        this.vx += (this.mx * this.speed - this.vx) * this.friction;
-        this.vy += (this.my * this.speed - this.vy) * this.friction;
+        var speed = this.speed;
+        if(this.crouching) {
+            if(this.canCrawl)
+                speed *= this.crawlSpeedMultiplier;
+            else 
+                speed = 0;
+        }
+        // this.vx += (this.mx * speed - this.vx) * this.friction;
+        // this.vy += (this.my * speed - this.vy) * this.friction;
+        var accel = this.groundAcceleration;
+        if(this.mx==0&&this.my==0) accel = this.groundDeceleration;
+        this.vx = linearMove(this.vx, this.mx*speed, accel);
+        this.vy = linearMove(this.vy, this.my*speed, accel);
+        
 
         this.vx = clamp(this.vx, -terminalSideVelocity, terminalSideVelocity);
         this.vy = clamp(this.vy, -terminalSideVelocity, terminalSideVelocity);
 
+        if(this.model.doubleJumping) {
+            this.vx = this.dx*this.model.doubleJumpTimer/2;
+        }
+
         this.x += this.vx;
         this.y += this.vy;
+
+       
 
         this.model.moving = this.mx != 0 || this.my != 0;
         this.model.rotation = 0;
@@ -281,6 +310,43 @@ class BeatEmUpper {
     highFive(){
         this.model.highFive();
     }
+    beHighFived() {
+        this.highFive();
+    }
+    attemptHighFive() {
+        this.highFive();
+        var minDist = Number.MAX_SAFE_INTEGER;
+        var closest;
+        this.highFiveTarget = null;
+        highFivers.forEach(h=> {
+        if(Math.sign(h.x-this.x) != this.dx)return;
+        if(h.dx==this.dx)return;
+        var p = {
+            x: h.x + h.dx*10,
+            y: h.y,
+            z: h.z,
+        }
+        var dist = sqrDist3(p,this);
+        if(dist<minDist) {
+            minDist = dist;
+            closest = h;
+        }
+        })
+        if(minDist<this.highFiveDistance*this.highFiveDistance) {
+        closest.highFiveTarget = this;
+        this.highFiveTarget = closest;
+        closest.beHighFived();
+        // if(this.model.cooldownTimer<2) {
+        var pow = this.scene.addEntity(new ImageParticle(IMAGES.highFivePow, (this.x+closest.x)/2-32, this.y-128, 64,128,0,0,50,-0.00));
+        pow.addMorph("pow",new Morph(null, {scaleW: 0.5, scaleH: 0.5, alpha: 0.5}, {scaleW: 1.5, scaleH: 1.5, alpha: 1}, 5, MorphType.easeOutQuad), true)
+        pow.setSortOffset(100);
+        SOUNDS.attack.play();
+        SOUNDS.clap.play();
+        // pow.scaleW = 2;
+        // pow.scaleH = 2;
+        // }
+        }
+    }
     jump() {
         if (!this.canJump()) return;
         if (this.model.attacking) return;
@@ -324,6 +390,21 @@ class BeatEmUpper {
         }
         // canvas.fillStyle = 'red';
         // canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
+    }
+    spawnTextParticle(text,size=30) {
+    // constructor(text,x,y,w,h,size) {
+        var textParticle = new DrawableText(text, this.x, this.y+10,100,30,size)
+            .center().setZ(-100);
+        textParticle.addMorph('fade',new Morph(
+            null, {}, {
+                dz: -10, alpha: 0
+            }, 30, MorphType.easeInOutCubic, m=>{
+                m.obj.shouldDelete = true;
+            }
+        ), true)
+        this.scene.addEntity(textParticle)
+            .color(0,250,250)
+        return textParticle;
     }
     die() {
         this.shouldDelete = true;

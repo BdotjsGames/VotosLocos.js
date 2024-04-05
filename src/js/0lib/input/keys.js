@@ -7,9 +7,14 @@ function resetKeys() {
   for(var i=0;i<255;++i)keys[i]=0;
   anyKey = 0;
 }
+var keyLogging = false;
 
 function onkeydown(e) {
   var k = e.keyCode;
+  if(keyLogging)console.log(e);
+  //e.code is a readable name of the key for special characters like space, shift, enter
+  // and it displays keys as KeyJ etc
+  // could be usefull for input customization displays
   if(!e.metaKey) {
     if(!keys[k]) {
       anyKey += 1;

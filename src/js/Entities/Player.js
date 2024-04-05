@@ -1,10 +1,11 @@
 class Player extends BeatEmUpper {
-  constructor(x,y) {
-    super(x,y,20,40,'darkgray');
+  constructor(x,y,model) {
+    super(x,y,20,40,'darkgray','black',model);
     // this.canAttack = false;
     this.outlineColor = "black";
     this.invulTime = 40;
     window.parent.player = this;
+    this.highFiveDistance = 40;
   }
   addShoes() {
     this.model.addShoes();
@@ -52,15 +53,19 @@ class Player extends BeatEmUpper {
     if(!getButton(Buttons.jump)) {
       this.unjump();
     }
-    if(getButtonDown(Buttons.crouch)) {
+    if(this.crouching = getButton(Buttons.crouch)) {
       this.crouch();
     }
     // if(this.grounded&&getButton(Buttons.B))this.model.highFive();
     if(getButtonDown(Buttons.highFive)&&this.model.cooldownTimer<2) {
-      this.highFive();
+      this.attemptHighFive();
     }
     if(this.model.highFiving&&getButton(Buttons.highFive))this.model.highFive();
     if(getButtonDown(Buttons.B)) {
+      if(this.grounded&&!this.crouching) {
+        this.jump();
+        this.jump();
+      } else 
         this.attack();
       // else
         // this.model.highFive();
@@ -76,38 +81,5 @@ class Player extends BeatEmUpper {
     SOUNDS.blowImpact.play();
     setTimeout(e=>
       this.scene.respawn(), 1000);
-  }
-  highFive() {
-    this.model.highFive();
-    var minDist = Number.MAX_SAFE_INTEGER;
-    var closest;
-    this.highFiveTarget = null;
-    highFivers.forEach(h=> {
-      if(Math.sign(h.x-this.x) != this.dx)return;
-      if(h.dx==this.dx)return;
-      var p = {
-        x: h.x + h.dx*10,
-        y: h.y
-      }
-      var dist = sqrDist(h,this);
-      if(dist<minDist) {
-        minDist = dist;
-        closest = h;
-      }
-    })
-    if(minDist<100*100) {
-      closest.highFiveTarget = this;
-      this.highFiveTarget = closest;
-      closest.highFive();
-      // if(this.model.cooldownTimer<2) {
-      var pow = this.scene.addEntity(new ImageParticle(IMAGES.highFivePow, (this.x+closest.x)/2-32, this.y-128, 64,128,0,0,50,-0.00));
-      pow.addMorph("pow",new Morph(null, {scaleW: 0.5, scaleH: 0.5, alpha: 0.5}, {scaleW: 1.5, scaleH: 1.5, alpha: 1}, 5, MorphType.easeOutQuad), true)
-      pow.setSortOffset(100);
-      SOUNDS.attack.play();
-      SOUNDS.clap.play();
-      // pow.scaleW = 2;
-      // pow.scaleH = 2;
-      // }
-    }
   }
 }

@@ -39,6 +39,18 @@ var touchButtons = [
   },
 ]
 
+function createTouchButton(name,position,rect) {
+  var button = {
+    name,
+    x: position.x, y: position.y, r:.1,
+    area: rect,
+    held: false,
+  }
+  button.index = touchButtons.length;
+  touchButtons.push(button);
+  return button;
+}
+
 
 function getTouchPosition(touch, e) {
   var boundingClientRect = CE.getBoundingClientRect();    

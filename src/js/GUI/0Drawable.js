@@ -5,6 +5,7 @@ class Drawable {
       this.y=y;
       this.w=w;
       this.h=h;
+      this.z=0;
       this.pivotX = this.w/2;
       this.pivotY = this.h/2;
       this.alpha = 1;
@@ -18,12 +19,17 @@ class Drawable {
       this.updates = [];
       this.dx=0;
       this.dy=0;
-      this.trueCoords=false;
+      this.dz=0;
+      this.trueCoords=true;
       this.sortOffset=0;
     }
     setSortOffset(offset) {
       this.y += offset;
       this.sortOffset += offset;
+    }
+    setZ(z) {
+      this.z=z;
+      return this;
     }
     setAspectScale(t) {
       this.aspectScale = t;
@@ -47,6 +53,10 @@ class Drawable {
     center() {
       this.x -= this.w/2;
       this.y -= this.h/2;
+      return this;
+    }
+    setTrueCoords(v) {
+      this.trueCoords = v;
       return this;
     }
     pixelSpace() {
@@ -107,8 +117,8 @@ class Drawable {
       var ps = this.pixelSpace();
       var H = ps.H;
       var x = (this.x+this.dx+this.pivotX) * ps.W;
-      var y = (this.y+this.dy+this.pivotY) * ps.H;
-      canvas.translate(x, y-this.sortOffset);
+      var y = (this.y+this.dy+this.pivotY+this.dz) * ps.H;
+      canvas.translate(x, y-this.sortOffset+this.z);
       canvas.scale(this.scaleW, this.scaleH);
       canvas.rotate(this.angle);
       canvas.translate(-this.pivotX*ps.W, -this.pivotY*H);

@@ -4,11 +4,43 @@ class PlatformerModel extends Model {
     this.w=w;this.h=h;this.color=color;   
     this.color2= color2;
     this.moving = false;
-    this.grounded = false;
+    this.grounded = true;
     this.moveLocked = false;
     this.highFiveCount = 0;
     this.highFiveTime = 12;
-
+    this.frameCount = 0;
+    this.customizableOptions = [
+      {
+        name: "hair",
+        options: [IMAGES.hair1, IMAGES.hair2, IMAGES.hair3, IMAGES.hair2Y, IMAGES.hair3Y],
+        index: 0,
+        onChange: (value) => {
+          this.hairType = value;
+          this.hair.drawable.image = value;
+        }
+      },
+      {
+        name: "body",
+        options: [10,15,20],
+        index: 0,
+        onChange: (value) => {
+          this.bwidth = value;
+          this.body2.drawable.width = value;
+          // this.body2.x =this.bwidth*0.1;
+          this.body.drawable.width = value*0.8;
+          this.arm1.x = -this.bwidth/2;
+          this.arm2.x = this.bwidth/2;
+        }
+      }
+    ]
+    if(!parent) {
+      this.parent = {
+        dx:1,vx:10,vy:0,
+        mx: 0, 
+        moving: true,
+        grounded: true
+      }
+    }
     // this.body = this.createLimb(0,0,10,h*.8,color);
     // this.head = this.body.createAfter(0,-10,20,20,color);
     // this.legL = this.body.createBefore(-5,h/2-4,8,8,color);
@@ -26,19 +58,9 @@ class PlatformerModel extends Model {
 
     this.bwidth = 10+Math.random()*10;
 
-    this.body = this.createLimb(0,-7,new Line(0,-3,0,10,10,lineCap,color));
-    this.body2 = this.body.createAfter(0,-3,new Line(0,-3,0,10,this.bwidth,lineCap,color));
-    this.head = this.body2.createAfter(0,-10);
-    this.headBase = this.head.createAfter(0,-10,new ImageDrawable(IMAGES.baseHead1, 0,0,27,25));
-    this.eyeBase = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.baseEyes1, 0,0,27,25));
-    // this.head = this.body.createAfter(0,-5,new Circle(0,-10,10,color));
-    // this.body.createAfter(-10,0,new CheeseburgerJohnsonModel(40,40,this));
-    // this.face = this.head.createAfter(0,-7);
-    this.face = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.pupils1, 0,0,27,25));
-    var hairtype = randomFromList([IMAGES.hair1, IMAGES.hair2, IMAGES.hair3, IMAGES.hair2Y, IMAGES.hair3Y]);
-    this.hair = this.headBase.createAfter(0,0,new ImageDrawable(hairtype, 0,0,27,25));
-    // this.eye1 = this.face.createAfter(-3,0,new Circle(0,0,2,'white'));
-    // this.eye2 = this.face.createAfter(3,0,new Circle(0,0,2,'white'));
+    this.body = this.createLimb(0,-7,new Line(0,-3,0,8,10,lineCap,color));
+    this.body2 = this.body.createAfter(0,-5,new Line(0,-7,0,10,this.bwidth,'butt',color));
+    
     this.legL= this.body.createAfter(-2,12,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
     this.legL2 = this.legL.createAfter(0,ll,new Line(0,0,0,ll,4,lineCap,color),-Math.PI/10);
     this.legR= this.body.createBefore(2,12,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
@@ -50,6 +72,17 @@ class PlatformerModel extends Model {
     this.hand1 = this.arm1.createAfter(0,al+1,new Circle(0,0,3,color));
     this.hand2 = this.arm2.createAfter(0,al+1,new Circle(0,0,3,color2));
 
+    this.head = this.body2.createAfter(0,-7);
+    this.headBase = this.head.createAfter(0,-10,new ImageDrawable(IMAGES.baseHead1, 0,0,27,25));
+    this.eyeBase = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.baseEyes1, 0,0,27,25));
+    // this.head = this.body.createAfter(0,-5,new Circle(0,-10,10,color));
+    // this.body.createAfter(-10,0,new CheeseburgerJohnsonModel(40,40,this));
+    // this.face = this.head.createAfter(0,-7);
+    this.face = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.pupils1, 0,0,27,25));
+    var hairtype = randomFromList([IMAGES.hair1, IMAGES.hair2, IMAGES.hair3, IMAGES.hair2Y, IMAGES.hair3Y]);
+    this.hair = this.headBase.createAfter(0,0,new ImageDrawable(hairtype, 0,0,27,25));
+    // this.eye1 = this.face.createAfter(-3,0,new Circle(0,0,2,'white'));
+    // this.eye2 = this.face.createAfter(3,0,new Circle(0,0,2,'white'));
     // var grd = canvas.createRadialGradient(0,0,0,0,0,50);
     // grd.addColorStop(0,"#00aadd55");
     // grd.addColorStop(1,"#00aadd00");
@@ -67,13 +100,18 @@ class PlatformerModel extends Model {
     this.shoe2 = this.legR.createAfter(0,this.ll,new ImageDrawable(IMAGES.Boot,0,0,10));
   }
   crouch() {
-    var dx = this.parent.dx;
+    var dx = 1;//this.parent.dx;
     var d = 2;
     var br = Math.PI*.4;
     this.body._rotation = br*dx;
     this.body._y += (Math.sin(br)*10-this.body._y)/d;
     this.legL._rotation = (-br-Math.PI/4)*dx;
     this.legR._rotation = (-br+Math.PI/4)*dx;
+
+    var frq = frameCount*Math.PI/12;
+    this.legL.rotation += Math.cos(frq)*Math.PI/4*this.parent.vx/this.parent.speed;
+    this.legR.rotation += -Math.cos(frq)*Math.PI/4*this.parent.vx/this.parent.speed;
+
     this.arm1._rotation = -br*dx;
     this.arm2._rotation = -br*dx;
     this.head._rotation = -br*dx;
@@ -112,6 +150,7 @@ class PlatformerModel extends Model {
     }
     this.highFiving = true;
     this.cooldownTimer = this.highFiveTime;
+    this.face._x=1
   }
   highFiveUpdate() {
     // var a = Math.floor(this.highFiveCount/2)?-Math.PI*0.8:-Math.PI/4;
@@ -233,8 +272,9 @@ class PlatformerModel extends Model {
     this.idle();
     // this.scaleX = 1+Math.sin(frameCount*Math.PI/10)*.1;
     // this.scaleY = 1-Math.sin(frameCount*Math.PI/10)*.1;
-    this.rotation = Math.cos(frameCount*Math.PI/10)*Math.PI/20;
-    var frq = frameCount*Math.PI/10;
+    this.frameCount += Math.min(Math.abs(this.parent.vx/this.parent.speed)+Math.abs(this.parent.vy/this.parent.speed),1)
+    this.rotation = Math.cos(this.frameCount*Math.PI/10)*Math.PI/20;
+    var frq = this.frameCount*Math.PI/10;
     this.legL.rotation = Math.cos(frq)*Math.PI/4;
     this.legR.rotation = -Math.cos(frq)*Math.PI/4;
     this.legL2.rotation= this.legL.rotation + Math.PI/4;
@@ -382,7 +422,11 @@ class PlatformerModel extends Model {
   }
   faceUpdate() {
     // this.face._x += Math.round((this.parent.dx*5-this.face._x)/3);
-    this.face._x = Math.abs(this.parent.dx);
+    // this.face._x = Math.abs(this.parent.dx);
+    if(this.moving)this.face._x = 1
+    else if(Math.random()>.98) {
+      this.face._x=0;
+    }
   }
   draw(x,y) {
     // canvas.strokeRect(x-this.w/2,y-this.h/2,this.w,this.h);

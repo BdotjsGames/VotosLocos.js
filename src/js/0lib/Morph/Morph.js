@@ -25,7 +25,7 @@ class Morph {
       this.active = false;
       this.update = this.inactiveUpdate;
       if(this.callback)
-      this.callback();
+      this.callback(this);
     }
     inactiveUpdate () {}
     activeUpdate() {

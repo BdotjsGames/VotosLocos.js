@@ -3,7 +3,7 @@ class ModelEditorScene extends Scene {
         super();
         this.gui = [];
 
-        this.loadModel(new PlatformerModel(20,40,"darkgrey",{
+        this.loadModel(new PlatformerModel(20,40,"darkgrey","blue",{
             dx:1,vx:10,vy:0,
             mx: 0, 
             moving: true,
@@ -34,7 +34,7 @@ class ModelEditorScene extends Scene {
         this.model.parent.dx = Math.sign(this.model.parent.vx);
         this.model.update();
         var axes = getAxes();
-        if(this.selectLimb) {
+        if(this.selectedLimb) {
             this.selectedLimb.x += axes.inputX;
             this.selectedLimb.y += axes.inputY;
         }

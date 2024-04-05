@@ -112,8 +112,11 @@ class Line {
     else canvas.strokeStyle = this.color;
     canvas.lineCap = this.cap;
     var w = this.width;
+    var dw = 0;
     if(override&&override.dw) {
       w+=override.dw*2;
+      if(this.cap=="butt")
+        dw = override.dw*1.5;
     }
     var dx = 0;
     var dy = 0;
@@ -123,8 +126,8 @@ class Line {
     }
     canvas.lineWidth = w;
     canvas.beginPath();
-    canvas.moveTo(this.x1+dx,this.y1+dy);
-    canvas.lineTo(this.x2+dx,this.y2+dy);
+    canvas.moveTo(this.x1+dx,this.y1+dy-dw);
+    canvas.lineTo(this.x2+dx,this.y2+dw);
     canvas.stroke();
   }
 }

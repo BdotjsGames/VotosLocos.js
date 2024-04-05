@@ -1,9 +1,9 @@
 
 class GameSceneBasic extends Scene {
-    constructor(level, prev) {
+    constructor(model,level, prev) {
       super();
       var startingY = 100;
-      var groundHeight = 200;
+      var groundHeight = 400;
       this.sorters = [];
       this.minY = startingY - groundHeight/2;
       this.maxY = startingY + groundHeight/2;
@@ -28,7 +28,7 @@ class GameSceneBasic extends Scene {
         var h = 50+200*Math.random();
         this.addEntity(new BackgroundBuilding(x,y, 100,h,'white')); 
       }
-      this.addEntity(this.player = new Player(100,startingY));
+      this.addEntity(this.player = new Player(100,startingY,model));
       // this.addEntity(new Knight(100,-100));
       // this.addEntity(new NPC(2100,0, CurleyModel));
       // this.addEntity(new Curley(2100,0));
@@ -43,7 +43,7 @@ class GameSceneBasic extends Scene {
       this.LightMask = createScreenCanvas();
       this.level = {
         width: 2000,
-        height: 300
+        height: startingY + groundHeight/2
       }
       this.dialogueController = new DialogueController(null,this);
     }
@@ -73,7 +73,7 @@ class GameSceneBasic extends Scene {
       var target = this.camera.target;
       var tvx = target.vx||0;
       var tx = target.x + tvx*5;
-      var ty = target.y;
+      var ty = target.y - target.h+target.z;
       if(!this.dialogueController.done) {
         ty += CE.height/20;
       }
@@ -88,9 +88,9 @@ class GameSceneBasic extends Scene {
       if(this.camera.x-screenw < 0) {
         this.camera.x = screenw;
       }
-      if(this.camera.y-screenh<0) {
-        this.camera.y = screenh;
-      }
+      // if(this.camera.y-screenh<-300) {
+      //   this.camera.y = screenh-300;
+      // }
 
       if(this.camera.x+screenw > this.level.width) {
         this.camera.x = this.level.width - screenw;
@@ -111,9 +111,9 @@ class GameSceneBasic extends Scene {
       } else {
         this.camera.rotation = 0;
       }
-    //   if(this.player.x>this.level.width) {
-    //     this.loadNextLevel()
-    //   }
+      if(this.player.x>this.level.width) {
+        this.loadNextLevel()
+      }
       this.dialogueController.update(); 
       
     }
@@ -131,6 +131,8 @@ class GameSceneBasic extends Scene {
     //   this.preProcessLevel();
     }
     loadNextLevel() {
+      this.driver.setScene(new GameSceneBasic(this.player.model));
+      return;
       var nextLevel = World.getNextLevel(this.level);
       if(nextLevel) {
         this.loadLevel(nextLevel);

@@ -3,6 +3,7 @@ class Model {
     this.rotation = 0;
     this.scaleX = 1;
     this.scaleY = 1;
+    this.scaleBoth = 1;
     this.parent = parent;
     this.parts = [];
     this.outlineColor = "black";
@@ -36,7 +37,7 @@ class Model {
       var q = 4;
       canvas.rotate(this._rotation+Math.round((this.rotation-this._rotation)*q)/q);
     } else canvas.rotate(this.rotation);
-    canvas.scale(this.scaleX,this.scaleY);
+    canvas.scale(this.scaleX*this.scaleBoth,this.scaleY*this.scaleBoth);
     if(this.flip) {
       canvas.scale(-1,1);
     }
@@ -51,7 +52,7 @@ class Model {
     canvas.save();
     canvas.translate(x,y);
     canvas.rotate(this.rotation);
-    canvas.scale(this.scaleX,this.scaleY);
+    canvas.scale(this.scaleX*this.scaleBoth,this.scaleY*this.scaleBoth);
     if(this.flip) {
       canvas.scale(-1,1);
     }
@@ -65,7 +66,7 @@ class Model {
     canvas.save();
     canvas.translate(x,y);
     canvas.rotate(this.rotation);
-    canvas.scale(this.scaleX,this.scaleY);
+    canvas.scale(this.scaleX*this.scaleBoth,this.scaleY*this.scaleBoth);
     if(this.flip) {
       canvas.scale(-1,1);
     }

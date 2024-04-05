@@ -9,6 +9,14 @@ var Axes = [
   {down: false, previous: 0},
 ]
 
+function createButton(obj){
+  if(!obj.name) {
+    return console.log('button must have name', obj);
+  }
+  Buttons[obj.name] = obj;
+  return obj;
+}
+
 function inputUpdate() {
   handleGamePad();
   anyKeyDown = false;
