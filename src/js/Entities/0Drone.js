@@ -1,5 +1,5 @@
 
-class Drone extends Platformer{
+class Drone extends BeatEmUpper{
   constructor(x,y) {
     super(x,y,50,50,"brown");
     this.speed = 1;
@@ -7,6 +7,8 @@ class Drone extends Platformer{
     this.shootTime = 60*2;
     this.shootTimer = 0;
     this.heal = 0.01;
+    this.contactDamage = 0;
+    this.health = this.maxHealth = 15;
     // this.offset = Math.random()*this.shootTime
   }
   getHit(other) {
@@ -26,22 +28,26 @@ class Drone extends Platformer{
     if(!player)return;
     var dx = player.x-this.x;
     var dy = player.y-this.y;
-    var ds = Math.abs(dx)+Math.abs(dy);
-    if(ds<50&&this.invul<=0) {
+    var dz = player.z-this.z;
+    // var ds = Math.abs(dx)+Math.abs(dy)+Math.abs(dz);
+    if(this.invul<=0&&Math.abs(dx)<5+player.w/2 && Math.abs(dy)<20+player.h/2&&Math.abs(dz)<100){
+    // if(ds<50&&this.invul<=0) {
       player.collide(this);
     }
     this.dx = dx>0?1:-1;
     // this.vy += Math.cos(frameCount*Math.PI/10)*.1;
-    this.vy += ((player.y - 50 - this.y)/50-this.vy)/10
+    this.vz += ((player.z - 50 - this.z)/50-this.vz)/10
 
     if(Math.abs(dx) < 500) {
       this.shootTimer++;
       if(this.shootTimer >= this.shootTime) {
         this.shootTimer = 0;
-        this.scene.addEntity(new LaserBeam(this.x,this.y,this.dx*5, 100));
+        this.scene.addEntity(new LaserBeam(this.x,this.y,this.z,this.dx*5, 100));
         SOUNDS.laser.play();
       }
     }
+    if(dy>50)this.my=1;
+    if(dy<-50)this.my=-1;
   }
   initModel() {
     this.model = new DroneModel(this);

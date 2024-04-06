@@ -1,9 +1,11 @@
 class LaserBeam {
-  constructor(x,y,vx, life) {
+  constructor(x,y,z,vx, life) {
     this.w = 20;
     this.h = 8; 
     this.x=x;this.y=y;this.vx=vx;
+    this.z=z;
     this.life=life;
+    this.contactDamage = 3;
   }
   update() {
     this.x += this.vx;
@@ -14,8 +16,9 @@ class LaserBeam {
     var player = this.scene.player;
     if(!player)return;
     var dx = Math.abs(player.x-this.x);
-    var dy = Math.abs(player.y-this.y);
-    if(dx<5+player.w/2 && dy<2+player.h/2) {
+    var dy = Math.abs(player.y-this.y-player.h/2);
+    var dz = Math.abs(player.z-this.z);
+    if(dx<5+player.w/2 && dy<2+player.h/2&&dz<10) {
       player.getHit(this);
       this.shouldDelete = true;
     }

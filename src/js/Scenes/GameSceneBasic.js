@@ -1,13 +1,15 @@
 
 class GameSceneBasic extends Scene {
-    constructor(model,level, prev) {
+    constructor(model,levelNumber=0, prev) {
       super();
+      this.levelNumber = levelNumber;
       var startingY = 100;
       var groundHeight = 400;
       this.sorters = [];
       this.minY = startingY - groundHeight/2;
       this.maxY = startingY + groundHeight/2;
-      this.ground = this.addEntity(new Ground(0,startingY-groundHeight/2,2000,groundHeight));
+      this.backgrounds = [];
+      this.backgrounds.push(this.ground=new Ground(0,startingY-groundHeight/2,2000,groundHeight));
       for(var i=0;i<10;i++) {
         var x = Math.random()*this.ground.w;
         var y = Math.random()*groundHeight + startingY - groundHeight/2;
@@ -20,13 +22,33 @@ class GameSceneBasic extends Scene {
       for(var i=0;i<10;i++) {
         var x = Math.random()*this.ground.w;
         var y = Math.random()*groundHeight + startingY - groundHeight/2;
-        this.addEntity(new Enemy(x,y)); 
+        this.addEntity(new HighFiver(x,y)); 
       }
+      if(this.levelNumber>0)
       for(var i=0;i<10;i++) {
         var x = Math.random()*this.ground.w;
-        var y = startingY - groundHeight/2;
+        var y = Math.random()*groundHeight + startingY - groundHeight/2;
+        this.addEntity(new Drone(x,y)); 
+      }
+      for(var i=0;i<17;i++) {
+        var x = Math.random()*this.ground.w;
+        var y = startingY - groundHeight/2-75-Math.random()*100;
+        var w = 100 + Math.random()*100;
         var h = 50+200*Math.random();
-        this.addEntity(new BackgroundBuilding(x,y, 100,h,'white')); 
+        this.backgrounds.push(new BackgroundBuilding(x,y, w,h,'white')); 
+      }
+      var wx = this.ground.w;
+      for(var x=wx;x>-300;) {
+        var x = wx;
+        var y = startingY - groundHeight/2;
+        // var h = 50+200*Math.random();
+        // this.addEntity(new BackgroundBuilding(x,y, 100,h,'white')); 
+        var buildingImage = randomFromList(IMAGES.buildings);
+        var w = buildingImage.width*2;
+        var h = buildingImage.height*2;
+        wx -= w;///2+Math.random()*w;
+        // wx -= Math.random()*200;
+        this.backgrounds.push(new ImageDrawable(buildingImage, x,y-h/2, w,h));
       }
       this.addEntity(this.player = new Player(100,startingY,model));
       // this.addEntity(new Knight(100,-100));
@@ -65,10 +87,12 @@ class GameSceneBasic extends Scene {
     //   return this.level.collides(...args);
     }
     collideCheck(e) {
+      if(e.x<0)e.x=0;
         if(e.y<this.minY) e.y = this.minY;
         if(e.y>this.maxY) e.y = this.maxY;
     }
     update() {
+      if(this.transitioningOut) return;
       super.update();
       var target = this.camera.target;
       var tvx = target.vx||0;
@@ -131,7 +155,8 @@ class GameSceneBasic extends Scene {
     //   this.preProcessLevel();
     }
     loadNextLevel() {
-      this.driver.setScene(new GameSceneBasic(this.player.model));
+      this.transitioningOut = true;
+      this.driver.transitionToScene(new GameSceneBasic(this.player.model, this.levelNumber+1));
       return;
       var nextLevel = World.getNextLevel(this.level);
       if(nextLevel) {
@@ -153,6 +178,7 @@ class GameSceneBasic extends Scene {
         canvas.rotate(this.camera.rotation);
         canvas.scale(this.camera.zoom,this.camera.zoom);
         canvas.translate(-this.camera.x,-this.camera.y);
+        this.backgrounds.forEach(b=>b.draw())
         super.draw();
       canvas.restore();
       if(this.doLighting) {
@@ -175,11 +201,13 @@ class GameSceneBasic extends Scene {
       this.dialogueController.draw();
     }
     respawn() {
-      // this.player.health = this.player.maxHealth;
-      // this.player.shouldDelete = false;
+      this.player.health = this.player.maxHealth;
+      this.player.shouldDelete = false;
     //   this.loadLevel(this.level.level);
-      this.camera.target = this.player;
-      this.camera.x = this.player.x;
-      this.camera.y = this.player.y;
+      // this.camera.target = this.player;
+      // this.camera.x = this.player.x;
+      // this.camera.y = this.player.y;
+      this.transitioningOut = true;
+      this.driver.transitionToScene(new GameSceneBasic(this.player.model, this.levelNumber));
     }
   }

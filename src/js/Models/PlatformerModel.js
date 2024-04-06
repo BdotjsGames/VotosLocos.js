@@ -11,8 +11,17 @@ class PlatformerModel extends Model {
     this.frameCount = 0;
     this.customizableOptions = [
       {
+        name: "skin",
+        options: IMAGES.headOptions,
+        index: 0,
+        onChange: (value) => {
+          this.headType = value;
+          this.headBase.drawable.image = value;
+        }
+      },
+      {
         name: "hair",
-        options: [IMAGES.hair1, IMAGES.hair2, IMAGES.hair3, IMAGES.hair2Y, IMAGES.hair3Y],
+        options: IMAGES.hairOptions,
         index: 0,
         onChange: (value) => {
           this.hairType = value;
@@ -20,18 +29,29 @@ class PlatformerModel extends Model {
         }
       },
       {
-        name: "body",
-        options: [10,15,20],
+        name: "Torso",
+        options: IMAGES.bodyOptions,
         index: 0,
-        onChange: (value) => {
-          this.bwidth = value;
-          this.body2.drawable.width = value;
-          // this.body2.x =this.bwidth*0.1;
-          this.body.drawable.width = value*0.8;
-          this.arm1.x = -this.bwidth/2;
-          this.arm2.x = this.bwidth/2;
+        onChange: (value,i) => {
+          this.hairType = value;
+          this.body2.drawable.image = value;
+          this.arm1.drawable.image = IMAGES.armOptions[i];
+          this.arm2.drawable.image = IMAGES.armOptions[i];
         }
-      }
+      },
+      // {
+      //   name: "bodyWidth",
+      //   options: [10,15,20],
+      //   index: 0,
+      //   onChange: (value) => {
+      //     this.bwidth = value;
+      //     this.body2.drawable.width = value;
+      //     // this.body2.x =this.bwidth*0.1;
+      //     this.body.drawable.width = value*0.8;
+      //     this.arm1.x = -this.bwidth/2;
+      //     this.arm2.x = this.bwidth/2;
+      //   }
+      // }
     ]
     if(!parent) {
       this.parent = {
@@ -56,30 +76,39 @@ class PlatformerModel extends Model {
     var lineCap = 'square';
     var bodyColor = "#6b6"
 
-    this.bwidth = 10+Math.random()*10;
+    this.bwidth = 15;//+Math.random()*10;
 
     this.body = this.createLimb(0,-7,new Line(0,-3,0,8,10,lineCap,color));
-    this.body2 = this.body.createAfter(0,-5,new Line(0,-7,0,10,this.bwidth,'butt',color));
+    // this.body2 = this.body.createAfter(0,-5,new Line(0,-7,0,10,this.bwidth,'butt',color));
+    this.body2 = this.body.createAfter(0,-5,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
+
     
-    this.legL= this.body.createAfter(-2,12,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
+    this.legL= this.body.createBefore(-2,12,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
     this.legL2 = this.legL.createAfter(0,ll,new Line(0,0,0,ll,4,lineCap,color),-Math.PI/10);
     this.legR= this.body.createBefore(2,12,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
     this.legR2 = this.legR.createBefore(0,ll,new Line(0,0,0,ll,4,lineCap,color2),Math.PI/10);
-    this.arm1 = this.body2.createAfter(-this.bwidth/2,-1,new Line(0,0,0,al,4,lineCap,color),Math.PI/4);
-    this.arm2 = this.body2.createBefore(this.bwidth/2,-1,new Line(0,0,0,al,4,lineCap,color2),-Math.PI/4);
+    // this.bodyImage = this.body2.createAfter(0,-1,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
+
+    this.arm1 = this.body2.createAfter(-this.bwidth/2,-1,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),Math.PI/4);
+    this.arm2 = this.body2.createBefore(this.bwidth/2,-1,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),-Math.PI/4);
+
+    // this.arm1 = this.body2.createAfter(-this.bwidth/2,-1,new Line(0,0,0,al,4,lineCap,color),Math.PI/4);
+    // this.arm2 = this.body2.createBefore(this.bwidth/2,-1,new Line(0,0,0,al,4,lineCap,color2),-Math.PI/4);
+
     // this.hand1 = this.arm1.createAfter(0,al+1,new ImageDrawable(IMAGES.fist,0,0,16,16));
     // this.hand2 = this.arm2.createAfter(0,al+1,new ImageDrawable(IMAGES.fist,0,0,16,16));
-    this.hand1 = this.arm1.createAfter(0,al+1,new Circle(0,0,3,color));
-    this.hand2 = this.arm2.createAfter(0,al+1,new Circle(0,0,3,color2));
+    // this.hand1 = this.arm1.createAfter(0,al+1,new Circle(0,0,3,color));
+    // this.hand2 = this.arm2.createAfter(0,al+1,new Circle(0,0,3,color2));
 
     this.head = this.body2.createAfter(0,-7);
     this.headBase = this.head.createAfter(0,-10,new ImageDrawable(IMAGES.baseHead1, 0,0,27,25));
-    this.eyeBase = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.baseEyes1, 0,0,27,25));
+    this.mouth = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.mouthSmile, 0,0,27,25));
+    // this.eyeBase = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.baseEyes1, 0,0,27,25));
     // this.head = this.body.createAfter(0,-5,new Circle(0,-10,10,color));
     // this.body.createAfter(-10,0,new CheeseburgerJohnsonModel(40,40,this));
     // this.face = this.head.createAfter(0,-7);
     this.face = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.pupils1, 0,0,27,25));
-    var hairtype = randomFromList([IMAGES.hair1, IMAGES.hair2, IMAGES.hair3, IMAGES.hair2Y, IMAGES.hair3Y]);
+    var hairtype = randomFromList(IMAGES.hairOptions);
     this.hair = this.headBase.createAfter(0,0,new ImageDrawable(hairtype, 0,0,27,25));
     // this.eye1 = this.face.createAfter(-3,0,new Circle(0,0,2,'white'));
     // this.eye2 = this.face.createAfter(3,0,new Circle(0,0,2,'white'));
@@ -93,6 +122,10 @@ class PlatformerModel extends Model {
     this.cooldownTime = 15;
     this.head.scaleX = 1.5;
     this.head.scaleY = 1.5;
+    this.customizableOptions.forEach(option => {
+      var index = Math.floor(Math.random()*option.options.length)
+      option.onChange(option.options[index], index)
+    });
   }
   addShoes() {
     if(this.shoe1)return;

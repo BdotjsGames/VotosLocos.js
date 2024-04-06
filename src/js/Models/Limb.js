@@ -48,6 +48,7 @@ class ImageDrawable {
       this.h = image.height/image.width*this.w;
     }
   }
+  update() {}
   draw(override) {
     if(override)return;
     canvas.drawImage(this.image,this.x-this.w/2,this.y-this.h/2,this.w,this.h);

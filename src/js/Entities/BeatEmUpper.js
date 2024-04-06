@@ -52,6 +52,7 @@ class BeatEmUpper {
         this.highFiveDistance = 40;
         this.groundAcceleration = 1;
         this.groundDeceleration = 1;
+        this.contactDamage = 10;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -71,6 +72,7 @@ class BeatEmUpper {
         ctx.fillRect(0, 0, CE.width, CE.height);
     }
     getHit(other) {
+        if(!other.contactDamage)return;
         if (this.invul > 0) return;
         var k = 1;
         if (other.knockBack) k = other.knockBack;
@@ -78,7 +80,7 @@ class BeatEmUpper {
         var dx = other.x - this.x > 0 ? 1 : -1;
         this.vx = -dx * k * 10;
         this.vy = -5;
-        this.health -= 10;
+        this.health -= other.contactDamage;
         this.invul = this.invulTime;
         if (this.health < 0) {
             this.hitSound.play(-0.1);
@@ -384,9 +386,9 @@ class BeatEmUpper {
             this.model.draw(this.x, this.y + this.z - this.h / 2);
         if (this.health < this.maxHealth - 1) {
             canvas.fillStyle = "black";
-            canvas.fillRect(this.x - 32, this.y - 62, 64, 14);
+            canvas.fillRect(this.x - 32, this.y - 2, 64, 14);
             canvas.fillStyle = "green";
-            canvas.fillRect(this.x - 30, this.y - 60, 60 * this.health / this.maxHealth, 10);
+            canvas.fillRect(this.x - 30, this.y - 0, 60 * this.health / this.maxHealth, 10);
         }
         // canvas.fillStyle = 'red';
         // canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);

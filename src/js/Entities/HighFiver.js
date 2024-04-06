@@ -1,7 +1,9 @@
 var highFivers = [];
-class Enemy extends BeatEmUpper {
+class HighFiver extends BeatEmUpper {
     constructor(x, y) {
         super(x, y, 20, 40, '#00b', '#006');
+        this.model.mouth.drawable.image = IMAGES.mouthFrown;
+        this.model.face._y=1;
         // this.canAttack = false;
         this.isEnemy = true;
         this.outlineColor = "black";
@@ -151,10 +153,13 @@ class Enemy extends BeatEmUpper {
     }
     beHighFived() {
         this.highFive();
-        if(Math.random()>.8)this.jump();
+        // if(Math.random()>.8)this.jump();
         this.highFivesNeeded-=1;
         if(this.highFivesNeeded<=0) {
             this.spawnTextParticle(":)")
+            this.jump();
+            this.model.mouth.drawable.image = IMAGES.mouthSmile;
+            this.model.face._y=0;
             this.startFollow(player, 60);
         }
     }

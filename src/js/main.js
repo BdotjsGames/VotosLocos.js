@@ -17,6 +17,13 @@ var MainDriver = {
     this.fadeDir=0;
     this.fadeCallback = callback;
   },
+  transitionToScene(scene) {
+    if(this.fadeTimer>0)return
+    this.fadeToBlack(30, e => {
+      this.setScene(scene)
+      this.fadeIn(30);
+    })
+  },
   startWithScene(scene) {
     this.update = this.update.bind(this);
     this.draw = this.draw.bind(this);

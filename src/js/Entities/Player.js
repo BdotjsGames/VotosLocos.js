@@ -62,10 +62,10 @@ class Player extends BeatEmUpper {
     }
     if(this.model.highFiving&&getButton(Buttons.highFive))this.model.highFive();
     if(getButtonDown(Buttons.B)) {
-      if(this.grounded&&!this.crouching) {
-        this.jump();
-        this.jump();
-      } else 
+      // if(this.grounded&&!this.crouching) {
+      //   this.jump();
+      //   this.jump();
+      // } else 
         this.attack();
       // else
         // this.model.highFive();

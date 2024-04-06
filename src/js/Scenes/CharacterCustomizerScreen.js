@@ -42,7 +42,7 @@ class CharacterCustomizerScene extends Scene{
                     if(customizableOption.index<0) {
                         customizableOption.index = customizableOption.options.length-1;
                     }
-                    customizableOption.onChange(customizableOption.options[customizableOption.index]);
+                    customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
                 }).center()
             )
             this.optionsGroup.addEntity(
@@ -51,7 +51,7 @@ class CharacterCustomizerScene extends Scene{
                     if(customizableOption.index>=customizableOption.options.length) {
                         customizableOption.index = 0;
                     }
-                    customizableOption.onChange(customizableOption.options[customizableOption.index]);
+                    customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index);
                 }).center()
             )
         })

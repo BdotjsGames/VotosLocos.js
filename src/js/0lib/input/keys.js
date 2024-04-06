@@ -15,7 +15,7 @@ function onkeydown(e) {
   //e.code is a readable name of the key for special characters like space, shift, enter
   // and it displays keys as KeyJ etc
   // could be usefull for input customization displays
-  if(!e.metaKey) {
+  if(!e.metaKey&&!e.ctrlKey) {
     if(!keys[k]) {
       anyKey += 1;
       anyKeyDown = true;
