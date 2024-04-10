@@ -49,7 +49,8 @@ class ButtonUI extends DrawableText{
     onHover() {
       this.morphs['hoverOff'].deactivate();
       this.morphs['hoverOn'].activate();
-      if(this.hoverSound)this.hoverSound.play();
+      if(!this.held)
+        if(this.hoverSound)this.hoverSound.play();
     }
     offHover() {
       this.morphs['heldOn'].deactivate();      

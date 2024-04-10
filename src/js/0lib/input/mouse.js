@@ -24,6 +24,7 @@ function onmousedown(e) {
 
 function onmouseup(e) {
   mouse.held = false;
+  mouse.up = true;
 }
 
 window.addEventListener('load', function(e) {

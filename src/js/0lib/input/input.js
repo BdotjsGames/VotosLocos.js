@@ -22,6 +22,7 @@ function inputUpdate() {
   anyKeyDown = false;
   gamepadAnyButtonDown = false;
   mouse.down = false;
+  mouse.up = false;
   touchStarts = [];
   Buttons.toCache.forEach(function(e) {
     e.cache = e.toCache;
@@ -37,7 +38,7 @@ function inputUpdate() {
 function getAnyDown() {
   return anyKeyDown || touchStarts.length>0 || mouse.down || gamepadAnyButtonDown;
 }
-
+var azertyEnabled = true;
 function getAxes() {
   if(touchOn&&touchJoySticks[0].held) {
     return {
@@ -51,8 +52,15 @@ function getAxes() {
       inputY: gamepadJoysticks[0].output.y,
     }
   }
-  var inputX = (keys[68]||keys[39])-(keys[65]||keys[37]);
-  var inputY = (keys[83]||keys[40])-(keys[87]||keys[38]);
+  //azerty: w is z, a is q
+  var leftKey = keys[65]||keys[37];
+  var upKey = keys[87]||keys[38];
+  if(azertyEnabled) {
+    leftKey = leftKey||keys[81];
+    upKey = upKey||keys[90]
+  }
+  var inputX = (keys[68]||keys[39])-(leftKey);
+  var inputY = (keys[83]||keys[40])-(upKey);
   return {inputX, inputY};
 }
 

@@ -23,6 +23,10 @@ class Drawable {
       this.trueCoords=true;
       this.sortOffset=0;
     }
+    setAttr(name, value) {
+      this[name] = value;
+      return this;
+    }
     setSortOffset(offset) {
       this.y += offset;
       this.sortOffset += offset;

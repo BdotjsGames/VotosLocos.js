@@ -4,7 +4,8 @@ class Player extends BeatEmUpper {
     // this.canAttack = false;
     this.outlineColor = "black";
     this.invulTime = 40;
-    window.parent.player = this;
+    console.log(window.self);
+    window.player = this;
     this.highFiveDistance = 40;
   }
   addShoes() {

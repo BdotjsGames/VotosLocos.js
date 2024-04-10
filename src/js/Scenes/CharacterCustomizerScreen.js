@@ -9,6 +9,9 @@ class CharacterCustomizerScene extends Scene{
             this.model.scaleBoth=1;
             this.driver.setScene(new GameSceneBasic(this.model))
         }).center())
+        this.addEntity(new ButtonUI("⚙️", 0.1,0.1,0.1,0.1,0.05,() => {
+            this.driver.setScene(new OptionsScene(this))
+        }).center())
     }
     update() {
         super.update();

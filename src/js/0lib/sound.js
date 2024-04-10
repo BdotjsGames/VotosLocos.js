@@ -26,7 +26,8 @@ function initializeSound() {
     var GAIN = AUDIOCONTEXT.createGain();
     GAIN.connect(AUDIOCONTEXT.destination);
     DESTINATION = GAIN;
-    setVolume(0.5);
+    var savedVolume = localStorage.getItem("mainVolume");
+    setVolume(savedVolume||0.5);
     // for(var i in BUFFERBUFFER) {
     //   BUFFERBUFFER[i].beginLoad();
     // }

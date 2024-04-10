@@ -69,8 +69,15 @@ var MainDriver = {
   },
   update() {
     frameCount += 1;
-    if(this.paused)return inputUpdate();;
-    this.scene.update();
+    if(this.paused)return inputUpdate();
+    try {
+      this.scene.update();
+    } catch (error) {
+      console.log(error);
+      // var localServerURL = "http://127.0.0.1:3000/";
+      // var localFilePath = "file://~/Desktop/Coding/VotosLocos.js/"
+      // console.log(""+error.stack.replaceAll(localServerURL, localFilePath));
+    }
     inputUpdate();
     if(this.fadeTimer>0) {
       this.fadeTimer--;
@@ -82,6 +89,14 @@ var MainDriver = {
     if(devtools.opened == true) {
       alert('detected');
     }
+    if(getButtonDown(Buttons.start)) {
+      if(!this.scene.isOptionsScene) {
+        this.setScene(new OptionsScene(this.scene))
+      } else {
+        this.scene.back();
+      }
+    }
+    
   },
   draw() {
     window.requestAnimationFrame(this.draw);

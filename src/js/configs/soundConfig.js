@@ -2,9 +2,9 @@
 
 SOUNDASSETS='Assets/sounds/';
 
-SOUNDS.select = new SoundTag('pop1.wav',2,2);
-SOUNDS.hover = new SoundTag('pop2.wav',2,2);
-SOUNDS.press = new SoundTag('pop1.wav',2,2);
+SOUNDS.select = new SoundTag('pop1.wav',2,1);
+SOUNDS.hover = new SoundTag('pop2.wav',2,1);
+SOUNDS.press = new SoundTag('pop1.wav',2,1);
 
 
 // SOUNDS.dramaticMusic = new SoundTag('Dramatic.wav', 1,1);

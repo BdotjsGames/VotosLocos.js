@@ -65,6 +65,8 @@ window.addEventListener('load', function(e) {
   // }
   Buttons.jump = Buttons.A;
   Buttons.crouch = Buttons.X;
+  Buttons.jump.keys.push(' '.keyCode);
+  Buttons.crouch.keys.push(16)
   // Buttons.A = {
   //   keys: 'JZ'.keyCodes,
   //   buttons: [0],
@@ -81,7 +83,7 @@ window.addEventListener('load', function(e) {
     touchButtons: [2],
   }
   Buttons.start = {
-    keys: [73,27],
+    keys: [27],
     buttons: [gamepadConfig.start]
   }
   Buttons.select = {
