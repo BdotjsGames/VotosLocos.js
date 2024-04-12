@@ -4,6 +4,9 @@ class SimpleDialogue {
     this.person = "";
     this.index= 0;
     this.impatience = 0;
+    this.linewraps = [];
+    this.textFont = "25px Arial";
+
   }
   setText(obj,persist) {
     this.persist = persist;
@@ -18,6 +21,29 @@ class SimpleDialogue {
     } else {
       this.talkSound = null;
     }
+    this.updateLineWraps();
+  }
+  getLines(ctx, text, maxWidth) {
+    var words = text.split(" ");
+    var lines = [];
+    var currentLine = words[0];
+
+    for (var i = 1; i < words.length; i++) {
+        var word = words[i];
+        var width = ctx.measureText(currentLine + " " + word).width;
+        if (width < maxWidth) {
+            currentLine += " " + word;
+        } else {
+            lines.push(currentLine);
+            currentLine = word;
+        }
+    }
+    lines.push(currentLine);
+    return lines;
+}
+  updateLineWraps() {
+    canvas.font = this.textFont;
+    this.lines = this.getLines(canvas, this.text, CE.width-CE.width/30);
   }
   reset() {
     this.index = 0;
@@ -67,18 +93,22 @@ class SimpleDialogue {
       canvas.fillText(this.person.name, CE.width/50,CE.height*.77);
     }
     canvas.font = "25px Arial";
-    var text = this.text.substring(0,this.index);
-    var words = text.split(" ");
-    var text1 = '';
-    var text2 = '';
-    for(var i=0;i<words.length;i++) {
-      if(i<10)
-        text1 += words[i]+' ';
-      else
-        text2 += words[i]+' ';
-    }
-    canvas.fillText(text1, CE.width/30,CE.height*.85);
-    canvas.fillText(text2, CE.width/30,CE.height*.9);
+    // var text = this.text.substring(0,this.index);
+
+    var currentIndex = 0;
+    this.lines.forEach((line,i)=>{
+      if(this.index>currentIndex) {
+        var text = line;
+        if(this.index-currentIndex<line.length){
+          text = line.substring(0,this.index-currentIndex)
+        }
+        canvas.fillText(text, CE.width/30,CE.height*.85+i*CE.height*.05);
+      }
+      currentIndex += line.length;
+    })
+    // canvas.fillText(text1, CE.width/30,CE.height*.85);
+    // canvas.fillText(text2, CE.width/30,CE.height*.9);
+    
     if(this.impatience>60&&!this.persist) {
       var t = ' (press space)';//.substring(0,this.impatience-60);
       canvas.textAlign = 'right';
@@ -130,8 +160,6 @@ class WaitForProximity {
 
 class DialogueController {
   constructor(sequence, gameScene) {
-    this.footer = document.querySelector(".b-js-webgl-footer");
-    this.footer.leClass = this.footer.className;
     this.gameScene = gameScene;
     this.sequence = sequence;
     this.index = 0;
@@ -171,6 +199,8 @@ class DialogueController {
         this.gameScene.camera.target = event.person.obj;
         event.person.obj.isTalking = true;
         this.lastSpeaker = event.person.obj;
+        if(event.zoom)this.gameScene.camera.zoom = event.zoom;
+        // this.gameScene.camera.zoom = 2;
       }
       if(event.doNotWait) {
         this.simpleDialogue.progress();
@@ -277,16 +307,6 @@ class DialogueController {
     return false;
   }
   update() {
-    if(this.fourthWall) {
-      if(this.fourthWall == 1) {
-        this.footer.className = this.footer.leClass.concat(" b-js-shake");
-      } else if(this.fourthWall == 2) {
-        this.footer.className = this.footer.leClass.concat(" b-js-raise");
-      }else if(this.fourthWall == 3) {
-        this.footer.className = this.footer.leClass.concat(" b-js-pop-outa-here");
-      }
-      this.fourthWall = false;
-    }
     for(var i=0;i<this.conditions.length;i++) {
       var con = this.conditions[i];
       if(this.processCondition(con[0])) {

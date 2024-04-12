@@ -30,6 +30,9 @@ var MainDriver = {
     this.setScene(scene);
     this.start();
   },
+  isActive(scene) {
+    return this.scene = scene;
+  },
   setScene(scene) {
     scene.driver = this;
     if(this.scene) {
@@ -89,13 +92,13 @@ var MainDriver = {
     if(devtools.opened == true) {
       alert('detected');
     }
-    if(getButtonDown(Buttons.start)) {
-      if(!this.scene.isOptionsScene) {
-        this.setScene(new OptionsScene(this.scene))
-      } else {
-        this.scene.back();
-      }
-    }
+    // if(getButtonDown(Buttons.start)) {
+    //   if(!this.scene.isOptionsScene) {
+    //     this.setScene(new OptionsScene(this.scene))
+    //   } else {
+    //     this.scene.back();
+    //   }
+    // }
     
   },
   draw() {

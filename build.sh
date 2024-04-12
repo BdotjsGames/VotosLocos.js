@@ -7,7 +7,14 @@ rm ${html}/scripts.html
 echo >> ${html}/scripts.html
 # jsFiles=$(find ./js/ -name '*.js')
 cd src
-for f in $(find js -name '*.js');
+js_files=$(find js -name '*.js')
+js_files=$(echo $js_files | xargs -n1 | sort | xargs)
+# for f in $(find js -name '*.js');
+# do
+#   echo $f
+# done
+# echo $js_files
+for f in $js_files;
 do
   echo "<script src='./$f?$TimeNano'></script>" >> html/scripts.html
 done

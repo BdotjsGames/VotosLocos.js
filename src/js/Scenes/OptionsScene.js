@@ -1,7 +1,6 @@
-class OptionsScene extends Scene {
+class OptionsScene extends AdditiveScene {
     constructor(prevScene) {
-        super();
-        this.prevScene = prevScene;
+        super(prevScene);
         this.isOptionsScene = true;
         var x = 0.5
         this.addEntity(
@@ -16,15 +15,10 @@ class OptionsScene extends Scene {
             })
         )
     }
-    back() {
-        this.driver.setScene(this.prevScene);
-    }
-    draw() {
-        this.prevScene.draw();
-        canvas.fillStyle = "#666";
-        canvas.globalAlpha = 0.75;
-        canvas.fillRect(0,0,CE.width,CE.height);
-        canvas.globalAlpha = 1;
-        super.draw();
+    update() {
+        super.update();
+        if(getButtonDown(Buttons.start)) {
+            this.back();
+        }
     }
 }

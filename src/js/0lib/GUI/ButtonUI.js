@@ -19,6 +19,7 @@ class ButtonUI extends DrawableText{
       this.hoverSound = SOUNDS.hover;
       this.pressSound = SOUNDS.press;
       this.selectSound = SOUNDS.select;
+      this.alpha = 1;
     }
     onClick() {
       if(!this.hover)this.offHover();
@@ -45,6 +46,7 @@ class ButtonUI extends DrawableText{
         this.held = false;
         this.offHeld();
       }
+      this.alpha = 1;
     }
     onHover() {
       this.morphs['hoverOff'].deactivate();
@@ -73,12 +75,14 @@ class ButtonUI extends DrawableText{
       this.morphs['click'].activate();
     }
     drawShape() {
+      // canvas.globalAlpha = this.alpha;
       if(this.hover) {
         canvas.strokeStyle = 'white';
         // canvas.lineWidth = .001;      
         canvas.strokeRect(0,0,this._w,this._h);
       }
       super.drawShape();
+      // if(this.alpha>0)this.alpha -= 0.1;
     }
   }
   

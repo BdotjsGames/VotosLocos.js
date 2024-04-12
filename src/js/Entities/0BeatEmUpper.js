@@ -53,6 +53,7 @@ class BeatEmUpper {
         this.groundAcceleration = 1;
         this.groundDeceleration = 1;
         this.contactDamage = 10;
+        this.obj = this;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;

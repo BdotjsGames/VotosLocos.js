@@ -16,6 +16,9 @@ class CharacterCustomizerScene extends Scene{
     update() {
         super.update();
         this.model.update();
+        if(getButtonDown(Buttons.start)) {
+            this.driver.setScene(new OptionsScene(this));
+        }
     }
     draw() {
         super.draw();

@@ -16,6 +16,8 @@ class HighFiver extends BeatEmUpper {
         this.groundAcceleration = 0.2;
         this.groundAcceleration = 0.5;
         this.highFivesNeeded = randomFromList([1,3,5])
+        this.name = 'citizen';
+        this.talkSound = SOUNDS.johsonTalk;
     }
     startFollow(target, distance) {
         this.following = true;
@@ -161,6 +163,12 @@ class HighFiver extends BeatEmUpper {
             this.model.mouth.drawable.image = IMAGES.mouthSmile;
             this.model.face._y=0;
             this.startFollow(player, 60);
+            this.scene.playDialogue(
+                [
+                    {person: this, text: "line 1", zoom: 2},
+                    {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
+                ]
+            )
         }
     }
     die() {

@@ -60,12 +60,13 @@ class GameSceneBasic extends Scene {
         target: this.player,
         zoom:1.2,
       };
+      this.defaultZoom = this.camera.zoom;
       this.doLighting = false;
       this.screenShake = 0;
       this.LightMask = createScreenCanvas();
       this.level = {
         width: 2000,
-        height: startingY + groundHeight/2
+        height: startingY + groundHeight/2+300
       }
       this.dialogueController = new DialogueController(null,this);
     }
@@ -76,6 +77,10 @@ class GameSceneBasic extends Scene {
       } else {
         this.dialogueController.setSequence([{}]);
       }
+    }
+    playDialogue(sequence, blocking=true) {
+      this.dialogueBlocking = blocking;
+      this.dialogueController.setSequence(sequence);
     }
     wallCollideWith(cell,entity) {
     //   return this.level.wallCollideWith(cell,entity);
@@ -94,6 +99,14 @@ class GameSceneBasic extends Scene {
     update() {
       if(this.transitioningOut) return;
       super.update();
+      if(getButtonDown(Buttons.start)) {
+        this.driver.setScene(new PauseScene(this));
+      }
+      if(this.dialogueController.done) {
+        this.camera.target = this.player;
+        this.camera.zoom = this.defaultZoom;
+        this.dialogueBlocking = false;
+      }
       var target = this.camera.target;
       var tvx = target.vx||0;
       var tx = target.x + tvx*5;
@@ -104,7 +117,7 @@ class GameSceneBasic extends Scene {
       this.camera.x += Math.floor((tx-this.camera.x)/10);
       this.camera.y += Math.floor((ty-this.camera.y)/10);
       
-      var targetZoom = 1/(1+Math.abs(this.player.vx)/100);
+      // var targetZoom = 1/(1+Math.abs(this.player.vx)/100);
       // this.camera.zoom += (targetZoom-this.camera.zoom)/100;
   
       var screenw = CE.width/2/this.camera.zoom;
