@@ -78,14 +78,13 @@ class PlatformerModel extends Model {
 
     this.bwidth = 15;//+Math.random()*10;
 
-    this.body = this.createLimb(0,-7,new Line(0,-3,0,8,10,lineCap,color));
+    this.body = this.createLimb(0,-25,new Line(0,-3,0,8,10,lineCap,color));
     // this.body2 = this.body.createAfter(0,-5,new Line(0,-7,0,10,this.bwidth,'butt',color));
     this.body2 = this.body.createAfter(0,-5,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
 
-    
+    this.legR= this.body.createBefore(2,12,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
     this.legL= this.body.createBefore(-2,12,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
     this.legL2 = this.legL.createAfter(0,ll,new Line(0,0,0,ll,4,lineCap,color),-Math.PI/10);
-    this.legR= this.body.createBefore(2,12,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
     this.legR2 = this.legR.createBefore(0,ll,new Line(0,0,0,ll,4,lineCap,color2),Math.PI/10);
     // this.bodyImage = this.body2.createAfter(0,-1,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
 
@@ -100,7 +99,7 @@ class PlatformerModel extends Model {
     // this.hand1 = this.arm1.createAfter(0,al+1,new Circle(0,0,3,color));
     // this.hand2 = this.arm2.createAfter(0,al+1,new Circle(0,0,3,color2));
 
-    this.head = this.body2.createAfter(0,-7);
+    this.head = this.body2.createAfter(0,-6);
     this.headBase = this.head.createAfter(0,-10,new ImageDrawable(IMAGES.baseHead1, 0,0,27,25));
     this.mouth = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.mouthSmile, 0,0,27,25));
     // this.eyeBase = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.baseEyes1, 0,0,27,25));
@@ -120,10 +119,13 @@ class PlatformerModel extends Model {
     this.attackSound = SOUNDS.attack;
     this.cooldownTimer = 0;
     this.cooldownTime = 15;
-    this.head.scaleX = 1.5;
-    this.head.scaleY = 1.5;
+    this.body.scaleX = 1.5;
+    this.body.scaleY = 1.5;
+    this.head.scaleX = 1.2;
+    this.head.scaleY = 1.2;
     this.customizableOptions.forEach(option => {
       var index = Math.floor(Math.random()*option.options.length)
+      option.index = index;
       option.onChange(option.options[index], index)
     });
   }
@@ -138,15 +140,17 @@ class PlatformerModel extends Model {
     var br = Math.PI*.4;
     this.body._rotation = br*dx;
     this.body._y += (Math.sin(br)*10-this.body._y)/d;
-    this.legL._rotation = (-br-Math.PI/4)*dx;
-    this.legR._rotation = (-br+Math.PI/4)*dx;
+    this.legL._rotation = (-br+Math.PI/4)*dx;
+    this.legR._rotation = (-br-Math.PI/4)*dx;
 
-    var frq = frameCount*Math.PI/12;
-    this.legL.rotation += Math.cos(frq)*Math.PI/4*this.parent.vx/this.parent.speed;
-    this.legR.rotation += -Math.cos(frq)*Math.PI/4*this.parent.vx/this.parent.speed;
+    // var frq = frameCount*Math.PI/12;
+    // this.legL.rotation += Math.cos(frq)*Math.PI/4*this.parent.vx/this.parent.speed;
+    // this.legR.rotation += -Math.cos(frq)*Math.PI/4*this.parent.vx/this.parent.speed;
 
-    this.arm1._rotation = -br*dx;
-    this.arm2._rotation = -br*dx;
+    this.arm1._rotation = 0;
+    this.arm2._rotation = -Math.PI*.6;
+    this.arm1._x=0;
+    this.arm2._x=0;
     this.head._rotation = -br*dx;
     this._rotation = 0;
     this.head._y += (5-this.head._y)/d;
@@ -162,6 +166,11 @@ class PlatformerModel extends Model {
     this.body.rotation += (this.body._rotation-this.body.rotation)/d;
     this.body2.rotation += (this.body2._rotation-this.body2.rotation)/d;
 
+    this.legR2.rotation = Math.PI*.5;
+    this.legL2.rotation = Math.PI*.25;
+
+    this.legL._x = 3;
+    this.legL._y = 3;
     // this.idle();
     // this.rotation = 0;
     // this.legL.rotation = Math.PI/10;
@@ -291,8 +300,8 @@ class PlatformerModel extends Model {
     this.head.rotation = 0;
     var bd = Math.cos(frameCount*Math.PI/40+0.1);
     this.body._y += bd;
-    this.legL._y =-bd;
-    this.legR._y =-bd;
+    this.legL._y =-bd/2;
+    this.legR._y =-bd/2;
 
     if(this.wallColliding) {
       var dx = this.parent.dx;
@@ -300,20 +309,23 @@ class PlatformerModel extends Model {
       if(dx>0)arm=this.arm2;
       arm.rotation = -dx*Math.PI*.9;
     }
+    this.legL._x = 0;
   }
   walk() {
     this.idle();
     // this.scaleX = 1+Math.sin(frameCount*Math.PI/10)*.1;
     // this.scaleY = 1-Math.sin(frameCount*Math.PI/10)*.1;
-    this.frameCount += Math.min(Math.abs(this.parent.vx/this.parent.speed)+Math.abs(this.parent.vy/this.parent.speed),1)
+    var dv = Math.min(1,Math.abs(this.parent.vx/this.parent.speed)+Math.abs(this.parent.vy/this.parent.speed));
+    this.frameCount += dv;
     this.rotation = Math.cos(this.frameCount*Math.PI/10)*Math.PI/20;
     var frq = this.frameCount*Math.PI/10;
-    this.legL.rotation = Math.cos(frq)*Math.PI/4;
-    this.legR.rotation = -Math.cos(frq)*Math.PI/4;
-    this.legL2.rotation= this.legL.rotation + Math.PI/4;
-    this.legR2.rotation= this.legR.rotation + Math.PI/4;
-    this.arm1.rotation = -Math.cos(frq)*Math.PI/4;
-    this.arm2.rotation = Math.cos(frq)*Math.PI/4;
+    var angle = Math.PI/4*(dv);
+    this.legL.rotation = Math.cos(frq)*angle;
+    this.legR.rotation = -Math.cos(frq)*angle;
+    this.legL2.rotation= this.legL.rotation + angle;
+    this.legR2.rotation= this.legR.rotation + angle;
+    this.arm1.rotation = -Math.cos(frq)*angle;
+    this.arm2.rotation = Math.cos(frq)*angle;
     this.body2.rotation = 0;
     // this.body.rotation = Math.PI/100*Math.abs(this.parent.vx);
     this.head.rotation = -this.body.rotation;
@@ -340,6 +352,7 @@ class PlatformerModel extends Model {
     this.arm2._rotation = -this.arm1._rotation;
     this.head._rotation = 0;
     this.body.rotation = 0;
+    this.body2.rotation = 0;
 
     if(this.wallColliding) {
       var dx = this.parent.dx;
@@ -356,6 +369,8 @@ class PlatformerModel extends Model {
     this.legR.rotation += (this.legR._rotation-this.legR.rotation)/d;
     this.arm1.rotation += (this.arm1._rotation-this.arm1.rotation)/d;
     this.arm2.rotation += (this.arm2._rotation-this.arm2.rotation)/d;
+    this.legL._x=0;
+    this.legL._y=0;
   }
   land() {
     this.doubleJumpTimer = 0;

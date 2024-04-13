@@ -1,4 +1,5 @@
 var frameCount = 0;
+var AUTOPAUSE = (localStorage.getItem("autopause")=='true')||false;
 var MainDriver = {
   scene: null,
   started: false,
@@ -49,11 +50,16 @@ var MainDriver = {
     setInterval(this.update, 1000/this.FPS);
     this.draw();
     this.started = true;
-    window.addEventListener('blur', this.pause.bind(this));
-    window.addEventListener('focus', this.unPause.bind(this));    
+    window.addEventListener('blur', this.onBlur.bind(this));
+    window.addEventListener('focus', this.onFocus.bind(this));    
+  },
+  onFocus() {
+    this.unPause();
+  },
+  onBlur() {
+    if(AUTOPAUSE) this.pause()
   },
   pause() {
-    if(!this.pausesOnClickOff)return;
     this.paused = true;
     canvas.fillStyle = "white";
     canvas.strokeStyle = "black";

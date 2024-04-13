@@ -4,6 +4,7 @@ class DrawableText extends Drawable{
       this.text=text;
       this.fontSize = size;
       this.fontFamily = 'Courier';
+      this.textAlign ='center';
     }
     drawShape() {
       // super.drawShape();
@@ -14,7 +15,7 @@ class DrawableText extends Drawable{
       canvas.fillStyle=this.color;
       var ps = this.pixelSpace();
       canvas.font = this.fontSize*ps.W +'px ' + this.fontFamily;
-      canvas.textAlign = 'center';
+      canvas.textAlign = this.textAlign;
       canvas.textBaseline='middle';
       canvas.fillText(this.text,w/2, h/2,w,h);
     }

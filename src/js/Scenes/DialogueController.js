@@ -1,3 +1,6 @@
+function preprocessText(text) {
+  return text.replaceAll('|','')
+}
 class SimpleDialogue {
   constructor() {
     this.text= "";
@@ -5,8 +8,9 @@ class SimpleDialogue {
     this.index= 0;
     this.impatience = 0;
     this.linewraps = [];
-    this.textFont = "25px Arial";
-
+    this.textFont = "20px Arial";
+    this.personFont = "25px Arial";
+    this.maxLines = 3;
   }
   setText(obj,persist) {
     this.persist = persist;
@@ -21,6 +25,7 @@ class SimpleDialogue {
     } else {
       this.talkSound = null;
     }
+    console.log(obj);
     this.updateLineWraps();
   }
   getLines(ctx, text, maxWidth) {
@@ -30,7 +35,7 @@ class SimpleDialogue {
 
     for (var i = 1; i < words.length; i++) {
         var word = words[i];
-        var width = ctx.measureText(currentLine + " " + word).width;
+        var width = ctx.measureText(preprocessText(currentLine + " " + word)).width;
         if (width < maxWidth) {
             currentLine += " " + word;
         } else {
@@ -43,34 +48,48 @@ class SimpleDialogue {
 }
   updateLineWraps() {
     canvas.font = this.textFont;
-    this.lines = this.getLines(canvas, this.text, CE.width-CE.width/30);
+    this.lines = this.getLines(canvas, this.text, CE.width-CE.width/15);
   }
   reset() {
     this.index = 0;
   }
   update() {
-    if(this.index<this.text.length&&frameCount%2==0) {
-      this.index += 1;
-      if(this.talkSound) {
-        if(this.every) {
-          if((frameCount>>1)%this.every==0) {
+    if(!this.lineCapReached) {
+      if(this.index<this.text.length&&frameCount%2==0) {
+        this.index += 1;
+        if(this.talkSound) {
+          if(this.every) {
+            if((frameCount>>1)%this.every==0) {
+              this.talkSound.play();
+            }
+          } else {
             this.talkSound.play();
           }
-        } else {
-          this.talkSound.play();
         }
       }
-    }
-    if(this.index>=this.text.length) {
+    } else {
+    // if(this.index>=this.text.length) {
       this.impatience ++;
-      if(this.impatience>30&&this.scene.player.mx!=0) {
-        this.done = true;
-      }
+      // if(this.impatience>30&&this.scene.player.mx!=0) {
+      //   this.done = true;
+      // }
     }
   }
   progress() {
+    if(this.lineCapReached) {
+      if(this.lines.length>this.maxLines) {
+        this.lines.shift();
+        this.lines.shift();
+        this.lines.shift();
+        this.impatience = 0;
+        this.index = 0;
+        this.lineCapReached = false;
+        return;
+      }
+    }
     if(this.index>=this.text.length) {
       this.done = true;
+      if(this.callback)this.callback();
     } else {
       if(this.talkSound) {
         this.talkSound.play();
@@ -80,37 +99,55 @@ class SimpleDialogue {
   }
   draw() {
     if(this.text=='')return;
-    canvas.fillStyle = "#000000aa";
-    canvas.fillRect(0,CE.height*.8,CE.width,CE.height*.2);
+    // canvas.fillStyle = "#000000aa";
+    canvas.fillStyle = "#000000";
+    var h = CE.height*.25;
+    var y = CE.height-h;
+    var tagHeight = CE.height*.05;
+    canvas.fillRect(0,y,CE.width,h);
     if(this.person) {
-      canvas.fillRect(0,CE.height*.75,CE.width*.3,CE.height*.05);
+      canvas.fillRect(0,y-tagHeight,CE.width*.3,tagHeight);
     }
     canvas.fillStyle = "white";
     canvas.textBaseline = "top";
-    canvas.font = "30px Arial";
+    canvas.font = this.personFont;
     canvas.textAlign = "left";
     if(this.person) {
-      canvas.fillText(this.person.name, CE.width/50,CE.height*.77);
+      canvas.fillText(this.person.name, CE.width/50,y-tagHeight+CE.height*.02);
     }
-    canvas.font = "25px Arial";
+    canvas.font = this.textFont;
     // var text = this.text.substring(0,this.index);
 
     var currentIndex = 0;
-    this.lines.forEach((line,i)=>{
+    var lineHeight = CE.height*.06;
+    for(var i=0;i<this.lines.length&&i<this.maxLines;i++) {
+      var line=this.lines[i];
       if(this.index>currentIndex) {
         var text = line;
         if(this.index-currentIndex<line.length){
           text = line.substring(0,this.index-currentIndex)
         }
-        canvas.fillText(text, CE.width/30,CE.height*.85+i*CE.height*.05);
+        canvas.fillText(preprocessText(text), CE.width/30,y+lineHeight+i*lineHeight);
       }
       currentIndex += line.length;
-    })
+    }
+    this.lineCapReached = this.index>currentIndex;
+
+    // this.lines.forEach((line,i)=>{
+    //   if(this.index>currentIndex) {
+    //     var text = line;
+    //     if(this.index-currentIndex<line.length){
+    //       text = line.substring(0,this.index-currentIndex)
+    //     }
+    //     canvas.fillText(text, CE.width/30,y+lineHeight/2+i*lineHeight);
+    //   }
+    //   currentIndex += line.length;
+    // })
     // canvas.fillText(text1, CE.width/30,CE.height*.85);
     // canvas.fillText(text2, CE.width/30,CE.height*.9);
     
-    if(this.impatience>60&&!this.persist) {
-      var t = ' (press space)';//.substring(0,this.impatience-60);
+    if(this.impatience>60&&!this.persist&&frameCount%60<30) {
+      var t = 'v';//.substring(0,this.impatience-60);
       canvas.textAlign = 'right';
       canvas.fillText(t, CE.width*.99,CE.height*.95);
     }
@@ -175,7 +212,8 @@ class DialogueController {
   add(sequence) {
     this.setSequence(sequence);
   }
-  setSequence(sequence) {
+  setSequence(sequence, callback) {
+    this.callback = callback;
     this.conditions = [];
     this.persist = false;
     this.simpleDialogue.text = '';
@@ -199,13 +237,19 @@ class DialogueController {
         this.gameScene.camera.target = event.person.obj;
         event.person.obj.isTalking = true;
         this.lastSpeaker = event.person.obj;
-        if(event.zoom)this.gameScene.camera.zoom = event.zoom;
+        if(event.zoom)this.gameScene.camera.targetZoom = event.zoom;
         // this.gameScene.camera.zoom = 2;
+      }
+      if(event.person) {
+        this.speakerImage = event.person.image;
       }
       if(event.doNotWait) {
         this.simpleDialogue.progress();
         this.next();
       }
+    }
+    if(event.speakerImage) {
+      this.speakerImage = event.speakerImage;
     }
     if(event.persist) {
       this.persist = true;
@@ -315,7 +359,7 @@ class DialogueController {
     }
     if(this.current) {
       this.current.update();
-      if(getButtonDown(Buttons.A)) {
+      if(getButtonDown(Buttons.Confirm) || mouse.down) {
         this.current.progress();
       }
       if(this.current.done) {
@@ -343,6 +387,7 @@ class DialogueController {
     this.index += 1;
     if(this.index >= this.sequence.length) {
       this.done = true;
+      if(this.callback)this.callback();
     } else {
       this.processData(this.sequence[this.index]);
     }
@@ -351,6 +396,9 @@ class DialogueController {
     if(this.done&&!this.persist)return;
     // if(this.current&&this.current.draw)
       // this.current.draw();
+      if(this.speakerImage) {
+        canvas.drawImage(this.speakerImage, CE.width*.5, CE.height*.2,this.speakerImage.width*2,this.speakerImage.height*2);
+      }
     this.simpleDialogue.draw();
   }
 }

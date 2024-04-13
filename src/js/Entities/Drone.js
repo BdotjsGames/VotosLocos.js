@@ -24,6 +24,7 @@ class Drone extends BeatEmUpper{
     this.scene.enemyCount--;
   }
   getInputs() {
+    if(this.scene.dialogueBlocking)return;
     var player = this.scene.player;
     if(!player)return;
     var dx = player.x-this.x;

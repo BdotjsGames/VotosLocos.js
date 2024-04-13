@@ -10,10 +10,10 @@ var gamepadConfig = {
   select: 9,
 }
 
-function addInputToButton(buttonName, keys=[], buttons=[]) {
+function addInputToButton(buttonName, keys = [], buttons = []) {
   var button = Buttons[buttonName];
-  if(!button) {
-    button = createButton({name: buttonName, keys, buttons, touchButtons:[] })
+  if (!button) {
+    button = createButton({ name: buttonName, keys, buttons, touchButtons: [] })
     return button;
   }
   button.keys.push(...keys);
@@ -21,31 +21,31 @@ function addInputToButton(buttonName, keys=[], buttons=[]) {
 }
 
 function configureABXY(keys, buttons) {
-    buttonNames = 'ABXY';
-    buttonNames.forEach((buttonName, i) => {
-      var button = addInputToButton(buttonName, [keys[i]], [buttons[i]])
-    })
+  buttonNames = 'ABXY';
+  buttonNames.forEach((buttonName, i) => {
+    var button = addInputToButton(buttonName, [keys[i]], [buttons[i]])
+  })
 }
 
 function configureButtonList(buttonNamesList, attributeName, valuesList) {
   buttonNamesList.forEach((buttonName, i) => {
     var button = Buttons[buttonName];
-    if(!button) button = createButton({
+    if (!button) button = createButton({
       name: buttonName,
       // keys:[],buttons:[], touchButtons:[],
     })
     var attribute = button[attributeName];
-    if(!attribute) attribute = button[attributeName] = [valuesList[i]]
+    if (!attribute) attribute = button[attributeName] = [valuesList[i]]
     else attribute.push(valuesList[i]);
   })
 }
 
-window.addEventListener('load', function(e) {
-  var buttonNames = ['A','B','X','Y'];
+window.addEventListener('load', function (e) {
+  var buttonNames = ['A', 'B', 'X', 'Y'];
   configureButtonList(buttonNames, 'keys', 'JKLI'.keyCodes);
   configureButtonList(buttonNames, 'keys', 'XCVB'.keyCodes); //Z is skipped for azerty
-  configureButtonList(buttonNames, 'buttons', [0,1,2,3]);
-  configureButtonList(buttonNames, 'touchButtons', [0,1,3,4]);
+  configureButtonList(buttonNames, 'buttons', [0, 1, 2, 3]);
+  configureButtonList(buttonNames, 'touchButtons', [0, 1, 2, 3]);
 
   // configureABXY('JKLI'.keyCodes, [gamepadConfig.A,gamepadConfig.B,gamepadConfig.X,gamepadConfig.Y]);
 
@@ -54,10 +54,11 @@ window.addEventListener('load', function(e) {
   //   keys: (' J'+enterKey).keyCodes,
   //   buttons: [gamepadConfig.A]
   // })
-  Buttons.menuSelect = {
-    keys: [32,74,13],
-    buttons: [gamepadConfig.A],
-  }
+  // Buttons.menuSelect = {
+  //   keys: [32,74,13],
+  //   buttons: [gamepadConfig.A],
+  // }
+  Buttons.menuSElect = Buttons.A;
   // Buttons.jump = {
   //   keys: ['J'.keyCode,32,'Z'.keyCode],
   //   buttons: [0],
@@ -67,6 +68,7 @@ window.addEventListener('load', function(e) {
   Buttons.crouch = Buttons.X;
   Buttons.jump.keys.push(' '.keyCode);
   Buttons.crouch.keys.push(16)
+  Buttons.Confirm = Buttons.A;
   // Buttons.A = {
   //   keys: 'JZ'.keyCodes,
   //   buttons: [0],
@@ -77,11 +79,7 @@ window.addEventListener('load', function(e) {
   //   buttons: [gamepadConfig.B],
   //   touchButtons: [1],
   // }
-  Buttons.highFive = {
-    keys: ["I".keyCode, "V".keyCode],
-    buttons: [gamepadConfig.B],
-    touchButtons: [2],
-  }
+  Buttons.highFive = Buttons.Y;
   Buttons.start = {
     keys: [27],
     buttons: [gamepadConfig.start]
@@ -91,15 +89,15 @@ window.addEventListener('load', function(e) {
     buttons: [gamepadConfig.select]
   }
   Buttons.cheatForward = {
-    keys: [67,78],
+    keys: [67, 78],
     allKeys: true,
   }
   Buttons.cheatBackward = {
-    keys: [67,66],
+    keys: [67, 66],
     allKeys: true,
   }
   Buttons.chapterSkip = {
-    keys: [67,77],
+    keys: [67, 77],
     allKeys: true,
   }
 })

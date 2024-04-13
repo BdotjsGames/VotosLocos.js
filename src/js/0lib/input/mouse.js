@@ -16,7 +16,7 @@ function onmousemove(e) {
 function onmousedown(e) {
   onmousemove(e);
   touchOn = false;
-  gamepadOn = false;
+  // gamepadOn = false;
   mouse.down = true;
   mouse.held = true;
   initializeSound();

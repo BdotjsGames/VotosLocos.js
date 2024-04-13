@@ -54,6 +54,8 @@ class BeatEmUpper {
         this.groundDeceleration = 1;
         this.contactDamage = 10;
         this.obj = this;
+        this.talkSound = SOUNDS.johsonTalk;
+        this.every = 2;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -295,7 +297,7 @@ class BeatEmUpper {
             this.y += ((closest.y+this.y)/2-this.y)*0.4;
             // closest.y = this.y;
             var mx = (this.x+closest.x)/2;
-            var space = 17;
+            var space = 38;
             this.x += (mx-this.dx*space - this.x) * 0.4;
             // if(this.model.cooldownTimer<2) {
             //     var pow = this.scene.addEntity(new ImageParticle(IMAGES.highFivePow, mx-32, this.y+10, 64,128,0,0,20,-0.01));
@@ -325,7 +327,7 @@ class BeatEmUpper {
         if(Math.sign(h.x-this.x) != this.dx)return;
         if(h.dx==this.dx)return;
         var p = {
-            x: h.x + h.dx*10,
+            x: h.x + h.dx*40,
             y: h.y,
             z: h.z,
         }
@@ -336,18 +338,18 @@ class BeatEmUpper {
         }
         })
         if(minDist<this.highFiveDistance*this.highFiveDistance) {
-        closest.highFiveTarget = this;
-        this.highFiveTarget = closest;
-        closest.beHighFived();
-        // if(this.model.cooldownTimer<2) {
-        var pow = this.scene.addEntity(new ImageParticle(IMAGES.highFivePow, (this.x+closest.x)/2-32, this.y-128, 64,128,0,0,50,-0.00));
-        pow.addMorph("pow",new Morph(null, {scaleW: 0.5, scaleH: 0.5, alpha: 0.5}, {scaleW: 1.5, scaleH: 1.5, alpha: 1}, 5, MorphType.easeOutQuad), true)
-        pow.setSortOffset(100);
-        SOUNDS.attack.play();
-        SOUNDS.clap.play();
-        // pow.scaleW = 2;
-        // pow.scaleH = 2;
-        // }
+            closest.highFiveTarget = this;
+            this.highFiveTarget = closest;
+            closest.beHighFived();
+            // if(this.model.cooldownTimer<2) {
+            var pow = this.scene.addEntity(new ImageParticle(IMAGES.highFivePow, (this.x+closest.x)/2-32, this.y-128, 64,128,0,0,50,-0.00));
+            pow.addMorph("pow",new Morph(null, {scaleW: 0.5, scaleH: 0.5, alpha: 0.5}, {scaleW: 1.5, scaleH: 1.5, alpha: 1}, 5, MorphType.easeOutQuad), true)
+            pow.setSortOffset(100);
+            SOUNDS.attack.play();
+            SOUNDS.clap.play();
+            // pow.scaleW = 2;
+            // pow.scaleH = 2;
+            // }
         }
     }
     jump() {

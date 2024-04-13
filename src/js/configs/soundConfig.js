@@ -112,8 +112,18 @@ SOUNDS.playerTalk =  new SoundList([
   new SoundTag('onPress.wav', .91,1),
 ])
 
-var jtd = 0.8;
+var jtd = 1;
 SOUNDS.johnsonTalk =  new SoundList([
+  new SoundTag('onPress.wav', 1*jtd,1),
+  new SoundTag('onPress.wav', .91*jtd,1),
+  new SoundTag('onPress.wav', 1.17*jtd,1),
+  new SoundTag('onPress.wav', 1.33*jtd,1),
+  new SoundTag('onPress.wav', 1.25*jtd,1),
+])
+
+
+jtd = 0.75;
+SOUNDS.LouTalk =  new SoundList([
   new SoundTag('onPress.wav', 1*jtd,1),
   new SoundTag('onPress.wav', .91*jtd,1),
   new SoundTag('onPress.wav', 1.17*jtd,1),
@@ -122,7 +132,7 @@ SOUNDS.johnsonTalk =  new SoundList([
 ])
 
 
-var jtd = 2;
+jtd = 2;
 SOUNDS.computerTalk =  new SoundList([
   new SoundTag('onPress.wav', 1*jtd,1),
   new SoundTag('onPress.wav', 1.17*jtd,1),
@@ -130,6 +140,8 @@ SOUNDS.computerTalk =  new SoundList([
   new SoundTag('onPress.wav', .91*jtd,1),
   new SoundTag('onPress.wav', 1.33*jtd,1),
 ])
+
+SOUNDS.citizenTalk = SOUNDS.johnsonTalk
 
 // SOUNDS.exampleSound = new SoundTag('exampleSound.wav', 1,1);
 // SOUNDS.exampleSoundRandom = new SoundListRandom([

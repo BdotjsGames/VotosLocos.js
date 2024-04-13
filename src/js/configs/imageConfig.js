@@ -1,8 +1,11 @@
 IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo.png');
+IMAGES.LouChalibre = ImageLoader.loadImage('Luchador1.png');
 IMAGES.ChomperTop = ImageLoader.loadImage('ChomperTop.png');
 IMAGES.drone = ImageLoader.loadImage('drone.png');
 
-IMAGES.drone = ImageLoader.loadImage('drone.png');
+// IMAGES.drone = ImageLoader.loadImage('drone.png');
+IMAGES.drone = ImageLoader.loadImage('RussianBot1.png');
+IMAGES.GoArrow = ImageLoader.loadImage('GoArrow.png');
 
 
 IMAGES.highFivePow = ImageLoader.loadImage('highFivePow.png');
@@ -38,7 +41,7 @@ IMAGES.bodyOptions = [
 ]
 
 IMAGES.buildings = [
-    IMAGES.buildingBrickWall = ImageLoader.loadImage("buildingBrickWall.png"),
+    // IMAGES.buildingBrickWall = ImageLoader.loadImage("buildingBrickWall.png"),
     IMAGES.buildingBrickWall2 = ImageLoader.loadImage("buildingBrickWall2.png"),
     IMAGES.buildingBlock = ImageLoader.loadImage("buildingBlock.png"),
     IMAGES.buildingBlock2 = ImageLoader.loadImage("buildingBlock2.png"),

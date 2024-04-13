@@ -1,2 +1,2 @@
-CE.width = 800;
-CE.height = 600;
+CE.width = 600;
+CE.height = 450;

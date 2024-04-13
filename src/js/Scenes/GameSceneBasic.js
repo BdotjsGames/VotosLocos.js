@@ -3,36 +3,37 @@ class GameSceneBasic extends Scene {
     constructor(model,levelNumber=0, prev) {
       super();
       this.levelNumber = levelNumber;
-      var startingY = 100;
-      var groundHeight = 400;
+      this.startingY = 100;
+      this.groundHeight = 400;
       this.sorters = [];
-      this.minY = startingY - groundHeight/2;
-      this.maxY = startingY + groundHeight/2;
+      this.minY = this.startingY - this.groundHeight/2;
+      this.maxY = this.startingY + this.groundHeight/2;
       this.backgrounds = [];
-      this.backgrounds.push(this.ground=new Ground(0,startingY-groundHeight/2,2000,groundHeight));
-      for(var i=0;i<10;i++) {
-        var x = Math.random()*this.ground.w;
-        var y = Math.random()*groundHeight + startingY - groundHeight/2;
-        var z = 0;
-        var w = 30;
-        var h = 15;
-        var d = 30;
-        this.addEntity(new Block(x,y,z,w,h,d)); 
-      }
-      for(var i=0;i<10;i++) {
-        var x = Math.random()*this.ground.w;
-        var y = Math.random()*groundHeight + startingY - groundHeight/2;
-        this.addEntity(new HighFiver(x,y)); 
-      }
-      if(this.levelNumber>0)
-      for(var i=0;i<10;i++) {
-        var x = Math.random()*this.ground.w;
-        var y = Math.random()*groundHeight + startingY - groundHeight/2;
-        this.addEntity(new Drone(x,y)); 
-      }
+      this.backgrounds.push(this.ground=new Ground(0,this.startingY-this.groundHeight/2,2000,this.groundHeight));
+      // for(var i=0;i<10;i++) {
+      //   var x = Math.random()*this.ground.w;
+      //   var y = Math.random()*this.groundHeight + this.startingY - this.groundHeight/2;
+      //   var z = 0;
+      //   var w = 30;
+      //   var h = 15;
+      //   var d = 30;
+      //   this.addEntity(new Block(x,y,z,w,h,d)); 
+      // }
+      // for(var i=0;i<10;i++) {
+      //   var x = Math.random()*this.ground.w;
+      //   var y = Math.random()*this.groundHeight + this.startingY - this.groundHeight/2;
+      //   this.addEntity(new HighFiver(x,y)); 
+      // }
+      // if(this.levelNumber>0)
+      // for(var i=0;i<10;i++) {
+      //   var x = Math.random()*this.ground.w;
+      //   var y = Math.random()*this.groundHeight + this.startingY - this.groundHeight/2;
+      //   this.addEntity(new Drone(x,y)); 
+      // }
+      this.showGo = false;
       for(var i=0;i<17;i++) {
         var x = Math.random()*this.ground.w;
-        var y = startingY - groundHeight/2-75-Math.random()*100;
+        var y = this.startingY - this.groundHeight/2-75-Math.random()*100;
         var w = 100 + Math.random()*100;
         var h = 50+200*Math.random();
         this.backgrounds.push(new BackgroundBuilding(x,y, w,h,'white')); 
@@ -40,7 +41,7 @@ class GameSceneBasic extends Scene {
       var wx = this.ground.w;
       for(var x=wx;x>-300;) {
         var x = wx;
-        var y = startingY - groundHeight/2;
+        var y = this.startingY - this.groundHeight/2;
         // var h = 50+200*Math.random();
         // this.addEntity(new BackgroundBuilding(x,y, 100,h,'white')); 
         var buildingImage = randomFromList(IMAGES.buildings);
@@ -50,7 +51,7 @@ class GameSceneBasic extends Scene {
         // wx -= Math.random()*200;
         this.backgrounds.push(new ImageDrawable(buildingImage, x,y-h/2, w,h));
       }
-      this.addEntity(this.player = new Player(100,startingY,model));
+      this.addEntity(this.player = new Player(100,this.startingY,model));
       // this.addEntity(new Knight(100,-100));
       // this.addEntity(new NPC(2100,0, CurleyModel));
       // this.addEntity(new Curley(2100,0));
@@ -58,17 +59,105 @@ class GameSceneBasic extends Scene {
       this.camera = {
         x:0,y:0,
         target: this.player,
-        zoom:1.2,
+        zoom:0.8,
       };
       this.defaultZoom = this.camera.zoom;
+      this.camera.targetZoom = this.camera.zoom;
       this.doLighting = false;
       this.screenShake = 0;
       this.LightMask = createScreenCanvas();
       this.level = {
-        width: 2000,
-        height: startingY + groundHeight/2+300
+        width: 1500,
+        height: this.startingY + this.groundHeight/2+42
       }
       this.dialogueController = new DialogueController(null,this);
+
+      // switch(this.levelNumber) {
+      //   case 0:
+      //     this.playDialogue([
+      //       {text:"Go Register to vote!", person:{name: "Lou Chalibre"}, speakerImage:IMAGES.LouChalibre},
+      //     ],true,b=>{
+      //       this.showGo = true;
+      //     })
+      //     break;
+      //   case 1:
+      //     this.spawnRandom(HighFiver, 10);
+      //     break;
+      //   case 2:
+      //     this.spawnRandom(Drone, 10);
+      //     break;
+      // }
+      this.ui = [];
+      if(this.levelNumber<GameSequence.length) {
+        this.processLevelData(GameSequence[this.levelNumber]);
+      }
+    }
+    addUI(ui) {
+      this.ui.push(ui);
+      return ui;
+    }
+    setGoal(goal) {
+      if(!this.goalText) {
+        this.goalText = this.addUI(new DrawableText(goal, -0.45,0.05,1,.1,.03)
+        .setTrueCoords(false)
+        .setAttr('textAlign', 'left')
+        .color(0,0,0)
+        .setAttr('pivotX', 0)
+        .addMorph("comin", new MorphGroup(null,
+          [{dx: -1},1],
+          [{dx: 0},30],
+          // [{dx: 0},30],
+          // [{dx: -1},30,null, m=>m.obj.shouldDelete=true],
+        ), true));
+      } else {
+        this.goalText.text = goal;
+      }
+    }
+    processLevelData(data) {
+      this.levelName = data.name;
+      this.addUI(new DrawableText(data.name, -0.45,0,1,.1,.03)
+        .setTrueCoords(false)
+        .setAttr('textAlign', 'left')
+        .color(0,0,0)
+        .addMorph("comin", new MorphGroup(null,
+          [{dx: -1},1],
+          [{dx: 0},30],
+          [{dx: 0},30],
+          [{dx: -1},30,null, m=>m.obj.shouldDelete=true],
+        ), true)
+      );
+      this.goal = data.Goal;
+      
+      if(data.DialogueData && data.DialogueData.length>0) {
+        this.playDialogue(data.DialogueData, true, b=>{
+          if(data.continueOnDialogueFinish) {
+            this.loadNextLevel();
+          } else {
+            this.showGo = true;
+            if(data.Goal) {
+              this.setGoal(data.Goal);
+            }
+          }
+        });
+      } else {
+        if(data.Goal) {
+          this.setGoal(data.Goal);
+        }
+      }
+      if(data.spawnRandom) {
+        data.spawnRandom.forEach(s=>{
+          this.spawnRandom(s[0],s[1])
+        })
+      }
+      this.encounters = data.encounters;
+
+    }
+    spawnRandom(className, num) {
+      for(var i=0;i<num;i++) {
+        var x = Math.random()*this.ground.w;
+        var y = Math.random()*this.groundHeight + this.startingY - this.groundHeight/2;
+        this.addEntity(new className(x,y)); 
+      }
     }
     dialogueProcess(name) {
       var dialogue = GetDialogueData(this,name);
@@ -78,9 +167,10 @@ class GameSceneBasic extends Scene {
         this.dialogueController.setSequence([{}]);
       }
     }
-    playDialogue(sequence, blocking=true) {
+    playDialogue(sequence, blocking=true, callback) {
       this.dialogueBlocking = blocking;
-      this.dialogueController.setSequence(sequence);
+      this.player.inputBlocked = true;
+      this.dialogueController.setSequence(sequence,callback);
     }
     wallCollideWith(cell,entity) {
     //   return this.level.wallCollideWith(cell,entity);
@@ -99,26 +189,37 @@ class GameSceneBasic extends Scene {
     update() {
       if(this.transitioningOut) return;
       super.update();
+      this.ui.forEach(u=>u.update());
+      this.ui = this.ui.filter(u=>!u.shouldDelete);
       if(getButtonDown(Buttons.start)) {
         this.driver.setScene(new PauseScene(this));
       }
       if(this.dialogueController.done) {
         this.camera.target = this.player;
         this.camera.zoom = this.defaultZoom;
+        this.player.inputBlocked = false;
         this.dialogueBlocking = false;
       }
       var target = this.camera.target;
+      if(target != this.player) {
+        target = {
+          x: (target.x + this.player.x)/2,
+          y: (target.y + this.player.y)/2,
+          z: (target.z + this.player.z)/2,
+          h: target.h,
+        }
+      }
       var tvx = target.vx||0;
       var tx = target.x + tvx*5;
       var ty = target.y - target.h+target.z;
       if(!this.dialogueController.done) {
-        ty += CE.height/20;
+        ty += CE.height/40;
       }
       this.camera.x += Math.floor((tx-this.camera.x)/10);
       this.camera.y += Math.floor((ty-this.camera.y)/10);
       
       // var targetZoom = 1/(1+Math.abs(this.player.vx)/100);
-      // this.camera.zoom += (targetZoom-this.camera.zoom)/100;
+      this.camera.zoom += (this.camera.targetZoom-this.camera.zoom)/10;
   
       var screenw = CE.width/2/this.camera.zoom;
       var screenh = CE.height/2/this.camera.zoom;
@@ -169,6 +270,11 @@ class GameSceneBasic extends Scene {
     }
     loadNextLevel() {
       this.transitioningOut = true;
+      highFivers = [];
+      if(this.levelNumber+1>=GameSequence.length) {
+        this.driver.transitionToScene(new MenuScene());
+        return;
+      }
       this.driver.transitionToScene(new GameSceneBasic(this.player.model, this.levelNumber+1));
       return;
       var nextLevel = World.getNextLevel(this.level);
@@ -212,6 +318,11 @@ class GameSceneBasic extends Scene {
         canvas.globalCompositeOperation = "source-over";
       }
       this.dialogueController.draw();
+
+      if(this.showGo && frameCount%60<30) {
+        canvas.drawImage(IMAGES.GoArrow, CE.width-IMAGES.GoArrow.width,CE.height*.3-IMAGES.GoArrow.height/2);
+      }
+      this.ui.forEach(u=>u.draw());
     }
     respawn() {
       this.player.health = this.player.maxHealth;

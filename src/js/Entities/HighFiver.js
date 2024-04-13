@@ -17,7 +17,7 @@ class HighFiver extends BeatEmUpper {
         this.groundAcceleration = 0.5;
         this.highFivesNeeded = randomFromList([1,3,5])
         this.name = 'citizen';
-        this.talkSound = SOUNDS.johsonTalk;
+        this.talkSound = SOUNDS.citizenTalk;
     }
     startFollow(target, distance) {
         this.following = true;
@@ -127,6 +127,7 @@ class HighFiver extends BeatEmUpper {
                 other.vy -= out.dy/distance*this.pushSpeed;
             }
         }
+        this.dx = (target.x>this.x)?1:-1
     }
     update(){
         super.update();
@@ -144,6 +145,7 @@ class HighFiver extends BeatEmUpper {
         this.scene = scene;
     }
     getInputs() {
+        if(this.inputBlocking)return;
         if(Math.random()>.99) {
             this.mx = 0;
             this.my = 0;
@@ -162,12 +164,22 @@ class HighFiver extends BeatEmUpper {
             this.jump();
             this.model.mouth.drawable.image = IMAGES.mouthSmile;
             this.model.face._y=0;
-            this.startFollow(player, 60);
+            this.mx = 0;
+            this.my = 0;
+            this.inputBlocking = true;
+            var text = randomFromList([
+                "Alright! I'll follow you!",
+                "Woo! Lets go!",
+                "Yeah!|| Where are we going?",
+            ])
             this.scene.playDialogue(
                 [
-                    {person: this, text: "line 1", zoom: 2},
-                    {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
-                ]
+                    {person: this, text, zoom: 2},
+                    // {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
+                    // {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
+                ], true, e=> {
+                    this.startFollow(player, 80);
+                }
             )
         }
     }

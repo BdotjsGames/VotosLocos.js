@@ -59,9 +59,9 @@ class DroneModel extends Model {
     // if(this.parent.dx<0)this.scaleX = -1;
     // else this.scaleX = 1;
     if(this.parent.dx>0)
-      this.scaleX = -1;
-    else
       this.scaleX = 1;
+    else
+      this.scaleX = -1;
       super.draw(...args);
     // this.scaleX = sx;
   }
