@@ -19,7 +19,10 @@ var MainDriver = {
     this.fadeCallback = callback;
   },
   transitionToScene(scene) {
-    if(this.fadeTimer>0)return
+    if(this.fadeTimer>0) {
+      console.log("already transitioning");
+      // return;
+    }
     this.fadeToBlack(30, e => {
       this.setScene(scene)
       this.fadeIn(30);
@@ -41,6 +44,7 @@ var MainDriver = {
     }
     this.scene = scene;
     scene.init();
+    this.fadeIn(10);
   },
   start() {
     if(this.started) {
@@ -98,7 +102,7 @@ var MainDriver = {
     if(devtools.opened == true) {
       alert('detected');
     }
-    // if(getButtonDown(Buttons.start)) {
+    // if(getButtonDown(Buttons.pause)) {
     //   if(!this.scene.isOptionsScene) {
     //     this.setScene(new OptionsScene(this.scene))
     //   } else {

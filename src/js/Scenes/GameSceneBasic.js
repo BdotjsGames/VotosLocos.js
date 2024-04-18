@@ -57,7 +57,7 @@ class GameSceneBasic extends Scene {
       // this.addEntity(new Curley(2100,0));
       // this.addEntity(new Chomper(2200,0));
       this.camera = {
-        x:0,y:0,
+        x:this.player.x,y:this.player.y,
         target: this.player,
         zoom:0.8,
       };
@@ -150,7 +150,11 @@ class GameSceneBasic extends Scene {
         })
       }
       this.encounters = data.encounters;
-
+      if(data.night) {
+        this.doLighting = true;
+        CE.style.background = 'none';
+        CE.style.backgroundColor = "#000";
+      }
     }
     spawnRandom(className, num) {
       for(var i=0;i<num;i++) {
@@ -189,9 +193,18 @@ class GameSceneBasic extends Scene {
     update() {
       if(this.transitioningOut) return;
       super.update();
+      if(DEV) {
+        if(getButtonDown(Buttons.cheatForward)) {
+          this.loadNextLevel(true);
+        }
+        if(getButtonDown(Buttons.cheatBackward)) {
+          this.loadPrevLevel(true);
+        }
+      }
+      
       this.ui.forEach(u=>u.update());
       this.ui = this.ui.filter(u=>!u.shouldDelete);
-      if(getButtonDown(Buttons.start)) {
+      if(getButtonDown(Buttons.pause)) {
         this.driver.setScene(new PauseScene(this));
       }
       if(this.dialogueController.done) {
@@ -255,50 +268,45 @@ class GameSceneBasic extends Scene {
       this.dialogueController.update(); 
       
     }
-    loadLevel(level) {
-    //   this.entities = [];
-    //   // this.player.inputBlocked = false;
-    //   var x = this.player.x;
-    //   var y = this.player.y;
-    //   this.addEntity(this.level = new Level(level));
-    //   this.addEntity(this.player = new Player(x,y));
-    //   this.camera.target = this.player;
-    //   if(this.level.level.index>3) {
-    //     this.player.addShoes();
-    //   }
-    //   this.preProcessLevel();
-    }
-    loadNextLevel() {
+    loadLevel(levelNumber,skipTransition) {
+      console.log(levelNumber);
+      if(this.transitioningOut)return;
       this.transitioningOut = true;
       highFivers = [];
-      if(this.levelNumber+1>=GameSequence.length) {
+      if(levelNumber<0)levelNumber=0;
+      if(levelNumber>=GameSequence.length) {
         this.driver.transitionToScene(new MenuScene());
         return;
       }
-      this.driver.transitionToScene(new GameSceneBasic(this.player.model, this.levelNumber+1));
-      return;
-      var nextLevel = World.getNextLevel(this.level);
-      if(nextLevel) {
-        this.loadLevel(nextLevel);
-      }
+      if(skipTransition)
+      this.driver.setScene(new GameSceneBasic(this.player.model, levelNumber));
+      else
+      this.driver.transitionToScene(new GameSceneBasic(this.player.model, levelNumber));
+      
     }
-    loadPrevLevel() {
-      var nextLevel = World.getPrevLevel(this.level);
-      this.loadLevel(nextLevel);
+    loadNextLevel(skipTransition) {
+      this.loadLevel(this.levelNumber+1,skipTransition);
+    }
+    loadPrevLevel(skipTransition) {
+      // var nextLevel = World.getPrevLevel(this.level);
+      this.loadLevel(this.levelNumber-1,skipTransition);
     }
     draw() {
-        this.entities = this.entities.sort((a,b) => a.y-b.y)
+      this.entities = this.entities.sort((a,b) => a.y-b.y)
       var ctx = this.LightMask.canvas;
-      ctx.clearRect(0,0,CE.width,CE.height);
-      ctx.fillStyle = "#0003";
-      ctx.fillRect(0,0,CE.width,CE.height);
+      if(this.doLighting) {
+        ctx.clearRect(0,0,CE.width,CE.height);
+        ctx.fillStyle = "#0003";
+        ctx.fillRect(0,0,CE.width,CE.height);
+      }
       canvas.save();
-        canvas.translate(CE.width/2,CE.height/2);
-        canvas.rotate(this.camera.rotation);
-        canvas.scale(this.camera.zoom,this.camera.zoom);
-        canvas.translate(-this.camera.x,-this.camera.y);
-        this.backgrounds.forEach(b=>b.draw())
-        super.draw();
+      canvas.translate(CE.width/2,CE.height/2);
+      canvas.rotate(this.camera.rotation);
+      canvas.scale(this.camera.zoom,this.camera.zoom);
+      canvas.translate(-this.camera.x,-this.camera.y);
+      this.backgrounds.forEach(b=>b.draw())
+      
+      super.draw();
       canvas.restore();
       if(this.doLighting) {
         var zoom = this.camera.zoom;
@@ -309,11 +317,12 @@ class GameSceneBasic extends Scene {
             e.lightDraw(ctx,cx,cy,zoom);
           }
         })
-        // var ambient = "#ffffffaa";    
-        var ambient = this.ambient;
+        var ambient = "#ffffff33";    
+        // var ambient = this.ambient;
         ctx.fillStyle = ambient;
         ctx.fillRect(0,0,CE.width,CE.height)
         canvas.globalCompositeOperation = "destination-in";
+        // canvas.globalCompositeOperation = "multiply";
         canvas.drawImage(this.LightMask.CE, 0,0);
         canvas.globalCompositeOperation = "source-over";
       }

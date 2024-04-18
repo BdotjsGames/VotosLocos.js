@@ -43,7 +43,7 @@ class BeatEmUpper {
         this.getknockBack = 1;
         this.hitSound = SOUNDS.hit;
         this.friction = 0.5;
-        this.shadow = canvas.createRadialGradient(0, 0, 5, 0, 0, 15);
+        this.shadow = canvas.createRadialGradient(0, 0, 5, 0, 0, 20);
         this.shadow.addColorStop(0, "#000000aa");
         this.shadow.addColorStop(1, "#00000000");
         this.canCrawl = false;
@@ -63,7 +63,7 @@ class BeatEmUpper {
         // var x = cx+dx/zoom-cx;
         // var y = cy+dy/zoom-cy;
         var x = this.x + cx;
-        var y = this.y + cy + this.z;
+        var y = this.y + cy + this.z - this.h;
         var dx = x - CE.width / 2;
         var dy = y - CE.height / 2;
         x = CE.width / 2 + dx * zoom;

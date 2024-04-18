@@ -78,7 +78,7 @@ class PlatformerModel extends Model {
 
     this.bwidth = 15;//+Math.random()*10;
 
-    this.body = this.createLimb(0,-25,new Line(0,-3,0,8,10,lineCap,color));
+    this.body = this.createLimb(0,-26,new Line(0,-3,0,8,10,lineCap,color));
     // this.body2 = this.body.createAfter(0,-5,new Line(0,-7,0,10,this.bwidth,'butt',color));
     this.body2 = this.body.createAfter(0,-5,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
 

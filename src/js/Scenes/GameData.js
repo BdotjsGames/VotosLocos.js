@@ -34,7 +34,7 @@ GameSequence = [
     {
         name: "opening cutscene",
         DialogueData: [
-            {person: LouChalibre, text: "The time to vote is approaching!"},
+            {person: LouChalibre, text: "The time to <color red>vote</color> is <wiggle>approaching!"},
             {person: LouChalibre, text: "You gotta get your ballot!"},
         ],
         continueOnDialogueFinish: true,
@@ -69,7 +69,7 @@ GameSequence = [
         name: "First combat",
         Goal: "Defeat the enemies!",
         DialogueData: [
-            {person: LouChalibre, text: "Uh Oh!"},
+            {person: LouChalibre, text: "<bam>Uh Oh!"},
             {person: LouChalibre, text: "Defeat the enemies!"},
         ],
         spawnRandom: [
@@ -82,6 +82,7 @@ GameSequence = [
     },
     {
         name: "Low Rider Transition",
+        night: true,
     },
     {
         name: "Go to Community Rally",

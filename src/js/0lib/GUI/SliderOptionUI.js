@@ -84,7 +84,7 @@ class SliderOptionUI extends ButtonUI {
         canvas.font = this.fontSize*ps.W +'px ' + this.fontFamily;
         canvas.textAlign = 'center';
         canvas.textBaseline='middle';
-        canvas.fillText(this.text,w/2, -h/2,w,h);
+        canvas.fillText(this.text,w/2, -h/2,w);
 
         canvas.fillStyle = Color.darken(this, .8).color;
         canvas.fillRect(0,0,this._w,this._h);

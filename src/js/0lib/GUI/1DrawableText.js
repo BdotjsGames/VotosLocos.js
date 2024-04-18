@@ -17,6 +17,6 @@ class DrawableText extends Drawable{
       canvas.font = this.fontSize*ps.W +'px ' + this.fontFamily;
       canvas.textAlign = this.textAlign;
       canvas.textBaseline='middle';
-      canvas.fillText(this.text,w/2, h/2,w,h);
+      canvas.fillText(this.text,w/2, h/2,w);
     }
   }

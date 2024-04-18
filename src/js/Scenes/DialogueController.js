@@ -1,5 +1,6 @@
+const tagRegex = /<[^>]*>/g;
 function preprocessText(text) {
-  return text.replaceAll('|','')
+  return text.replaceAll('|','').replaceAll(tagRegex,'')
 }
 class SimpleDialogue {
   constructor() {
@@ -27,6 +28,9 @@ class SimpleDialogue {
     }
     console.log(obj);
     this.updateLineWraps();
+    this.currentLine = 0;
+    this.currentLineOffset = 0;
+    this.letterParser = null;
   }
   getLines(ctx, text, maxWidth) {
     var words = text.split(" ");
@@ -53,10 +57,48 @@ class SimpleDialogue {
   reset() {
     this.index = 0;
   }
+  processTag(tag) {
+    // var args = tag.split(' ');
+    // switch(args[0]) {
+    //   case 'bam':
+
+    //     break;
+    // }
+  }
+  processChar(char) {
+    if(char=="|") {
+
+    }
+  }
+  increment() {
+    
+    var currentChar = this.lines[this.currentLine][this.index-this.currentLineOffset];
+    this.currentChar = currentChar;
+    if(currentChar == "<") {
+      currentChar='';
+      var c;
+      while(this.index - this.currentLineOffset < this.lines[this.currentLine].length) {
+        this.index += 1;
+        c = this.lines[this.currentLine][this.index-this.currentLineOffset];
+        if(c=='>') {
+          this.processTag(currentChar);
+          break;
+        }
+        currentChar += c;
+      }
+    }
+    this.index += 1;
+    if(this.index-this.currentLineOffset>this.lines[this.currentLine].length) {
+      this.currentLineOffset += this.lines[this.currentLine].length;
+      this.currentLine += 1;
+    }
+    this.processChar(this.currentChar);
+    return currentChar;
+  }
   update() {
     if(!this.lineCapReached) {
       if(this.index<this.text.length&&frameCount%2==0) {
-        this.index += 1;
+        this.increment();
         if(this.talkSound) {
           if(this.every) {
             if((frameCount>>1)%this.every==0) {
@@ -96,6 +138,19 @@ class SimpleDialogue {
       }
       this.index = this.text.length;
     }
+
+    
+    // var currentIndex = 0;
+    // for(var i=0;i<this.lines.length;i++) {
+    //   var line = this.lines[i];
+    //   if(this.index>currentIndex) {
+    //     if(this.index-currentIndex<line.length){
+    //       this.currentLine = i;
+    //       this.currentLineOffset = 
+    //     }
+    //   }
+    //   currentIndex += line.length;
+    // }
   }
   draw() {
     if(this.text=='')return;
@@ -127,7 +182,7 @@ class SimpleDialogue {
         if(this.index-currentIndex<line.length){
           text = line.substring(0,this.index-currentIndex)
         }
-        canvas.fillText(preprocessText(text), CE.width/30,y+lineHeight+i*lineHeight);
+        canvas.fillRichText(text, CE.width/30,y+lineHeight+i*lineHeight);
       }
       currentIndex += line.length;
     }

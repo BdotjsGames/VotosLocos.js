@@ -16,7 +16,7 @@ class CharacterCustomizerScene extends Scene{
     update() {
         super.update();
         this.model.update();
-        if(getButtonDown(Buttons.start)) {
+        if(getButtonDown(Buttons.pause)) {
             this.driver.setScene(new OptionsScene(this));
         }
     }

@@ -21,6 +21,10 @@ class ButtonUI extends DrawableText{
       this.selectSound = SOUNDS.select;
       this.alpha = 1;
       this.outlineOnHover = true;
+      this.selected = false;
+    }
+    setSelected() {
+      this.selected = true;
     }
     onClick() {
       if(!this.hover)this.offHover();
@@ -77,7 +81,7 @@ class ButtonUI extends DrawableText{
     }
     drawShape() {
       // canvas.globalAlpha = this.alpha;
-      if(this.hover && this.outlineOnHover) {
+      if((this.hover||this.selected) && this.outlineOnHover) {
         canvas.strokeStyle = 'white';
         // canvas.lineWidth = .001;      
         canvas.strokeRect(0,0,this._w,this._h);

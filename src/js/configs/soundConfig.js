@@ -113,22 +113,26 @@ SOUNDS.playerTalk =  new SoundList([
 ])
 
 var jtd = 1;
-SOUNDS.johnsonTalk =  new SoundList([
-  new SoundTag('onPress.wav', 1*jtd,1),
-  new SoundTag('onPress.wav', .91*jtd,1),
-  new SoundTag('onPress.wav', 1.17*jtd,1),
-  new SoundTag('onPress.wav', 1.33*jtd,1),
-  new SoundTag('onPress.wav', 1.25*jtd,1),
+SOUNDS.citizenTalk =  new SoundList([
+  new SoundTag('bfxr/Blip_select42.wav', 1*jtd,   0.75),
+  new SoundTag('bfxr/Blip_select42.wav', .99*jtd, 0.75),
+  new SoundTag('bfxr/Blip_select42.wav', 1.01*jtd,0.75),
+  // new SoundTag('onPress.wav', .91*jtd,1),
+  // new SoundTag('onPress.wav', 1.17*jtd,1),
+  // new SoundTag('onPress.wav', 1.33*jtd,1),
+  // new SoundTag('onPress.wav', 1.25*jtd,1),
 ])
 
 
-jtd = 0.75;
-SOUNDS.LouTalk =  new SoundList([
-  new SoundTag('onPress.wav', 1*jtd,1),
-  new SoundTag('onPress.wav', .91*jtd,1),
-  new SoundTag('onPress.wav', 1.17*jtd,1),
-  new SoundTag('onPress.wav', 1.25*jtd,1),
-  new SoundTag('onPress.wav', 1.33*jtd,1),
+jtd = 1;
+SOUNDS.LouTalk =  new SoundListRandom([
+  new SoundTag('bfxr/Blip_select42.wav', 1*jtd,   0.75),
+  new SoundTag('bfxr/Blip_select42.wav', .99*jtd, 0.75),
+  new SoundTag('bfxr/Blip_select42.wav', 1.01*jtd,0.75),
+  // new SoundTag('bfxr/Blip_select40.wav', 1.17*jtd,1),
+  // new SoundTag('bfxr/Blip_select40.wav', .8*jtd,1),
+  // new SoundTag('bfxr/Blip_select40.wav', 1.25*jtd,1),
+  // new SoundTag('bfxr/Blip_select40.wav', 1.33*jtd,1),
 ])
 
 
@@ -141,7 +145,6 @@ SOUNDS.computerTalk =  new SoundList([
   new SoundTag('onPress.wav', 1.33*jtd,1),
 ])
 
-SOUNDS.citizenTalk = SOUNDS.johnsonTalk
 
 // SOUNDS.exampleSound = new SoundTag('exampleSound.wav', 1,1);
 // SOUNDS.exampleSoundRandom = new SoundListRandom([

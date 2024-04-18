@@ -45,7 +45,7 @@ class PauseScene extends AdditiveScene {
     }
     update() {
         super.update();
-        if(getButtonDown(Buttons.start)) {
+        if(getButtonDown(Buttons.pause)) {
             this.back();
         }
     }
