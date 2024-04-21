@@ -22,7 +22,7 @@ class CharacterCustomizerScene extends Scene{
     }
     draw() {
         super.draw();
-        this.model.draw(CE.width/2,CE.height/2);
+        this.model.draw(CE.width/2,CE.height*.6);
     }
     loadModel(model) {
         // if(this.model&&this.model!=model) {

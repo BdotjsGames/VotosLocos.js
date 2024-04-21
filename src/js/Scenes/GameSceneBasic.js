@@ -8,6 +8,16 @@ class GameSceneBasic extends Scene {
       this.sorters = [];
       this.minY = this.startingY - this.groundHeight/2;
       this.maxY = this.startingY + this.groundHeight/2;
+      for(var i=0;i<10;i++) {
+        var x = 1500*Math.random();
+        var y = 300*Math.random()/3+this.startingY-this.groundHeight-300;
+        var cloud = this.addEntity(new ImageDrawable(IMAGES.cloud, x,y))
+        cloud.vx = Math.random();
+        cloud.update = function() {
+          this.x += this.vx;
+          if(this.x-this.w>1500) this.x=-this.w*2;
+        }
+      }
       this.backgrounds = [];
       this.backgrounds.push(this.ground=new Ground(0,this.startingY-this.groundHeight/2,2000,this.groundHeight));
       // for(var i=0;i<10;i++) {
@@ -59,7 +69,7 @@ class GameSceneBasic extends Scene {
       this.camera = {
         x:this.player.x,y:this.player.y,
         target: this.player,
-        zoom:0.8,
+        zoom:1,
       };
       this.defaultZoom = this.camera.zoom;
       this.camera.targetZoom = this.camera.zoom;
@@ -158,7 +168,7 @@ class GameSceneBasic extends Scene {
     }
     spawnRandom(className, num) {
       for(var i=0;i<num;i++) {
-        var x = Math.random()*this.ground.w;
+        var x = 200+Math.random()*(this.ground.w-200);
         var y = Math.random()*this.groundHeight + this.startingY - this.groundHeight/2;
         this.addEntity(new className(x,y)); 
       }
@@ -173,6 +183,8 @@ class GameSceneBasic extends Scene {
     }
     playDialogue(sequence, blocking=true, callback) {
       this.dialogueBlocking = blocking;
+      this.player.mx = 0;
+      this.player.my = 0;
       this.player.inputBlocked = true;
       this.dialogueController.setSequence(sequence,callback);
     }

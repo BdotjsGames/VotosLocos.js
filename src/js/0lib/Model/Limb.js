@@ -47,10 +47,13 @@ class ImageDrawable {
     }else if(!this.h) {
       this.h = image.height/image.width*this.w;
     }
+    this.hidden = false;
   }
   update() {}
   draw(override) {
     if(override)return;
+    if(this.hidden)return;
+    if(!this.image)return;
     canvas.drawImage(this.image,this.x-this.w/2,this.y-this.h/2,this.w,this.h);
   }
 }
@@ -107,8 +110,10 @@ class Line {
     this.width=width;
     this.cap=cap;
     this.color=color;
+    this.hidden = false;
   }
   draw(override) {
+    if(this.hidden)return;
     if(override&&override.color) canvas.strokeStyle = override.color;
     else canvas.strokeStyle = this.color;
     canvas.lineCap = this.cap;
@@ -147,6 +152,7 @@ class Limb {
     this.before = [];
     this.after = [];
     this.quantizeRotation = false;
+    this.hidden = false;
   }
   createBefore(...args) {
     var limb = new Limb(...args);
@@ -163,6 +169,7 @@ class Limb {
     return limb;
   }
   draw(override) {
+    if(this.hidden)return;
     if(override&&this.ignoresOverride)return;
     canvas.save();
     canvas.translate(this.x+this._x,this.y+this._y);

@@ -131,7 +131,10 @@ class SimpleDialogue {
     }
     if(this.index>=this.text.length) {
       this.done = true;
-      if(this.callback)this.callback();
+      if(this.callback) {
+        this.callback();
+        this.callback = null;
+      }
     } else {
       if(this.talkSound) {
         this.talkSound.play();
@@ -442,7 +445,10 @@ class DialogueController {
     this.index += 1;
     if(this.index >= this.sequence.length) {
       this.done = true;
-      if(this.callback)this.callback();
+      if(this.callback) {
+        this.callback();
+        this.callback = null;
+      }
     } else {
       this.processData(this.sequence[this.index]);
     }

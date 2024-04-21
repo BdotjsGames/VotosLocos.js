@@ -36,7 +36,7 @@ class BeatEmUpper {
         this.maxHealth = 30;
         this.invul = 0;
         this.invulTime = 20;
-        this.heal = 0.05;
+        this.heal = 0;//0.05;
         this.color = color || 'darkgrey';
         this.color2 = color2 || 'black';
         this.knockBack = 1;
@@ -123,6 +123,7 @@ class BeatEmUpper {
         }
     }
     update() {
+        if(this.scene.dialogueBlocking)return;
         if (this.health < 0) {
             this.die();
         }

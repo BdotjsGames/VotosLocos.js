@@ -70,10 +70,10 @@ GameSequence = [
         Goal: "Defeat the enemies!",
         DialogueData: [
             {person: LouChalibre, text: "<bam>Uh Oh!"},
-            {person: LouChalibre, text: "Defeat the enemies!"},
+            {person: LouChalibre, text: "Watch out for the bots!"},
         ],
         spawnRandom: [
-            [Drone, 10]
+            [Bot, 10]
         ]
     },
     {

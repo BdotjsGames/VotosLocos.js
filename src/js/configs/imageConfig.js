@@ -1,7 +1,23 @@
 IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo.png');
+
+IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
+
 IMAGES.LouChalibre = ImageLoader.loadImage('Luchador1.png');
 IMAGES.ChomperTop = ImageLoader.loadImage('ChomperTop.png');
 IMAGES.drone = ImageLoader.loadImage('drone.png');
+
+IMAGES.botHeadOptions = [
+    IMAGES.botHead = ImageLoader.loadImage('BotHead1.png'),
+    IMAGES.botHead2 = ImageLoader.loadImage('BotHead2.png'),
+]
+
+IMAGES.botTorsoOptions = [
+    IMAGES.botTorso1 = ImageLoader.loadImage('botTorso1.png'),
+    IMAGES.botTorso2 = ImageLoader.loadImage('botTorso2.png'),
+    IMAGES.botTorso2 = ImageLoader.loadImage('botTorso3.png'),
+    IMAGES.botTorso2 = ImageLoader.loadImage('botTorso4.png'),
+]
+
 
 // IMAGES.drone = ImageLoader.loadImage('drone.png');
 IMAGES.drone = ImageLoader.loadImage('RussianBot1.png');
@@ -30,11 +46,11 @@ IMAGES.hairOptions = [
 IMAGES.mouthSmile        = ImageLoader.loadImage("mouthSmile.png")
 IMAGES.mouthFrown        = ImageLoader.loadImage("mouthFrown.png")
 IMAGES.fist        = ImageLoader.loadImage("fist.png")
+
 IMAGES.armOptions = [
     IMAGES.armSuit1 = ImageLoader.loadImage("armSuit1.png"),
     IMAGES.armVLTee = ImageLoader.loadImage("armVLTee.png")
 ]
-
 IMAGES.bodyOptions = [
     IMAGES.torsoTie        = ImageLoader.loadImage("torsoTie.png"),
     IMAGES.torsoVLTee        = ImageLoader.loadImage("torsoVLTee.png")

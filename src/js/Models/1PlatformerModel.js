@@ -9,10 +9,29 @@ class PlatformerModel extends Model {
     this.highFiveCount = 0;
     this.highFiveTime = 12;
     this.frameCount = 0;
+    this.createOptions();
+    if(!parent) {
+      this.parent = {
+        dx:1,vx:10,vy:0,
+        mx: 0, 
+        moving: true,
+        grounded: true
+      }
+    }
+    this.createModel();
+    this.customizableOptions.forEach(option => {
+      if(!option.options||!option.options.length)return;
+      var index = Math.floor(Math.random()*option.options.length)
+      option.index = index;
+      option.onChange(option.options[index], index)
+    });
+  }
+  createOptions(options={}) {
+    var armOptions = options.armOptions||IMAGES.armOptions;
     this.customizableOptions = [
       {
         name: "skin",
-        options: IMAGES.headOptions,
+        options: options.headOptions||IMAGES.headOptions,
         index: 0,
         onChange: (value) => {
           this.headType = value;
@@ -21,7 +40,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "hair",
-        options: IMAGES.hairOptions,
+        options: options.hairOptions||IMAGES.hairOptions,
         index: 0,
         onChange: (value) => {
           this.hairType = value;
@@ -30,13 +49,30 @@ class PlatformerModel extends Model {
       },
       {
         name: "Torso",
-        options: IMAGES.bodyOptions,
+        options: options.bodyOptions||IMAGES.bodyOptions,
         index: 0,
         onChange: (value,i) => {
           this.hairType = value;
           this.body2.drawable.image = value;
-          this.arm1.drawable.image = IMAGES.armOptions[i];
-          this.arm2.drawable.image = IMAGES.armOptions[i];
+          if(i<=armOptions.length)
+          this.arm1.drawable.image = armOptions[i];
+          this.arm2.drawable.image = armOptions[i];
+        }
+      },
+      {
+        name: "Legs",
+        options: [5,6,7,8],
+        index: 0,
+        onChange: (value,i) => {
+          this.legLength = value;
+          var ll = value;
+          this.body.y = -12-ll*4;
+          this.legL2.y=ll;
+          this.legR2.y=ll;
+          this.legL.drawable.y2 = ll;
+          this.legR.drawable.y2 = ll;
+          this.legL2.drawable.y2 = ll;
+          this.legR2.drawable.y2 = ll;
         }
       },
       // {
@@ -53,15 +89,9 @@ class PlatformerModel extends Model {
       //   }
       // }
     ]
-    if(!parent) {
-      this.parent = {
-        dx:1,vx:10,vy:0,
-        mx: 0, 
-        moving: true,
-        grounded: true
-      }
-    }
-    // this.body = this.createLimb(0,0,10,h*.8,color);
+  }
+  createModel() {
+// this.body = this.createLimb(0,0,10,h*.8,color);
     // this.head = this.body.createAfter(0,-10,20,20,color);
     // this.legL = this.body.createBefore(-5,h/2-4,8,8,color);
     // this.legR = this.body.createBefore(5,h/2-4,8,8,color);
@@ -69,35 +99,29 @@ class PlatformerModel extends Model {
     // this.arm2 = this.body.createBefore(5,4,8,8,color);
     // this.eye1 = this.head.createAfter(0,0,4,4,"white");
 
-    var ll = h/2-12;
+    // var ll = h/2-12;
+    var ll = 6;
     this.ll=ll;
     var al = al||7;
 
     var lineCap = 'square';
     var bodyColor = "#6b6"
+    var color = this.color;
+    var color2 = this.color2;
 
     this.bwidth = 15;//+Math.random()*10;
 
-    this.body = this.createLimb(0,-26,new Line(0,-3,0,8,10,lineCap,color));
-    // this.body2 = this.body.createAfter(0,-5,new Line(0,-7,0,10,this.bwidth,'butt',color));
+    this.body = this.createLimb(0,-15-ll*3.5,new Line(0,-3,0,8,10,lineCap,color));
     this.body2 = this.body.createAfter(0,-5,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
 
     this.legR= this.body.createBefore(2,12,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
     this.legL= this.body.createBefore(-2,12,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
     this.legL2 = this.legL.createAfter(0,ll,new Line(0,0,0,ll,4,lineCap,color),-Math.PI/10);
     this.legR2 = this.legR.createBefore(0,ll,new Line(0,0,0,ll,4,lineCap,color2),Math.PI/10);
-    // this.bodyImage = this.body2.createAfter(0,-1,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
 
     this.arm1 = this.body2.createAfter(-this.bwidth/2,-1,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),Math.PI/4);
     this.arm2 = this.body2.createBefore(this.bwidth/2,-1,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),-Math.PI/4);
 
-    // this.arm1 = this.body2.createAfter(-this.bwidth/2,-1,new Line(0,0,0,al,4,lineCap,color),Math.PI/4);
-    // this.arm2 = this.body2.createBefore(this.bwidth/2,-1,new Line(0,0,0,al,4,lineCap,color2),-Math.PI/4);
-
-    // this.hand1 = this.arm1.createAfter(0,al+1,new ImageDrawable(IMAGES.fist,0,0,16,16));
-    // this.hand2 = this.arm2.createAfter(0,al+1,new ImageDrawable(IMAGES.fist,0,0,16,16));
-    // this.hand1 = this.arm1.createAfter(0,al+1,new Circle(0,0,3,color));
-    // this.hand2 = this.arm2.createAfter(0,al+1,new Circle(0,0,3,color2));
 
     this.head = this.body2.createAfter(0,-6);
     this.headBase = this.head.createAfter(0,-10,new ImageDrawable(IMAGES.baseHead1, 0,0,27,25));
@@ -107,8 +131,8 @@ class PlatformerModel extends Model {
     // this.body.createAfter(-10,0,new CheeseburgerJohnsonModel(40,40,this));
     // this.face = this.head.createAfter(0,-7);
     this.face = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.pupils1, 0,0,27,25));
-    var hairtype = randomFromList(IMAGES.hairOptions);
-    this.hair = this.headBase.createAfter(0,0,new ImageDrawable(hairtype, 0,0,27,25));
+    // var hairtype = randomFromList(IMAGES.hairOptions);
+    this.hair = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
     // this.eye1 = this.face.createAfter(-3,0,new Circle(0,0,2,'white'));
     // this.eye2 = this.face.createAfter(3,0,new Circle(0,0,2,'white'));
     // var grd = canvas.createRadialGradient(0,0,0,0,0,50);
@@ -119,15 +143,10 @@ class PlatformerModel extends Model {
     this.attackSound = SOUNDS.attack;
     this.cooldownTimer = 0;
     this.cooldownTime = 15;
-    this.body.scaleX = 1.5;
-    this.body.scaleY = 1.5;
-    this.head.scaleX = 1.2;
-    this.head.scaleY = 1.2;
-    this.customizableOptions.forEach(option => {
-      var index = Math.floor(Math.random()*option.options.length)
-      option.index = index;
-      option.onChange(option.options[index], index)
-    });
+    this.body.scaleX = 2;
+    this.body.scaleY = 2;
+    // this.head.scaleX = 1.2;
+    // this.head.scaleY = 1.2;
   }
   addShoes() {
     if(this.shoe1)return;
@@ -197,7 +216,7 @@ class PlatformerModel extends Model {
   highFiveUpdate() {
     // var a = Math.floor(this.highFiveCount/2)?-Math.PI*0.8:-Math.PI/4;
     var a = this.highFiveCount%2==0?-Math.PI*0.8:-Math.PI/3;
-    if(Math.floor(this.highFiveCount/2)==0)
+    if(Math.floor(this.highFiveCount/2)==0 || true)
       this.arm2.rotation = a;
     else {
       this.arm1.rotation = a;
@@ -317,7 +336,7 @@ class PlatformerModel extends Model {
     // this.scaleY = 1-Math.sin(frameCount*Math.PI/10)*.1;
     var dv = Math.min(1,Math.abs(this.parent.vx/this.parent.speed)+Math.abs(this.parent.vy/this.parent.speed));
     this.frameCount += dv;
-    this.rotation = Math.cos(this.frameCount*Math.PI/10)*Math.PI/20;
+    this.rotation = Math.cos(this.frameCount*Math.PI/10)*Math.PI/30*dv;
     var frq = this.frameCount*Math.PI/10;
     var angle = Math.PI/4*(dv);
     this.legL.rotation = Math.cos(frq)*angle;
@@ -407,7 +426,7 @@ class PlatformerModel extends Model {
     if(this.doubleJumpTimer<=0) {
       this.doubleJumping = false;
     }
-    var dx = this.parent.dx;
+    var dx = 1;//this.parent.dx;
     var t = this.doubleJumpTimer/20;
     this.arm1.rotation = 0;
     this.arm2.rotation = 0;
@@ -416,7 +435,7 @@ class PlatformerModel extends Model {
     this.legR.rotation = -Math.PI/2;
     this.head.rotation = Math.PI/2;
     t = t*t;
-    this.rotation = -t*Math.PI*2*dx;
+    this.body.rotation = -t*Math.PI*2*dx;
   }
   doubleJump() {
     this.doubleJumping = true;

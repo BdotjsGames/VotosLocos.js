@@ -136,6 +136,18 @@ SOUNDS.LouTalk =  new SoundListRandom([
 ])
 
 
+jtd = 1;
+SOUNDS.botTalk =  new SoundListRandom([
+  new SoundTag('bfxr/Blip_select40.wav', 1*jtd,   0.75),
+  new SoundTag('bfxr/Blip_select40.wav', .99*jtd, 0.75),
+  new SoundTag('bfxr/Blip_select40.wav', 1.01*jtd,0.75),
+  // new SoundTag('bfxr/Blip_select40.wav', 1.17*jtd,1),
+  // new SoundTag('bfxr/Blip_select40.wav', .8*jtd,1),
+  // new SoundTag('bfxr/Blip_select40.wav', 1.25*jtd,1),
+  // new SoundTag('bfxr/Blip_select40.wav', 1.33*jtd,1),
+])
+
+
 jtd = 2;
 SOUNDS.computerTalk =  new SoundList([
   new SoundTag('onPress.wav', 1*jtd,1),

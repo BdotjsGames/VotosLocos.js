@@ -1,6 +1,18 @@
 class MenuScene extends Scene {
   constructor() {
     super();
+
+    for(var i=0;i<10;i++) {
+      var x = CE.width*Math.random();
+      var y = CE.height*Math.random()/3;
+      var cloud = this.addEntity(new ImageDrawable(IMAGES.cloud, x,y))
+      cloud.vx = Math.random();
+      cloud.update = function() {
+        this.x += this.vx;
+        if(this.x-this.w>CE.width) this.x=-this.w*2;
+      }
+    }
+    
     this.addEntity(new ButtonUI("Play", 0.5,0.5, 0.5,0.2,0.2,e=>{
       console.log('pressed');
       MainDriver.setScene(new CharacterCustomizerScene());
@@ -14,5 +26,7 @@ class MenuScene extends Scene {
       Buttons.pause, b=>this.driver.setScene(new OptionsScene(this)),
       Buttons.start, b=>this.driver.setScene(new CharacterCustomizerScene()),
     ])
+
+    
   }
 }
