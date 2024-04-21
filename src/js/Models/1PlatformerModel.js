@@ -30,21 +30,21 @@ class PlatformerModel extends Model {
     var armOptions = options.armOptions||IMAGES.armOptions;
     this.customizableOptions = [
       {
-        name: "skin",
-        options: options.headOptions||IMAGES.headOptions,
-        index: 0,
-        onChange: (value) => {
-          this.headType = value;
-          this.headBase.drawable.image = value;
-        }
-      },
-      {
         name: "hair",
         options: options.hairOptions||IMAGES.hairOptions,
         index: 0,
         onChange: (value) => {
           this.hairType = value;
           this.hair.drawable.image = value;
+        }
+      },
+      {
+        name: "skin",
+        options: options.headOptions||IMAGES.headOptions,
+        index: 0,
+        onChange: (value) => {
+          this.headType = value;
+          this.headBase.drawable.image = value;
         }
       },
       {

@@ -1,8 +1,18 @@
+
 class Scene {
   constructor() {
     this.entities = [];
     this.specialActors = {};
     this.buttonsDown = []
+  }
+  addSelectableButton(btn, dir=DIRECTION.down) {
+    btn = this.addEntity(btn);
+    if(this.buttonToLink) {
+      this.buttonToLink.linkButton(btn, dir)
+      btn.linkButton(this.buttonToLink, DIRECTION.opposite(dir))
+    }
+    this.buttonToLink = btn;
+    return btn;
   }
   addEntity (entity) {
     if(entity.setScene)entity.setScene(this);

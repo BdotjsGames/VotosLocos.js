@@ -22,9 +22,34 @@ class ButtonUI extends DrawableText{
       this.alpha = 1;
       this.outlineOnHover = true;
       this.selected = false;
+      this.directionallyLinkedButtons = [];
+    }
+    linkButton(btn, dir) {
+      var prev = this.directionallyLinkedButtons[dir]
+      if(prev) {
+        // prev.
+      }
+      this.directionallyLinkedButtons[dir] = btn;
+    }
+    tryMove(direction) {
+      var next = this.directionallyLinkedButtons[direction];
+      if(next) {
+        this.deselect();
+        next.linkButton(this, DIRECTION.opposite(direction))
+        next.setSelected();
+      } else {
+        //TODO play error sound effect
+      }
     }
     setSelected() {
+      this.onHover();
       this.selected = true;
+      this.justSelected = true;
+      return this;
+    }
+    deselect() {
+      this.selected = false;
+      this.offHover();
     }
     onClick() {
       if(!this.hover)this.offHover();
@@ -51,6 +76,18 @@ class ButtonUI extends DrawableText{
         this.held = false;
         this.offHeld();
       }
+      if(this.selected&&!this.justSelected) {
+        //asdfjkl;
+        var {inputX, inputY} = getAxesDown();
+        if(inputX>0)this.tryMove(DIRECTION.right);
+        else if(inputX<0)this.tryMove(DIRECTION.left);
+        else if(inputY>0)this.tryMove(DIRECTION.down);
+        else if(inputY<0)this.tryMove(DIRECTION.up);
+        else if(getButtonDown(Buttons.Confirm)) {
+          this.click();
+        }
+      }
+      this.justSelected = false;
       this.alpha = 1;
     }
     onHover() {

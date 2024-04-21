@@ -8,7 +8,12 @@ class OptionsScene extends AdditiveScene {
         var w = 0.3;
         var fontSize = 0.04;
         var h = 0.07;
-        this.addEntity(
+        this.addSelectableButton(
+            new ButtonUI("back",0.05,0.05,0.1,0.05,0.05,e=>{
+                this.driver.setScene(this.prevScene);
+            }).setSelected()
+        )
+        this.addSelectableButton(
             new SliderOptionUI('volume',x,y,0.3,0.05,value=>{
                 localStorage.setItem("mainVolume", value);
                 setVolume(value);
@@ -37,23 +42,19 @@ class OptionsScene extends AdditiveScene {
                 .color(255,255,255)
                 .setAttr("outlineOnHover", false)
             )
-            this.addEntity(
+            this.addSelectableButton(
                 new ButtonUI(toggle.text,x,y,w,h,fontSize,b=>{
                     toggle.callback(check);
                     check.text = check.value?'☑':'☐'
                 })
                 .setTrueCoords(false)
-                .setAttr("outlineOnHover", false)
+                // .setAttr("outlineOnHover", false)
                 .setAttr("pivotX", 0)
                 .color(255,255,255)
             )
             y+=spacing;
         })
-        this.addEntity(
-            new ButtonUI("back",0.05,0.05,0.1,0.05,0.05,e=>{
-                this.driver.setScene(this.prevScene);
-            })
-        )
+        
     }
     update() {
         super.update();

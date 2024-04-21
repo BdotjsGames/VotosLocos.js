@@ -19,6 +19,13 @@ class SliderOptionUI extends ButtonUI {
         this.sliderValue = (value-this.minValue) / (this.maxValue-this.minValue);
         return this;
     }
+    setSliderValue(zeroToOne) {
+      zeroToOne = clamp(zeroToOne,0,1);
+      this.sliderValue = zeroToOne;
+      this.value = this.minValue + this.sliderValue * (this.maxValue-this.minValue);
+      this.knob.x = this.sliderValue*this._w;
+      this.onValueChanged(this.value);
+    }
     update() {
         super.update();
         this.knob.update();
@@ -32,13 +39,18 @@ class SliderOptionUI extends ButtonUI {
         if(this.held) {
             // this.knob.x = mouse.x-left;
             // console.log(this.knob.x);
-            this.sliderValue = clamp((mouse.x-left)/this._w, 0,1);
-            this.value = this.minValue + this.sliderValue * (this.maxValue-this.minValue);
-            this.knob.x = this.sliderValue*this._w;
+            this.setSliderValue((mouse.x-left)/this._w);
+            // this.sliderValue = clamp((mouse.x-left)/this._w, 0,1);
+            // this.value = this.minValue + this.sliderValue * (this.maxValue-this.minValue);
+            // this.knob.x = this.sliderValue*this._w;
             // this.value = (this.knob.x*p.W-left)/p.W;
-            this.onValueChanged(this.value);
+            // this.onValueChanged(this.value);
         } else {
             this.knob.x =  p.w*this.sliderValue;
+        }
+        if(this.selected) {
+          var {inputX} = getAxesDown();
+          this.setSliderValue(this.sliderValue+inputX*.1);
         }
     }
     onHover() {
