@@ -3,6 +3,8 @@ IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo.png');
 IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
 
 IMAGES.LouChalibre = ImageLoader.loadImage('Luchador1.png');
+console.log(IMAGES);
+console.log(IMAGES.LouChalibre);
 IMAGES.ChomperTop = ImageLoader.loadImage('ChomperTop.png');
 IMAGES.drone = ImageLoader.loadImage('drone.png');
 

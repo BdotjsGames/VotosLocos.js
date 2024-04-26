@@ -19,12 +19,12 @@ class SliderOptionUI extends ButtonUI {
         this.sliderValue = (value-this.minValue) / (this.maxValue-this.minValue);
         return this;
     }
-    setSliderValue(zeroToOne) {
+    setSliderValue(zeroToOne, updates=true) {
       zeroToOne = clamp(zeroToOne,0,1);
       this.sliderValue = zeroToOne;
       this.value = this.minValue + this.sliderValue * (this.maxValue-this.minValue);
       this.knob.x = this.sliderValue*this._w;
-      this.onValueChanged(this.value);
+      if(updates) this.onValueChanged(this.value);
     }
     update() {
         super.update();
@@ -37,9 +37,10 @@ class SliderOptionUI extends ButtonUI {
         var left = p.x;
         var right = p.x+p.w;
         if(this.held) {
+          this.needsUpdate = true;
             // this.knob.x = mouse.x-left;
             // console.log(this.knob.x);
-            this.setSliderValue((mouse.x-left)/this._w);
+            this.setSliderValue((mouse.x-left)/this._w, false);
             // this.sliderValue = clamp((mouse.x-left)/this._w, 0,1);
             // this.value = this.minValue + this.sliderValue * (this.maxValue-this.minValue);
             // this.knob.x = this.sliderValue*this._w;
@@ -47,6 +48,10 @@ class SliderOptionUI extends ButtonUI {
             // this.onValueChanged(this.value);
         } else {
             this.knob.x =  p.w*this.sliderValue;
+            if(this.needsUpdate) {
+              this.onValueChanged(this.value);
+              this.needsUpdate = false;
+            }
         }
         if(this.selected) {
           var {inputX} = getAxesDown();
@@ -91,7 +96,7 @@ class SliderOptionUI extends ButtonUI {
         var h = this._h;
         // canvas.fillStyle=Color.darken(this).color;
         // canvas.fillRect(0,0,w,h);
-        canvas.fillStyle=this.color;
+        canvas.fillStyle=this._color;
         var ps = this.pixelSpace();
         canvas.font = this.fontSize*ps.W +'px ' + this.fontFamily;
         canvas.textAlign = 'center';
@@ -100,7 +105,7 @@ class SliderOptionUI extends ButtonUI {
 
         canvas.fillStyle = Color.darken(this, .8).color;
         canvas.fillRect(0,0,this._w,this._h);
-        canvas.fillStyle = this.color;
+        canvas.fillStyle = this._color;
         canvas.fillRect(0,0,this._w*this.sliderValue,this._h);
         this.knob.draw();
         // canvas.fillStyle = Color.darken(this).color;

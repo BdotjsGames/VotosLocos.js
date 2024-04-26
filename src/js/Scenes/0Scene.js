@@ -1,3 +1,4 @@
+var UsingMouselessSelection = true;
 
 class Scene {
   constructor() {
@@ -5,8 +6,14 @@ class Scene {
     this.specialActors = {};
     this.buttonsDown = []
   }
+  setSelected(btn){
+    if(this.selectedButton && this.selectedButton != btn)this.selectedButton.deselect();
+    this.selectedButton = btn;
+  }
   addSelectableButton(btn, dir=DIRECTION.down) {
     btn = this.addEntity(btn);
+    btn.shouldSetSelectOnClick = true;
+    btn.shouldSetSelectOnHover = true;
     if(this.buttonToLink) {
       this.buttonToLink.linkButton(btn, dir)
       btn.linkButton(this.buttonToLink, DIRECTION.opposite(dir))

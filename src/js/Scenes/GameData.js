@@ -28,6 +28,12 @@ var LouChalibre = {
     every: 3,
 }
 
+console.log(LouChalibre);
+
+ImageLoader.onComplete( () => {
+    LouChalibre.image = IMAGES.LouChalibre;
+    console.log(LouChalibre);
+});
 
 
 GameSequence = [
@@ -73,12 +79,16 @@ GameSequence = [
             {person: LouChalibre, text: "Watch out for the bots!"},
         ],
         spawnRandom: [
-            [Bot, 10]
+            [Bot, 10],
         ]
     },
     {
         name: "Registrar Office Reached",
         DialogueData: [], //give ballot cutscene
+        spawnRandom: [
+            [Drone, 10],
+            [Bot, 10],
+        ]
     },
     {
         name: "Low Rider Transition",

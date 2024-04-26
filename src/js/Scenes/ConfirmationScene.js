@@ -16,9 +16,10 @@ class ConfirmationScene extends AdditiveScene {
                 buttonsPerThisRow = this.options.length % buttonsPerRow;
             }
             var x = 0.5-buttonsPerThisRow*bw/2 + bw*i%buttonsPerRow;
-            this.addEntity(new ButtonUI(
+            var btn = this.addSelectableButton(new ButtonUI(
                 option.name, x, y, 0.2,0.1,0.07,option.callback
-            ))
+            ), DIRECTION.right)
+            if(!i)btn.setSelected();
         })
     }
 }

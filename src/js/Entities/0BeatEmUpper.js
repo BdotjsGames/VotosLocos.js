@@ -325,6 +325,8 @@ class BeatEmUpper {
         var closest;
         this.highFiveTarget = null;
         highFivers.forEach(h=> {
+        if(h.shouldDelete)return;
+        if(h.following)return;
         if(Math.sign(h.x-this.x) != this.dx)return;
         if(h.dx==this.dx)return;
         var p = {

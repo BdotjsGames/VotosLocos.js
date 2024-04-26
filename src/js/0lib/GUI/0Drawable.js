@@ -12,6 +12,7 @@ class Drawable {
       this.red=200;
       this.green=200;
       this.blue=200;
+      
       this.morphs = {};
       this.angle = 0;
       this.scaleW = 1;
@@ -51,7 +52,13 @@ class Drawable {
       this.green=g;
       this.blue = b;
       if(a!=undefined)this.aplha = a;
-      this.color = Color.colorString(this);
+      // this.color = Color.colorString(this);
+      this._color = 'rgba(' +
+        Math.floor(this.red) + ',' +
+        Math.floor(this.green) + ',' +
+        Math.floor(this.blue) + ',' +
+        this.alpha + 
+      ')';
       return this;
     }
     center() {
@@ -90,12 +97,20 @@ class Drawable {
           delete this.morphs[i];
         }
       }
-      this.color = 'rgba(' +
+      // this.color = 'rgba(' +
+      //   Math.floor(this.red) + ',' +
+      //   Math.floor(this.green) + ',' +
+      //   Math.floor(this.blue) + ',' +
+      //   this.alpha + 
+      // ')';
+      if(!this._color) {
+        this._color = 'rgba(' +
         Math.floor(this.red) + ',' +
         Math.floor(this.green) + ',' +
         Math.floor(this.blue) + ',' +
         this.alpha + 
       ')';
+      }
       var ps = this.pixelSpace();
       this._w = ps.w;
       if(this.aspectScale) this._h = ps.h;
@@ -115,7 +130,15 @@ class Drawable {
       canvas.fillRect(this._w*.4,this._h/10,this._w/2,this._h/4);   
     }
     draw() {
-      canvas.fillStyle = this.color;
+      if(!this._color) {
+        this._color = 'rgba(' +
+        Math.floor(this.red) + ',' +
+        Math.floor(this.green) + ',' +
+        Math.floor(this.blue) + ',' +
+        this.alpha + 
+      ')';
+      }
+      canvas.fillStyle = this._color;
       canvas.save();
       // canvas.scale(CE.width, CE.height);
       var ps = this.pixelSpace();

@@ -10,10 +10,10 @@ var ImageLoader = {
   loadImage(src) {
     var img = new Image();
     img.src=this.directory+src;
-    this.imagesToLoad += 1;
-    img.onload = this.onLoad;
+    this.imagesToLoad += 1; 
+    img.onload = this.onLoad; 
     return img;
-  },
+  }, 
   onLoad() {
     ImageLoader.loaded++;
     if(ImageLoader.loaded>=ImageLoader.imagesToLoad) {
@@ -22,7 +22,7 @@ var ImageLoader = {
     }
   },
   onComplete(callback) {
-    if(this.loaded>=this.imagesToLoad) {
+    if(this.loaded>=this.imagesToLoad && this.imagesToLoad!=0) {
       callback();
     } else {
       this.onCompleteEvents.push(callback);

@@ -32,6 +32,7 @@ class ButtonUI extends DrawableText{
       this.directionallyLinkedButtons[dir] = btn;
     }
     tryMove(direction) {
+      UsingMouselessSelection = true;
       var next = this.directionallyLinkedButtons[direction];
       if(next) {
         this.deselect();
@@ -42,9 +43,14 @@ class ButtonUI extends DrawableText{
       }
     }
     setSelected() {
-      this.onHover();
       this.selected = true;
       this.justSelected = true;
+      if(UsingMouselessSelection) {
+        this.onHover();
+      }
+      if(this.scene) {
+        this.scene.setSelected(this);
+      }
       return this;
     }
     deselect() {
@@ -61,6 +67,10 @@ class ButtonUI extends DrawableText{
         if(!this.hover) {
           this.hover = true;        
           this.onHover();
+          if(this.shouldSetSelectOnHover) {
+            UsingMouselessSelection = false;
+            this.setSelected();
+          }
         }
       } else if(this.hover){
         this.hover = false;
@@ -70,6 +80,10 @@ class ButtonUI extends DrawableText{
         this.held = true;
         this.onHeld();
         this.click();
+        if(this.shouldSetSelectOnClick) {
+          UsingMouselessSelection = false;
+          this.setSelected();
+        }
       }
       if(mouse.up&&this.held) {
         // if(this.held&&this.hover)this.click();
@@ -118,7 +132,7 @@ class ButtonUI extends DrawableText{
     }
     drawShape() {
       // canvas.globalAlpha = this.alpha;
-      if((this.hover||this.selected) && this.outlineOnHover) {
+      if(((this.hover&&!UsingMouselessSelection)||(this.selected&&UsingMouselessSelection)) && this.outlineOnHover) {
         canvas.strokeStyle = 'white';
         // canvas.lineWidth = .001;      
         canvas.strokeRect(0,0,this._w,this._h);

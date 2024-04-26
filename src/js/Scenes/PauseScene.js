@@ -7,19 +7,24 @@ class PauseScene extends AdditiveScene {
         var spacing = .05;
         var y = 0.3;
         var w  = 0.6;
-        this.addEntity(
+        this.addSelectableButton(
+            new ButtonUI("back",0.05,0.05,0.14,0.08,0.05,e=>{
+                this.back();
+            })
+        )
+        this.addSelectableButton(
             new ButtonUI("Resume",0.5,y,w,h,fontSize,e=>{
                 this.back();
-            }).center()
+            }).center().setSelected()
         )
         y+= h+spacing;
-        this.addEntity(
+        this.addSelectableButton(
             new ButtonUI("Options",0.5,y,w,h,fontSize,e=>{
                 this.driver.setScene(new OptionsScene(this));
             }).center()
         )
         y+= h+spacing;
-        this.addEntity(
+        this.addSelectableButton(
             new ButtonUI("Quit to Menu",0.5,y,w,h,fontSize,e=>{
                 this.driver.setScene(new ConfirmationScene(this,
                     "Quit to Menu?",
@@ -37,11 +42,7 @@ class PauseScene extends AdditiveScene {
                 // this.driver.setScene(new MenuScene());
             }).center()
         )
-        this.addEntity(
-            new ButtonUI("back",0.05,0.05,0.1,0.05,0.05,e=>{
-                this.back();
-            })
-        )
+        
     }
     update() {
         super.update();
