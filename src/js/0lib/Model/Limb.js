@@ -49,6 +49,10 @@ class ImageDrawable {
     }
     this.hidden = false;
   }
+  setScaleToImage() {
+    this.w = this.image.width;
+    this.h = this.image.height;
+  }
   update() {}
   draw(override) {
     if(override)return;

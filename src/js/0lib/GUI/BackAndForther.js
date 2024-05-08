@@ -18,12 +18,12 @@ class BackAndForther extends ButtonUI {
         this.trueCoords=false;
         this.leftButton  = new ButtonUI("<", x-bw, y+h/2, bw, h, size, this.decrement.bind(this)).center()
         this.rightButton = new ButtonUI(">", x+w+bw, y+h/2, bw, h, size, this.increment.bind(this)).center();
-        this.leftButton.setSelected = this.setSelected.bind(this);
-        this.rightButton.setSelected = this.setSelected.bind(this);
-        this.leftButton.shouldSetSelectOnHover = true;
-        this.leftButton.shouldSetSelectOnClick = true;
-        this.rightButton.shouldSetSelectOnHover = true;
-        this.rightButton.shouldSetSelectOnClick = true;
+        // this.leftButton.setSelected = this.setSelected.bind(this);
+        // this.rightButton.setSelected = this.setSelected.bind(this);
+        // this.leftButton.shouldSetSelectOnHover = true;
+        // this.leftButton.shouldSetSelectOnClick = true;
+        // this.rightButton.shouldSetSelectOnHover = true;
+        // this.rightButton.shouldSetSelectOnClick = true;
         // this.leftButton.outlineOnHover = false;
         // this.rightButton.outlineOnHover = false;
         // this.leftButton.onHover = this.onHover.bind(this);
@@ -58,6 +58,7 @@ class BackAndForther extends ButtonUI {
         }
         this.onValueChanged(this.value);
     }
+    mouseUpdate(){}
     update() {
         // super.super.update();
         super.update();
@@ -73,7 +74,6 @@ class BackAndForther extends ButtonUI {
                 // this.click();
             }
         }
-        this.justSelected = false;
         this.leftButton.update();
         this.rightButton.update();
     }

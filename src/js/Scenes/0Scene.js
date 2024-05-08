@@ -12,8 +12,8 @@ class Scene {
   }
   addSelectableButton(btn, dir=DIRECTION.down) {
     btn = this.addEntity(btn);
-    btn.shouldSetSelectOnClick = true;
-    btn.shouldSetSelectOnHover = true;
+    // btn.shouldSetSelectOnClick = true;
+    // btn.shouldSetSelectOnHover = true;
     if(this.buttonToLink) {
       this.buttonToLink.linkButton(btn, dir)
       btn.linkButton(this.buttonToLink, DIRECTION.opposite(dir))

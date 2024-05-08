@@ -9,8 +9,8 @@ class SimpleDialogue {
     this.index= 0;
     this.impatience = 0;
     this.linewraps = [];
-    this.textFont = "20px Arial";
-    this.personFont = "25px Arial";
+    this.textFont = "20px " + FONT_FAMILY.default;
+    this.personFont = "25px " + FONT_FAMILY.default;
     this.maxLines = 3;
   }
   setText(obj,persist) {

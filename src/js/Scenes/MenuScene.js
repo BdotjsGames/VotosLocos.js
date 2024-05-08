@@ -13,12 +13,12 @@ class MenuScene extends Scene {
       }
     }
     
-    this.addSelectableButton(new ButtonUI("Play", 0.5,0.5, 0.7,0.25,0.2,e=>{
+    this.addSelectableButton(new ButtonUI("Play", 0.5,0.7, 0.4,0.1,0.05,e=>{
       console.log('pressed');
       MainDriver.setScene(new CharacterCustomizerScene());
       // MainDriver.setScene(new GameSceneBasic());
     })).center().color(250,250,250).setSelected();
-    this.addSelectableButton(new ButtonUI("Options", 0.5,0.7, 0.5,0.1,0.05,e=>{
+    this.addSelectableButton(new ButtonUI("Options", 0.5,0.8, 0.4,0.1,0.05,e=>{
       MainDriver.setScene(new OptionsScene(this));
       // MainDriver.setScene(new GameSceneBasic());
     })).center().color(250,250,250);

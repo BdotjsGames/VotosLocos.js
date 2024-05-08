@@ -325,27 +325,29 @@ class BeatEmUpper {
         var closest;
         this.highFiveTarget = null;
         highFivers.forEach(h=> {
-        if(h.shouldDelete)return;
-        if(h.following)return;
-        if(Math.sign(h.x-this.x) != this.dx)return;
-        if(h.dx==this.dx)return;
-        var p = {
-            x: h.x + h.dx*40,
-            y: h.y,
-            z: h.z,
-        }
-        var dist = sqrDist3(p,this);
-        if(dist<minDist) {
-            minDist = dist;
-            closest = h;
-        }
+            if(h.shouldDelete)return;
+            if(h.following)return;
+            if(Math.sign(h.x-this.x) != this.dx)return;
+            if(h.dx==this.dx)return;
+            var p = {
+                x: h.x + h.dx*40,
+                y: h.y,
+                z: h.z,
+            }
+            var dist = sqrDist3(p,this);
+            if(dist<minDist) {
+                minDist = dist;
+                closest = h;
+            }
         })
-        if(minDist<this.highFiveDistance*this.highFiveDistance) {
+        var r = this.highFiveDistance+closest.highFiveDistance;
+        if(minDist<r*r) {
             closest.highFiveTarget = this;
             this.highFiveTarget = closest;
             closest.beHighFived();
             // if(this.model.cooldownTimer<2) {
-            var pow = this.scene.addEntity(new ImageParticle(IMAGES.highFivePow, (this.x+closest.x)/2-32, this.y-128, 64,128,0,0,50,-0.00));
+            // var pow = this.scene.addEntity(new ImageParticle(IMAGES.highFivePow, (this.x+closest.x)/2-32, this.y-128, 64,128,0,0,50,-0.00));
+            var pow = this.scene.addEntity(new ImageParticle(IMAGES.pow, (this.x+closest.x)/2-32, this.y-128, 64,64,0,0,50,-0.00));
             pow.addMorph("pow",new Morph(null, {scaleW: 0.5, scaleH: 0.5, alpha: 0.5}, {scaleW: 1.5, scaleH: 1.5, alpha: 1}, 5, MorphType.easeOutQuad), true)
             pow.setSortOffset(100);
             SOUNDS.attack.play();

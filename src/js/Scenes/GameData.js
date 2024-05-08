@@ -86,8 +86,8 @@ GameSequence = [
         name: "Registrar Office Reached",
         DialogueData: [], //give ballot cutscene
         spawnRandom: [
-            [Drone, 10],
-            [Bot, 10],
+            [KnockableDoor, 10],
+            // [Bot, 10],
         ]
     },
     {

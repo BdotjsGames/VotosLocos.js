@@ -67,7 +67,7 @@ var MainDriver = {
     this.paused = true;
     canvas.fillStyle = "white";
     canvas.strokeStyle = "black";
-    canvas.font = '40px Impact';
+    canvas.font = '40px ' + FONT_FAMILY.default;
     canvas.textAlign = 'center';
     canvas.lineWidth = 5;
     canvas.miterLimit = 2;
@@ -132,6 +132,12 @@ devtools.toString = function() {
   // this.opened = true;
   // alert('hi');
 }
+
+var p = window.parent;
+// while(p.parent != p) {
+//   console.log(p)
+//   p=window.parent;
+// }
 
 // window.addEventListener('load', function(e) {
 //   function start() {

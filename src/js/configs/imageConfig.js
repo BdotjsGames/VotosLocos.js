@@ -3,8 +3,6 @@ IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo.png');
 IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
 
 IMAGES.LouChalibre = ImageLoader.loadImage('Luchador1.png');
-console.log(IMAGES);
-console.log(IMAGES.LouChalibre);
 IMAGES.ChomperTop = ImageLoader.loadImage('ChomperTop.png');
 IMAGES.drone = ImageLoader.loadImage('drone.png');
 
@@ -27,6 +25,7 @@ IMAGES.GoArrow = ImageLoader.loadImage('GoArrow.png');
 
 
 IMAGES.highFivePow = ImageLoader.loadImage('highFivePow.png');
+IMAGES.pow = ImageLoader.loadImage('pow.png');
 
 IMAGES.headOptions = [
     IMAGES.baseHead1    = ImageLoader.loadImage("baseHead1.png"),
@@ -43,19 +42,31 @@ IMAGES.hairOptions = [
     // IMAGES.hair2Y        = ImageLoader.loadImage("hair2Y.png"),
     // IMAGES.hair3Y        = ImageLoader.loadImage("hair3Y.png"),
     IMAGES.hairMohawk    = ImageLoader.loadImage("hairMohawk.png"),
-    IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png")
+    IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png"),
+    IMAGES.hairCholo      = ImageLoader.loadImage("hairCholo.png"),
 ]
+
+IMAGES.glassesOptions = [
+    null,
+    IMAGES.sunglasses      = ImageLoader.loadImage("sunglasses.png"),
+    IMAGES.glasses1      = ImageLoader.loadImage("glasses1.png"),
+    IMAGES.glassesFrames      = ImageLoader.loadImage("glassesFrames.png"),
+    IMAGES.glassesGoatee      = ImageLoader.loadImage("glassesGoatee.png"),
+]
+
 IMAGES.mouthSmile        = ImageLoader.loadImage("mouthSmile.png")
 IMAGES.mouthFrown        = ImageLoader.loadImage("mouthFrown.png")
 IMAGES.fist        = ImageLoader.loadImage("fist.png")
 
 IMAGES.armOptions = [
     IMAGES.armSuit1 = ImageLoader.loadImage("armSuit1.png"),
-    IMAGES.armVLTee = ImageLoader.loadImage("armVLTee.png")
+    IMAGES.armVLTee = ImageLoader.loadImage("armVLTee.png"),
+    IMAGES.armPlaid = ImageLoader.loadImage("armPlaid.png"),
 ]
 IMAGES.bodyOptions = [
     IMAGES.torsoTie        = ImageLoader.loadImage("torsoTie.png"),
-    IMAGES.torsoVLTee        = ImageLoader.loadImage("torsoVLTee.png")
+    IMAGES.torsoVLTee        = ImageLoader.loadImage("torsoVLTee.png"),
+    IMAGES.torsoPlaid        = ImageLoader.loadImage("tosoPlaid.png"),
 ]
 
 IMAGES.buildings = [

@@ -74,7 +74,7 @@ class TextUI {
       canvas.textAlign = this.options.textAlign;
     if(this.options.textBaseline)
       canvas.textBaseline = this.options.textBaseline;
-    canvas.font = this.fontsize + 'px Arial';
+    canvas.font = this.fontsize + 'px ' + FONT_FAMILY.default;
     var x = this.x;
     var y = this.y;
     canvas.fillStyle = "white";

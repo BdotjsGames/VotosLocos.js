@@ -48,6 +48,14 @@ class PlatformerModel extends Model {
         }
       },
       {
+        name: "glasses",
+        options: options.glassesOptions||IMAGES.glassesOptions,
+        index: 0,
+        onChange: (value) => {
+          this.glasses.drawable.image = value;
+        }
+      },
+      {
         name: "Torso",
         options: options.bodyOptions||IMAGES.bodyOptions,
         index: 0,
@@ -69,8 +77,8 @@ class PlatformerModel extends Model {
           this.body.y = -12-ll*4;
           this.legL2.y=ll;
           this.legR2.y=ll;
-          this.legL.drawable.y2 = ll;
-          this.legR.drawable.y2 = ll;
+          this.legL.drawable.y2 = ll*.6;
+          this.legR.drawable.y2 = ll*.6;
           this.legL2.drawable.y2 = ll;
           this.legR2.drawable.y2 = ll;
         }
@@ -131,6 +139,7 @@ class PlatformerModel extends Model {
     // this.body.createAfter(-10,0,new CheeseburgerJohnsonModel(40,40,this));
     // this.face = this.head.createAfter(0,-7);
     this.face = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.pupils1, 0,0,27,25));
+    this.glasses = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
     // var hairtype = randomFromList(IMAGES.hairOptions);
     this.hair = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
     // this.eye1 = this.face.createAfter(-3,0,new Circle(0,0,2,'white'));

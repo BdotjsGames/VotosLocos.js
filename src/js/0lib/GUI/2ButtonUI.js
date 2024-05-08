@@ -61,8 +61,7 @@ class ButtonUI extends DrawableText{
       if(!this.hover)this.offHover();
       if(this.callback2)this.callback2(this);
     }
-    update() {
-      super.update();
+    mouseUpdate() {
       if(this.contains(mouse.x,mouse.y)) {
         if(!this.hover) {
           this.hover = true;        
@@ -90,6 +89,8 @@ class ButtonUI extends DrawableText{
         this.held = false;
         this.offHeld();
       }
+    }
+    selectedUpdate() {
       if(this.selected&&!this.justSelected) {
         //asdfjkl;
         var {inputX, inputY} = getAxesDown();
@@ -102,6 +103,11 @@ class ButtonUI extends DrawableText{
         }
       }
       this.justSelected = false;
+    }
+    update() {
+      super.update();
+      this.mouseUpdate();
+      this.selectedUpdate();
       this.alpha = 1;
     }
     onHover() {
@@ -132,11 +138,16 @@ class ButtonUI extends DrawableText{
     }
     drawShape() {
       // canvas.globalAlpha = this.alpha;
-      if(((this.hover&&!UsingMouselessSelection)||(this.selected&&UsingMouselessSelection)) && this.outlineOnHover) {
+      if(this.selected) {
+        canvas.fillStyle = "#999a";
+        canvas.fillRect(0,0,this._w, this._h);
+      }
+      if((this.hover) && this.outlineOnHover) {
         canvas.strokeStyle = 'white';
         // canvas.lineWidth = .001;      
         canvas.strokeRect(0,0,this._w,this._h);
       }
+      canvas.fillstyle = this._color;
       super.drawShape();
       // if(this.alpha>0)this.alpha -= 0.1;
     }

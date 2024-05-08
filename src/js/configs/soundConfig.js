@@ -157,6 +157,10 @@ SOUNDS.computerTalk =  new SoundList([
   new SoundTag('onPress.wav', 1.33*jtd,1),
 ])
 
+SOUNDS.knockSound =  new SoundList([
+  new SoundTag('bfxr/Knock.wav', 1,1),
+])
+
 
 // SOUNDS.exampleSound = new SoundTag('exampleSound.wav', 1,1);
 // SOUNDS.exampleSoundRandom = new SoundListRandom([
