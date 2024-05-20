@@ -15,6 +15,9 @@ function pressed(b) {
   return b && (b==1 || b.pressed);
 }
 
+var activeGamepads = [];
+var activeGamepadsMap = {};
+
 function handleGamePad() {
   var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
   // if(gamepads2.length>0)
@@ -51,6 +54,7 @@ function handleGamePad() {
         if(p) {
           gamepadOn = true;
           gamepadAnyButton+=1;
+          console.log(gp);
           if(!gamepadButtons[i]) gamepadAnyButtonDown = true;
         }
         gamepadButtons[i] = p;
@@ -58,4 +62,42 @@ function handleGamePad() {
     }
   }
 }
-  
+
+function isGamepadActive(gamepad) {
+  var activated = activeGamepadsMap[gamepad.id];
+  return activated;
+}
+
+function activateGamepad(gamepad) {
+  var activated = activeGamepadsMap[gamepad.id];
+  if(activated) {
+    console.log('already activated', gamepad);
+    return;
+  }
+  activeGamepadsMap[gamepad.id] = {};
+  activeGamepads.push(gamepad.id);
+}
+
+function createActiveGamepad() {
+  return {};
+}
+
+function getActiveGamepad(gamepad) {
+  var activated = activeGamepadsMap[gamepad.id];
+  if(activated) return activated;
+  var activeGamepad = createActiveGamepad();
+  activeGamepadsMap[gamepad.id] = activeGamepad;
+  activeGamepads.push(activeGamepad);
+  return activeGamepad;
+}
+
+function rumbleGamepad(gamepad) {
+  gamepad.vibrationActuator.playEffect("dual-rumble", {
+    startDelay: 0,
+    duration: 200,
+    weakMagnitude: 1.0,
+    strongMagnitude: 1.0,
+  });
+}
+
+

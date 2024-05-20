@@ -42,9 +42,10 @@ class PlatformerModel extends Model {
         name: "skin",
         options: options.headOptions||IMAGES.headOptions,
         index: 0,
-        onChange: (value) => {
-          this.headType = value;
+        onChange: (value, i) => {
+          this.skinColorIndex = i;
           this.headBase.drawable.image = value;
+          this.changeSkinColor(i);
         }
       },
       {
@@ -65,6 +66,7 @@ class PlatformerModel extends Model {
           if(i<=armOptions.length)
           this.arm1.drawable.image = armOptions[i];
           this.arm2.drawable.image = armOptions[i];
+          this.changeSkinColor(this.skinColorIndex);
         }
       },
       {
@@ -97,6 +99,27 @@ class PlatformerModel extends Model {
       //   }
       // }
     ]
+  }
+  changeSkinColor(i) {
+    var skinable = [this.arm1, this.arm2]
+    skinable.forEach(limb => {
+      var img = limb.drawable.image;
+      // try {
+      //   skin = img.palletSwaps.skin[i];
+      //   skin.palletSwaps = img.palletSwaps;
+      //   limb.drawable.image=skin;
+      // } catch(e) {
+      //   console.log(e);
+      // }
+      if(!img)return;
+      if(!img.palletSwaps)return
+      var skinPallete = img.palletSwaps.skin;
+      if(!skinPallete)return;
+      var skin = skinPallete[i];
+      if(!skin)return;
+      skin.palletSwaps = img.palletSwaps;
+      limb.drawable.image = skin;
+    })
   }
   createModel() {
 // this.body = this.createLimb(0,0,10,h*.8,color);

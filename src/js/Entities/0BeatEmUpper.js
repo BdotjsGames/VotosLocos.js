@@ -1,3 +1,7 @@
+shadow = canvas.createRadialGradient(0, 0, 5, 0, 0, 20);
+shadow.addColorStop(0, "#000000aa");
+shadow.addColorStop(1, "#00000000");
+
 class BeatEmUpper {
     constructor(x, y, w, h, color,color2,model) {
         this.x = x; this.y = y; this.w = w; this.h = h;
@@ -43,9 +47,7 @@ class BeatEmUpper {
         this.getknockBack = 1;
         this.hitSound = SOUNDS.hit;
         this.friction = 0.5;
-        this.shadow = canvas.createRadialGradient(0, 0, 5, 0, 0, 20);
-        this.shadow.addColorStop(0, "#000000aa");
-        this.shadow.addColorStop(1, "#00000000");
+        this.shadow = shadow;
         this.canCrawl = false;
         this.crawlSpeedMultiplier = 0.6;
         this.crouchFallSpeed = 7;

@@ -28,11 +28,9 @@ var LouChalibre = {
     every: 3,
 }
 
-console.log(LouChalibre);
 
 ImageLoader.onComplete( () => {
     LouChalibre.image = IMAGES.LouChalibre;
-    console.log(LouChalibre);
 });
 
 

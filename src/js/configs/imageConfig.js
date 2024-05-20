@@ -6,6 +6,18 @@ IMAGES.LouChalibre = ImageLoader.loadImage('Luchador1.png');
 IMAGES.ChomperTop = ImageLoader.loadImage('ChomperTop.png');
 IMAGES.drone = ImageLoader.loadImage('drone.png');
 
+
+var rgb = hexToRGB;
+
+var PALLETE_KEY = {
+    skin: {
+        label: 'skin', 
+        inputHexes: [rgb("#ffe0b7")],
+        //creates 3 alternatives with default skin replaced with the following colors:
+        mapping: [[rgb('#e88a36')], [rgb('#673931')],[rgb('#ffe0b7')]]
+    }
+}
+
 IMAGES.botHeadOptions = [
     IMAGES.botHead = ImageLoader.loadImage('BotHead1.png'),
     IMAGES.botHead2 = ImageLoader.loadImage('BotHead2.png'),
@@ -59,9 +71,9 @@ IMAGES.mouthFrown        = ImageLoader.loadImage("mouthFrown.png")
 IMAGES.fist        = ImageLoader.loadImage("fist.png")
 
 IMAGES.armOptions = [
-    IMAGES.armSuit1 = ImageLoader.loadImage("armSuit1.png"),
-    IMAGES.armVLTee = ImageLoader.loadImage("armVLTee.png"),
-    IMAGES.armPlaid = ImageLoader.loadImage("armPlaid.png"),
+    IMAGES.armSuit1 = ImageLoader.loadImage("armSuit1.png", PALLETE_KEY.skin),
+    IMAGES.armVLTee = ImageLoader.loadImage("armVLTee.png", PALLETE_KEY.skin),
+    IMAGES.armPlaid = ImageLoader.loadImage("armPlaid.png", PALLETE_KEY.skin),
 ]
 IMAGES.bodyOptions = [
     IMAGES.torsoTie        = ImageLoader.loadImage("torsoTie.png"),

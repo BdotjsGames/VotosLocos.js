@@ -2,8 +2,8 @@ class OptionsScene extends AdditiveScene {
     constructor(prevScene) {
         super(prevScene);
         this.isOptionsScene = true;
-        var x = 0.5
-        var y = 0.1;
+        var x = 0.4
+        var y = 0.2;
         var spacing = 0.1;
         var w = 0.3;
         var fontSize = 0.04;
@@ -14,7 +14,8 @@ class OptionsScene extends AdditiveScene {
             }).setSelected()
         )
         this.addSelectableButton(
-            new SliderOptionUI('volume',x,y,0.3,0.05,value=>{
+            new SliderOptionUI('volume',x,y,0.3,0.05,(value,self)=>{
+                if(VOLUME!=value) SOUNDS.select.play();
                 localStorage.setItem("mainVolume", value);
                 setVolume(value);
             }).setTrueCoords(false).setBounds(0,1).setValue(VOLUME)
@@ -34,7 +35,7 @@ class OptionsScene extends AdditiveScene {
         ]
         toggles.forEach((toggle,i) => {
             var check = this.addEntity(
-                new ButtonUI(toggle.startingValue?'☑':'☐',x-0.05,y,0.05,h,fontSize,b=>{
+                new DrawableText(toggle.startingValue?'☑':'☐',x-0.05,y,0.05,h,fontSize*1.2,b=>{
                     toggle.callback(b);
                     b.text = b.value?'☑':'☐'
                 })
@@ -43,7 +44,7 @@ class OptionsScene extends AdditiveScene {
                 .setAttr("outlineOnHover", false)
             )
             this.addSelectableButton(
-                new ButtonUI(toggle.text,x,y,w,h,fontSize,b=>{
+                new ButtonUI("  "+toggle.text,x-0.05,y,w+0.05,h,fontSize,b=>{
                     toggle.callback(check);
                     check.text = check.value?'☑':'☐'
                 })

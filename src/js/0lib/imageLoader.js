@@ -1,4 +1,23 @@
 var IMAGES = {};
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+var hexRegex = new RegExp(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+function hexToRGB(hex) {
+    var result = hexRegex.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
 var ImageLoader = {
   imagesToLoad: 0,
   loaded: 0,
@@ -7,7 +26,41 @@ var ImageLoader = {
   getLoaded() {
     return ImageLoader.loaded/ImageLoader.imagesToLoad;
   },
-  loadImage(src) {
+  loadImageWithPalleteSwaps(src, pallete_key) {
+    var img = new Image();
+    img.src=this.directory+src;
+    this.imagesToLoad += 1; 
+    img.onload = () => {
+      this.onLoad(); 
+      var palletSwaps = [];
+      for(var k=0;k<pallete_key.mapping.length;k++) {
+        var mapping = pallete_key.mapping[k];
+        var ce = document.createElement('canvas');
+        ce.width = img.width;
+        ce.height= img.height;
+        var ctx = ce.getContext('2d');
+        ctx.drawImage(img, 0,0);
+        var imageData = ctx.getImageData(0,0,img.width,img.height);
+        var data = imageData.data;
+        for(var i=0;i<data.length;i+=4) {
+          pallete_key.inputHexes.forEach((input,j) => {
+            if(data[i]==input.r&&data[i+1]==input.g&&data[i+2]==input.b) {
+              data[i]   = mapping[j].r;
+              data[i+1] = mapping[j].g;
+              data[i+2] = mapping[j].b;
+            }
+          })
+        }
+        ctx.putImageData(imageData, 0, 0);
+        palletSwaps.push(ce);
+      }
+      (img.palletSwaps=(img.palletSwaps||{}))[pallete_key.label] = palletSwaps;
+      
+    }
+    return img;
+  },
+  loadImage(src, pallete_key=null) {
+    if(pallete_key)return this.loadImageWithPalleteSwaps(src, pallete_key);
     var img = new Image();
     img.src=this.directory+src;
     this.imagesToLoad += 1; 

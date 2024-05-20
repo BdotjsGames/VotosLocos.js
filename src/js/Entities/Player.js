@@ -6,6 +6,11 @@ class Player extends BeatEmUpper {
     this.invulTime = 40;
     window.player = this;
     this.highFiveDistance = 40;
+    this.buttons={};
+    this.buttons.B = Buttons.B;
+    this.buttons.crouch = Buttons.crouch;
+    this.buttons.highFive = Buttons.highFive;
+    this.buttons.jump = Buttons.jump;
   }
   addShoes() {
     this.model.addShoes();
@@ -47,21 +52,21 @@ class Player extends BeatEmUpper {
     //   this.unjump();
     // }
     // this.crouching = axes.inputY > 0;
-    if(getButtonDown(Buttons.jump)) {
+    if(getButtonDown(this.buttons.jump)) {
       this.jump();
     }
-    if(!getButton(Buttons.jump)) {
+    if(!getButton(this.buttons.jump)) {
       this.unjump();
     }
-    if(this.crouching = getButton(Buttons.crouch)) {
+    if(this.crouching = getButton(this.buttons.crouch)) {
       this.crouch();
     }
-    // if(this.grounded&&getButton(Buttons.B))this.model.highFive();
-    if(getButtonDown(Buttons.highFive)&&this.model.cooldownTimer<2) {
+    // if(this.grounded&&getButton(this.buttons.B))this.model.highFive();
+    if(getButtonDown(this.buttons.highFive)&&this.model.cooldownTimer<2) {
       this.attemptHighFive();
     }
-    if(this.model.highFiving&&getButton(Buttons.highFive))this.model.highFive();
-    if(getButtonDown(Buttons.B)) {
+    if(this.model.highFiving&&getButton(this.buttons.highFive))this.model.highFive();
+    if(getButtonDown(this.buttons.B)) {
       // if(this.grounded&&!this.crouching) {
       //   this.jump();
       //   this.jump();

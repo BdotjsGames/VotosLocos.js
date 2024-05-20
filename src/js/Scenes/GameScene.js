@@ -8,6 +8,7 @@ class GameScene extends Scene {
       this.addEntity(this.level = new Level(LEVELS.getLevelByName("AnityEntrance")));
       // this.addEntity(this.level = new Level(World.getNextLevel()));
     }
+    this.players = [];
     this.addEntity(this.player = new Player(100,100));
     // this.addEntity(new Knight(100,-100));
     // this.addEntity(new NPC(2100,0, CurleyModel));
