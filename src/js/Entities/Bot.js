@@ -9,7 +9,7 @@ class Bot extends BeatEmUpper {
         this.shootTimer = 0;
         this.heal = 0.01;
         this.contactDamage = 0;
-        this.health = this.maxHealth = 15;
+        this.health = this.maxHealth = 30;
         this.contactDamage = 3;
         this.name = 'bot';
         this.talkSound = SOUNDS.botTalk;

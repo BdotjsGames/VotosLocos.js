@@ -36,8 +36,7 @@ class BeatEmUpper {
         } else {
             this.initModel(w, h, color,color2);
         }
-        this.health = 30;
-        this.maxHealth = 30;
+        this.health = this.maxHealth = 30;
         this.invul = 0;
         this.invulTime = 20;
         this.heal = 0;//0.05;
@@ -79,14 +78,20 @@ class BeatEmUpper {
     getHit(other) {
         if(!other.contactDamage)return;
         if (this.invul > 0) return;
+        other.model.impactStop(10);
+        this.dx = this.x<other.x?1:-1;
+        this.model.impactStop(20);
+
         var k = 1;
         if (other.knockBack) k = other.knockBack;
         k = k * this.getknockBack;
         var dx = other.x - this.x > 0 ? 1 : -1;
         this.vx = -dx * k * 10;
+        this.x += this.vx;
         this.vy = -5;
         this.health -= other.contactDamage;
         this.invul = this.invulTime;
+        this.model.getHit(true);
         if (this.health < 0) {
             this.hitSound.play(-0.1);
             SOUNDS.hitSoundthing.play(-0.5);
@@ -105,7 +110,8 @@ class BeatEmUpper {
         if (this.model.attacking) {
             this.vx = 0;
             other.getHit(this);
-            this.model.wallCollide();
+            
+            // this.model.wallCollide();
             this.jumpCount = 0;
         } else {
             this.getHit(other);
@@ -150,38 +156,42 @@ class BeatEmUpper {
             else 
                 speed = 0;
         }
-        // this.vx += (this.mx * speed - this.vx) * this.friction;
-        // this.vy += (this.my * speed - this.vy) * this.friction;
-        var accel = this.groundAcceleration;
-        if(this.mx==0&&this.my==0) accel = this.groundDeceleration;
-        this.vx = linearMove(this.vx, this.mx*speed, accel);
-        this.vy = linearMove(this.vy, this.my*speed, accel);
+        if(!this.model.impactStopTimer>0) {
+
+            // this.vx += (this.mx * speed - this.vx) * this.friction;
+            // this.vy += (this.my * speed - this.vy) * this.friction;
+            
+            var accel = this.groundAcceleration;
+            if(this.mx==0&&this.my==0) accel = this.groundDeceleration;
+            this.vx = linearMove(this.vx, this.mx*speed, accel);
+            this.vy = linearMove(this.vy, this.my*speed, accel);
+            
+
+            this.vx = clamp(this.vx, -terminalSideVelocity, terminalSideVelocity);
+            this.vy = clamp(this.vy, -terminalSideVelocity, terminalSideVelocity);
+
+            if(this.model.doubleJumping) {
+                this.vx = this.dx*this.model.doubleJumpTimer/2;
+            }
+
+            this.x += this.vx;
+            this.y += this.vy;
+
         
 
-        this.vx = clamp(this.vx, -terminalSideVelocity, terminalSideVelocity);
-        this.vy = clamp(this.vy, -terminalSideVelocity, terminalSideVelocity);
+            this.model.moving = this.mx != 0 || this.my != 0;
+            this.model.rotation = 0;
+            // this.grounded = true;
+            if (this.mx != 0) {
+                this.dx = this.dx = this.mx > 0 ? 1 : -1;
+            }
 
-        if(this.model.doubleJumping) {
-            this.vx = this.dx*this.model.doubleJumpTimer/2;
+            if (this.vz < 0) {
+                this.grounded = false;
+            }
+            this.vz += this.grav;
+            this.z += this.vz;
         }
-
-        this.x += this.vx;
-        this.y += this.vy;
-
-       
-
-        this.model.moving = this.mx != 0 || this.my != 0;
-        this.model.rotation = 0;
-        // this.grounded = true;
-        if (this.mx != 0) {
-            this.dx = this.dx = this.mx > 0 ? 1 : -1;
-        }
-
-        if (this.vz < 0) {
-            this.grounded = false;
-        }
-        this.vz += this.grav;
-        this.z += this.vz;
         if (this.z >= 0) {
             this.vz = 0;
             this.z = 0;

@@ -9,6 +9,7 @@ class BotModel extends PlatformerModel {
             headOptions: IMAGES.botHeadOptions,
             hairOptions: [],
             bodyOptions: IMAGES.botTorsoOptions,
+            legOptions:[8],
             glassesOptions: [],
             skinOptions: [],
             armOptions: [],

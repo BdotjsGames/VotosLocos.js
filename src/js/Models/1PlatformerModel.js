@@ -470,6 +470,9 @@ class PlatformerModel extends Model {
     this.scaleX = 1.2+Math.abs(this.parent.vy)/20;
     this.doubleJumping = false;
   }
+  impactStop(amount) {
+    this.impactStopTimer = amount;
+  }
   wallCollide() {
     this.doubleJumping = false;
     var d = Math.abs(this.parent.vx)/30;
@@ -519,7 +522,32 @@ class PlatformerModel extends Model {
       this.head.rotation = -Math.PI/20;
       // this.arm1.rotation = Math.PI;
   }
+  getHit(init) {
+    if(init || !this.hitRotation) { 
+      this.hitRotation = (Math.random()*2-1) * Math.PI/5;
+    }
+    this.rotation = Math.PI/4;
+    this.isHit = true;
+    this.body.rotation = -this.hitRotation;
+    this.body2.rotation = -this.hitRotation;
+    this.head.rotation = -this.hitRotation;
+    this.arm1.rotation = Math.PI;
+    this.arm2.rotation = Math.PI;
+    this.legL.rotation = Math.PI/4;
+    this.legR.rotation = -Math.PI/4;
+  }
   update() {
+    if(this.impactStopTimer>0) {
+      this.impactStopTimer--;
+      if(this.isHit) {
+        this.getHit();
+      }
+      if(this.impactStopTimer<=0) {
+        this.wallCollide();
+        this.isHit = false;
+      }
+      return;
+    }
     this.moveLocked = this.attacking||this.highFiving;
     if(this.cooldownTimer>0) this.cooldownTimer--;
     if(this.parent.passedOut) {
