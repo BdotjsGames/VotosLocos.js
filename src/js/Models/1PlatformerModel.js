@@ -10,6 +10,8 @@ class PlatformerModel extends Model {
     this.highFiveTime = 12;
     this.frameCount = 0;
     this.createOptions();
+    this.hairColor = 0;
+    this.skinColorIndex = 0;
     if(!parent) {
       this.parent = {
         dx:1,vx:10,vy:0,
@@ -28,6 +30,11 @@ class PlatformerModel extends Model {
   }
   createOptions(options={}) {
     var armOptions = options.armOptions||IMAGES.armOptions;
+    var legOptions = options.legOptions||[5,6,7,8];
+    var wheelChairLegValue = -1;
+    if(options.canWheelchair) {
+      legOptions.push(wheelChairLegValue)
+    }
     this.customizableOptions = [
       {
         name: "hair",
@@ -36,6 +43,17 @@ class PlatformerModel extends Model {
         onChange: (value) => {
           this.hairType = value;
           this.hair.drawable.image = value;
+          this.hair.drawable.setScaleToImage();
+          this.changeHairColor(this.hairColor);
+        }
+      },
+      {
+        name: "hair color",
+        options: PALLETE_KEY.hair.mapping,
+        index: 0,
+        onChange: (value,i) => {
+          this.hairColor = i;
+          this.changeHairColor(i);
         }
       },
       {
@@ -54,6 +72,8 @@ class PlatformerModel extends Model {
         index: 0,
         onChange: (value) => {
           this.glasses.drawable.image = value;
+          this.glasses.drawable.setScaleToImage();
+          this.glasses.changePalette('hair', this.hairColor);
         }
       },
       {
@@ -71,9 +91,23 @@ class PlatformerModel extends Model {
       },
       {
         name: "Legs",
-        options: [5,6,7,8],
+        options: legOptions,
         index: 0,
         onChange: (value,i) => {
+          if(value==wheelChairLegValue) {
+            this.inWheelChair = true;
+            this.wheelchair.hidden = false;
+            this.wheelchair.wheel.hidden = false;
+            this.legL.hidden=true;
+            this.legR.hidden=true;
+            value = 8;
+          } else {
+            this.inWheelChair = false;
+            this.wheelchair.hidden = true;
+            this.wheelchair.wheel.hidden = true;
+            this.legL.hidden=false;
+            this.legR.hidden=false;
+          }
           this.legLength = value;
           var ll = value;
           this.body.y = -12-ll*4;
@@ -99,26 +133,16 @@ class PlatformerModel extends Model {
       //   }
       // }
     ]
+   
+  }
+  changeHairColor(i) {
+    this.hair.changePalette('hair', i);
+    this.glasses.changePalette('hair', i);
   }
   changeSkinColor(i) {
     var skinable = [this.arm1, this.arm2]
     skinable.forEach(limb => {
-      var img = limb.drawable.image;
-      // try {
-      //   skin = img.palletSwaps.skin[i];
-      //   skin.palletSwaps = img.palletSwaps;
-      //   limb.drawable.image=skin;
-      // } catch(e) {
-      //   console.log(e);
-      // }
-      if(!img)return;
-      if(!img.palletSwaps)return
-      var skinPallete = img.palletSwaps.skin;
-      if(!skinPallete)return;
-      var skin = skinPallete[i];
-      if(!skin)return;
-      skin.palletSwaps = img.palletSwaps;
-      limb.drawable.image = skin;
+      limb.changePalette('skin', i);
     })
   }
   createModel() {
@@ -143,7 +167,21 @@ class PlatformerModel extends Model {
     this.bwidth = 15;//+Math.random()*10;
 
     this.body = this.createLimb(0,-15-ll*3.5,new Line(0,-3,0,8,10,lineCap,color));
+
+    this.arm2 = this.body.createBefore(this.bwidth/2,-1-5,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),-Math.PI/4);
+
+    this.wheelchair = this.body.createBefore(0,12, new ImageDrawable(IMAGES.wheelchairBack))
+    var wheelPivot = {
+      x: 32-27.5,
+      y: 32-40.5,
+    }
+
+    this.wheelchair.wheel = this.body.createAfter(-wheelPivot.x,12-wheelPivot.y,new ImageDrawable(IMAGES.wheelchairWheelFront, wheelPivot.x,wheelPivot.y,))
+    this.wheelchair.hidden = true;
+    this.wheelchair.wheel.hidden = true;
+
     this.body2 = this.body.createAfter(0,-5,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
+
 
     this.legR= this.body.createBefore(2,12,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
     this.legL= this.body.createBefore(-2,12,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
@@ -151,7 +189,6 @@ class PlatformerModel extends Model {
     this.legR2 = this.legR.createBefore(0,ll,new Line(0,0,0,ll,4,lineCap,color2),Math.PI/10);
 
     this.arm1 = this.body2.createAfter(-this.bwidth/2,-1,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),Math.PI/4);
-    this.arm2 = this.body2.createBefore(this.bwidth/2,-1,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),-Math.PI/4);
 
 
     this.head = this.body2.createAfter(0,-6);
@@ -345,7 +382,7 @@ class PlatformerModel extends Model {
     
     this.arm1.rotation = Math.PI/10-Math.cos(frameCount*Math.PI/40)*Math.PI/40;
     this.arm2.rotation=-Math.PI/10+Math.cos(frameCount*Math.PI/40)*Math.PI/40;
-    this.head._y = Math.cos(frameCount*Math.PI/40)*1;
+    this.head._y = Math.cos(frameCount*Math.PI/40)*0.5;
     this.body.rotation = 0;
     this.body2.rotation = 0;
     this.head.rotation = 0;
@@ -368,6 +405,7 @@ class PlatformerModel extends Model {
     // this.scaleY = 1-Math.sin(frameCount*Math.PI/10)*.1;
     var dv = Math.min(1,Math.abs(this.parent.vx/this.parent.speed)+Math.abs(this.parent.vy/this.parent.speed));
     this.frameCount += dv;
+    this.wheelchair.wheel.rotation += dv*Math.PI/20;
     this.rotation = Math.cos(this.frameCount*Math.PI/10)*Math.PI/30*dv;
     var frq = this.frameCount*Math.PI/10;
     var angle = Math.PI/4*(dv);

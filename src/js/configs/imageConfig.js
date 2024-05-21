@@ -6,8 +6,60 @@ IMAGES.LouChalibre = ImageLoader.loadImage('Luchador1.png');
 IMAGES.ChomperTop = ImageLoader.loadImage('ChomperTop.png');
 IMAGES.drone = ImageLoader.loadImage('drone.png');
 
+IMAGES.wheelchairBack = ImageLoader.loadImage('wheelchairBack.png');
+IMAGES.wheelchairWheelFront = ImageLoader.loadImage('wheelchairWheelFront.png');
+
 
 var rgb = hexToRGB;
+function rainbowFunction(data, index, width,height) {
+    var x = index/4%width;
+    var y = Math.floor(index/4/width);
+    var dx = (width/2+2-x);
+    var dy = (height/2-y);
+    var rr = dx*dx+dy*dy;
+    var r = Math.sqrt(rr);
+    var darken = r/(width/2);
+    var hueQuantize = 12;
+    var quantize = 4;
+    var h = (x/width*(2-y/20));
+    var s = 1;
+    var v = 1;//-darken*.3;
+    h = Math.floor(h*hueQuantize)/hueQuantize;
+    v = Math.floor(v*quantize)/quantize;
+    
+    return hsvToRgb(h,s,v);
+    return rainbowColors[Math.floor((x)/(4+y/20))%rainbowColors.length]
+}
+rainbowFunction.callable = true;
+var hairColors = [
+
+]
+function shadingFunction(rgb, data, index,width,height, mappingIndex) {
+    var r = rgb.r;
+    var g = rgb.g;
+    var b = rgb.b;
+    var x = index/4%width;
+    var y = Math.floor(index/4/width);
+    var dx = (width/2+2-x);
+    var dy = (25/2-y);
+    var rr = dx*dx+dy*dy;
+    var radius = Math.sqrt(rr);
+    var darken = radius/(width/2);
+    // var hueQuantize = 12;
+    var quantize = 2;
+    // var h = (x/width*(2-y/20));
+    // var s = 1;
+    var v = 1-darken*.3;
+    // h = Math.floor(h*hueQuantize)/hueQuantize;
+    v = 1- Math.floor(darken*quantize)/quantize*.3;
+    // if(v>0.9)return rgb;
+    var bv = (1+v)/2;
+    return {
+        r: Math.floor(r*v),
+        g: Math.floor(g*v),
+        b: Math.floor(b*bv),
+    };
+}
 
 var PALLETE_KEY = {
     skin: {
@@ -15,6 +67,13 @@ var PALLETE_KEY = {
         inputHexes: [rgb("#ffe0b7")],
         //creates 3 alternatives with default skin replaced with the following colors:
         mapping: [[rgb('#e88a36')], [rgb('#673931')],[rgb('#ffe0b7')]]
+    },
+    hair: {
+        label: 'hair',
+        inputHexes: [rgb("#271f1b")],
+        // inputHexes: [-1],
+        mapping: [[rgb('#050403')],[rgb('#612721')],[rgb('#b9451d')],[rgb('#5b3138')],[rgb('#f8c53a')],[rgb('#d21f0c')],[rgb('#e27285')],[rgb('#4572e3')],[rainbowFunction]],
+        post: shadingFunction,
     }
 }
 
@@ -47,15 +106,21 @@ IMAGES.headOptions = [
 IMAGES.baseEyes1    = ImageLoader.loadImage("baseEyes1.png")
 IMAGES.pupils1      = ImageLoader.loadImage("pupils1.png")
 IMAGES.hairOptions = [
-    IMAGES.hair1         = ImageLoader.loadImage("hair1.png"),
-    IMAGES.hair2         = ImageLoader.loadImage("hair2.png"),
-    IMAGES.hair3         = ImageLoader.loadImage("hair3.png"),
+    IMAGES.hair1         = ImageLoader.loadImage("hair1.png", PALLETE_KEY.hair),
+    IMAGES.hair2         = ImageLoader.loadImage("hair2.png", PALLETE_KEY.hair),
+    IMAGES.hair3         = ImageLoader.loadImage("hair3.png", PALLETE_KEY.hair),
+    IMAGES.hair4         = ImageLoader.loadImage("hair4.png", PALLETE_KEY.hair),
+    IMAGES.hair5         = ImageLoader.loadImage("hair5.png", PALLETE_KEY.hair),
+    IMAGES.hair6         = ImageLoader.loadImage("hair6.png", PALLETE_KEY.hair),
+    IMAGES.hairLong         = ImageLoader.loadImage("hairLong.png", PALLETE_KEY.hair),
     // IMAGES.hair1Y        = ImageLoader.loadImage("hair1Y.png"),
     // IMAGES.hair2Y        = ImageLoader.loadImage("hair2Y.png"),
     // IMAGES.hair3Y        = ImageLoader.loadImage("hair3Y.png"),
-    IMAGES.hairMohawk    = ImageLoader.loadImage("hairMohawk.png"),
-    IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png"),
-    IMAGES.hairCholo      = ImageLoader.loadImage("hairCholo.png"),
+    IMAGES.hairMohawk    = ImageLoader.loadImage("hairMohawk.png", PALLETE_KEY.hair),
+    IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png", PALLETE_KEY.hair),
+    IMAGES.hairCholo      = ImageLoader.loadImage("hairCholo.png", PALLETE_KEY.hair),
+    IMAGES.hijab         = ImageLoader.loadImage("hijab.png", PALLETE_KEY.hair),
+    null,
 ]
 
 IMAGES.glassesOptions = [
@@ -63,7 +128,7 @@ IMAGES.glassesOptions = [
     IMAGES.sunglasses      = ImageLoader.loadImage("sunglasses.png"),
     IMAGES.glasses1      = ImageLoader.loadImage("glasses1.png"),
     IMAGES.glassesFrames      = ImageLoader.loadImage("glassesFrames.png"),
-    IMAGES.glassesGoatee      = ImageLoader.loadImage("glassesGoatee.png"),
+    IMAGES.glassesGoatee      = ImageLoader.loadImage("glassesGoatee.png", PALLETE_KEY.hair),
 ]
 
 IMAGES.mouthSmile        = ImageLoader.loadImage("mouthSmile.png")
@@ -73,11 +138,13 @@ IMAGES.fist        = ImageLoader.loadImage("fist.png")
 IMAGES.armOptions = [
     IMAGES.armSuit1 = ImageLoader.loadImage("armSuit1.png", PALLETE_KEY.skin),
     IMAGES.armVLTee = ImageLoader.loadImage("armVLTee.png", PALLETE_KEY.skin),
+    IMAGES.armVLTee,
     IMAGES.armPlaid = ImageLoader.loadImage("armPlaid.png", PALLETE_KEY.skin),
 ]
 IMAGES.bodyOptions = [
     IMAGES.torsoTie        = ImageLoader.loadImage("torsoTie.png"),
     IMAGES.torsoVLTee        = ImageLoader.loadImage("torsoVLTee.png"),
+    IMAGES.torsoVLTeeF        = ImageLoader.loadImage("torsoVLTeeF.png"),
     IMAGES.torsoPlaid        = ImageLoader.loadImage("tosoPlaid.png"),
 ]
 

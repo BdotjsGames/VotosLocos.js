@@ -26,7 +26,7 @@ class SimpleDialogue {
     } else {
       this.talkSound = null;
     }
-    console.log(obj);
+    // console.log(obj);
     this.updateLineWraps();
     this.currentLine = 0;
     this.currentLineOffset = 0;

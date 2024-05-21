@@ -35,7 +35,7 @@ class Circle {
 }
 
 class ImageDrawable {
-  constructor(image,x,y,w,h) {
+  constructor(image,x=0,y=0,w,h) {
     this.image = image;
     this.x=x;this.y=y;this.w=w;this.h=h;
     if(!w&&!h) {
@@ -48,8 +48,11 @@ class ImageDrawable {
       this.h = image.height/image.width*this.w;
     }
     this.hidden = false;
+    this.x-=this.w/2;
+    this.y-=this.h/2;
   }
   setScaleToImage() {
+    if(!this.image)return;
     this.w = this.image.width;
     this.h = this.image.height;
   }
@@ -58,7 +61,7 @@ class ImageDrawable {
     if(override)return;
     if(this.hidden)return;
     if(!this.image)return;
-    canvas.drawImage(this.image,this.x-this.w/2,this.y-this.h/2,this.w,this.h);
+    canvas.drawImage(this.image,this.x,this.y,this.w,this.h);
   }
 }
 
@@ -157,6 +160,17 @@ class Limb {
     this.after = [];
     this.quantizeRotation = false;
     this.hidden = false;
+  }
+  changePalette(palleteName, i) {
+    var img = this.drawable.image;
+    if(!img)return;
+    if(!img.palletSwaps)return
+    var skinPallete = img.palletSwaps[palleteName];
+    if(!skinPallete)return;
+    var skin = skinPallete[i];
+    if(!skin)return;
+    skin.palletSwaps = img.palletSwaps;
+    this.drawable.image = skin;
   }
   createBefore(...args) {
     var limb = new Limb(...args);

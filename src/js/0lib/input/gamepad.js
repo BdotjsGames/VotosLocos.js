@@ -54,7 +54,7 @@ function handleGamePad() {
         if(p) {
           gamepadOn = true;
           gamepadAnyButton+=1;
-          console.log(gp);
+          // console.log(gp);
           if(!gamepadButtons[i]) gamepadAnyButtonDown = true;
         }
         gamepadButtons[i] = p;

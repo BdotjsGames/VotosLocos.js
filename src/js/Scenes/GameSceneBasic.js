@@ -6,8 +6,9 @@ class GameSceneBasic extends Scene {
       this.startingY = 100;
       this.groundHeight = 400;
       this.sorters = [];
-      this.minY = this.startingY - this.groundHeight/2;
+      this.minY = this.startingY - this.groundHeight/2+15;
       this.maxY = this.startingY + this.groundHeight/2;
+      this.enemies = [];
       for(var i=0;i<10;i++) {
         var x = 1500*Math.random();
         var y = 300*Math.random()/3+this.startingY-this.groundHeight-300;
@@ -281,9 +282,10 @@ class GameSceneBasic extends Scene {
       
     }
     loadLevel(levelNumber,skipTransition) {
-      console.log(levelNumber);
+      // console.log(levelNumber);
       if(this.transitioningOut)return;
       this.transitioningOut = true;
+      this.enemies = [];
       highFivers = [];
       if(levelNumber<0)levelNumber=0;
       if(levelNumber>=GameSequence.length) {

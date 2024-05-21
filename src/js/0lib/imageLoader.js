@@ -44,10 +44,19 @@ var ImageLoader = {
         var data = imageData.data;
         for(var i=0;i<data.length;i+=4) {
           pallete_key.inputHexes.forEach((input,j) => {
-            if(data[i]==input.r&&data[i+1]==input.g&&data[i+2]==input.b) {
-              data[i]   = mapping[j].r;
-              data[i+1] = mapping[j].g;
-              data[i+2] = mapping[j].b;
+            if(input==-1||data[i]==input.r&&data[i+1]==input.g&&data[i+2]==input.b) {
+              var rgb = mapping[j];
+              if(rgb.callable) {
+                rgb = rgb(data, i, img.width,img.height, k,j)
+              }
+              if(pallete_key.post) {
+                rgb = pallete_key.post(rgb, data, i, img.width,img.height,k,j);
+              }
+              data[i]   = rgb.r;
+              data[i+1] = rgb.g;
+              data[i+2] = rgb.b;
+              
+
             }
           })
         }

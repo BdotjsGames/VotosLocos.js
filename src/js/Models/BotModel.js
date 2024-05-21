@@ -12,6 +12,7 @@ class BotModel extends PlatformerModel {
             glassesOptions: [],
             skinOptions: [],
             armOptions: [],
+            canWheelchair: false,
         });
     }
 }
