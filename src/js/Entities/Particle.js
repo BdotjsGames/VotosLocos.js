@@ -7,6 +7,7 @@ class Particle {
     this.grav=grav||0;
     this.maxLife=
     this.life=life;
+    this.alpha =1;
   }
   update() {
     this.vy += this.grav;
@@ -16,11 +17,13 @@ class Particle {
     if(this.life<=0) {
       this.shouldDelete = true;
     }
+    this.alpha = this.life/this.maxLife;
+    if(this.customUpdate) this.customUpdate();
   }
   draw() {
     canvas.fillStyle = this.color;
     // canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
-    canvas.globalAlpha = this.life/this.maxLife;
+    canvas.globalAlpha = this.alpha;
     canvas.beginPath();
     canvas.arc(this.x,this.y,this.w/2,0,Math.PI*2);
     canvas.fill();

@@ -9,6 +9,7 @@ class GameSceneBasic extends Scene {
       this.minY = this.startingY - this.groundHeight/2+15;
       this.maxY = this.startingY + this.groundHeight/2;
       this.enemies = [];
+      this.players = [];
       for(var i=0;i<10;i++) {
         var x = 1500*Math.random();
         var y = 300*Math.random()/3+this.startingY-this.groundHeight-300;
@@ -139,7 +140,7 @@ class GameSceneBasic extends Scene {
       );
       this.goal = data.Goal;
       
-      if(data.DialogueData && data.DialogueData.length>0) {
+      if(data.DialogueData && data.DialogueData.length>0 && false) {
         this.playDialogue(data.DialogueData, true, b=>{
           if(data.continueOnDialogueFinish) {
             this.loadNextLevel();
@@ -286,6 +287,7 @@ class GameSceneBasic extends Scene {
       if(this.transitioningOut)return;
       this.transitioningOut = true;
       this.enemies = [];
+      this.players = [];
       highFivers = [];
       if(levelNumber<0)levelNumber=0;
       if(levelNumber>=GameSequence.length) {

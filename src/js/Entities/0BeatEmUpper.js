@@ -30,6 +30,7 @@ class BeatEmUpper {
         this.wallCollidingWith = null;
         this.standingOn = null;
         this.canAttack = true;
+        this.attackHitbox = {width: 70, height: 70};
         if(model) {
             this.model = model;
             model.parent = this;
@@ -78,10 +79,11 @@ class BeatEmUpper {
     getHit(other) {
         if(!other.contactDamage)return;
         if (this.invul > 0) return;
-        other.model.impactStop(10);
+        other.model.impactStop(5);
         this.dx = this.x<other.x?1:-1;
         this.model.impactStop(20);
-
+        createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
+        
         var k = 1;
         if (other.knockBack) k = other.knockBack;
         k = k * this.getknockBack;
@@ -92,6 +94,13 @@ class BeatEmUpper {
         this.health -= other.contactDamage;
         this.invul = this.invulTime;
         this.model.getHit(true);
+        if(other.model.knockbackUp) {
+            this.vz = other.model.knockbackUp;
+            other.vz = other.model.knockbackUp;
+        }
+        // this.vz += other.vz*2;
+        // this.vz = -20;
+        this.z+=this.vz;
         if (this.health < 0) {
             this.hitSound.play(-0.1);
             SOUNDS.hitSoundthing.play(-0.5);
@@ -131,12 +140,16 @@ class BeatEmUpper {
         }
     }
     update() {
+        if(this.dx==0) {
+            console.log("WTF")
+        }
         if(this.scene.dialogueBlocking)return;
         if (this.health < 0) {
             this.die();
         }
         if (this.invul > 0) {
-            this.invul--;
+            // if(!this.model.impactStopTimer>0)
+                this.invul--;
         } else {
             if (this.health < this.maxHealth) {
                 this.health += this.heal;
@@ -148,9 +161,9 @@ class BeatEmUpper {
             this.my = 0;
         }
 
-        var terminalSideVelocity = 44;
+        var terminalSideVelocity = this.speed*2;
         var speed = this.speed;
-        if(this.crouching) {
+        if(this.crouching && !this.model.attacking) {
             if(this.canCrawl)
                 speed *= this.crawlSpeedMultiplier;
             else 
@@ -163,6 +176,7 @@ class BeatEmUpper {
             
             var accel = this.groundAcceleration;
             if(this.mx==0&&this.my==0) accel = this.groundDeceleration;
+            if(!this.grounded)accel *=0.2;
             this.vx = linearMove(this.vx, this.mx*speed, accel);
             this.vy = linearMove(this.vy, this.my*speed, accel);
             
@@ -171,7 +185,7 @@ class BeatEmUpper {
             this.vy = clamp(this.vy, -terminalSideVelocity, terminalSideVelocity);
 
             if(this.model.doubleJumping) {
-                this.vx = this.dx*this.model.doubleJumpTimer/2;
+                // this.vx = this.dx*this.model.doubleJumpTimer/2;
             }
 
             this.x += this.vx;
@@ -183,7 +197,11 @@ class BeatEmUpper {
             this.model.rotation = 0;
             // this.grounded = true;
             if (this.mx != 0) {
-                this.dx = this.dx = this.mx > 0 ? 1 : -1;
+                var dx = this.dx = this.mx > 0 ? 1 : -1;
+                if(frameCount-this.jumpTimeStamp<5) {
+                    this.vx = (this.dx*this.jumpSpeedBoost)
+                }
+                this.dx = dx;
             }
 
             if (this.vz < 0) {
@@ -317,13 +335,30 @@ class BeatEmUpper {
             // }
             // closest.x = mx + this.dx * space;
           }
+        if(this.model.attacking) {
+            this.attackCollisionCheck();
+        }
+    }
+    attackCollisionCheck() {
+        this.enemies.forEach(enemy => {
+            var dx = enemy.x - this.x;
+            var dy = enemy.y - this.y;
+            var dz = enemy.z - this.z;
+            var adx = Math.abs(dx);
+            var ady = Math.abs(dy);
+            var adz = Math.abs(dz);
+            if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
+                enemy.getHit(this);
+                this.vx = 0;
+            }
+        })
     }
     canJump() {
         return this.jumpCount < this.numJumps;
     }
     onJump() { }
     onDoubleJump() {
-        this.vx += this.dx*50;
+        // this.vx += this.dx*50;
     }
     highFive(){
         this.model.highFive();
@@ -379,11 +414,17 @@ class BeatEmUpper {
         this.vz = -this.jumpStrength;
         this.model.jump();
         this.jumpCount++;
+        this.jumpSpeedBoost = this.speed*1.4;
         if (this.jumpCount > 1) {
             this.model.doubleJump();
             this.onDoubleJump();
+            this.jumpSpeedBoost = this.speed*2;
         } else {
             this.onJump();
+        }
+        this.jumpTimeStamp = frameCount;
+        if(this.mx!=0) {
+            this.vx = (this.dx*this.jumpSpeedBoost)
         }
         this.grounded = false;
     }
@@ -433,10 +474,41 @@ class BeatEmUpper {
         var g = 0.2;
         var x = this.x;
         var y = this.y;
+        createFadingParticle(this.scene,x,y-20,100)
+        // var pow = this.scene.addEntity(new ImageParticle(IMAGES.pow, (this.x+closest.x)/2-32, this.y-128, 64,64,0,0,50,-0.00));
+        //     pow.addMorph("pow",new Morph(null, {scaleW: 0.5, scaleH: 0.5, alpha: 0.5}, {scaleW: 1.5, scaleH: 1.5, alpha: 1}, 5, MorphType.easeOutQuad), true)
         for (var i = 0; i < 9; i++) {
             var vx = (Math.random() - 0.5) * 4;
             var vy = (Math.random() - 0.5) * 4 - 5;
             this.scene.addEntity(new Particle(x, y, 15, 15, this.color, vx, vy, 40, g));
         }
+        if(this.allies) {
+            var myIndex = this.allies.indexOf(this);
+            if(myIndex!=-1)this.allies.splice(myIndex,1);
+        }
     }
+}
+
+function createFadingParticleCluster(scene,x,y,size,variance) {
+    for(var i=0;i<3;i++ ) {
+        createFadingParticle(scene,
+            x + (Math.random()*2-1)*variance,
+            y + (Math.random()*2-1)*variance,
+            size+Math.random()*variance/2
+        );
+    }
+}
+
+function createFadingParticle(scene,x,y,size){
+    var p = scene.addEntity(new Particle(x,y-50,size,size,"#ffffff", 0,0, 15,0))
+    p.colorValue = 1;
+    p.customUpdate = fadingParticleUpdate;
+}
+
+function fadingParticleUpdate() {
+    this.colorValue = (0.5-this.colorValue)*0.8;
+    var v = Math.floor(this.colorValue*255);
+    this.color = `rgb(${v},${v/2},${v/2})`
+    this.alpha = clamp((this.life/this.maxLife)*2,0,1);
+    // console.log(this);
 }

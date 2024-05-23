@@ -185,6 +185,7 @@ class SimpleDialogue {
         if(this.index-currentIndex<line.length){
           text = line.substring(0,this.index-currentIndex)
         }
+        text = text.replaceAll('|','')
         canvas.fillRichText(text, CE.width/30,y+lineHeight+i*lineHeight);
       }
       currentIndex += line.length;

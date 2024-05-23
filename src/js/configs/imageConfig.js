@@ -133,6 +133,7 @@ IMAGES.glassesOptions = [
 
 IMAGES.mouthSmile        = ImageLoader.loadImage("mouthSmile.png")
 IMAGES.mouthFrown        = ImageLoader.loadImage("mouthFrown.png")
+IMAGES.mouthOpenDistress = ImageLoader.loadImage("mouthOpenDistress.png");
 IMAGES.fist        = ImageLoader.loadImage("fist.png")
 
 IMAGES.armOptions = [

@@ -12,6 +12,7 @@ class Player extends BeatEmUpper {
     this.buttons.highFive = Buttons.highFive;
     this.buttons.jump = Buttons.jump;
   }
+  
   addShoes() {
     this.model.addShoes();
     this.canAttack = true;
@@ -29,8 +30,10 @@ class Player extends BeatEmUpper {
   }
   
   setScene(scene) {
-    scene.specialActors.kwak = this;
     this.scene=scene;
+    this.scene.players.push(this);
+    this.enemies = this.scene.enemies;
+    this.allies = this.scene.players;
   }
   getInputs() {
     this.model.outlineColor = this.outlineColor;

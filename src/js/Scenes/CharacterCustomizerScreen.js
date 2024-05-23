@@ -30,6 +30,7 @@ class CharacterCustomizerScene extends Scene{
     draw() {
         super.draw();
         this.model.draw(CE.width/2,CE.height*.6);
+        canvas.fillRect(CE.width/2,CE.height*.6+25, 10,10);
     }
     loadModel(model) {
         // if(this.model&&this.model!=model) {

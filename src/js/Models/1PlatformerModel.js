@@ -12,6 +12,13 @@ class PlatformerModel extends Model {
     this.createOptions();
     this.hairColor = 0;
     this.skinColorIndex = 0;
+    this.impactStopTimer=0;
+    this.self = this;
+    this.anims=anims;
+    // this.attackCombo = [anims.punch1, anims.flipKick, anims.armSpinny];
+    this.attackCombo = [anims.flipKick];
+    this.attackComboIndex = 0;
+    this.attackAnim = anims.punch1;
     if(!parent) {
       this.parent = {
         dx:1,vx:10,vy:0,
@@ -110,7 +117,8 @@ class PlatformerModel extends Model {
           }
           this.legLength = value;
           var ll = value;
-          this.body.y = -12-ll*4;
+          var db1 = 8
+          this.body.y = -12-ll*4+db1;
           this.legL2.y=ll;
           this.legR2.y=ll;
           this.legL.drawable.y2 = ll*.6;
@@ -166,32 +174,36 @@ class PlatformerModel extends Model {
 
     this.bwidth = 15;//+Math.random()*10;
 
-    this.body = this.createLimb(0,-15-ll*3.5,new Line(0,-3,0,8,10,lineCap,color));
+    this.body = this.createLimb(0,-15-ll*3.5/*,new Line(0,-3,0,2,10,lineCap,color)*/);
 
-    this.arm2 = this.body.createBefore(this.bwidth/2,-1-5,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),-Math.PI/4);
 
-    this.wheelchair = this.body.createBefore(0,12, new ImageDrawable(IMAGES.wheelchairBack))
+
+    var db2 = 12
+    this.body2 = this.body.createAfter(0,-3+db2,new ImageDrawable(IMAGES.bodyOptions[0],-2,5-db2,32,32));
+    this.arm2 = this.body2.createBefore(this.bwidth/2,-1-db2,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),-Math.PI/4);
+    this.hips = this.body.createBefore(0,12);
+
+    this.wheelchair = this.body2.createBefore(0,8, new ImageDrawable(IMAGES.wheelchairBack))
     var wheelPivot = {
       x: 32-27.5,
       y: 32-40.5,
     }
 
-    this.wheelchair.wheel = this.body.createAfter(-wheelPivot.x,12-wheelPivot.y,new ImageDrawable(IMAGES.wheelchairWheelFront, wheelPivot.x,wheelPivot.y,))
+    this.wheelchair.wheel = this.wheelchair.createAfter(-wheelPivot.x,0-wheelPivot.y,new ImageDrawable(IMAGES.wheelchairWheelFront, wheelPivot.x,wheelPivot.y,))
     this.wheelchair.hidden = true;
     this.wheelchair.wheel.hidden = true;
 
-    this.body2 = this.body.createAfter(0,-5,new ImageDrawable(IMAGES.bodyOptions[0],-2,5,32,32));
 
-
-    this.legR= this.body.createBefore(2,12,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
-    this.legL= this.body.createBefore(-2,12,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
+    this.legR= this.hips.createBefore(2,0,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
+    this.legL= this.hips.createBefore(-2,0,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
     this.legL2 = this.legL.createAfter(0,ll,new Line(0,0,0,ll,4,lineCap,color),-Math.PI/10);
     this.legR2 = this.legR.createBefore(0,ll,new Line(0,0,0,ll,4,lineCap,color2),Math.PI/10);
 
-    this.arm1 = this.body2.createAfter(-this.bwidth/2,-1,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),Math.PI/4);
 
 
-    this.head = this.body2.createAfter(0,-6);
+    this.head = this.body2.createAfter(0,-6-db2);
+    this.arm1 = this.body2.createAfter(-this.bwidth/2,-1-db2,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),Math.PI/4);
+
     this.headBase = this.head.createAfter(0,-10,new ImageDrawable(IMAGES.baseHead1, 0,0,27,25));
     this.mouth = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.mouthSmile, 0,0,27,25));
     // this.eyeBase = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.baseEyes1, 0,0,27,25));
@@ -226,22 +238,25 @@ class PlatformerModel extends Model {
     var dx = 1;//this.parent.dx;
     var d = 2;
     var br = Math.PI*.4;
+    var l = this.legLength;
     this.body._rotation = br*dx;
-    this.body._y += (Math.sin(br)*10-this.body._y)/d;
-    this.legL._rotation = (-br+Math.PI/4)*dx;
+    this.body._y += (Math.sin(br)*l+15-this.body._y);
+    this.body._x += (Math.cos(br)*l+25-this.body._x);
+    this.body._y = Math.sin(this.body.rotation)*l+15;
+    this.legL._rotation = (-br+Math.PI/4)*dx-Math.PI/6;
     this.legR._rotation = (-br-Math.PI/4)*dx;
 
     // var frq = frameCount*Math.PI/12;
     // this.legL.rotation += Math.cos(frq)*Math.PI/4*this.parent.vx/this.parent.speed;
     // this.legR.rotation += -Math.cos(frq)*Math.PI/4*this.parent.vx/this.parent.speed;
 
-    this.arm1._rotation = 0;
+    this.arm1._rotation = 0;//-Math.PI/4;
     this.arm2._rotation = -Math.PI*.6;
     this.arm1._x=0;
     this.arm2._x=0;
     this.head._rotation = -br*dx;
     this._rotation = 0;
-    this.head._y += (5-this.head._y)/d;
+    this.head._y += (2-this.head._y)/d;
     // this.head._x += (8*dx-this.head._x)/d;
 
 
@@ -309,6 +324,15 @@ class PlatformerModel extends Model {
   attack() {
     if(this.attacking)return;
     if(this.cooldownTimer>0)return;
+    if(this.crouching)return this.slide();
+    // this.attacking = true;
+    this.startAnim(this.attackCombo[this.attackComboIndex]);
+    this.attackComboIndex += 1;
+    if(this.attackComboIndex>=this.attackCombo.length)this.attackComboIndex=0;
+    // this.startAnim(this.attackAnim);
+  }
+  slide() {
+
     this.attackSound.play();
     this.doubleJumping=false;
     this.parent.wallColliding = false;
@@ -351,7 +375,7 @@ class PlatformerModel extends Model {
     this.scaleY=1;
     var t = this.attackTimer/15;
     if(this.attackTimer<14&&this.attackTimer>1) {
-      this.parent.vx = this.parent.dx*30*t;
+      this.parent.vx = this.parent.dx*40*t;
       // this.parent.vy = 1;
       this.parent.vz = 2;
     } else {
@@ -376,6 +400,7 @@ class PlatformerModel extends Model {
     this.scaleX += (1-this.scaleX)/7;
     this.legL.rotation = Math.PI/10;
     this.legR.rotation=-Math.PI/10;
+    this.hips.rotation = 0;
 
     this.legL2.rotation= -this.legL.rotation;
     this.legR2.rotation= -this.legR.rotation;
@@ -524,8 +549,17 @@ class PlatformerModel extends Model {
   }
   getHit(init) {
     if(init || !this.hitRotation) { 
+      if(this.mouth.drawable.image!=IMAGES.mouthOpenDistress && this.mouth.drawable.image){
+        this.mouthType = this.mouth.drawable.image;
+        this.mouth.drawable.image = IMAGES.mouthOpenDistress;
+      }
       this.hitRotation = (Math.random()*2-1) * Math.PI/5;
+      this.scaleX = 1.2;
+      this.scaleY = 1.2;
+      this.endAnim();
     }
+    this.scaleY += (1-this.scaleY)/2;
+    this.scaleX += (1-this.scaleX)/2;
     this.rotation = Math.PI/4;
     this.isHit = true;
     this.body.rotation = -this.hitRotation;
@@ -537,6 +571,8 @@ class PlatformerModel extends Model {
     this.legR.rotation = -Math.PI/4;
   }
   update() {
+    // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
+
     if(this.impactStopTimer>0) {
       this.impactStopTimer--;
       if(this.isHit) {
@@ -544,6 +580,9 @@ class PlatformerModel extends Model {
       }
       if(this.impactStopTimer<=0) {
         this.wallCollide();
+        if(this.isHit) {
+          this.mouth.drawable.image = this.mouthType;
+        }
         this.isHit = false;
       }
       return;
@@ -552,6 +591,10 @@ class PlatformerModel extends Model {
     if(this.cooldownTimer>0) this.cooldownTimer--;
     if(this.parent.passedOut) {
       this.passedOut();
+      return;
+    }
+    if(this.anim) {
+      this.animProcessor();
       return;
     }
     if(this.attacking) {
@@ -593,9 +636,189 @@ class PlatformerModel extends Model {
       this.face._x=0;
     }
   }
+  startAnim(anim) {
+    this.anim = anim;
+    this.animIndex = 0;
+    this.animFrameCount = -1;
+    this.animKeyFrame = this.anim[this.animIndex];
+    this.animStartFrame(this.animKeyFrame);
+  }
+  endAnim() {
+    this.anim = null;
+    if(this.attacking) {
+      this.attacking = false;
+    }
+    this.wheelchair.rotation = 0;
+  }
+  animStartFrame(keyFrame) {
+    var t = keyFrame.time;
+    keyFrame.limbs.forEach(limbData => {
+      var limb = this[limbData.limb];
+      limb.drotation = (limbData.rotation-limb.rotation)/t || 0
+      limb.dx = (limbData.x-limb.x)/t || 0
+      limb.d_x = (limbData._x-limb._x)/t || 0
+      limb.dy = (limbData.y-limb.y)/t || 0
+      limb.d_y = (limbData._y-limb._y)/t || 0
+    })
+    if(keyFrame.onStart) {
+      keyFrame.onStart(this);
+    }
+  }
+  animProcessor() {
+    this.scaleY += (1-this.scaleY)/2;
+    this.scaleX += (1-this.scaleX)/2;
+    this.animFrameCount += 1;
+    // this.animKeyFrame = this.anim[this.animIndex]
+    if(this.animFrameCount>=this.animKeyFrame.time) {
+      this.animIndex += 1;
+      if(this.animIndex>=this.anim.length) {
+        //finish anim
+        this.anim = null;
+        this.endAnim();
+        return;
+      }
+      this.animKeyFrame = this.anim[this.animIndex];
+      this.animStartFrame(this.animKeyFrame);
+      this.animFrameCount=0;
+    }
+    var time = this.animKeyFrame.time;
+    // var t = this.animFrameCount/time;
+    this.animKeyFrame.limbs.forEach(limbData => {
+      var limb = this[limbData.limb]
+      // if(limbData.rotation) limb.rotation = limbData.rotation*t;
+      // if(limbData.x) limb.x = limbData.x*t;
+      // if(limbData._x) limb._x = limbData._x*t;
+      // if(limbData.y) limb.y = limbData.y*t;
+      // if(limbData._y) limb._y = limbData._y*t;
+      limb.rotation += limb.drotation;
+      limb.x += limb.dx;
+      limb._x += limb.d_x;
+      limb.y += limb.dy;
+      limb._y += limb.d_y;
+    })
+    if(this.animKeyFrame.dx) {
+      this.parent.vx += this.animKeyFrame.dx/time*this.parent.dx;
+    }
+    if(this.animKeyFrame.customUpdate) {
+      this.animKeyFrame.customUpdate(this);
+    }
+    // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
+  }
   draw(x,y) {
     // canvas.strokeRect(x-this.w/2,y-this.h/2,this.w,this.h);
     this.drawOutline(x,y);
     super.draw(x,y);
   }
+}
+
+var anims = {
+  punch1: [
+    { limbs: 
+      [
+        {limb: 'arm1', rotation: Math.PI},
+        {limb: 'arm2', rotation: Math.PI},
+        {limb: 'body2', rotation: -Math.PI/4},
+        // {limb: 'hips', rotation: Math.PI/4},
+      ],
+      time: 5, dx: -6
+    },
+    {limbs:[],time: 3, dx: 12},
+    { limbs: 
+      [
+        {limb: 'arm1', rotation: Math.PI*1.2},
+        {limb: 'arm2', rotation: Math.PI*1.2},
+        {limb: 'body2', rotation: Math.PI/4},
+        {limb: 'body', rotation: Math.PI/4},
+        {limb: 'head', rotation: -Math.PI/8},
+        {limb: 'legL', rotation: Math.PI/4},
+        {limb: 'legL2', rotation: Math.PI/4},
+        // {limb: 'hips', rotation: -Math.PI/2},
+      ],
+      onStart: self=>{
+        self.attacking=true
+        var p = self.parent;
+        if(!p.grounded && p.mx || p.isBot) {
+          p.vx = (p.dx*p.jumpSpeedBoost)
+        }
+      },
+      time: 3, dx:12
+    },
+    {
+      limbs:[],
+      time: 12
+    }
+  ],
+  flipKick: [
+    {
+      limbs: 
+      [
+        {limb: 'arm1', rotation: Math.PI*1.2},
+        {limb: 'arm2', rotation: Math.PI*1.2},
+        {limb: 'body2', rotation: Math.PI/4},
+        {limb: 'body', rotation: Math.PI/4},
+        {limb: 'head', rotation: -Math.PI/8},
+        {limb: 'legL', rotation: Math.PI/4},
+        {limb: 'legL2', rotation: Math.PI/4},
+        // {limb: 'hips', rotation: -Math.PI/2},
+      ], time: 1,
+    },
+    {
+      limbs: 
+      [
+        {limb: 'body2', rotation: -Math.PI/4},
+        {limb: 'body', rotation: -Math.PI/4},
+        {limb: 'head', rotation: -Math.PI/8},
+        {limb: 'legL', rotation: Math.PI/2},
+        {limb: 'legR', rotation: 0},
+        {limb: 'legL2', rotation: Math.PI/2},
+        {limb: 'legR2', rotation: Math.PI/2},
+        // {limb: 'hips', rotation: -Math.PI/2},
+      ], time: 5,
+      onStart: self=> {
+        self.attacking = true;
+        self.knockbackUp = -20;
+      },
+    },
+    {
+      limbs:[
+        {limb: 'legR', rotation: -Math.PI/2},
+        {limb: 'legR2', rotation: 0},
+        {limb: 'body', rotation: -Math.PI/2},
+        {limb: 'arm1', rotation: -Math.PI/3},
+        {limb: 'arm2', rotation: -Math.PI/3},
+
+      ],time: 7,
+      onStart: self=>self.parent.vz -= 8,
+    },
+    {
+      limbs: 
+      [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: -Math.PI*2},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: 0},
+        {limb: 'arm2', rotation: 0},
+        // {limb: 'hips', rotation: -Math.PI/2},
+      ], time: 30, onStart: self=>{
+        self.attacking=false;
+        self.knockbackUp = 0;
+      }
+    }
+  ],
+  armSpinny: [
+    {
+      limbs: [],
+      customUpdate: self=>{
+        var aa = self.arm1.rotation;
+        self.attacking = true;
+        self.parent.vx = self.parent.dx*self.parent.speed;
+        self.parent.vz = 0;
+        self.walk();
+        self.arm1.rotation = aa + Math.PI/4;
+        self.arm2.rotation = aa + Math.PI/4+Math.PI;
+      }, time: 50,
+    }
+  ]
 }
