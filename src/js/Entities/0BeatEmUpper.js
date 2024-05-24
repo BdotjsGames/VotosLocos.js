@@ -350,6 +350,7 @@ class BeatEmUpper {
             if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
                 enemy.getHit(this);
                 this.vx = 0;
+                if(this.jumpCount !=0) this.jumpCount = 1
             }
         })
     }

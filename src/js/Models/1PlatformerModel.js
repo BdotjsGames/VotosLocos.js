@@ -1,6 +1,7 @@
 class PlatformerModel extends Model {
-  constructor(w,h,color,color2,parent, al) {
+  constructor(w,h,color,color2,parent, modelOptions) {
     super(parent);
+    this.modelOptions = modelOptions;
     this.w=w;this.h=h;this.color=color;   
     this.color2= color2;
     this.moving = false;
@@ -15,8 +16,8 @@ class PlatformerModel extends Model {
     this.impactStopTimer=0;
     this.self = this;
     this.anims=anims;
-    // this.attackCombo = [anims.punch1, anims.flipKick, anims.armSpinny];
-    this.attackCombo = [anims.flipKick];
+    this.attackCombo = [anims.punch1, anims.flipKick, anims.armSpinny];
+    // this.attackCombo = [anims.flipKick];
     this.attackComboIndex = 0;
     this.attackAnim = anims.punch1;
     if(!parent) {
@@ -28,12 +29,27 @@ class PlatformerModel extends Model {
       }
     }
     this.createModel();
+    if(this.modelOptions) {
+      this.modelOptions.forEach((index, i) => {
+        var option = this.customizableOptions[i]
+        option.index = index;
+        option.onChange(option.options[index], index);
+      })
+    } else {
+      this.customizableOptions.forEach(option => {
+        if(!option.options||!option.options.length)return;
+        var index = Math.floor(Math.random()*option.options.length)
+        option.index = index;
+        option.onChange(option.options[index], index)
+      });
+    }
+  }
+  getModelOptions() {
+    var modelOptions = []
     this.customizableOptions.forEach(option => {
-      if(!option.options||!option.options.length)return;
-      var index = Math.floor(Math.random()*option.options.length)
-      option.index = index;
-      option.onChange(option.options[index], index)
-    });
+      modelOptions.push(option.index);
+    })
+    return modelOptions;
   }
   createOptions(options={}) {
     var armOptions = options.armOptions||IMAGES.armOptions;
@@ -117,7 +133,7 @@ class PlatformerModel extends Model {
           }
           this.legLength = value;
           var ll = value;
-          var db1 = 8
+          var db1 = 6
           this.body.y = -12-ll*4+db1;
           this.legL2.y=ll;
           this.legR2.y=ll;
@@ -776,7 +792,7 @@ var anims = {
       ], time: 5,
       onStart: self=> {
         self.attacking = true;
-        self.knockbackUp = -20;
+        self.knockbackUp = -10;
       },
     },
     {

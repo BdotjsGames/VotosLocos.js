@@ -12,6 +12,7 @@ class CharacterCustomizerScene extends Scene{
         var s = 0.05
         this.playButton = this.addSelectableButton(new ButtonUI("play", 0.5,0.8,0.3,0.1,s,() => {
             this.model.scaleBoth=1;
+            this.model.modelOptions = this.model.getModelOptions();
             this.driver.setScene(new GameSceneBasic(this.model))
         }).center())
 
@@ -22,6 +23,7 @@ class CharacterCustomizerScene extends Scene{
     }
     update() {
         super.update();
+        
         this.model.update();
         if(getButtonDown(Buttons.pause)) {
             this.driver.setScene(new MenuScene(this));
@@ -29,8 +31,15 @@ class CharacterCustomizerScene extends Scene{
     }
     draw() {
         super.draw();
+        canvas.save();
+        canvas.translate(CE.width/2,CE.height*.6+45);
+        canvas.scale(2,1);
+        canvas.fillStyle = shadow;
+        canvas.fillRect(-30,-30,60,60);
+        canvas.restore();
+        // canvas.fillStyle = 'black';
+        // canvas.fillRect(CE.width/4,CE.height*.6+45, CE.width/2,10);
         this.model.draw(CE.width/2,CE.height*.6);
-        canvas.fillRect(CE.width/2,CE.height*.6+25, 10,10);
     }
     loadModel(model) {
         // if(this.model&&this.model!=model) {

@@ -10,6 +10,7 @@ class GameSceneBasic extends Scene {
       this.maxY = this.startingY + this.groundHeight/2;
       this.enemies = [];
       this.players = [];
+      
       for(var i=0;i<10;i++) {
         var x = 1500*Math.random();
         var y = 300*Math.random()/3+this.startingY-this.groundHeight-300;
@@ -64,6 +65,7 @@ class GameSceneBasic extends Scene {
         this.backgrounds.push(new ImageDrawable(buildingImage, x,y-h/2, w,h));
       }
       this.addEntity(this.player = new Player(100,this.startingY,model));
+      window.player = this.player;
       // this.addEntity(new Knight(100,-100));
       // this.addEntity(new NPC(2100,0, CurleyModel));
       // this.addEntity(new Curley(2100,0));

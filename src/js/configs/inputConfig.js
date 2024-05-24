@@ -10,6 +10,18 @@ var gamepadConfig = {
   select: 9,
 }
 
+var gamepadConfig2 = {
+  leftBumper: 4,
+  A: 3,
+  B: 2,
+  X: 1, //untested
+  Y: 0, //untested
+  start: 8,
+  select: 9,
+}
+
+gamepadConfig = gamepadConfig2
+
 function addInputToButton(buttonName, keys = [], buttons = []) {
   var button = Buttons[buttonName];
   if (!button) {
@@ -44,7 +56,7 @@ window.addEventListener('load', function (e) {
   var buttonNames = ['A', 'B', 'X', 'Y'];
   configureButtonList(buttonNames, 'keys', 'JKLI'.keyCodes);
   configureButtonList(buttonNames, 'keys', 'XCVB'.keyCodes); //Z is skipped for azerty
-  configureButtonList(buttonNames, 'buttons', [0, 1, 2, 3]);
+  configureButtonList(buttonNames, 'buttons', [2, 0, 1, 3]);
   configureButtonList(buttonNames, 'touchButtons', [0, 1, 2, 3]);
 
   // configureABXY('JKLI'.keyCodes, [gamepadConfig.A,gamepadConfig.B,gamepadConfig.X,gamepadConfig.Y]);

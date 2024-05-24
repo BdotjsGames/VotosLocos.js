@@ -4,13 +4,15 @@ class Player extends BeatEmUpper {
     // this.canAttack = false;
     this.outlineColor = "black";
     this.invulTime = 40;
-    window.player = this;
+    // window.player = this;
     this.highFiveDistance = 40;
     this.buttons={};
     this.buttons.B = Buttons.B;
     this.buttons.crouch = Buttons.crouch;
     this.buttons.highFive = Buttons.highFive;
     this.buttons.jump = Buttons.jump;
+    this.networkedState = {};
+    this.networkedStateDiff = {};
   }
   
   addShoes() {
@@ -36,8 +38,14 @@ class Player extends BeatEmUpper {
     this.allies = this.scene.players;
   }
   getInputs() {
+    this.networkedStateDiff = {};
+    // this.needsNetworkUpdate = false;
     this.model.outlineColor = this.outlineColor;
-    if(this.inputBlocked)return;
+    if(this.inputBlocked) {
+      this.setNetworkedStateAttr('mx', this.mx);
+      this.setNetworkedStateAttr('my', this.my);
+      return;
+    }
     // if(this.scene.dialogueController.simpleDialogue.text&&!this.scene.dialogueController.current.done) {
       // this.mx = 0;return;
     // }
@@ -57,31 +65,62 @@ class Player extends BeatEmUpper {
     // this.crouching = axes.inputY > 0;
     if(getButtonDown(this.buttons.jump)) {
       this.jump();
+      this.setNetworkedStateAttr('jump', true);
     }
     if(!getButton(this.buttons.jump)) {
       this.unjump();
+      this.setNetworkedStateAttr('unjump', true);
+
     }
     if(this.crouching = getButton(this.buttons.crouch)) {
       this.crouch();
+      this.setNetworkedStateAttr('crouch', true);
     }
     // if(this.grounded&&getButton(this.buttons.B))this.model.highFive();
     if(getButtonDown(this.buttons.highFive)&&this.model.cooldownTimer<2) {
       this.attemptHighFive();
+      this.setNetworkedStateAttr('attemptHighFive', true);
+      this.setNetworkedStateAttr('unHighFive', false);
     }
-    if(this.model.highFiving&&getButton(this.buttons.highFive))this.model.highFive();
+    if(this.model.highFiving&&getButton(this.buttons.highFive)) {
+      this.model.highFive();
+    } else if(this.model.highFiving) {
+      this.setNetworkedStateAttr('unHighFive', true);
+    }
     if(getButtonDown(this.buttons.B)) {
       // if(this.grounded&&!this.crouching) {
       //   this.jump();
       //   this.jump();
       // } else 
         this.attack();
+      this.setNetworkedStateAttr('attack', true);
       // else
         // this.model.highFive();
     }
     if(keys[82]) {
       this.die();
     }
-    
+    this.setNetworkedStateAttr('mx', this.mx);
+    this.setNetworkedStateAttr('my', this.my);
+    if(this.needsNetworkUpdate) {
+      this.sendNetworkedState();
+    }
+  }
+  setNetworkedStateAttr(attr, value) {
+    if(this.networkedState[attr] != value) {
+      this.needsNetworkUpdate = true;
+      this.networkedState[attr] = value;
+      this.networkedStateDiff[attr]= value;
+    }
+  }
+  sendNetworkedState() {
+    this.needsNetworkUpdate = false;
+    var state = this.networkedStateDiff;
+    var inputs = ['x','y','z','vx','vy','vz','mx','my']
+    inputs.forEach(input => {
+      state[input] = this[input]
+    })
+    // console.log(this.networkedStateDiff) 
   }
   die() {
     if(this.shouldDelete)return;
