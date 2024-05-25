@@ -78,6 +78,7 @@ class Player extends BeatEmUpper {
     }
     // if(this.grounded&&getButton(this.buttons.B))this.model.highFive();
     if(getButtonDown(this.buttons.highFive)&&this.model.cooldownTimer<2) {
+      console.log('highFive');
       this.attemptHighFive();
       this.setNetworkedStateAttr('attemptHighFive', true);
       this.setNetworkedStateAttr('unHighFive', false);

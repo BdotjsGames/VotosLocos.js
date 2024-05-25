@@ -346,6 +346,8 @@ class PlatformerModel extends Model {
     this.attackComboIndex += 1;
     if(this.attackComboIndex>=this.attackCombo.length)this.attackComboIndex=0;
     // this.startAnim(this.attackAnim);
+    this.attackTimer = 15;
+
   }
   slide() {
 

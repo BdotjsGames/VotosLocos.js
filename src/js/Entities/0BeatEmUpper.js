@@ -388,6 +388,7 @@ class BeatEmUpper {
                 closest = h;
             }
         })
+        if(!closest)return;
         var r = this.highFiveDistance+closest.highFiveDistance;
         if(minDist<r*r) {
             closest.highFiveTarget = this;
