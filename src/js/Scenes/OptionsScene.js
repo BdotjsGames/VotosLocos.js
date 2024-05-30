@@ -1,6 +1,7 @@
 class OptionsScene extends AdditiveScene {
     constructor(prevScene) {
         super(prevScene);
+        this.useTouchAsMouse = true;
         this.isOptionsScene = true;
         var x = 0.4
         var y = 0.2;

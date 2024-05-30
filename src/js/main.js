@@ -124,6 +124,9 @@ var MainDriver = {
       canvas.fillRect(0,0,CE.width,CE.height);
       canvas.globalAlpha=1;
     }
+    if(touchOn && !this.scene.dialogueBlocking) {
+      touchDraw();
+    }
   }
 }
 

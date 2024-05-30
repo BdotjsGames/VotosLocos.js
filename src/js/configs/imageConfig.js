@@ -90,6 +90,15 @@ IMAGES.botTorsoOptions = [
 ]
 
 
+IMAGES.ninjaHeadOptions = [
+    IMAGES.ninjaHead1 = ImageLoader.loadImage('NinjaHead1.png'),
+]
+
+IMAGES.ninjaTorsoOptions = [
+    IMAGES.ninjaTorso1 = ImageLoader.loadImage('NinjaTorso1.png'),
+]
+
+
 // IMAGES.drone = ImageLoader.loadImage('drone.png');
 IMAGES.drone = ImageLoader.loadImage('RussianBot1.png');
 IMAGES.GoArrow = ImageLoader.loadImage('GoArrow.png');
@@ -118,7 +127,7 @@ IMAGES.hairOptions = [
     // IMAGES.hair3Y        = ImageLoader.loadImage("hair3Y.png"),
     IMAGES.hairMohawk    = ImageLoader.loadImage("hairMohawk.png", PALLETE_KEY.hair),
     IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png", PALLETE_KEY.hair),
-    IMAGES.hairCholo      = ImageLoader.loadImage("hairCholo.png", PALLETE_KEY.hair),
+    IMAGES.hairCholo      = ImageLoader.loadImage("HairCholo.png", PALLETE_KEY.hair),
     IMAGES.hijab         = ImageLoader.loadImage("hijab.png", PALLETE_KEY.hair),
     null,
 ]

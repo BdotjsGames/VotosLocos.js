@@ -1,7 +1,7 @@
 class PauseScene extends AdditiveScene {
     constructor(prevsScene) {
         super(prevsScene)
-
+        this.useTouchAsMouse = true;
         var h = 0.1;
         var fontSize = 0.07;
         var spacing = .05;

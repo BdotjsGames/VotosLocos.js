@@ -5,7 +5,7 @@ class Bot extends BeatEmUpper {
 
         this.speed = 3;
         this.grav = 0.25;
-        this.shootTime = 80*2;
+        this.shootTime = 10;
         this.shootTimer = 60;
         this.heal = 0.01;
         this.contactDamage = 0;
@@ -21,6 +21,9 @@ class Bot extends BeatEmUpper {
         this.attackHitbox = {
             width: 40, height: 40,
         }
+        this.noticeDistance = 300
+        this.attackX = 240
+        this.attackY = 120
     }
     setScene(scene) {
         this.scene=scene;
@@ -42,11 +45,11 @@ class Bot extends BeatEmUpper {
         var dx = player.x-this.x;
         var dy = player.y-this.y;
         var dz = player.z-this.z;
-        if(Math.abs(dx)+Math.abs(dy) < 300 && this.dx * dx >0) {
+        if(Math.abs(dx)+Math.abs(dy) < this.noticeDistance && this.dx * dx >0) {
             this.noticed = true;
         }
         if(!this.noticed) {
-            if(Math.random()>.9&&frameCount%10==0)this.dx = this.dx*-1;
+            if(Math.random()>.8&&frameCount%10==0)this.dx = this.dx*-1;
             return;
         }
         // if(Math.random()>.9&&frameCount%10==0) {
@@ -57,14 +60,14 @@ class Bot extends BeatEmUpper {
         if(!this.model.anim) {
             this.dx = dx>0?1:-1;
             this.shootTimer++;
-            if(this.invul<=0&&Math.abs(dx)<240 && Math.abs(dy)<120+player.h/2 && this.shootTimer>=this.shootTime) {
+            if(this.invul<=0&&Math.abs(dx)<this.attackX && Math.abs(dy)<this.attackY+player.h/2 && this.shootTimer>=this.shootTime) {
                 // this.vx = this.dx * this.speed*2;
                 // this.vy = Math.sign(dy)*this.speed*2;
                 this.mx = dx>0?1:-1;
                 this.my = dy>0?1:-1;
                 this.jumpSpeedBoost = this.speed*3;
                 this.attack();
-                this.shootTime = 0;
+                this.shootTimer = 0;
             }
             // this.vy += Math.cos(frameCount*Math.PI/10)*.1;
             // this.vz += ((player.z - 50 - this.z)/50-this.vz)/10

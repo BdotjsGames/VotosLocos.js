@@ -1,4 +1,6 @@
 var FONT_FAMILY = {
     // default: "Impact",
-    default: "Arial",
+    // default: "Pixelify Sans",
+    default: "Maison",
+    // default: "Arial",
 }

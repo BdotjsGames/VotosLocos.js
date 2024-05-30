@@ -3,14 +3,15 @@
 class CharacterCustomizerScene extends Scene{
     constructor() {
         super();
-        this.backButton = this.addSelectableButton(new ButtonUI("back", 0.1,0.1,0.15,0.1,0.05,() => {
+        this.useTouchAsMouse = true;
+        this.backButton = this.addSelectableButton(new ButtonUI("BACK", 0.1,0.1,0.15,0.1,0.05,() => {
             this.driver.setScene(new MenuScene(this))
         }).center())
         this.optionsGroup = this.addEntity(new Group(0,0));
         
         this.loadModel(new PlayerModel());
         var s = 0.05
-        this.playButton = this.addSelectableButton(new ButtonUI("play", 0.5,0.8,0.3,0.1,s,() => {
+        this.playButton = this.addSelectableButton(new ButtonUI("PLAY", 0.5,0.8,0.3,0.1,s,() => {
             this.model.scaleBoth=1;
             this.model.modelOptions = this.model.getModelOptions();
             this.driver.setScene(new GameSceneBasic(this.model))
@@ -59,7 +60,7 @@ class CharacterCustomizerScene extends Scene{
             var x = 0.8;
             var y = 0.1+0.1*i;
             var btn = this.addSelectableButton(new BackAndForther(
-                customizableOption.name, x,y,0.15,0.08,value=>{
+                customizableOption.name.toUpperCase(), x,y,0.2,0.08,value=>{
                     customizableOption.index = value;
                     customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
                 }).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
