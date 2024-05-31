@@ -10,6 +10,8 @@ class BackAndForther extends ButtonUI {
         this.value = 0;
         this.onValueChanged = onValueChanged;
         this.wraps = true;
+        this.drawBallotMark = false;
+        this.textPosition = 10
         // this.knob = new CircleDrawable(0,0,h);//.setTrueCoords(false);
         // this.knob = new KnobUI(0,h/2,h).setTrueCoords(true);
         // x - 0.1, y, 0.1, 0.1
@@ -18,6 +20,8 @@ class BackAndForther extends ButtonUI {
         this.trueCoords=false;
         this.leftButton  = new ButtonUI("<", x-bw, y+h/2, bw, h, size, this.decrement.bind(this)).center()
         this.rightButton = new ButtonUI(">", x+w+bw, y+h/2, bw, h, size, this.increment.bind(this)).center();
+        this.leftButton.drawBallotMark = false;
+        this.rightButton.drawBallotMark = false;
         // this.leftButton.setSelected = this.setSelected.bind(this);
         // this.rightButton.setSelected = this.setSelected.bind(this);
         // this.leftButton.shouldSetSelectOnHover = true;

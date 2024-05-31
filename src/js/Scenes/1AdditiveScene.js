@@ -5,7 +5,7 @@ class AdditiveScene extends Scene {
         this.isAdditiveScene = true;
         this.drawsPrevscene = true;
         this.drawsPanel = true;
-        this.panelColor = "#aaae";
+        this.panelColor = "#333e";
     }
     back() {
         this.driver.setScene(this.prevScene);

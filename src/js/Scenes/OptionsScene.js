@@ -10,7 +10,7 @@ class OptionsScene extends AdditiveScene {
         var fontSize = 0.04;
         var h = 0.07;
         this.addSelectableButton(
-            new ButtonUI("back",0.05,0.05,0.13,0.07,0.05,e=>{
+            new ButtonUI("back",0.05,0.05,0.25,0.07,0.05,e=>{
                 this.driver.setScene(this.prevScene);
             }).setSelected()
         )
