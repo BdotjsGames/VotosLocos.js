@@ -64,7 +64,7 @@ class CharacterCustomizerScene extends Scene{
                     customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
                 }).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
             );
-            if(!i)btn.setSelected();
+            if(i==0)btn.setSelected();
             // this.optionsGroup.addEntity(
             //     new DrawableText(customizableOption.name, x,y,0.4,0.1,size)
             //     .setTrueCoords(false)
