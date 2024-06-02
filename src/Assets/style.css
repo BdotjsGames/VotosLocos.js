@@ -12,11 +12,21 @@ body {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
-  font-family: 'pixel';
+  /* font-family: 'pixel'; */
 }
-@font-face {
+/* @font-face {
   font-family: 'pixel';
-  src: url('./Assets/Fonts/PixelifySans-VariableFont_wght.tff');
+  src: url('./Fonts/PixelifySans-VariableFont_wght.tff');
+} */
+@font-face {
+  font-family: 'Maison';
+  src: url('./Fonts/MaisonNeueDemi.otf');
+}
+* {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: 200; */
+  font-style: normal;
 }
 #gc {
   display: block;

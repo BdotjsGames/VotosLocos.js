@@ -137,6 +137,9 @@ class BeatEmUpper {
     crouch() {
         if (!this.grounded) {
             this.vz += this.crouchFallSpeed;
+            if(this.canAttack) {
+                this.model.slide();
+            }
         }
     }
     update() {
@@ -338,6 +341,13 @@ class BeatEmUpper {
         if(this.model.attacking) {
             this.attackCollisionCheck();
         }
+        if(this.setNetworkedStateAttr) {
+            this.setNetworkedStateAttr('mx', this.mx);
+            this.setNetworkedStateAttr('my', this.my);
+            if(this.needsNetworkUpdate) {
+                this.sendNetworkedState();
+            }
+        }
     }
     attackCollisionCheck() {
         this.enemies.forEach(enemy => {
@@ -476,7 +486,7 @@ class BeatEmUpper {
         var g = 0.2;
         var x = this.x;
         var y = this.y;
-        createFadingParticle(this.scene,x,y-20,100)
+        createFadingParticle(this.scene,x,y-20,this.z,100)
         // var pow = this.scene.addEntity(new ImageParticle(IMAGES.pow, (this.x+closest.x)/2-32, this.y-128, 64,64,0,0,50,-0.00));
         //     pow.addMorph("pow",new Morph(null, {scaleW: 0.5, scaleH: 0.5, alpha: 0.5}, {scaleW: 1.5, scaleH: 1.5, alpha: 1}, 5, MorphType.easeOutQuad), true)
         for (var i = 0; i < 9; i++) {
@@ -491,26 +501,40 @@ class BeatEmUpper {
     }
 }
 
-function createFadingParticleCluster(scene,x,y,size,variance) {
+function createFadingParticleCluster(scene,x,y,z,size,variance) {
     for(var i=0;i<3;i++ ) {
         createFadingParticle(scene,
             x + (Math.random()*2-1)*variance,
             y + (Math.random()*2-1)*variance,
+            z,
             size+Math.random()*variance/2
         );
     }
 }
 
-function createFadingParticle(scene,x,y,size){
-    var p = scene.addEntity(new Particle(x,y-50,size,size,"#ffffff", 0,0, 15,0))
+function createFadingParticle(scene,x,y,z,size){
+    var p = scene.addEntity(new Particle(x,y-50+z,size,size,"#ffffff", 0,0, 15,0))
     p.colorValue = 1;
     p.customUpdate = fadingParticleUpdate;
+
+    // var p2 = scene.addEntity(new Particle(x,y-50,size*.9,size*.9,"#ffffff", 0,0, 15,0))
+    // p2.colorValue = 1;
+    // p2.customUpdate = fadingParticleUpdate;
 }
 
 function fadingParticleUpdate() {
     this.colorValue = (0.5-this.colorValue)*0.8;
     var v = Math.floor(this.colorValue*255);
     this.color = `rgb(${v},${v/2},${v/2})`
+    this.alpha = clamp((this.life/this.maxLife)*2,0,1);
+    // console.log(this);
+}
+
+
+function fadingParticleUpdate2() {
+    this.colorValue += (0.7-this.colorValue)*0.8;
+    var v = Math.floor(this.colorValue*255);
+    this.color = `rgb(${v},${v},${v})`
     this.alpha = clamp((this.life/this.maxLife)*2,0,1);
     // console.log(this);
 }

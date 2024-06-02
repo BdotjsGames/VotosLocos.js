@@ -4,6 +4,7 @@ class BotModel extends PlatformerModel {
         this.face.hidden = true;
         this.mouth.hidden = true;
         this.anims = botanims;
+        // this.attackSound = {play(){}}
         this.attackAnim = this.anims.punch1;
         this.attackCombo = [this.anims.punch1];
         // if(Math.random()>.5) {
@@ -17,7 +18,7 @@ class BotModel extends PlatformerModel {
             hairOptions: [],
             bodyOptions: [IMAGES.botTorsoOptions[3]],
             armOptions: [IMAGES.armOptions[0]],
-            legOptions:[8],
+            legOptions:[6],
             glassesOptions: [],
             skinOptions: [],
             canWheelchair: false,
@@ -60,13 +61,13 @@ var botanims = {
             p.vx += (p.dx*p.jumpSpeedBoost)
             p.mx = p.dx;
         },
-        time: 3*3, dx:12*9
+        time: 3*3, dx:20*9
       },
       {
         limbs:[
             {limb: 'body', rotation: Math.PI/3},
         ],
-        time: 12, dx:12
+        time: 6, dx:24
       }, 
       {
         limbs: [
@@ -85,7 +86,7 @@ var botanims = {
             self.parent.mx = 0;
             self.parent.my = 0;
         },
-        time: 60, dx: 80
+        time: 20 , dx: 100
       }
     ],
     punch2: [

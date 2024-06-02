@@ -2,9 +2,10 @@
 
 var touchOn = false;
 touchStarts = [];
+var touchDown = false;
 var touchJoySticks = [
   {
-    x: .15, y:.75, r: .2,
+    x: .15, y:.80, r: .2,
     area: {
       x: 0, y: 0, w: 0.5, h: 1
     },
@@ -24,16 +25,44 @@ var touchJoySticks = [
 var touchButtons = [
   {
     name: 'A',
-    x: .65, y:.75, r:.1,
+    x: .85, y:.85, r:.1,
     area: {
-      x: 0.5, y: 0, w: 0.25, h:1
+      // x: 0.75, y: 0, w: 0.25, h:1
+      x: .85-.1, y:.85-.1, w: .2, h: .2
+    },
+    held: false,
+  },
+  {
+    name: 'B',
+    x: .65, y:.85, r:.1,
+    area: {
+      x: .65-.1, y:.85-.1, w: .2, h: .2
+    },
+    held: false,
+  },
+  {
+    name: 'X',
+    x: .75, y:.65, r:.1,
+    area: {
+      // x: 0.5, y: 0, w: 0.25, h:1
+      x: .75-.1, y:.65-.1, w: .2, h: .2
     },
     held: false,
   },{
-    name: 'B',
-    x: .85, y:.75, r:.1,
+    name: 'Y',
+    x: .95, y:.65, r:.1,
     area: {
-      x: 0.75, y: 0, w: 0.25, h:1
+      // x: 0.75, y: 0, w: 0.25, h:1
+      x: .95-.1, y:.65-.1, w: .2, h: .2
+    },
+    held: false,
+  },
+  {
+    name: '||',
+    x: .95, y:.05, r:.1,
+    area: {
+      // x: 0.75, y: 0, w: 0.25, h:1
+      x: .95-.1, y:.05-.1, w: .2, h: .2
     },
     held: false,
   },
@@ -69,6 +98,7 @@ function pointInRect(x,y,rect) {
 }
 
 function touchDraw() {
+  if(MainDriver.scene.useTouchAsMouse)return;
   for(var i=0;i<touchJoySticks.length;++i) {
     var joyStick = touchJoySticks[i];
     var angle = joyStick.output.angle;
@@ -93,8 +123,13 @@ function touchDraw() {
     if(button.held)color = 'rgba(255,0,0,0.5)';
     canvas.fillStyle = color
     canvas.fillRect(x-w/2,y-h/2,w,h);
+    canvas.fillStyle = "#fff";
+    canvas.textAlign = 'center';
+    canvas.font = "20px Arial";
+    canvas.fillText(button.name, x,y);
   }
 }
+
 
 function touchstart(e) {
   initializeSound();
@@ -107,6 +142,17 @@ function touchstart(e) {
   for(var i=0;i<touches.length;i++) {
     var touch = e.changedTouches[i];
     var {x, y} = this.getTouchPosition(touch, e);
+    if(MainDriver.scene.useTouchAsMouse) {
+      mouse.x = x*CE.width;
+      mouse.y = y*CE.height;
+      // mouse.down = true;
+      if(!touchDown) {
+        touchDown = true;
+        mouse.down = true;
+      }
+      mouse.held = true;
+      return;
+    }
     touchStarts.push({x,y});
     for(var j=0;j<touchJoySticks.length;j++) {
       var joyStick = touchJoySticks[j];
@@ -137,12 +183,19 @@ function touchstart(e) {
 function touchend(e) {
   // if(this.scene.startGame)this.scene.startGame();
   // if(this.scene.time)this.scene.time=0;
+  touchDown = false;
   var touches = e.changedTouches;
   e.preventDefault();
   e.stopImmediatePropagation();
   for(var i=0;i<touches.length;i++) {
     var touch = e.changedTouches[i];
     var {x, y} = this.getTouchPosition(touch, e);
+    if(MainDriver.scene.useTouchAsMouse) {
+      mouse.x = x*CE.width;
+      mouse.y = y*CE.height;
+      mouse.held = false;
+      return;
+    }
     for(var j=0;j<touchJoySticks.length;j++) {
       var joyStick = touchJoySticks[j];
       if(pointInRect(x,y,joyStick.area)) {
@@ -158,8 +211,16 @@ function touchend(e) {
   }
 }
 
+function touchStartForMouse() {
+  // touchDown = true;
+  if(MainDriver.scene.useTouchAsMouse)
+    mouse.down = true;
+}
 
+window.addEventListener('load', e=> {
   window.addEventListener('touchstart', touchstart,{ passive: false });
+  window.addEventListener('touchstart', touchStartForMouse,{ passive: false });
   window.addEventListener('touchmove', touchstart,{ passive: false });
   window.addEventListener('touchend', touchend);
   window.addEventListener('touchcancel', touchend);
+})

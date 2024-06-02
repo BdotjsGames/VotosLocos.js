@@ -3,14 +3,15 @@
 class CharacterCustomizerScene extends Scene{
     constructor() {
         super();
-        this.backButton = this.addSelectableButton(new ButtonUI("back", 0.1,0.1,0.15,0.1,0.05,() => {
+        this.useTouchAsMouse = true;
+        this.backButton = this.addSelectableButton(new ButtonUI("BACK", 0.15,0.1,0.25,0.1,0.05,() => {
             this.driver.setScene(new MenuScene(this))
         }).center())
         this.optionsGroup = this.addEntity(new Group(0,0));
         
         this.loadModel(new PlayerModel());
         var s = 0.05
-        this.playButton = this.addSelectableButton(new ButtonUI("play", 0.5,0.8,0.3,0.1,s,() => {
+        this.playButton = this.addSelectableButton(new ButtonUI("PLAY", 0.5,0.85,0.3,0.1,s,() => {
             this.model.scaleBoth=1;
             this.model.modelOptions = this.model.getModelOptions();
             this.driver.setScene(new GameSceneBasic(this.model))
@@ -30,16 +31,18 @@ class CharacterCustomizerScene extends Scene{
         }
     }
     draw() {
-        super.draw();
+        var x = CE.width*.3;
         canvas.save();
-        canvas.translate(CE.width/2,CE.height*.6+45);
+        canvas.translate(x,CE.height*.6+45);
         canvas.scale(2,1);
         canvas.fillStyle = shadow;
         canvas.fillRect(-30,-30,60,60);
         canvas.restore();
         // canvas.fillStyle = 'black';
         // canvas.fillRect(CE.width/4,CE.height*.6+45, CE.width/2,10);
-        this.model.draw(CE.width/2,CE.height*.6);
+        this.model.draw(x, CE.height*.6);
+        super.draw();
+
     }
     loadModel(model) {
         // if(this.model&&this.model!=model) {
@@ -56,10 +59,10 @@ class CharacterCustomizerScene extends Scene{
 
         
         model.customizableOptions.forEach((customizableOption,i) => {
-            var x = 0.8;
+            var x = 0.75;
             var y = 0.1+0.1*i;
             var btn = this.addSelectableButton(new BackAndForther(
-                customizableOption.name, x,y,0.15,0.08,value=>{
+                customizableOption.name.toUpperCase(), x,y,0.3,0.08,value=>{
                     customizableOption.index = value;
                     customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
                 }).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)

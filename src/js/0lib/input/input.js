@@ -23,6 +23,7 @@ function inputUpdate() {
   gamepadAnyButtonDown = false;
   mouse.down = false;
   mouse.up = false;
+
   touchStarts = [];
   Buttons.toCache.forEach(function(e) {
     e.cache = e.toCache;

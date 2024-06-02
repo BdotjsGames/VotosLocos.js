@@ -5,6 +5,8 @@ class DrawableText extends Drawable{
       this.fontSize = size;
       this.fontFamily = FONT_FAMILY.default;
       this.textAlign ='center';
+      this.textBaseline = 'middle';
+      this.textPosition = w/2;
     }
     drawShape() {
       // super.drawShape();
@@ -15,8 +17,8 @@ class DrawableText extends Drawable{
       canvas.fillStyle=this._color;
       var ps = this.pixelSpace();
       canvas.font = this.fontSize*ps.W +'px ' + this.fontFamily;
-      canvas.textAlign = this.textAlign;
+      canvas.textAlizgn = this.textAlign;
       canvas.textBaseline='middle';
-      canvas.fillText(this.text,w/2, h/2,w);
+      canvas.fillText(this.text,this.textPosition, h/2,w);
     }
   }

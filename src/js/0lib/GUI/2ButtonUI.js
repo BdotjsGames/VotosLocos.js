@@ -23,6 +23,12 @@ class ButtonUI extends DrawableText{
       this.outlineOnHover = true;
       this.selected = false;
       this.directionallyLinkedButtons = [];
+      this.drawBallotMark = true;
+
+      if(w>.1) {
+        this.textAlign = 'left';
+        this.textPosition = 40;
+      }
     }
     linkButton(btn, dir) {
       var prev = this.directionallyLinkedButtons[dir]
@@ -149,7 +155,22 @@ class ButtonUI extends DrawableText{
       }
       canvas.fillstyle = this._color;
       super.drawShape();
+      if(this.drawBallotMark){
+        if(this.hover)
+          canvas.strokeStyle = '#f55';
+        else
+          canvas.strokeStyle = "#000";
+        drawBallotMark(20, this._h*.5);
+      }
+
+      // drawBallotMark(this._w*.9, this._h*.5);
       // if(this.alpha>0)this.alpha -= 0.1;
     }
   }
   
+  function drawBallotMark(x,y) {
+    canvas.lineWidth = 3;
+    canvas.beginPath();
+    canvas.ellipse(x,y,7,12, Math.PI/2,0,Math.PI*2)
+    canvas.stroke();
+  }

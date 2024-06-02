@@ -44,6 +44,9 @@ class Player extends BeatEmUpper {
     if(this.inputBlocked) {
       this.setNetworkedStateAttr('mx', this.mx);
       this.setNetworkedStateAttr('my', this.my);
+      // if(this.needsNetworkUpdate) {
+      //   this.sendNetworkedState();
+      // }
       return;
     }
     // if(this.scene.dialogueController.simpleDialogue.text&&!this.scene.dialogueController.current.done) {
@@ -65,7 +68,9 @@ class Player extends BeatEmUpper {
     // this.crouching = axes.inputY > 0;
     if(getButtonDown(this.buttons.jump)) {
       this.jump();
+      this.setNetworkedStateAttr('jump', false);
       this.setNetworkedStateAttr('jump', true);
+      this.setNetworkedStateAttr('unjump', false);
     }
     if(!getButton(this.buttons.jump)) {
       this.unjump();
@@ -75,12 +80,17 @@ class Player extends BeatEmUpper {
     if(this.crouching = getButton(this.buttons.crouch)) {
       this.crouch();
       this.setNetworkedStateAttr('crouch', true);
+    } else {
+      this.setNetworkedStateAttr('crouch', false);
     }
     // if(this.grounded&&getButton(this.buttons.B))this.model.highFive();
     if(getButtonDown(this.buttons.highFive)&&this.model.cooldownTimer<2) {
       this.attemptHighFive();
+      this.setNetworkedStateAttr('attemptHighFive', false);
       this.setNetworkedStateAttr('attemptHighFive', true);
       this.setNetworkedStateAttr('unHighFive', false);
+    } else {
+      this.setNetworkedStateAttr('attemptHighFive', false);
     }
     if(this.model.highFiving&&getButton(this.buttons.highFive)) {
       this.model.highFive();
@@ -93,7 +103,8 @@ class Player extends BeatEmUpper {
       //   this.jump();
       // } else 
         this.attack();
-      this.setNetworkedStateAttr('attack', true);
+        this.setNetworkedStateAttr('attack', false);
+        this.setNetworkedStateAttr('attack', true);
       // else
         // this.model.highFive();
     }
@@ -102,9 +113,9 @@ class Player extends BeatEmUpper {
     }
     this.setNetworkedStateAttr('mx', this.mx);
     this.setNetworkedStateAttr('my', this.my);
-    if(this.needsNetworkUpdate) {
-      this.sendNetworkedState();
-    }
+    // if(this.needsNetworkUpdate) {
+    //   this.sendNetworkedState();
+    // }
   }
   setNetworkedStateAttr(attr, value) {
     if(this.networkedState[attr] != value) {
@@ -120,6 +131,9 @@ class Player extends BeatEmUpper {
     inputs.forEach(input => {
       state[input] = this[input]
     })
+    if(this.networkTester) {
+      this.networkTester.receiveNetworkedState(state);
+    }
     // console.log(this.networkedStateDiff) 
   }
   die() {

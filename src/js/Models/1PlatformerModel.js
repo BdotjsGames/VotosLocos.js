@@ -16,7 +16,7 @@ class PlatformerModel extends Model {
     this.impactStopTimer=0;
     this.self = this;
     this.anims=anims;
-    this.attackCombo = [anims.punch1, anims.flipKick, anims.armSpinny];
+    this.attackCombo = [anims.punch1, -1,anims.flipKick, anims.armSpinny];
     // this.attackCombo = [anims.flipKick];
     this.attackComboIndex = 0;
     this.attackAnim = anims.punch1;
@@ -341,15 +341,28 @@ class PlatformerModel extends Model {
     if(this.attacking)return;
     if(this.cooldownTimer>0)return;
     if(this.crouching)return this.slide();
+    // if(this.anims.flipKick && this.parent.vz <-this.parent.jumpStrength*.9) {
+    //   this.startAnim(this.anims.flipKick);
+    // } else 
+    {
+      var attack = this.attackCombo[this.attackComboIndex];
+      this.attackComboIndex += 1;
+      if(this.attackComboIndex>=this.attackCombo.length)this.attackComboIndex=0;
+      if(attack==-1) {
+        return this.slide();
+      }
+      this.startAnim(attack);
+    }
+    this.attackSound.play();
     // this.attacking = true;
-    this.startAnim(this.attackCombo[this.attackComboIndex]);
-    this.attackComboIndex += 1;
-    if(this.attackComboIndex>=this.attackCombo.length)this.attackComboIndex=0;
     // this.startAnim(this.attackAnim);
     this.attackTimer = 15;
 
   }
   slide() {
+    if(this.attacking)return;
+    if(this.cooldownTimer>0)return;
+    this.endAnim();
 
     this.attackSound.play();
     this.doubleJumping=false;
@@ -441,6 +454,11 @@ class PlatformerModel extends Model {
       arm.rotation = -dx*Math.PI*.9;
     }
     this.legL._x = 0;
+    this.legL.scaleY = 1;
+    this.legR.scaleY = 1;
+    this.legL._y=0;
+    this.legR._y=0;
+    this.body._y=0;
   }
   walk() {
     this.idle();

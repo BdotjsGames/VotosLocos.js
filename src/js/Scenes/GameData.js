@@ -44,7 +44,7 @@ GameSequence = [
         name: "opening cutscene",
         DialogueData: [
             {person: LouChalibre, text: "The time to <color red>vote</color> is <wiggle>approaching!"},
-            {person: LouChalibre, text: "You gotta get your ballot!"},
+            {person: LouChalibre, text: "Are you ready to cast your ballot?"},
         ],
         continueOnDialogueFinish: true,
     },
@@ -52,8 +52,9 @@ GameSequence = [
         name: "Level 1",
         Goal: "Get to The Registrar Office!",
         DialogueData: [
-            {person: LouChalibre, text: "You're not registered to vote?"},
-            {person: LouChalibre, text: "You gotta get to the Registrar Office!"},
+            {person: LouChalibre, text: "You're not registered to vote? Today is the last day!"},
+            {person: LouChalibre, text: "Hurry! you better get to the Registrar Office!"},
+            {person: LouChalibre, text: "Before its <wiggle>too||o|||o|||||o|||o|| l|||a|||t|||e!"},
         ],
         spawnRandom: [
             [HighFiver, 10]
@@ -80,16 +81,19 @@ GameSequence = [
         DialogueData: [
             {person: LouChalibre, text: "<bam>Uh Oh!"},
             {person: LouChalibre, text: "Watch out for the bots!"},
+            {person: LouChalibre, text: "Press the [Attack] button to show em what for!"},
         ],
         spawnRandom: [
-            [Bot, 10],
+            [Bot, 4],
         ]
     },
     {
         name: "Registrar Office Reached",
         DialogueData: [], //give ballot cutscene
         spawnRandom: [
-            [KnockableDoor, 10],
+            // [KnockableDoor, 10],
+            [Bot, 8],
+            [Ninja, 3],
             // [Bot, 10],
         ]
     },

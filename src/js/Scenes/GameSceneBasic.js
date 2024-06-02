@@ -65,6 +65,7 @@ class GameSceneBasic extends Scene {
         this.backgrounds.push(new ImageDrawable(buildingImage, x,y-h/2, w,h));
       }
       this.addEntity(this.player = new Player(100,this.startingY,model));
+      // this.addEntity(this.player.networkTester = new PlayerNetworked(80,this.startingY, model.getModelOptions()))
       window.player = this.player;
       // this.addEntity(new Knight(100,-100));
       // this.addEntity(new NPC(2100,0, CurleyModel));
@@ -163,6 +164,10 @@ class GameSceneBasic extends Scene {
           this.spawnRandom(s[0],s[1])
         })
       }
+      if(this.enemies.length>0) {
+        this.showGo = false;
+        this.showGoOnEnemiesDefeated = true;
+      }
       this.encounters = data.encounters;
       if(data.night) {
         this.doLighting = true;
@@ -172,7 +177,7 @@ class GameSceneBasic extends Scene {
     }
     spawnRandom(className, num) {
       for(var i=0;i<num;i++) {
-        var x = 200+Math.random()*(this.ground.w-200);
+        var x = 200+Math.random()*(this.ground.w-400);
         var y = Math.random()*this.groundHeight + this.startingY - this.groundHeight/2;
         this.addEntity(new className(x,y)); 
       }
@@ -203,10 +208,15 @@ class GameSceneBasic extends Scene {
     }
     collideCheck(e) {
       if(e.x<0)e.x=0;
+      if(e.x>this.level.width+1)e.x = this.level.width+1
         if(e.y<this.minY) e.y = this.minY;
         if(e.y>this.maxY) e.y = this.maxY;
     }
     update() {
+      this.useTouchAsMouse = this.dialogueBlocking;
+      if(this.showGoOnEnemiesDefeated) {
+        this.showGo= this.enemies.length==0;
+      }
       if(this.transitioningOut) return;
       super.update();
       if(DEV) {
@@ -278,8 +288,12 @@ class GameSceneBasic extends Scene {
       } else {
         this.camera.rotation = 0;
       }
-      if(this.player.x>this.level.width) {
-        this.loadNextLevel()
+      if(this.player.x>=this.level.width) {
+        if(this.showGo)
+          this.loadNextLevel()
+        else {
+          this.player.x = this.level.width;
+        }
       }
       this.dialogueController.update(); 
       

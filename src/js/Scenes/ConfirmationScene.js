@@ -2,7 +2,8 @@ class ConfirmationScene extends AdditiveScene {
     constructor(prevScene, title, options) {
         super(prevScene);
         var y = 0.35;
-        this.addEntity(new DrawableText(title, 0.5,y, 0.5,0.5,0.1))
+        this.useTouchAsMouse = true;
+        this.addEntity(new DrawableText(title, 0.5,y, 1,0.5,0.1))
             .setTrueCoords(false)
             .center()
             .color(255,255,255)

@@ -96,7 +96,8 @@ window.addEventListener('load', function (e) {
   Buttons.highFive = Buttons.Y;
   Buttons.pause = {
     keys: [27],
-    buttons: [gamepadConfig.select]
+    buttons: [gamepadConfig.select],
+    touchButtons: [4]
   }
   Buttons.start = {
     keys: [13],
