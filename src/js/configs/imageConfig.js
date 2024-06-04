@@ -168,7 +168,9 @@ IMAGES.buildings = [
 // IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk.png")
 IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk2.png")
 
-
+IMAGES.skirts = [
+    IMAGES.skirt1 = ImageLoader.loadImage("skirt.png"),
+]
 // IMAGES.tilesetPortalRoom    = ImageLoader.loadImage("tilesetPortalRoom.png")
 // IMAGES.tilesetCurleys       = ImageLoader.loadImage("tilesetCurleys.png")
 // IMAGES.tilesetVents         = ImageLoader.loadImage("tilesetVents.png")

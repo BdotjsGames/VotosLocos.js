@@ -209,6 +209,7 @@ class PlatformerModel extends Model {
     this.wheelchair.hidden = true;
     this.wheelchair.wheel.hidden = true;
 
+    this.skirt = this.hips.createAfter(0,6,new ImageDrawable(IMAGES.skirt1))
 
     this.legR= this.hips.createBefore(2,0,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
     this.legL= this.hips.createBefore(-2,0,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
