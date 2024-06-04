@@ -16,9 +16,9 @@ function rainbowFunction(data, index, width,height) {
     var y = Math.floor(index/4/width);
     var dx = (width/2+2-x);
     var dy = (height/2-y);
-    var rr = dx*dx+dy*dy;
-    var r = Math.sqrt(rr);
-    var darken = r/(width/2);
+    // var rr = dx*dx+dy*dy;
+    // var r = Math.sqrt(rr);
+    // var darken = r/(width/2);
     var hueQuantize = 12;
     var quantize = 4;
     var h = (x/width*(2-y/20));
@@ -31,6 +31,27 @@ function rainbowFunction(data, index, width,height) {
     return rainbowColors[Math.floor((x)/(4+y/20))%rainbowColors.length]
 }
 rainbowFunction.callable = true;
+function rainbowFunction2(data, index, width,height) {
+    var x = index/4%width;
+    var y = Math.floor(index/4/width);
+    var dx = (width/2-x);
+    var dy = (height/2-y);
+    // var rr = dx*dx+dy*dy;
+    // var r = Math.sqrt(rr);
+    // var darken = r/(width/2);
+    var hueQuantize = 12;
+    var quantize = 4;
+    // var h = (x/width*(2-y/height));
+    var h = (x+y/height*5)/width*2.5;
+    var s = 1;
+    var v = 1;//-darken*.3;
+    h = Math.floor(h*hueQuantize)/hueQuantize;
+    v = Math.floor(v*quantize)/quantize;
+    
+    return hsvToRgb(h,s,v);
+    return rainbowColors[Math.floor((x)/(4+y/20))%rainbowColors.length]
+}
+rainbowFunction2.callable = true;
 var hairColors = [
 
 ]
@@ -73,6 +94,13 @@ var PALLETE_KEY = {
         inputHexes: [rgb("#271f1b")],
         // inputHexes: [-1],
         mapping: [[rgb('#612721')],[rgb('#5b3138')],[rgb('#333333')],[rgb('#666666')],[rgb('#999999')],[rgb('#ffffff')],[rgb('#b9451d')],[rgb('#f8c53a')],[rgb('#d21f0c')],[rgb('#e27285')],[rgb('#4572e3')],[rainbowFunction]],
+        post: shadingFunction,
+    },
+    skirt: {
+        label: 'skirt',
+        inputHexes: [rgb("#d77bba")],
+        // inputHexes: [-1],
+        mapping: [[rainbowFunction2],[rgb("#d77bba")]],
         post: shadingFunction,
     }
 }
@@ -169,8 +197,16 @@ IMAGES.buildings = [
 IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk2.png")
 
 IMAGES.skirts = [
+    null,
     IMAGES.skirt1 = ImageLoader.loadImage("skirt.png"),
+    
 ]
+IMAGES.tutu = ImageLoader.loadImage('tutu.png', PALLETE_KEY.skirt, swaps => {
+    // IMAGES.skirts.push(IMAGES.rainbowSkirt = swaps[0])
+    IMAGES.skirts=IMAGES.skirts.concat(swaps);
+})
+
+IMAGES.boot = ImageLoader.loadImage('fist.png')
 // IMAGES.tilesetPortalRoom    = ImageLoader.loadImage("tilesetPortalRoom.png")
 // IMAGES.tilesetCurleys       = ImageLoader.loadImage("tilesetCurleys.png")
 // IMAGES.tilesetVents         = ImageLoader.loadImage("tilesetVents.png")

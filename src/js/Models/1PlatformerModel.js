@@ -20,6 +20,7 @@ class PlatformerModel extends Model {
     // this.attackCombo = [anims.flipKick];
     this.attackComboIndex = 0;
     this.attackAnim = anims.punch1;
+    this.skirtOn = true;
     if(!parent) {
       this.parent = {
         dx:1,vx:10,vy:0,
@@ -110,6 +111,16 @@ class PlatformerModel extends Model {
           this.arm1.drawable.image = armOptions[i];
           this.arm2.drawable.image = armOptions[i];
           this.changeSkinColor(this.skinColorIndex);
+        }
+      },
+      {
+        name: "Skirt",
+        options: options.skirtOptions||IMAGES.skirts,
+        displayOffsetY: -80,
+        index: 0,
+        onChange: (value,i) => {
+          this.skirt.drawable.image = value;
+          this.skirtOn = value;
         }
       },
       {
@@ -210,7 +221,8 @@ class PlatformerModel extends Model {
     this.wheelchair.hidden = true;
     this.wheelchair.wheel.hidden = true;
 
-    this.skirt = this.hips.createAfter(0,6,new ImageDrawable(IMAGES.skirt1))
+    this.skirt = this.body2.createAfter(0,6+3,new ImageDrawable(IMAGES.skirt1))
+    this.skirt.drawable.image = null;
 
     this.legR= this.hips.createBefore(2,0,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
     this.legL= this.hips.createBefore(-2,0,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
@@ -249,8 +261,8 @@ class PlatformerModel extends Model {
   }
   addShoes() {
     if(this.shoe1)return;
-    this.shoe1 = this.legL.createAfter(0,this.ll,new ImageDrawable(IMAGES.Boot,0,0,10));
-    this.shoe2 = this.legR.createAfter(0,this.ll,new ImageDrawable(IMAGES.Boot,0,0,10));
+    this.shoe1 = this.legL2.createAfter(0,this.ll,new ImageDrawable(IMAGES.boot,0,0,10));
+    this.shoe2 = this.legR2.createAfter(0,this.ll,new ImageDrawable(IMAGES.boot,0,0,10));
   }
   crouch() {
     var dx = 1;//this.parent.dx;
@@ -472,6 +484,9 @@ class PlatformerModel extends Model {
     this.rotation = Math.cos(this.frameCount*Math.PI/10)*Math.PI/30*dv;
     var frq = this.frameCount*Math.PI/10;
     var angle = Math.PI/4*(dv);
+
+    if(this.skirtOn)angle *= 0.5;
+
     this.legL.rotation = Math.cos(frq)*angle;
     this.legR.rotation = -Math.cos(frq)*angle;
     this.legL2.rotation= this.legL.rotation + angle;
@@ -481,6 +496,8 @@ class PlatformerModel extends Model {
     this.body2.rotation = 0;
     // this.body.rotation = Math.PI/100*Math.abs(this.parent.vx);
     this.head.rotation = -this.body.rotation;
+
+
   }
   airborn() {
     if(this.ceilingCollide){
@@ -499,6 +516,7 @@ class PlatformerModel extends Model {
     // else
       // this._rotation = 0;
     this.legL._rotation = Math.PI/3-this.parent.vy/30;
+    if(this.skirtOn)this.legL._rotation *= 0.5;
     this.legR._rotation = -this.legL._rotation;
     this.arm1._rotation = Math.min(this.parent.vy/20,Math.PI*.4)+Math.PI/3;
     this.arm2._rotation = -this.arm1._rotation;
@@ -610,7 +628,8 @@ class PlatformerModel extends Model {
   }
   update() {
     // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
-
+    this.skirt.rotation = (this.legL.rotation + this.legR.rotation)/2
+    if(this.inWheelChair) this.skirt.rotation = -Math.PI/3
     if(this.impactStopTimer>0) {
       this.impactStopTimer--;
       if(this.isHit) {
@@ -747,6 +766,7 @@ class PlatformerModel extends Model {
     this.drawOutline(canvas, x,y);
     super.draw(canvas, x,y);
   }
+  
 }
 
 var anims = {

@@ -16,6 +16,7 @@ class NinjaModel extends PlatformerModel {
             legOptions:[5],
             glassesOptions: [],
             skinOptions: [],
+            skirtOptions: [],
             canWheelchair: false,
         });
     }

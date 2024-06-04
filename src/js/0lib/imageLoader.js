@@ -26,7 +26,7 @@ var ImageLoader = {
   getLoaded() {
     return ImageLoader.loaded/ImageLoader.imagesToLoad;
   },
-  loadImageWithPalleteSwaps(src, pallete_key) {
+  loadImageWithPalleteSwaps(src, pallete_key, callback) {
     var img = new Image();
     img.src=this.directory+src;
     this.imagesToLoad += 1; 
@@ -64,12 +64,12 @@ var ImageLoader = {
         palletSwaps.push(ce);
       }
       (img.palletSwaps=(img.palletSwaps||{}))[pallete_key.label] = palletSwaps;
-      
+      if(callback)callback(palletSwaps)
     }
     return img;
   },
-  loadImage(src, pallete_key=null) {
-    if(pallete_key)return this.loadImageWithPalleteSwaps(src, pallete_key);
+  loadImage(src, pallete_key=null, callback) {
+    if(pallete_key)return this.loadImageWithPalleteSwaps(src, pallete_key, callback);
     var img = new Image();
     img.src=this.directory+src;
     this.imagesToLoad += 1; 

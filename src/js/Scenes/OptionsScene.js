@@ -30,28 +30,30 @@ class OptionsScene extends AdditiveScene {
                     AUTOPAUSE = !AUTOPAUSE;
                     // b.text = 'Auto Pause ' + (AUTOPAUSE?'☑':'☐');
                     b.value = AUTOPAUSE;
+                    b.ballotMarkFilled = AUTOPAUSE
                     localStorage.setItem("autopause", AUTOPAUSE);
                 }
             }
         ]
         toggles.forEach((toggle,i) => {
-            var check = this.addEntity(
-                new DrawableText(toggle.startingValue?'☑':'☐',x-0.05,y,0.05,h,fontSize*1.2,b=>{
-                    toggle.callback(b);
-                    b.text = b.value?'☑':'☐'
-                })
-                .setTrueCoords(false)
-                .color(255,255,255)
-                .setAttr("outlineOnHover", false)
-            )
+            // var check = this.addEntity(
+            //     new DrawableText(toggle.startingValue?'☑':'☐',x-0.05,y,0.05,h,fontSize*1.2,b=>{
+            //         toggle.callback(b);
+            //         b.text = b.value?'☑':'☐'
+            //     })
+            //     .setTrueCoords(false)
+            //     .color(255,255,255)
+            //     .setAttr("outlineOnHover", false)
+            // )
             this.addSelectableButton(
                 new ButtonUI("  "+toggle.text,x-0.05,y,w+0.05,h,fontSize,b=>{
-                    toggle.callback(check);
-                    check.text = check.value?'☑':'☐'
+                    toggle.callback(b);
+                    // check.text = check.value?'☑':'☐'
                 })
                 .setTrueCoords(false)
                 // .setAttr("outlineOnHover", false)
                 .setAttr("pivotX", 0)
+                .setAttr("ballotMarkFilled", AUTOPAUSE)
                 .color(255,255,255)
             )
             y+=spacing;

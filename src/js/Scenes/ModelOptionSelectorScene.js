@@ -44,6 +44,7 @@ class ModelOptionSelectorScene extends AdditiveScene {
         //   draw from offset canvas to saved canvas
         this.option.options.forEach((option, i) => {
             this.option.onChange(option,i);
+            this.model.update();
             this.drawToOtherCanvas((i+0.5)*bufferWidth*mocScale);
         });
         this.option.onChange(this.option.options[currentOption], currentOption);

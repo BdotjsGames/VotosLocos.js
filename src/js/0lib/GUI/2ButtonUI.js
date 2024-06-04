@@ -24,6 +24,7 @@ class ButtonUI extends DrawableText{
       this.selected = false;
       this.directionallyLinkedButtons = [];
       this.drawBallotMark = true;
+      this.ballotMarkFilled = false;
 
       if(w>.1) {
         this.textAlign = 'left';
@@ -161,6 +162,10 @@ class ButtonUI extends DrawableText{
         else
           canvas.strokeStyle = "#000";
         drawBallotMark(20, this._h*.5);
+        if(this.ballotMarkFilled || this.held) {
+          canvas.fillStyle = canvas.strokeStyle;
+          canvas.fill();
+        }
       }
 
       // drawBallotMark(this._w*.9, this._h*.5);
