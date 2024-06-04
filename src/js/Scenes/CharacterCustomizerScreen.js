@@ -30,7 +30,7 @@ class CharacterCustomizerScene extends Scene{
             this.driver.setScene(new MenuScene(this));
         }
     }
-    draw() {
+    draw(canvas) {
         var x = CE.width*.3;
         canvas.save();
         canvas.translate(x,CE.height*.6+45);
@@ -40,8 +40,8 @@ class CharacterCustomizerScene extends Scene{
         canvas.restore();
         // canvas.fillStyle = 'black';
         // canvas.fillRect(CE.width/4,CE.height*.6+45, CE.width/2,10);
-        this.model.draw(x, CE.height*.6);
-        super.draw();
+        this.model.draw(canvas, x, CE.height*.6);
+        super.draw(canvas);
 
     }
     loadModel(model) {
@@ -65,7 +65,11 @@ class CharacterCustomizerScene extends Scene{
                 customizableOption.name.toUpperCase(), x,y,0.3,0.08,value=>{
                     customizableOption.index = value;
                     customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
-                }).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
+                },
+                () => {
+                    this.driver.setScene(new ModelOptionSelectorScene(this, this.model, customizableOption));
+                }
+            ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
             );
             if(i==0)btn.setSelected();
             // this.optionsGroup.addEntity(

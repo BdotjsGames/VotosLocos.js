@@ -18,7 +18,7 @@ class LoadingBar {
   setValue(value) {
     this.value = value;
   }
-  draw() {
+  draw(canvas) {
     var x = this.x-this.w/2;
     var y = this.y-this.h/2;
     canvas.fillStyle = this.color;
@@ -37,8 +37,8 @@ class ModelEntity {
   update() {
     this.model.update();
   }
-  draw() {
-    this.model.draw(this.x,this.y);
+  draw(canvas) {
+    this.model.draw(canvas, this.x,this.y);
   }
 }
 
@@ -53,7 +53,7 @@ class ImageEntity {
     }
   }
   update() {}
-  draw() {
+  draw(canvas) {
     var x = this.x-this.w/2;
     var y = this.y-this.h/2;
     canvas.drawImage(this.image,x,y,this.w,this.h);
@@ -67,7 +67,7 @@ class TextUI {
     this.fontsize = fontsize;
   }
   update(){}
-  draw() {
+  draw(canvas) {
     if(this.options.font)
       canvas.font = this.font;
     if(this.options.textAlign)
@@ -104,12 +104,12 @@ class JkScene extends Scene {
       this.driver.setScene(new JsScene(this.next));
     }
   }
-  draw() {
+  draw(canvas) {
     var x = Math.cos(frameCount*7)/this.timer*20;
     var y = Math.cos(frameCount*13)/this.timer*20;
     canvas.save();
     canvas.translate(x,y);
-    super.draw();
+    super.draw(canvas);
     canvas.restore();
   }
 }
@@ -147,15 +147,15 @@ class JsScene extends Scene {
       this.driver.setScene(this.next);
     }
   }
-  // draw() {
+  // draw(canvas) {
   //   var x = Math.cos(frameCount*7)/this.timer*20;
   //   var y = Math.cos(frameCount*13)/this.timer*20;
   //   canvas.save();
   //   canvas.translate(x,y);
-  //   super.draw();
+  //   super.draw(canvas);
   //   canvas.restore();
   // }
-  draw() {
+  draw(canvas) {
     canvas.save();
     var t = this.timer/this.time;
     t= Math.sin(t*Math.PI);
@@ -165,7 +165,7 @@ class JsScene extends Scene {
     canvas.translate(CE.width/2,CE.height/2);
     canvas.scale(s,s);
     canvas.translate(-CE.width/2,-CE.height/2);
-    super.draw();
+    super.draw(canvas);
     canvas.globalAlpha = 1;
     canvas.restore();    
   }
@@ -206,7 +206,7 @@ class BDScene extends Scene {
       this.driver.setScene(this.next);
     }
   }
-  draw() {
+  draw(canvas) {
     canvas.save();
     var t = this.timer/this.time;
     t= Math.sin(t*Math.PI);
@@ -216,7 +216,7 @@ class BDScene extends Scene {
     canvas.translate(CE.width/2,CE.height/2);
     canvas.scale(s,s);
     canvas.translate(-CE.width/2,-CE.height/2);
-    super.draw();
+    super.draw(canvas);
     canvas.globalAlpha = 1;
     canvas.restore();    
   }
@@ -259,7 +259,7 @@ class SplashScreen extends Scene {
       this.driver.setScene(new this.next());
     }
   }
-  draw() {
+  draw(canvas) {
     canvas.save();
     var t = this.timer/this.time;
     t= Math.sin(t*Math.PI);
@@ -269,7 +269,7 @@ class SplashScreen extends Scene {
     canvas.translate(CE.width/2,CE.height/2);
     canvas.scale(s,s);
     canvas.translate(-CE.width/2,-CE.height/2);
-    super.draw();
+    super.draw(canvas);
     canvas.globalAlpha = 1;
     canvas.restore();    
   }

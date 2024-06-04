@@ -39,8 +39,8 @@ class ModelEditorScene extends Scene {
             this.selectedLimb.y += axes.inputY;
         }
     }
-    draw() {
-        super.draw();
-        this.model.draw(CE.width/2,CE.height/2);
+    draw(canvas) {
+        super.draw(canvas);
+        this.model.draw(canvas, CE.width/2,CE.height/2);
     }
 }

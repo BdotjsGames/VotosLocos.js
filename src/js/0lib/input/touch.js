@@ -97,7 +97,7 @@ function pointInRect(x,y,rect) {
     y >= rect.y && y <= rect.y+rect.h;
 }
 
-function touchDraw() {
+function touchdraw(canvas) {
   if(MainDriver.scene.useTouchAsMouse)return;
   for(var i=0;i<touchJoySticks.length;++i) {
     var joyStick = touchJoySticks[i];

@@ -5,7 +5,7 @@ class Rect {
     this.h=h;
     this.color = color;
   }
-  draw() {
+  draw(canvas) {
     canvas.fillStyle = this.color;
     canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
   }

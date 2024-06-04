@@ -13,7 +13,7 @@ class Sorter {
             }
         }
     }
-    draw() {
+    draw(canvas) {
         this.entities = this.entities.sort((a,b) => b.y-a.y);
         this.entities.forEach(draw);
     }

@@ -155,7 +155,7 @@ class SimpleDialogue {
     //   currentIndex += line.length;
     // }
   }
-  draw() {
+  draw(canvas) {
     if(this.text=='')return;
     // canvas.fillStyle = "#000000aa";
     canvas.fillStyle = "#000000";
@@ -376,7 +376,7 @@ class DialogueController {
       MusicHandler.stop();
     }
     if(event.fadeToBlack) {
-      this.current = {update(){},draw(){},progress(){}};
+      this.current = {update(){},draw(canvas){},progress(){}};
       MainDriver.fadeToBlack(event.fadeToBlack, e=>{
         if(this.current)
           this.current.done = true;
@@ -384,7 +384,7 @@ class DialogueController {
       });
     }
     if(event.fadeIn) {
-      this.current = {update(){},draw(){},progress(){}};
+      this.current = {update(){},draw(canvas){},progress(){}};
       MainDriver.fadeIn(event.fadeIn, e=>{
         if(this.current)
           this.current.done = true;
@@ -454,13 +454,13 @@ class DialogueController {
       this.processData(this.sequence[this.index]);
     }
   }
-  draw() {
+  draw(canvas) {
     if(this.done&&!this.persist)return;
     // if(this.current&&this.current.draw)
-      // this.current.draw();
+      // this.current.draw(canvas);
       if(this.speakerImage) {
         canvas.drawImage(this.speakerImage, CE.width*.5, CE.height*.2,this.speakerImage.width*2,this.speakerImage.height*2);
       }
-    this.simpleDialogue.draw();
+    this.simpleDialogue.draw(canvas);
   }
 }

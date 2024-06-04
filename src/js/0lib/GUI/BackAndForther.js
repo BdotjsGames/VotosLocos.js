@@ -1,6 +1,6 @@
 class BackAndForther extends ButtonUI {
-    constructor(text, x, y, w, h, onValueChanged) {
-        super(text, x, y, w, h, h*.6);
+    constructor(text, x, y, w, h, onValueChanged, onTextClicked) {
+        super(text, x, y, w, h, h*.6, onTextClicked);
         // this.callback = this.increment.bind(this);
         this.center();
         x = this.x;
@@ -22,6 +22,8 @@ class BackAndForther extends ButtonUI {
         this.rightButton = new ButtonUI(">", x+w+bw, y+h/2, bw, h, size, this.increment.bind(this)).center();
         this.leftButton.drawBallotMark = false;
         this.rightButton.drawBallotMark = false;
+        this.leftButton.textPosition = 15;
+        this.rightButton.textPosition = 15;
         // this.leftButton.setSelected = this.setSelected.bind(this);
         // this.rightButton.setSelected = this.setSelected.bind(this);
         // this.leftButton.shouldSetSelectOnHover = true;
@@ -62,7 +64,7 @@ class BackAndForther extends ButtonUI {
         }
         this.onValueChanged(this.value);
     }
-    mouseUpdate(){}
+    // mouseUpdate(){}
     update() {
         // super.super.update();
         super.update();
@@ -111,10 +113,10 @@ class BackAndForther extends ButtonUI {
     //     // this.knob.morphs['click'].activate();
     //     // // this.morphs['click'].activate();
     // }
-    draw() {
-        super.draw();
-        this.leftButton.draw();
-        this.rightButton.draw();
+    draw(canvas) {
+        super.draw(canvas);
+        this.leftButton.draw(canvas);
+        this.rightButton.draw(canvas);
     }
 
 }

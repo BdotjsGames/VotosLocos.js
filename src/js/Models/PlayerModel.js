@@ -9,7 +9,7 @@ class PlayerModel extends PlatformerModel {
         canWheelchair: true,
     });
   }
-  draw(x,y){
-    super.draw(x,y);
-  }
+  // draw(canvas, x,y){
+  //   super.draw(canvas, x,y);
+  // }
 }

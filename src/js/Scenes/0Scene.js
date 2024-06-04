@@ -35,8 +35,8 @@ class Scene {
       if(getButtonDown(b[0]))b[1]();
     })
   }
-  draw() {
-    this.entities.forEach(function(e) {if(e.draw)e.draw()});
+  draw(canvas) {
+    this.entities.forEach(function(e) {if(e.draw)e.draw(canvas)});
   }
   onLeave() {}
   isActive() {

@@ -447,7 +447,7 @@ class BeatEmUpper {
         this.canUnJump = false;
         this.vy = this.vy / 2;
     }
-    draw() {
+    draw(canvas) {
         // canvas.fillStyle = 'red';
         // canvas.fillRect(this.x,this.y,10,10);
         canvas.save();
@@ -456,7 +456,7 @@ class BeatEmUpper {
         canvas.fillStyle = this.shadow;
         canvas.fillRect(-30,-30,60,60);
         canvas.restore();
-            this.model.draw(this.x, this.y + this.z - this.h / 2);
+            this.model.draw(canvas, this.x, this.y + this.z - this.h / 2);
         if (this.health < this.maxHealth - 1) {
             canvas.fillStyle = "black";
             canvas.fillRect(this.x - 32, this.y - 2, 64, 14);

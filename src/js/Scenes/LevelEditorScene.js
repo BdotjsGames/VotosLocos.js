@@ -141,11 +141,11 @@ class LevelEditorScene extends Scene {
       w: this.level.cellWidth,h: this.level.cellHeight,
     };
   }
-  draw() {
+  draw(canvas) {
     canvas.save();
     canvas.translate(CE.width/2-this.camera.x,CE.height/2-this.camera.y);
     canvas.scale(this.zoom,this.zoom);
-    this.entities.forEach(e=>e.draw());
+    this.entities.forEach(e=>e.draw(canvas));
     if(this.highlight) {
       canvas.fillStyle = '#00000055';
       canvas.fillRect(this.highlight.x,this.highlight.y,this.highlight.w,this.highlight.h);

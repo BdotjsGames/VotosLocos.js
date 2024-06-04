@@ -7,7 +7,7 @@ class Ground{
         this.h=h;
     }
     update() {}
-    draw() {
+    draw(canvas) {
         canvas.fillStyle = "#444";
         var {x,z,w,h} = this;
         canvas.fillRect(x,z,w,h);

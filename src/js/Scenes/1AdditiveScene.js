@@ -10,14 +10,14 @@ class AdditiveScene extends Scene {
     back() {
         this.driver.setScene(this.prevScene);
     }
-    draw() {
+    draw(canvas) {
         if(this.drawsPrevscene) {
-            this.prevScene.draw();
+            this.prevScene.draw(canvas);
         }
         if(this.drawsPanel) {
             canvas.fillStyle = this.panelColor;
             canvas.fillRect(0,0,CE.width,CE.height);
         }
-        super.draw();
+        super.draw(canvas);
     }
 }

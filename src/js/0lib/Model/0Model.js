@@ -30,7 +30,7 @@ class Model {
     this.parts.push(limb);
     return limb;
   }
-  draw(x,y) {
+  draw(canvas, x,y) {
     canvas.save();
     canvas.translate(x,y);
     if(this.quantizeRotation) {
@@ -43,11 +43,11 @@ class Model {
     }
     // canvas.strokeRect(-this.w/2,-this.h/2,this.w,this.h);
     this.parts.forEach(function(e) {
-      e.draw();
+      e.draw(canvas);
     });
     canvas.restore();
   }
-  drawOutline(x,y) {
+  drawOutline(canvas, x,y) {
     var color = this.outlineColor;
     canvas.save();
     canvas.translate(x,y);
@@ -72,7 +72,7 @@ class Model {
     }
     // canvas.strokeRect(-this.w/2,-this.h/2,this.w,this.h);
     this.parts.forEach(function(e) {
-      e.draw();
+      e.draw(canvas);
       e.draw({color: "#ffffff88", dw: -2,dx:1,dy:-1});
     });
     canvas.restore();
