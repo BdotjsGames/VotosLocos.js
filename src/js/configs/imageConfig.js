@@ -72,7 +72,7 @@ var PALLETE_KEY = {
         label: 'hair',
         inputHexes: [rgb("#271f1b")],
         // inputHexes: [-1],
-        mapping: [[rgb('#333333')],[rgb('#666666')],[rgb('#999999')],[rgb('#ffffff')],[rgb('#612721')],[rgb('#b9451d')],[rgb('#5b3138')],[rgb('#f8c53a')],[rgb('#d21f0c')],[rgb('#e27285')],[rgb('#4572e3')],[rainbowFunction]],
+        mapping: [[rgb('#612721')],[rgb('#5b3138')],[rgb('#333333')],[rgb('#666666')],[rgb('#999999')],[rgb('#ffffff')],[rgb('#b9451d')],[rgb('#f8c53a')],[rgb('#d21f0c')],[rgb('#e27285')],[rgb('#4572e3')],[rainbowFunction]],
         post: shadingFunction,
     }
 }
