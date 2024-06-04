@@ -9,7 +9,7 @@ class LightSouce {
     this.y = y;
   }
   update(){}
-  draw(){
+  draw(canvas){
     canvas.save();
     canvas.globalAlpha=0.1;
     canvas.translate(this.x,this.y);

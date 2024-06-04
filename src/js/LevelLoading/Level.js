@@ -114,7 +114,7 @@ class Level {
         e.y=y+h/2;
         var can = canvas;
         canvas = ctx;
-        e.draw();
+        e.draw(canvas);
         canvas = can;
       }
       return;
@@ -164,7 +164,7 @@ class Level {
       }
     }
   }
-  draw() {
+  draw(canvas) {
     canvas.drawImage(this.image,0,0);
   }
 }

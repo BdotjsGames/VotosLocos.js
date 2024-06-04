@@ -129,7 +129,7 @@ class Drawable {
       canvas.fillStyle = Color.lighten(this).color;    
       canvas.fillRect(this._w*.4,this._h/10,this._w/2,this._h/4);   
     }
-    draw() {
+    draw(canvas) {
       if(!this._color) {
         this._color = 'rgba(' +
         Math.floor(this.red) + ',' +

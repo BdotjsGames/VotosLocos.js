@@ -10,7 +10,7 @@ class Block {
         this.color2 = "#69a";
     }
     update() {}
-    draw() {
+    draw(canvas) {
         var x = this.x;
         var y = this.y-this.h;
         var w = this.w;

@@ -115,7 +115,7 @@ var MainDriver = {
     window.requestAnimationFrame(this.draw);
     if(this.paused)return;
     canvas.clearRect(0,0,CE.width,CE.height);
-    this.scene.draw();
+    this.scene.draw(canvas);
     if(this.fadeTimer>0) {
       canvas.fillStyle = 'black';
       var t = this.fadeTimer/this.fadeTime;
@@ -125,7 +125,7 @@ var MainDriver = {
       canvas.globalAlpha=1;
     }
     if(touchOn && !this.scene.dialogueBlocking) {
-      touchDraw();
+      touchdraw(canvas);
     }
   }
 }

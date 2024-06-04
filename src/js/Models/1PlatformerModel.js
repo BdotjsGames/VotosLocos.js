@@ -115,6 +115,7 @@ class PlatformerModel extends Model {
       {
         name: "Legs",
         options: legOptions,
+        displayOffsetY: -80,
         index: 0,
         onChange: (value,i) => {
           if(value==wheelChairLegValue) {
@@ -740,10 +741,10 @@ class PlatformerModel extends Model {
     }
     // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
   }
-  draw(x,y) {
+  draw(canvas, x,y) {
     // canvas.strokeRect(x-this.w/2,y-this.h/2,this.w,this.h);
-    this.drawOutline(x,y);
-    super.draw(x,y);
+    this.drawOutline(canvas, x,y);
+    super.draw(canvas, x,y);
   }
 }
 

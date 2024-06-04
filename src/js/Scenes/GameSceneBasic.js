@@ -323,7 +323,7 @@ class GameSceneBasic extends Scene {
       // var nextLevel = World.getPrevLevel(this.level);
       this.loadLevel(this.levelNumber-1,skipTransition);
     }
-    draw() {
+    draw(canvas) {
       this.entities = this.entities.sort((a,b) => a.y-b.y)
       var ctx = this.LightMask.canvas;
       if(this.doLighting) {
@@ -336,9 +336,9 @@ class GameSceneBasic extends Scene {
       canvas.rotate(this.camera.rotation);
       canvas.scale(this.camera.zoom,this.camera.zoom);
       canvas.translate(-this.camera.x,-this.camera.y);
-      this.backgrounds.forEach(b=>b.draw())
+      this.backgrounds.forEach(b=>b.draw(canvas))
       
-      super.draw();
+      super.draw(canvas);
       canvas.restore();
       if(this.doLighting) {
         var zoom = this.camera.zoom;
@@ -358,12 +358,12 @@ class GameSceneBasic extends Scene {
         canvas.drawImage(this.LightMask.CE, 0,0);
         canvas.globalCompositeOperation = "source-over";
       }
-      this.dialogueController.draw();
+      this.dialogueController.draw(canvas);
 
       if(this.showGo && frameCount%60<30) {
         canvas.drawImage(IMAGES.GoArrow, CE.width-IMAGES.GoArrow.width,CE.height*.3-IMAGES.GoArrow.height/2);
       }
-      this.ui.forEach(u=>u.draw());
+      this.ui.forEach(u=>u.draw(canvas));
     }
     respawn() {
       this.player.health = this.player.maxHealth;

@@ -23,7 +23,7 @@ class LaserBeam {
       this.shouldDelete = true;
     }
   }
-  draw() {
+  draw(canvas) {
     canvas.fillStyle = 'red';
     canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
   }

@@ -131,7 +131,7 @@ class GameScene extends Scene {
     var nextLevel = World.getPrevLevel(this.level);
     this.loadLevel(nextLevel);
   }
-  draw() {
+  draw(canvas) {
     var ctx = this.LightMask.canvas;
     ctx.clearRect(0,0,CE.width,CE.height);
     canvas.save();
@@ -139,7 +139,7 @@ class GameScene extends Scene {
       canvas.rotate(this.camera.rotation);
       canvas.scale(this.camera.zoom,this.camera.zoom);
       canvas.translate(-this.camera.x,-this.camera.y);
-      super.draw();
+      super.draw(canvas);
     canvas.restore();
     if(this.doLighting) {
       var zoom = this.camera.zoom;
@@ -158,7 +158,7 @@ class GameScene extends Scene {
       canvas.drawImage(this.LightMask.CE, 0,0);
       canvas.globalCompositeOperation = "source-over";
     }
-    this.dialogueController.draw();
+    this.dialogueController.draw(canvas);
   }
   respawn() {
     // this.player.health = this.player.maxHealth;

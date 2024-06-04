@@ -20,10 +20,10 @@ class Pickup {
     SOUNDS.hit.play();
     this.shouldDelete = true;
   }
-  draw() {
+  draw(canvas) {
     canvas.save();
     canvas.translate(this.x,this.y+this.dy);
-    if(this.drawable)this.drawable.draw();
+    if(this.drawable)this.drawable.draw(canvas);
     canvas.restore();
   }
 }

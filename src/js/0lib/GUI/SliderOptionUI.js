@@ -112,7 +112,7 @@ class SliderOptionUI extends ButtonUI {
         canvas.fillRect(0,0,this._w,this._h);
         canvas.fillStyle = this._color;
         canvas.fillRect(0,0,this._w*this.sliderValue,this._h);
-        this.knob.draw();
+        this.knob.draw(canvas);
         // canvas.fillStyle = Color.darken(this).color;
         // canvas.fillRect(0,0,this._w/4,this._h);
         // canvas.fillStyle = Color.lighten(this).color;    

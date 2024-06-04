@@ -232,8 +232,8 @@ class Platformer {
     this.canUnJump = false;
     this.vy = this.vy/2;
   }
-  draw() {
-    this.model.draw(this.x,this.y);
+  draw(canvas) {
+    this.model.draw(canvas, this.x,this.y);
     if(this.health<this.maxHealth-1) {
       canvas.fillStyle = "black";
       canvas.fillRect(this.x-32,this.y-62,64,14);
