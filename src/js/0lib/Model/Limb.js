@@ -15,7 +15,7 @@ class Circle {
   constructor(x,y,r,color) {
     this.x=x;this.y=y;this.r=r;this.color=color;
   }
-  draw(override) {
+  draw(canvas,override) {
     if(override&&override.color)canvas.fillStyle=override.color;
     else canvas.fillStyle = this.color;
     var r = this.r;
@@ -57,7 +57,7 @@ class ImageDrawable {
     this.h = this.image.height;
   }
   update() {}
-  draw(override) {
+  draw(canvas,override) {
     if(override)return;
     if(this.hidden)return;
     if(!this.image)return;
@@ -86,7 +86,7 @@ class CurveTrail {
     this.ex+=(x-this.ex)/10;
     this.ey+=(y-this.ey)/10;
   }
-  draw(override) {
+  draw(canvas,override) {
     if(override&&override.color) canvas.strokeStyle = override.color;
     else canvas.strokeStyle = this.color;
     canvas.lineCap = this.cap;
@@ -119,7 +119,7 @@ class Line {
     this.color=color;
     this.hidden = false;
   }
-  draw(override) {
+  draw(canvas,override) {
     if(this.hidden)return;
     if(override&&override.color) canvas.strokeStyle = override.color;
     else canvas.strokeStyle = this.color;
@@ -186,7 +186,7 @@ class Limb {
     this.after.push(limb);
     return limb;
   }
-  draw(override) {
+  draw(canvas,override) {
     if(this.hidden)return;
     if(override&&this.ignoresOverride)return;
     canvas.save();
@@ -199,9 +199,9 @@ class Limb {
       canvas.rotate(this.rotation);
     }
     canvas.scale(this.scaleX,this.scaleY);
-    this.before.forEach(function(e){e.draw(override)});
-    if(this.drawable)this.drawable.draw(override);
-    this.after.forEach(function(e){e.draw(override)});
+    this.before.forEach(function(e){e.draw(canvas,override)});
+    if(this.drawable)this.drawable.draw(canvas,override);
+    this.after.forEach(function(e){e.draw(canvas,override)});
     canvas.restore();
   }
 }

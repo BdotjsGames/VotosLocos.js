@@ -58,11 +58,11 @@ class Model {
     }
     // canvas.strokeRect(-this.w/2,-this.h/2,this.w,this.h);
     this.parts.forEach(function(e) {
-      e.draw({color: color, dw: 1});
+      e.draw(canvas, {color: color, dw: 1});
     });
     canvas.restore();
   }
-  drawHighlight(x,y) {
+  drawHighlight(canvas, x,y) {
     canvas.save();
     canvas.translate(x,y);
     canvas.rotate(this.rotation);
@@ -73,7 +73,7 @@ class Model {
     // canvas.strokeRect(-this.w/2,-this.h/2,this.w,this.h);
     this.parts.forEach(function(e) {
       e.draw(canvas);
-      e.draw({color: "#ffffff88", dw: -2,dx:1,dy:-1});
+      e.draw(canvas, {color: "#ffffff88", dw: -2,dx:1,dy:-1});
     });
     canvas.restore();
   }

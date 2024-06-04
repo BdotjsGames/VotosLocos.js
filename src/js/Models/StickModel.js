@@ -269,7 +269,7 @@ class StickModel extends Model {
     // });
 
   }
-  draw(x,y) {
+  draw(canvas, x,y) {
     if(this.attacking) {
       // canvas.beginPath();
       // canvas.strokeStyle = "#ffffffaa";
@@ -314,7 +314,7 @@ class StickModel extends Model {
       this.lastAngle = null;
     }
     this.drawOutline(x,y);
-    super.draw(x,y);
+    super.draw(canvas, x,y);
     
   }
 }
