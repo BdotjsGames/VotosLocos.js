@@ -5,7 +5,7 @@ class BackgroundBuilding extends Drawable{
         this.trueCoords = true;
         this.setSortOffset(-100);
     }
-    drawShape() {
+    drawShape(canvas) {
         canvas.fillStyle = this.color;
         var {w,h} = this;
         canvas.fillRect(1,1-h,w-2,h-2);

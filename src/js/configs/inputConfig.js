@@ -111,6 +111,10 @@ window.addEventListener('load', function (e) {
     keys: [67, 78],
     allKeys: true,
   }
+  Buttons.cheatDialogueOff = {
+    keys: ['C'.keyCode, 'D'.keyCode],
+    allKeys: true,
+  }
   Buttons.cheatBackward = {
     keys: [67, 66],
     allKeys: true,

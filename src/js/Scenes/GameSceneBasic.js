@@ -130,11 +130,12 @@ class GameSceneBasic extends Scene {
     }
     processLevelData(data) {
       this.levelName = data.name;
+      this.npcTexts = data.npcTexts;
       this.addUI(new DrawableText(data.name, -0.45,0,1,.1,.03)
         .setTrueCoords(false)
         .setAttr('textAlign', 'left')
         .color(0,0,0)
-        .addMorph("comin", new MorphGroup(null,
+        .addMorph("comein", new MorphGroup(null,
           [{dx: -1},1],
           [{dx: 0},30],
           [{dx: 0},30],
@@ -143,7 +144,7 @@ class GameSceneBasic extends Scene {
       );
       this.goal = data.Goal;
       
-      if(data.DialogueData && data.DialogueData.length>0) {
+      if(data.DialogueData && data.DialogueData.length>0 && !dialogueSkip) {
         this.playDialogue(data.DialogueData, true, b=>{
           if(data.continueOnDialogueFinish) {
             this.loadNextLevel();
@@ -171,8 +172,14 @@ class GameSceneBasic extends Scene {
       this.encounters = data.encounters;
       if(data.night) {
         this.doLighting = true;
-        CE.style.background = 'none';
-        CE.style.backgroundColor = "#000";
+        // CE.classList.add("nightCanvas");
+        // CE.style.background = 'none';
+        // CE.style.backgroundColor = "#000";
+      } else {
+        // CE.className = ""
+        // CE.classList.remove("nightCanvas");
+
+        // CE.Style.background = '0af';
       }
     }
     spawnRandom(className, num) {
@@ -330,6 +337,8 @@ class GameSceneBasic extends Scene {
         ctx.clearRect(0,0,CE.width,CE.height);
         ctx.fillStyle = "#0003";
         ctx.fillRect(0,0,CE.width,CE.height);
+        canvas.fillStyle = "#000";
+        canvas.fillRect(0,0,CE.width,CE.height);
       }
       canvas.save();
       canvas.translate(CE.width/2,CE.height/2);

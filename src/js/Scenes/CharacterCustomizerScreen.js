@@ -12,15 +12,20 @@ class CharacterCustomizerScene extends Scene{
         this.loadModel(new PlayerModel());
         var s = 0.05
         this.playButton = this.addSelectableButton(new ButtonUI("PLAY", 0.5,0.85,0.3,0.1,s,() => {
-            this.model.scaleBoth=1;
-            this.model.modelOptions = this.model.getModelOptions();
-            this.driver.setScene(new GameSceneBasic(this.model))
+            this.playGame()
         }).center())
 
         // this.addEntity(new ButtonUI("⚙️", 0.1,0.1,0.1,0.1,0.05,() => {
         //     this.driver.setScene(new OptionsScene(this))
         // }).center())
-       
+        this.buttonsDown.push(
+            [Buttons.cheatForward, b=>this.playGame()]
+        )
+    }
+    playGame() {
+        this.model.scaleBoth=1;
+        this.model.modelOptions = this.model.getModelOptions();
+        this.driver.setScene(new GameSceneBasic(this.model))
     }
     update() {
         super.update();

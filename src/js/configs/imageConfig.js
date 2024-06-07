@@ -1,5 +1,8 @@
 IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo.png');
 
+IMAGES.backgroundImage = ImageLoader.loadImage('backgroundSky.png');
+canvas.backgroundImage = IMAGES.backgroundImage;
+
 IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
 
 IMAGES.LouChalibre = ImageLoader.loadImage('Luchador1.png');

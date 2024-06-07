@@ -7,7 +7,7 @@ class Group extends Drawable {
         this.entities.push(entity);
         return entity;
     }
-    drawShape() {
+    drawShape(canvas) {
         this.entities.forEach(e=>e.draw(canvas));
     }
     update() {

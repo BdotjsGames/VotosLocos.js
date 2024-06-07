@@ -16,10 +16,10 @@ class PlatformerModel extends Model {
     this.impactStopTimer=0;
     this.self = this;
     this.anims=anims;
-    this.attackCombo = [anims.punch1, -1,anims.flipKick, anims.armSpinny];
-    // this.attackCombo = [anims.flipKick];
+    this.attackCombo = [anims.strike, -1,anims.flipKick, anims.armSpinny];
+    // this.attackCombo = [anims.punch1, anims.punch2, anims.strike];
     this.attackComboIndex = 0;
-    this.attackAnim = anims.punch1;
+    this.attackAnim = anims.strike;
     this.skirtOn = true;
     if(!parent) {
       this.parent = {
@@ -352,7 +352,7 @@ class PlatformerModel extends Model {
   }
   
   attack() {
-    if(this.attacking)return;
+    // if(this.attacking)return;
     if(this.cooldownTimer>0)return;
     if(this.crouching)return this.slide();
     // if(this.anims.flipKick && this.parent.vz <-this.parent.jumpStrength*.9) {
@@ -446,6 +446,8 @@ class PlatformerModel extends Model {
     this.legL.rotation = Math.PI/10;
     this.legR.rotation=-Math.PI/10;
     this.hips.rotation = 0;
+    this.arm1._x=0;
+    this.arm2._x=0;
 
     this.legL2.rotation= -this.legL.rotation;
     this.legR2.rotation= -this.legR.rotation;
@@ -771,6 +773,83 @@ class PlatformerModel extends Model {
 
 var anims = {
   punch1: [
+    { limbs: 
+      [
+        {limb: 'arm1', rotation: 0},
+        {limb: 'arm2', rotation: 0},
+        {limb: 'body2', rotation: 0},
+        // {limb: 'hips', rotation: Math.PI/4},
+      ],
+      time: 0, //dx: -6
+    },
+    { limbs: 
+      [
+        {limb: 'arm2', rotation: -Math.PI/2, _x: 2},
+        // {limb: 'arm2', rotation: Math.PI*1.2},
+        {limb: 'body2', rotation: 0, _x:2},
+        {limb: 'body', rotation: 0},
+        // {limb: 'head', rotation: -Math.PI/8},
+        // {limb: 'legL', rotation: Math.PI/4},
+        // {limb: 'legL2', rotation: Math.PI/4},
+        // {limb: 'hips', rotation: -Math.PI/2},
+      ],
+      onStart: self=>{
+        self.attacking=true
+        var p = self.parent;
+        if(!p.grounded && p.mx || p.isBot) {
+          p.vx = (p.dx*p.jumpSpeedBoost)
+        }
+      },
+      time: 1, dx:5
+    },
+    {
+      limbs:[
+        {limb: 'arm2', rotation: -Math.PI/20, _x: 0},
+        {limb: 'body2', rotation: Math.PI/20, _x: 0},
+      ],
+      time: 8
+    }
+  ],
+  punch2: [
+    { limbs: 
+      [
+        {limb: 'arm1', rotation: 0},
+        {limb: 'arm2', rotation: 0},
+        {limb: 'body2', rotation: 0},
+        // {limb: 'hips', rotation: Math.PI/4},
+      ],
+      time: 0,// dx: -6
+    },
+    { limbs: 
+      [
+        {limb: 'arm1', rotation: -Math.PI/2, _x: 10},
+        {limb: 'arm2', rotation: 0, _x: -10},
+        {limb: 'body2', rotation: 0, _x:5},
+        {limb: 'body', rotation: 0},
+        // {limb: 'head', rotation: -Math.PI/8},
+        // {limb: 'legL', rotation: Math.PI/4},
+        // {limb: 'legL2', rotation: Math.PI/4},
+        // {limb: 'hips', rotation: -Math.PI/2},
+      ],
+      onStart: self=>{
+        self.attacking=true
+        var p = self.parent;
+        if(!p.grounded && p.mx || p.isBot) {
+          p.vx = (p.dx*p.jumpSpeedBoost)
+        }
+      },
+      time: 2, dx:5
+    },
+    {
+      limbs:[
+        {limb: 'arm1', rotation: -Math.PI/20, _x: 0},
+        {limb: 'arm2', rotation: -Math.PI/20, _x: 0},
+        {limb: 'body2', rotation: Math.PI/20, _x: 0},
+      ],
+      time: 8
+    }
+  ],
+  strike: [
     { limbs: 
       [
         {limb: 'arm1', rotation: Math.PI},

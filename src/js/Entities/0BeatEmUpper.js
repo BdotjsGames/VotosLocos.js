@@ -81,7 +81,7 @@ class BeatEmUpper {
         if (this.invul > 0) return;
         other.model.impactStop(5);
         this.dx = this.x<other.x?1:-1;
-        this.model.impactStop(20);
+        this.model.impactStop(25);
         createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
         
         var k = 1;
@@ -359,7 +359,7 @@ class BeatEmUpper {
             var adz = Math.abs(dz);
             if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
                 enemy.getHit(this);
-                this.vx = 0;
+                // this.vx = 0;
                 if(this.jumpCount !=0) this.jumpCount = 1
             }
         })

@@ -34,6 +34,10 @@ class Bot extends BeatEmUpper {
     initModel(w, h, color,color2) {
         this.model = new BotModel(w, h, color,color2, this);
     }
+    getHit(args) {
+        super.getHit(args);
+        this.shootTimer = 0;
+    }
     getInputs() {
         if(this.scene.dialogueBlocking) {
             this.mx = 0;

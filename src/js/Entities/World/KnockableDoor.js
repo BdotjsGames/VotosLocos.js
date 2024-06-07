@@ -18,7 +18,7 @@ class KnockableDoor extends Drawable {
       this.morphs['knock'].activate();
 
     }
-    drawShape() {
+    drawShape(canvas) {
       canvas.strokeStyle = Color.darken(this, .8).color;
       canvas.lineWidth = 10;
       canvas.strokeRect(0,-this._h,this._w,this._h);

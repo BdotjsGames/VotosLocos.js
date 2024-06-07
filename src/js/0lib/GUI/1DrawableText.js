@@ -8,8 +8,8 @@ class DrawableText extends Drawable{
       this.textBaseline = 'middle';
       this.textPosition = w/2;
     }
-    drawShape() {
-      // super.drawShape();
+    drawShape(canvas) {
+      // super.drawShape(canvas);
       var w = this._w;
       var h = this._h;
       // canvas.fillStyle=Color.darken(this).color;

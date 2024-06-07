@@ -54,7 +54,7 @@ class ImageParticle extends Drawable {
       this.shouldDelete = true;
     }
   }
-  drawShape() {
+  drawShape(canvas) {
     // canvas.fillStyle = this.color;
     // canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
     canvas.globalAlpha = this.life/this.maxLife;

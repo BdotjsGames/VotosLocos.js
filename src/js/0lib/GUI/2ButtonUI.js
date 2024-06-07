@@ -30,6 +30,11 @@ class ButtonUI extends DrawableText{
         this.textAlign = 'left';
         this.textPosition = 40;
       }
+      this.children = [];
+    }
+    addChild(child) {
+      child.parent = this;
+      this.children.push(child);
     }
     linkButton(btn, dir) {
       var prev = this.directionallyLinkedButtons[dir]
@@ -143,7 +148,7 @@ class ButtonUI extends DrawableText{
       this.callback(this);
       this.morphs['click'].activate();
     }
-    drawShape() {
+    drawShape(canvas) {
       // canvas.globalAlpha = this.alpha;
       if(this.selected) {
         canvas.fillStyle = "#999a";
@@ -155,7 +160,8 @@ class ButtonUI extends DrawableText{
         canvas.strokeRect(0,0,this._w,this._h);
       }
       canvas.fillstyle = this._color;
-      super.drawShape();
+      super.drawShape(canvas);
+      this.children.forEach(child => child.draw(canvas))
       if(this.drawBallotMark){
         if(this.hover)
           canvas.strokeStyle = '#f55';

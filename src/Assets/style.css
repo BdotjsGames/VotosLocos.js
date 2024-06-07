@@ -35,8 +35,10 @@ body {
   /* top: 50%; */
   /* left: 50%; */
   /* transform: translate(-50%, -50%); */
-  background: #0af;
-  background-image: url('./images/backgroundSky.png');
+  /* background: #0af; */
+  background: #000;
+  /* background-color: #0af; */
+  /* background-image: url('./images/backgroundSky.png'); */
   /* background-position: center; */
   background-size: cover;
   -webkit-user-select: none; /* Safari */        
@@ -44,6 +46,10 @@ body {
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
   touch-action: none;
+}
+.nightCanvas {
+  background: none !important;
+  background-color: #000000 !important;
 }
 canvas {
   image-rendering: optimizeSpeed;             /* Older versions of FF          */

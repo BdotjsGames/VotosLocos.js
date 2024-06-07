@@ -1,4 +1,5 @@
 var frameCount = 0;
+var dialogueSkip = false;
 var AUTOPAUSE = (localStorage.getItem("autopause")=='true')||false;
 var MainDriver = {
   scene: null,
@@ -102,6 +103,9 @@ var MainDriver = {
     if(devtools.opened == true) {
       alert('detected');
     }
+    if(getButtonDown(Buttons.cheatDialogueOff)) {
+      dialogueSkip = !dialogueSkip
+    }
     // if(getButtonDown(Buttons.pause)) {
     //   if(!this.scene.isOptionsScene) {
     //     this.setScene(new OptionsScene(this.scene))
@@ -114,7 +118,11 @@ var MainDriver = {
   draw() {
     window.requestAnimationFrame(this.draw);
     if(this.paused)return;
-    canvas.clearRect(0,0,CE.width,CE.height);
+    if(canvas.backgroundImage && !this.scene.doLighting) {
+      canvas.drawImage(canvas.backgroundImage,0,0, CE.width,CE.height);
+    } else {
+      canvas.clearRect(0,0,CE.width,CE.height);
+    }
     this.scene.draw(canvas);
     if(this.fadeTimer>0) {
       canvas.fillStyle = 'black';

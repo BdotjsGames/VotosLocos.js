@@ -22,10 +22,11 @@ class MenuScene extends Scene {
       MainDriver.setScene(new OptionsScene(this));
       // MainDriver.setScene(new GameSceneBasic());
     })).center().color(250,250,250);
-    this.buttonsDown.push([
-      Buttons.pause, b=>this.driver.setScene(new OptionsScene(this)),
-      Buttons.start, b=>this.driver.setScene(new CharacterCustomizerScene()),
-    ])
+    this.buttonsDown.push(
+      [Buttons.pause, b=>this.driver.setScene(new OptionsScene(this))],
+      [Buttons.start, b=>this.driver.setScene(new CharacterCustomizerScene())],
+      [Buttons.cheatForward, b=>this.driver.setScene(new CharacterCustomizerScene())],
+    )
 
     
   }

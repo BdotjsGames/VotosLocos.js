@@ -166,11 +166,12 @@ class HighFiver extends BeatEmUpper {
             this.mx = 0;
             this.my = 0;
             this.inputBlocking = true;
-            var text = randomFromList([
+            var texts = this.scene.npcTexts || [
                 "Alright! I'll follow you!",
                 "Woo! Lets go!",
                 "Yeah!|| Where are we going?",
-            ])
+            ]
+            var text = randomFromList(texts)
             this.scene.playDialogue(
                 [
                     {person: this, text, zoom: 2},

@@ -1,5 +1,5 @@
 class CircleDrawable extends Drawable {
-    drawShape() {
+    drawShape(canvas) {
         canvas.strokeStyle = this.strokeColor || Color.darken(this, .8).color;
         canvas.lineWidth = this.lineWidth||10;
         canvas.beginPath();

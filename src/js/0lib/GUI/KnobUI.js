@@ -3,7 +3,7 @@ class KnobUI extends ButtonUI {
         super('',x,y,r,r);
         // this.center();
     }
-    drawShape() {
+    drawShape(canvas) {
         canvas.strokeStyle = this.strokeColor || Color.darken(this, .8).color;
         canvas.lineWidth = this.lineWidth||10;
         canvas.beginPath();

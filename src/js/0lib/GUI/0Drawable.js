@@ -119,7 +119,7 @@ class Drawable {
         this.updates[i].call(this);
       }
     }
-    drawShape() {
+    drawShape(canvas) {
       canvas.strokeStyle = Color.darken(this, .8).color;
       canvas.lineWidth = 10;
       canvas.strokeRect(0,0,this._w,this._h);

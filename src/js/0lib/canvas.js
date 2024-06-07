@@ -9,6 +9,7 @@ CE.style.width = "100%";
 
 var SCREEN_CANVASES = [];
 
+
 function createScreenCanvas() {
   var C = document.createElement('canvas');
   C.width = CE.width;

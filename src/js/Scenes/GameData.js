@@ -56,6 +56,13 @@ GameSequence = [
             {person: LouChalibre, text: "Hurry! you better get to the Registrar Office!"},
             {person: LouChalibre, text: "Before its <wiggle>too||o|||o|||||o|||o|| l|||a|||t|||e!"},
         ],
+        npcTexts: [
+            "You haven't registered to vote yet? Cmon lets go!",
+            "You're not registered yet? Its the last day!",
+            "Lets get you to the registrar office!",
+            "Oh the last day is today?, I need to register to vote too!",
+            "The registrar office? Lets go!",
+        ],
         spawnRandom: [
             [HighFiver, 10]
         ],
@@ -88,7 +95,7 @@ GameSequence = [
         ]
     },
     {
-        name: "Registrar Office Reached",
+        name: "1-2",
         DialogueData: [], //give ballot cutscene
         spawnRandom: [
             // [KnockableDoor, 10],
@@ -98,7 +105,19 @@ GameSequence = [
         ]
     },
     {
+        name: "Registrar Office Reached",
+        DialogueData: [
+            {person: LouChalibre, text: "you made it to the Registrar office!"},
+            {text: "<color red> you received a ballot!"},
+        ], //give ballot cutscene
+        
+    },
+    {
         name: "Low Rider Transition",
+        DialogueData: [
+            {person: LouChalibre, text: "Hey bud, We're heading to the community rally"},
+            {person: LouChalibre, text: "Need a ride?"},
+        ],
         night: true,
     },
     {
@@ -107,60 +126,86 @@ GameSequence = [
         levelData: {},
     },
     {
-        name: "Community Rally",
-        Goal: "Talk to 5 tables",
-        levelData: {},
-        encounters: [
-            {
-                name :'table 1',
-                DialogueData: [],
-            },
-            {
-                name :'enemyEncounter',
-                enemies: [
-                    ENEMIES.InternetTroll,
-                    ENEMIES.RussianBot,
-                ]
-            },
-            {
-                name :'table 2',
-                DialogueData: [],
-            },
-            {
-                name :'enemyEncounter',
-                enemies: [
-                    ENEMIES.RussianBot,
-                    ENEMIES.CyberNinja,
-                ]
-            },{
-                name :'table 3',
-                DialogueData: [],
-            },
-            {
-                name :'enemyEncounter',
-                enemies: [
-                    ENEMIES.InternetTroll,
-                    ENEMIES.CyberNinja,
-                ]
-            },{
-                name :'table 4',
-                DialogueData: [],
-            },
-            {
-                name :'enemyEncounter',
-                enemies: [
-                    ENEMIES.InternetTroll,
-                    ENEMIES.RussianBot,
-                    ENEMIES.CyberNinja,
-                    ENEMIES.QAnonShamon,
-                    ENEMIES.MagaHatMarge,
-                ]
-            },{
-                name :'table 5',
-                DialogueData: [],
-            },
+        name: "Community Rally - 1",
+        npcTexts: [
+            "hello join us",
+            "we are representing something"
+        ],
+        spawnRandom: [
+            [HighFiver, 3]
         ]
     },
+    {
+        name: "Community Rally - 2",
+        spawnRandom: [
+            [Bot, 4]
+        ]
+    },
+    {
+        name: "Community Rally - 1",
+        npcTexts: [
+            "hello join us",
+            "we are representing something"
+        ],
+        spawnRandom: [
+            [HighFiver, 3]
+        ]
+    },
+    // {
+    //     name: "Community Rally",
+    //     Goal: "Talk to 5 tables",
+    //     levelData: {},
+    //     encounters: [
+    //         {
+    //             name :'table 1',
+    //             DialogueData: [],
+    //         },
+    //         {
+    //             name :'enemyEncounter',
+    //             enemies: [
+    //                 ENEMIES.InternetTroll,
+    //                 ENEMIES.RussianBot,
+    //             ]
+    //         },
+    //         {
+    //             name :'table 2',
+    //             DialogueData: [],
+    //         },
+    //         {
+    //             name :'enemyEncounter',
+    //             enemies: [
+    //                 ENEMIES.RussianBot,
+    //                 ENEMIES.CyberNinja,
+    //             ]
+    //         },{
+    //             name :'table 3',
+    //             DialogueData: [],
+    //         },
+    //         {
+    //             name :'enemyEncounter',
+    //             enemies: [
+    //                 ENEMIES.InternetTroll,
+    //                 ENEMIES.CyberNinja,
+    //             ]
+    //         },{
+    //             name :'table 4',
+    //             DialogueData: [],
+    //         },
+    //         {
+    //             name :'enemyEncounter',
+    //             enemies: [
+    //                 ENEMIES.InternetTroll,
+    //                 ENEMIES.RussianBot,
+    //                 ENEMIES.CyberNinja,
+    //                 ENEMIES.QAnonShamon,
+    //                 ENEMIES.MagaHatMarge,
+    //             ]
+    //         },{
+    //             name :'table 5',
+    //             DialogueData: [],
+    //         },
+    //     ]
+    // },
     {
         name :"Community Rally complete",
         DialogueData: []
