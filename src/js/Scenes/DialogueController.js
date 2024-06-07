@@ -301,6 +301,8 @@ class DialogueController {
       }
       if(event.person) {
         this.speakerImage = event.person.image;
+      } else {
+        this.speakerImage = null;
       }
       if(event.doNotWait) {
         this.simpleDialogue.progress();

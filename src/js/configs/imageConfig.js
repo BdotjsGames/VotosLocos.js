@@ -12,6 +12,7 @@ IMAGES.drone = ImageLoader.loadImage('drone.png');
 IMAGES.wheelchairBack = ImageLoader.loadImage('wheelchairBack.png');
 IMAGES.wheelchairWheelFront = ImageLoader.loadImage('wheelchairWheelFront.png');
 
+IMAGES.ballotItem = ImageLoader.loadImage('ballotItem.png')
 
 var rgb = hexToRGB;
 function rainbowFunction(data, index, width,height) {

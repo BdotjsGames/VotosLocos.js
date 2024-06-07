@@ -108,8 +108,11 @@ GameSequence = [
         name: "Registrar Office Reached",
         DialogueData: [
             {person: LouChalibre, text: "you made it to the Registrar office!"},
-            {text: "<color red> you received a ballot!"},
+            // {text: "<color red> you received a ballot!"},
         ], //give ballot cutscene
+        onLoad: (scene) => {
+            scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 400,100,64,64))
+        }
         
     },
     {
