@@ -159,7 +159,7 @@ IMAGES.hairOptions = [
     // IMAGES.hair3Y        = ImageLoader.loadImage("hair3Y.png"),
     IMAGES.hairMohawk    = ImageLoader.loadImage("hairMohawk.png", PALLETE_KEY.hair),
     IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png", PALLETE_KEY.hair),
-    IMAGES.hairCholo      = ImageLoader.loadImage("HairCholo.png", PALLETE_KEY.hair),
+    IMAGES.hairCholo      = ImageLoader.loadImage("hairCholo2.png", PALLETE_KEY.hair),
     IMAGES.hijab         = ImageLoader.loadImage("hijab.png", PALLETE_KEY.hair),
     null,
 ]
