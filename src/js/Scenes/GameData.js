@@ -126,6 +126,11 @@ GameSequence = [
             {person: LouChalibre, text: "Hey bud, We're heading to the community rally"},
             {person: LouChalibre, text: "Need a ride?"},
         ],
+        onLoad: (scene) => {
+            var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,50))
+            lowRider.w *= 3;
+            lowRider.h *= 3;
+        },
         night: true,
     },
     {

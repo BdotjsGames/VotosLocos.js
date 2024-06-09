@@ -19,8 +19,8 @@ class ItemPickup extends ImageDrawable {
     }
     update() {
         this.scene.players.forEach(p => {
-            var dx = p.x - this.x;
-            var dy = p.y - this.y;
+            var dx = p.x - (this.x + this.w/2);
+            var dy = p.y - (this.y + this.h/2);
             var adx = Math.abs(dx);
             var ady = Math.abs(dy);
             if(adx<this.w/2 && ady < this.h/2) {

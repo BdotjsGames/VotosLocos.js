@@ -10,6 +10,7 @@ class GameSceneBasic extends Scene {
       this.maxY = this.startingY + this.groundHeight/2;
       this.enemies = [];
       this.players = [];
+      this.items = [];
       
       for(var i=0;i<10;i++) {
         var x = 1500*Math.random();
@@ -131,7 +132,7 @@ class GameSceneBasic extends Scene {
     processLevelData(data) {
       this.levelName = data.name;
       this.npcTexts = data.npcTexts;
-      this.addUI(new DrawableText(data.name, -0.45,0,1,.1,.03)
+      this.addUI(new DrawableText(data.name, 0,0,1,.1,.03)
         .setTrueCoords(false)
         .setAttr('textAlign', 'left')
         .color(0,0,0)
@@ -180,6 +181,9 @@ class GameSceneBasic extends Scene {
         // CE.classList.remove("nightCanvas");
 
         // CE.Style.background = '0af';
+      }
+      if(data.onLoad) {
+        data.onLoad(this);
       }
     }
     spawnRandom(className, num) {
