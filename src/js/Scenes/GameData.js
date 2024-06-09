@@ -88,7 +88,7 @@ GameSequence = [
         DialogueData: [
             {person: LouChalibre, text: "<bam>Uh Oh!"},
             {person: LouChalibre, text: "Watch out for the bots!"},
-            {person: LouChalibre, text: "Press the [Attack] button to show em what for!"},
+            {person: LouChalibre, text: "Press the [Attack] button to teach 'em a lesson"},
         ],
         spawnRandom: [
             [Bot, 4],
