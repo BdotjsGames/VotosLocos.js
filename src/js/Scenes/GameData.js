@@ -111,7 +111,12 @@ GameSequence = [
             // {text: "<color red> you received a ballot!"},
         ], //give ballot cutscene
         onLoad: (scene) => {
-            scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 400,100,64,64))
+            var office = scene.addEntity(new ImageDrawable(IMAGES.registrarOffice, 350,0))
+            office.w *= 4
+            office.h *= 4
+            window.office=office;
+            office.y=-office.h - 60
+            scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
         }
         
     },
