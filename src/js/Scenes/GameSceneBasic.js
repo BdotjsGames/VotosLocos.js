@@ -328,6 +328,8 @@ class GameSceneBasic extends Scene {
       
     }
     loadNextLevel(skipTransition) {
+      this.player.model.idle();
+      this.player.model.update();
       this.loadLevel(this.levelNumber+1,skipTransition);
     }
     loadPrevLevel(skipTransition) {

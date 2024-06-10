@@ -12,7 +12,10 @@ class MenuScene extends Scene {
         if(this.x-this.w>CE.width) this.x=-this.w*2;
       }
     }
-    
+    this.addEntity(new DrawableText("VOTOS LOCOS", 0.5,0.3,0.8,0.3,0.2))
+      .setTrueCoords(false)
+      // .center()
+      .color(255,255,255)
     this.addSelectableButton(new ButtonUI("PLAY", 0.5,0.7, 0.4,0.1,0.05,e=>{
       // console.log('pressed');
       MainDriver.setScene(new CharacterCustomizerScene());
