@@ -9,9 +9,23 @@ function resetKeys() {
 }
 var keyLogging = false;
 
+listeningForNextKey = false;
+listeningCallback = null;
+function listenForNextKey(callback) {
+  listeningCallback = callback;
+  listeningForNextKey = true;
+}
+
 function onkeydown(e) {
   var k = e.keyCode;
   if(keyLogging)console.log(e);
+  if(listeningForNextKey) {
+    specialCharacterDisplays[e.keyCode] = e.code;
+    listeningCallback(k);
+    listeningForNextKey = false;
+    return;
+  }
+  // e.code
   //e.code is a readable name of the key for special characters like space, shift, enter
   // and it displays keys as KeyJ etc
   // could be usefull for input customization displays

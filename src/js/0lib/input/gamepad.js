@@ -18,6 +18,13 @@ function pressed(b) {
 var activeGamepads = [];
 var activeGamepadsMap = {};
 
+var isListeningForNextGamepadButton = false;
+var listenForNextGamepadButtonCallback = null;
+function listenForNextGamepadButton(callback) {
+  listenForNextGamepadButtonCallback = callback;
+  isListeningForNextGamepadButton = true;
+}
+
 function handleGamePad() {
   var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
   // if(gamepads2.length>0)
@@ -55,7 +62,15 @@ function handleGamePad() {
           gamepadOn = true;
           gamepadAnyButton+=1;
           // console.log(gp);
-          if(!gamepadButtons[i]) gamepadAnyButtonDown = true;
+          if(!gamepadButtons[i]) {
+            gamepadAnyButtonDown = true;
+            if(isListeningForNextGamepadButton) {
+              listenForNextGamepadButtonCallback(i)
+              isListeningForNextGamepadButton = false;
+              return;
+            }
+          }
+          
         }
         gamepadButtons[i] = p;
       });
