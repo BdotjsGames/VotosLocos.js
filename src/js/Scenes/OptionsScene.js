@@ -46,7 +46,7 @@ class OptionsScene extends AdditiveScene {
             //     .setAttr("outlineOnHover", false)
             // )
             this.addSelectableButton(
-                new ButtonUI("  "+toggle.text,x-0.05,y,w+0.05,h,fontSize,b=>{
+                new ButtonUI("  "+toggle.text,x,y,w,h,fontSize,b=>{
                     toggle.callback(b);
                     // check.text = check.value?'☑':'☐'
                 })
@@ -58,7 +58,12 @@ class OptionsScene extends AdditiveScene {
             )
             y+=spacing;
         })
-        
+        this.addSelectableButton(
+            new ButtonUI('controls',x,y,w,h,fontSize,(b)=>{
+                this.driver.setScene(new ControlsScene(this))
+            })
+        )
+        y+=spacing;
     }
     update() {
         super.update();

@@ -29,10 +29,11 @@ class ControlsEditorScene extends AdditiveScene {
         );
         y+=spacing;
         var options = [
+            // {
+            //     name: 'clear', 
+            //     callback: () => {}
+            // },
             {
-                name: 'clear', 
-                callback: () => {}
-            },{
                 name: 'add Key', 
                 callback: () => {
                     listenForNextKey(k=>{
@@ -42,6 +43,12 @@ class ControlsEditorScene extends AdditiveScene {
                         this.inputDisplay.text = buttonConfigToString(button.buttons);
                     })
                 }
+            },{
+                name: 'remove Key', 
+                callback: () => {
+                    this.button.buttons.keys.pop();
+                    this.inputDisplay.text = buttonConfigToString(button.buttons);
+                }
             }, {
                 name: 'add Gamepad Button', 
                 callback: () => {
@@ -50,6 +57,13 @@ class ControlsEditorScene extends AdditiveScene {
                         this.button.buttons.buttons.push(b);
                         this.inputDisplay.text = buttonConfigToString(button.buttons);
                     })
+                }
+            }, {
+                name: 'remove Gamepad Button',
+                callback: () => {
+                    this.button.buttons.buttons.pop();
+                    this.inputDisplay.text = buttonConfigToString(button.buttons);
+                    
                 }
             // }, {
             //     name: 'add Mouse Button', 

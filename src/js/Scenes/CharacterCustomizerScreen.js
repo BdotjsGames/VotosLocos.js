@@ -19,7 +19,8 @@ class CharacterCustomizerScene extends Scene{
         //     this.driver.setScene(new OptionsScene(this))
         // }).center())
         this.buttonsDown.push(
-            [Buttons.cheatForward, b=>this.playGame()]
+            [Buttons.cheatForward, b=>this.playGame()],
+            [Buttons.start, b=>this.playGame()],
         )
     }
     playGame() {
