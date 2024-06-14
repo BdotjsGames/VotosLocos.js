@@ -19,20 +19,30 @@ class ControlsScene extends AdditiveScene {
             {name: 'Attack', buttons: Buttons.B},
             {name: 'Crouch', buttons: Buttons.X},
             {name: 'Interact', buttons: Buttons.Y},
+            {name: '[UI] Confirm', buttons: Buttons.A},
         ]
         buttons.forEach(button => {
+            
+            var text = buttonConfigToString(button.buttons);
+            text.split(',').forEach((t,i)=>{
+                this.addEntity(
+                    new DrawableText(t,0.4+.15*i,y,0.15,h,fontSize)
+                    .setTrueCoords(false)
+                    .setAttr('textAlign', 'left')
+                )
+            })
             this.addSelectableButton(
                 new ButtonUI(button.name,x-.3,y,w,h,fontSize,b=>{
                     this.driver.setScene(new ControlsEditorScene(this, button))
                 })
             )
-            var text = buttonConfigToString(button.buttons);
-            this.addEntity(
-                new DrawableText(text,0.4,y,0.6,h,fontSize)
-                .setTrueCoords(false)
-                .setAttr('textAlign', 'left')
-            )
             y+=spacing
+            // this.addEntity(
+            //     new DrawableText(text,0.4,y,0.6,h,fontSize)
+            //     .setTrueCoords(false)
+            //     .setAttr('textAlign', 'left')
+            // )
+            // y+=spacing
         })
     }
 }

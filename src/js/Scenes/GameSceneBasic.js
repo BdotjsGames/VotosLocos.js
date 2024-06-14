@@ -11,17 +11,8 @@ class GameSceneBasic extends Scene {
       this.enemies = [];
       this.players = [];
       this.items = [];
+      this.cameraLerpSpeed = 10;
       
-      for(var i=0;i<10;i++) {
-        var x = 1500*Math.random();
-        var y = 300*Math.random()/3+this.startingY-this.groundHeight-300;
-        var cloud = this.addEntity(new ImageDrawable(IMAGES.cloud, x,y))
-        cloud.vx = Math.random();
-        cloud.update = function() {
-          this.x += this.vx;
-          if(this.x-this.w>1500) this.x=-this.w*2;
-        }
-      }
       this.backgrounds = [];
       this.backgrounds.push(this.ground=new Ground(0,this.startingY-this.groundHeight/2,2000,this.groundHeight));
       // for(var i=0;i<10;i++) {
@@ -45,26 +36,7 @@ class GameSceneBasic extends Scene {
       //   this.addEntity(new Drone(x,y)); 
       // }
       this.showGo = false;
-      for(var i=0;i<17;i++) {
-        var x = Math.random()*this.ground.w;
-        var y = this.startingY - this.groundHeight/2-75-Math.random()*100;
-        var w = 100 + Math.random()*100;
-        var h = 50+200*Math.random();
-        this.backgrounds.push(new BackgroundBuilding(x,y, w,h,'white')); 
-      }
-      var wx = this.ground.w;
-      for(var x=wx;x>-300;) {
-        var x = wx;
-        var y = this.startingY - this.groundHeight/2;
-        // var h = 50+200*Math.random();
-        // this.addEntity(new BackgroundBuilding(x,y, 100,h,'white')); 
-        var buildingImage = randomFromList(IMAGES.buildings);
-        var w = buildingImage.width*2;
-        var h = buildingImage.height*2;
-        wx -= w;///2+Math.random()*w;
-        // wx -= Math.random()*200;
-        this.backgrounds.push(new ImageDrawable(buildingImage, x,y-h/2, w,h));
-      }
+     
       this.addEntity(this.player = new Player(100,this.startingY,model));
       // this.addEntity(this.player.networkTester = new PlayerNetworked(80,this.startingY, model.getModelOptions()))
       window.player = this.player;
@@ -75,6 +47,7 @@ class GameSceneBasic extends Scene {
       this.camera = {
         x:this.player.x,y:this.player.y,
         target: this.player,
+        offsetY: 0,
         zoom:1,
       };
       this.defaultZoom = this.camera.zoom;
@@ -106,6 +79,40 @@ class GameSceneBasic extends Scene {
       this.ui = [];
       if(this.levelNumber<GameSequence.length) {
         this.processLevelData(GameSequence[this.levelNumber]);
+      }
+    }
+    addClouds() {
+      for(var i=0;i<10;i++) {
+        var x = 1500*Math.random();
+        var y = 300*Math.random()/3+this.startingY-this.groundHeight-300;
+        var cloud = this.addEntity(new ImageDrawable(IMAGES.cloud, x,y))
+        cloud.vx = Math.random();
+        cloud.update = function() {
+          this.x += this.vx;
+          if(this.x-this.w>1500) this.x=-this.w*2;
+        }
+      }
+    }
+    addBuildings() {
+      for(var i=0;i<17;i++) {
+        var x = Math.random()*this.ground.w;
+        var y = this.startingY - this.groundHeight/2-75-Math.random()*100;
+        var w = 100 + Math.random()*100;
+        var h = 50+200*Math.random();
+        this.backgrounds.push(new BackgroundBuilding(x,y, w,h,'white')); 
+      }
+      var wx = this.ground.w;
+      for(var x=wx;x>-300;) {
+        var x = wx;
+        var y = this.startingY - this.groundHeight/2;
+        // var h = 50+200*Math.random();
+        // this.addEntity(new BackgroundBuilding(x,y, 100,h,'white')); 
+        var buildingImage = randomFromList(IMAGES.buildings);
+        var w = buildingImage.width*2;
+        var h = buildingImage.height*2;
+        wx -= w;///2+Math.random()*w;
+        // wx -= Math.random()*200;
+        this.backgrounds.push(new ImageDrawable(buildingImage, x,y-h/2, w,h));
       }
     }
     addUI(ui) {
@@ -185,6 +192,15 @@ class GameSceneBasic extends Scene {
       if(data.onLoad) {
         data.onLoad(this);
       }
+      if(data.environment) {
+        if(data.environment.tileImage) {
+          this.ground.tile = IMAGES[data.environment.tileImage]
+        }
+
+      } else {
+        this.addClouds();
+        this.addBuildings();
+      }
     }
     spawnRandom(className, num) {
       for(var i=0;i<num;i++) {
@@ -244,9 +260,10 @@ class GameSceneBasic extends Scene {
       if(getButtonDown(Buttons.pause)) {
         this.driver.setScene(new PauseScene(this));
       }
-      if(this.dialogueController.done) {
+      if(this.dialogueController.done&&this.player.inputBlocked) {
         this.camera.target = this.player;
-        this.camera.zoom = this.defaultZoom;
+        this.camera.targetZoom = this.defaultZoom;
+        // this.camera.zoom = this.defaultZoom;
         this.player.inputBlocked = false;
         this.dialogueBlocking = false;
       }
@@ -264,12 +281,14 @@ class GameSceneBasic extends Scene {
       var ty = target.y - target.h+target.z;
       if(!this.dialogueController.done) {
         ty += CE.height/40;
+      } else {
+        ty += this.camera.offsetY;
       }
       this.camera.x += Math.floor((tx-this.camera.x)/10);
       this.camera.y += Math.floor((ty-this.camera.y)/10);
       
       // var targetZoom = 1/(1+Math.abs(this.player.vx)/100);
-      this.camera.zoom += (this.camera.targetZoom-this.camera.zoom)/10;
+      this.camera.zoom += (this.camera.targetZoom-this.camera.zoom)/this.cameraLerpSpeed;
   
       var screenw = CE.width/2/this.camera.zoom;
       var screenh = CE.height/2/this.camera.zoom;

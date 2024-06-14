@@ -9,9 +9,13 @@ var ENEMIES = {
 
 var Environments = {
     Street: {
-        tileImage: IMAGES.backgroundTileStreetSidewalk
+        tileImage: 'backgroundTileStreetSidewalk'
+    },
+    OfficeInterior: {
+        tileImage: 'backgroundTileOfficeInterior',
+        backgroundColor: 'tan',
+        minYOffset: 200
     }
-
 }
 
 var BlockWalkDoor = {};
@@ -115,10 +119,24 @@ GameSequence = [
             office.w *= 4
             office.h *= 4
             window.office=office;
-            office.y=-office.h - 60
-            scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
+            office.y=-office.h - 80
+            // scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
+            scene.addEntity(new EnterableDoor(office.x+office.w/2,-20,0));
+            scene.defaultZoom = 0.5
+            scene.cameraLerpSpeed = 40
+            // scene.camera.zoom = 0.5
+            scene.camera.offsetY = -200
         }
         
+    },
+    {
+        name: 'Registrar Office Interior',
+        environment: Environments.OfficeInterior,
+        onLoad: (scene) => {
+            scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
+            scene.minY += 200
+            // scene.maxY -= 100
+        }
     },
     {
         name: "Low Rider Transition",

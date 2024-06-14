@@ -16,6 +16,7 @@ IMAGES.ballotItem = ImageLoader.loadImage('ballotItem.png')
 IMAGES.registrarOffice = ImageLoader.loadImage('RegistrarOffice.png')
 IMAGES.lowRider = ImageLoader.loadImage('lowRider.png')
 
+
 var rgb = hexToRGB;
 function rainbowFunction(data, index, width,height) {
     var x = index/4%width;
@@ -201,6 +202,7 @@ IMAGES.buildings = [
 ]
 // IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk.png")
 IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk2.png")
+IMAGES.backgroundTileOfficeInterior    = ImageLoader.loadImage("backgroundTileOfficeInterror.png")
 
 IMAGES.skirts = [
     null,
