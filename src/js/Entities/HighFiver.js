@@ -171,7 +171,7 @@ class HighFiver extends BeatEmUpper {
                 "Woo! Lets go!",
                 "Yeah!|| Where are we going?",
             ]
-            var text = randomFromList(texts)
+            var text = this.text || randomFromList(texts);
             this.scene.playDialogue(
                 [
                     {person: this, text, zoom: 2},

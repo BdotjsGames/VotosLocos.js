@@ -16,6 +16,10 @@ IMAGES.ballotItem = ImageLoader.loadImage('ballotItem.png')
 IMAGES.registrarOffice = ImageLoader.loadImage('RegistrarOffice.png')
 IMAGES.lowRider = ImageLoader.loadImage('lowRider.png')
 
+IMAGES.desk = ImageLoader.loadImage('desk.png')
+IMAGES.deskFront = ImageLoader.loadImage('deskFront.png')
+
+
 
 var rgb = hexToRGB;
 function rainbowFunction(data, index, width,height) {

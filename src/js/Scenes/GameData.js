@@ -110,18 +110,20 @@ GameSequence = [
     },
     {
         name: "Registrar Office Reached",
+        Goal: "Enter the Registrar Office",
         DialogueData: [
             {person: LouChalibre, text: "you made it to the Registrar office!"},
             // {text: "<color red> you received a ballot!"},
         ], //give ballot cutscene
         onLoad: (scene) => {
             var office = scene.addEntity(new ImageDrawable(IMAGES.registrarOffice, 350,0))
+            
             office.w *= 4
             office.h *= 4
             window.office=office;
             office.y=-office.h - 80
             // scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
-            scene.addEntity(new EnterableDoor(office.x+office.w/2,-20,0));
+            scene.addEntity(new EnterableDoor(office.x+office.w/2,-100,0));
             scene.defaultZoom = 0.5
             scene.cameraLerpSpeed = 40
             // scene.camera.zoom = 0.5
@@ -131,10 +133,30 @@ GameSequence = [
     },
     {
         name: 'Registrar Office Interior',
+        Goal: "Get your ballot!",
         environment: Environments.OfficeInterior,
         onLoad: (scene) => {
-            scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
             scene.minY += 200
+            var deskImage =  new ImageDrawable(IMAGES.deskFront, 0,0);
+            deskImage.w *= 3;
+            deskImage.h *= 3;
+            deskImage.y = -deskImage.h;
+            var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
+            var npc = scene.addEntity(new HighFiver(500,100))
+            npc.dx = -1
+            npc.getInputs = e=>{}
+            npc.dialogue = [
+                {person: npc, text: "Hi!||| are you here to receive your ballot?", zoom:2},
+                {person: npc, text: "Wow you were just in time, we were just about to close!"},
+                {person: npc, text: "Well, here you go!"},
+            ]
+            npc.onAfterDialogue = e=> {
+                var ballot = scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 500,250,64,64))
+                ballot.afterPickup = e=>{
+                    scene.showGo = true;
+                }
+            }
+
             // scene.maxY -= 100
         }
     },
@@ -145,7 +167,7 @@ GameSequence = [
             {person: LouChalibre, text: "Need a ride?"},
         ],
         onLoad: (scene) => {
-            var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,50))
+            var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,0))
             lowRider.w *= 3;
             lowRider.h *= 3;
         },
