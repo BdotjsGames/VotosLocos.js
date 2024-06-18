@@ -143,6 +143,7 @@ class PlatformerModel extends Model {
             this.legL.hidden=false;
             this.legR.hidden=false;
           }
+          this.skirt.hidden = !this.wheelchair.hidden;
           this.legLength = value;
           var ll = value;
           var db1 = 6

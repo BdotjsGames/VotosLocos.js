@@ -54,6 +54,37 @@ function sqrDist3(a,b) {
   return dx*dx+dy*dy+dz*dz;
 }
 
+function boxCollideTL(a,b) {
+  return a.x + a.w >= b.x && a.x<=b.x+b.w&&
+    a.y + a.h >= b.y && a.y<=b.y+b.h
+}
+
+function boxCollideM(a,b) {
+  return a.x + a.w/2 >= b.x-b.w/2 && a.x-a.w/2<=b.x+b.w/2 && 
+    a.y + a.h/2 >= b.y-b.h/2 && a.y-a.h/2<=b.y+b.h/2
+}
+
+
+function boxCollideMB(a,b) {
+  return a.x + a.w/2 >= b.x-b.w/2 && a.x-a.w/2<=b.x+b.w/2 && 
+    a.y - a.h >= b.y-b.h && a.y<=b.y
+}
+
+
+function distABS(a,b,w,h) {
+  var dx = a.x-b.x;
+  var dy = a.y-b.y;
+  return Math.abs(dx)<w && Math.abs(dy)<h ;
+}
+
+function distABSz(a,b,w,h,d) {
+  var dx = a.x-b.x;
+  var dy = a.y-b.y;
+  var dz = a.z-b.z;
+  return Math.abs(dx)<w && Math.abs(dy)<h &&Math.abs(dz)<d
+
+}
+
 function arrayRemoveItem(arr, value) {
   var index = arr.indexOf(value);
   if (index > -1) {

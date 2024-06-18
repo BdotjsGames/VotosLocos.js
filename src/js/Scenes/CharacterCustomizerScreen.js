@@ -73,7 +73,7 @@ class CharacterCustomizerScene extends Scene{
                     customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
                 },
                 () => {
-                    this.driver.setScene(new ModelOptionSelectorScene(this, this.model, customizableOption));
+                    // this.driver.setScene(new ModelOptionSelectorScene(this, this.model, customizableOption));
                 }
             ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
             );

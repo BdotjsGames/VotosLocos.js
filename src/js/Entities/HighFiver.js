@@ -18,6 +18,12 @@ class HighFiver extends BeatEmUpper {
         this.highFivesNeeded = randomFromList([1,3,5])
         this.name = 'citizen';
         this.talkSound = SOUNDS.citizenTalk;
+        this.onAfterDialogue = e=> {
+            this.startFollow(player, 80);
+            this.jump();
+        }
+        this.shouldStartDiaolgueOnProximity = false;
+        this.lookingAt = null;
     }
     startFollow(target, distance) {
         this.following = true;
@@ -132,6 +138,23 @@ class HighFiver extends BeatEmUpper {
     update(){
         super.update();
         if(this.following)this.followUpdate();
+        if(this.shouldStartDiaolgueOnProximity) {
+            this.scene.players.forEach(p=>{
+                var w = 100
+                if(distABSz(this,p, w,w,w )) {
+                    if(!this.inProxy) {
+                        this.startDialogueToPlayer(p);
+                    }
+                    this.inProxy = true;
+                    return;
+                } else {
+                    this.inProxy = false;
+                }
+            })
+        }
+        if(this.lookingAt) {
+            this.dx = (this.lookingAt.x>this.x)?1:-1
+        }
     }
     onJump() {
         SOUNDS.jump.play();
@@ -155,34 +178,39 @@ class HighFiver extends BeatEmUpper {
             }
         }
     }
-    beHighFived() {
+    startDialogueToPlayer(player){
+        this.lookingAt = player;
+        this.dx = (player.x>this.x)?1:-1;
+        this.inputBlocking = true;
+        var texts = this.scene.npcTexts || [
+            "Alright! I'll follow you!",
+            "Woo! Lets go!",
+            "Yeah!|| Where are we going?",
+        ]
+        var text = this.text || randomFromList(texts);
+        var dialogue = this.dialogue || [
+            {person: this, text, zoom:2}
+        ]
+
+        this.scene.playDialogue(
+            dialogue, true, this.onAfterDialogue
+        )
+    }
+    beHighFived(by) {
         this.highFive();
         // if(Math.random()>.8)this.jump();
         this.highFivesNeeded-=1;
         if(this.highFivesNeeded<=0) {
             this.spawnTextParticle(":)")
-            this.model.mouth.drawable.image = IMAGES.mouthSmile;
-            this.model.face._y=0;
+           this.beHappy();
             this.mx = 0;
             this.my = 0;
-            this.inputBlocking = true;
-            var texts = this.scene.npcTexts || [
-                "Alright! I'll follow you!",
-                "Woo! Lets go!",
-                "Yeah!|| Where are we going?",
-            ]
-            var text = this.text || randomFromList(texts);
-            this.scene.playDialogue(
-                [
-                    {person: this, text, zoom: 2},
-                    // {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
-                    // {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
-                ], true, e=> {
-                    this.startFollow(player, 80);
-                    this.jump();
-                }
-            )
+            this.startDialogueToPlayer(by);
         }
+    }
+    beHappy() {
+        this.model.mouth.drawable.image = IMAGES.mouthSmile;
+        this.model.face._y=0;
     }
     die() {
         if (this.shouldDelete) return;

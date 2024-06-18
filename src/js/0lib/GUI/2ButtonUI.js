@@ -150,6 +150,10 @@ class ButtonUI extends DrawableText{
     }
     drawShape(canvas) {
       // canvas.globalAlpha = this.alpha;
+      if(this.backColor) {
+        canvas.fillStyle = this.backColor;
+        canvas.fillRect(0,0,this._w, this._h);
+      }
       if(this.selected) {
         canvas.fillStyle = "#999a";
         canvas.fillRect(0,0,this._w, this._h);

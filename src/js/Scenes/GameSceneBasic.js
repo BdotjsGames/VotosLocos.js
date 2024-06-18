@@ -157,7 +157,7 @@ class GameSceneBasic extends Scene {
           if(data.continueOnDialogueFinish) {
             this.loadNextLevel();
           } else {
-            this.showGo = true;
+            if(!data.dontShowGo) this.showGo = true;
             if(data.Goal) {
               this.setGoal(data.Goal);
             }
@@ -193,6 +193,8 @@ class GameSceneBasic extends Scene {
         data.onLoad(this);
       }
       if(data.environment) {
+        this.environment=data.environment;
+        this.backgroundColor = data.environment.backgroundColor;
         if(data.environment.tileImage) {
           this.ground.tile = IMAGES[data.environment.tileImage]
         }
@@ -366,6 +368,10 @@ class GameSceneBasic extends Scene {
         canvas.fillRect(0,0,CE.width,CE.height);
       }
       canvas.save();
+      if(this.backgroundColor) {
+        canvas.fillStyle = this.backgroundColor;
+        canvas.fillRect(0,0,CE.width,CE.height);
+      }
       canvas.translate(CE.width/2,CE.height/2);
       canvas.rotate(this.camera.rotation);
       canvas.scale(this.camera.zoom,this.camera.zoom);

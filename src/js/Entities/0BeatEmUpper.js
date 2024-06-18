@@ -146,7 +146,7 @@ class BeatEmUpper {
         if(this.dx==0) {
             console.log("WTF")
         }
-        if(this.scene.dialogueBlocking)return;
+        // if(this.scene.dialogueBlocking)return;
         if (this.health < 0) {
             this.die();
         }
@@ -403,7 +403,7 @@ class BeatEmUpper {
         if(minDist<r*r) {
             closest.highFiveTarget = this;
             this.highFiveTarget = closest;
-            closest.beHighFived();
+            closest.beHighFived(this);
             // if(this.model.cooldownTimer<2) {
             // var pow = this.scene.addEntity(new ImageParticle(IMAGES.highFivePow, (this.x+closest.x)/2-32, this.y-128, 64,128,0,0,50,-0.00));
             var pow = this.scene.addEntity(new ImageParticle(IMAGES.pow, (this.x+closest.x)/2-32, this.y-128, 64,64,0,0,50,-0.00));

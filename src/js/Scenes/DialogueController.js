@@ -268,6 +268,16 @@ class DialogueController {
     this.lastSpeaker = null;
     this.conditions = [];
   }
+  selectOption(index) {
+    var option = this.options[index];
+    if(option.onSelected)option.onSelected(this);
+    if(option.sequence) {
+      this.setSequence(option.sequence, this.callback)
+    } else if(option.setIndex) {
+        this.index = option.setIndex -1;
+        this.next();
+    }
+  }
   add(sequence) {
     this.setSequence(sequence);
   }
@@ -283,6 +293,9 @@ class DialogueController {
     this.processData(this.sequence[0]);
   }
   processData(event) {
+    if(event.onStart) {
+      event.onStart(this);
+    }
     if(event.setCondition) {
       this.conditions.push([event.setCondition, event.conditionTarget]);
     }
@@ -308,6 +321,11 @@ class DialogueController {
         this.simpleDialogue.progress();
         this.next();
       }
+    }
+
+    if(event.options) {
+      this.options = event.options;
+      this.gameScene.driver.setScene(new DialogueOptionScene(this.gameScene.driver.scene, event.options, this),0)
     }
     if(event.speakerImage) {
       this.speakerImage = event.speakerImage;

@@ -38,14 +38,15 @@ var MainDriver = {
   isActive(scene) {
     return this.scene = scene;
   },
-  setScene(scene) {
+  setScene(scene, fadeIn=10) {
     scene.driver = this;
     if(this.scene) {
       this.scene.onLeave();
     }
     this.scene = scene;
     scene.init();
-    this.fadeIn(10);
+    if(fadeIn)
+      this.fadeIn(fadeIn);
   },
   start() {
     if(this.started) {
