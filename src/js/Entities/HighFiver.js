@@ -24,8 +24,12 @@ class HighFiver extends BeatEmUpper {
         }
         this.shouldStartDiaolgueOnProximity = false;
         this.lookingAt = null;
+        this.interactable = true;
+        this.isInteractable = true;
+        this.promptOffsetY = -100;
     }
     startFollow(target, distance) {
+        this.isInteractable = false;
         this.following = true;
         this.followDistance = distance;
         this.followMoving = false;
@@ -164,8 +168,9 @@ class HighFiver extends BeatEmUpper {
     }
 
     setScene(scene) {
-        scene.specialActors.kwak = this;
-        this.scene = scene;
+        this.scene=scene;
+        this.scene.interactables.push(this);
+        this.enemies = this.scene.enemies;
     }
     getInputs() {
         if(this.inputBlocking)return;
@@ -178,7 +183,12 @@ class HighFiver extends BeatEmUpper {
             }
         }
     }
+    onInteract(player) {
+        this.startDialogueToPlayer(player);
+    }
     startDialogueToPlayer(player){
+        this.mx = 0;
+        this.my = 0;
         this.lookingAt = player;
         this.dx = (player.x>this.x)?1:-1;
         this.inputBlocking = true;
@@ -202,7 +212,7 @@ class HighFiver extends BeatEmUpper {
         this.highFivesNeeded-=1;
         if(this.highFivesNeeded<=0) {
             this.spawnTextParticle(":)")
-           this.beHappy();
+            this.beHappy();
             this.mx = 0;
             this.my = 0;
             this.startDialogueToPlayer(by);

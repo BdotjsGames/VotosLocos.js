@@ -144,7 +144,7 @@ GameSequence = [
             deskImage.y = -deskImage.h;
             var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
             var npc = scene.addEntity(new HighFiver(500,100))
-            npc.shouldStartDiaolgueOnProximity = true;
+            // npc.shouldStartDiaolgueOnProximity = true;
             npc.dx = -1
             npc.getInputs = e=>{}
             npc.beHappy();
@@ -158,7 +158,7 @@ GameSequence = [
                         {person: npc, text: "Well, here you go!"},
                         {onStart: dia => {
                             var ballot = scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 500,250,64,64))
-                            npc.shouldStartDiaolgueOnProximity = false;
+                            // npc.shouldStartDiaolgueOnProximity = false;
                             ballot.afterPickup = e=>{
                                 scene.showGo = true;
                             }

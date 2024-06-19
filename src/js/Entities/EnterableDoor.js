@@ -4,18 +4,28 @@ class EnterableDoor {
         this.showGo = true;
         this.w = 100;
         this.h = 100;
+        this.interactable = true;
+        this.isInteractable = true;
+    }
+    setScene(scene) {
+        this.scene=scene;
+        this.scene.interactables.push(this);
+        this.enemies = this.scene.enemies;
+    }
+    onInteract(player) {
+        this.scene.loadNextLevel();
     }
     update() {
-        this.scene.players.forEach(p => {
-            var dx = p.x - (this.x);
-            var dy = p.y - (this.y);
-            var adx = Math.abs(dx);
-            var ady = Math.abs(dy);
-            if(adx<this.w/2 && ady < this.h/2) {
-                // this.onPickup();
-                this.scene.loadNextLevel();
-            }
-        })
+        // this.scene.players.forEach(p => {
+        //     var dx = p.x - (this.x);
+        //     var dy = p.y - (this.y);
+        //     var adx = Math.abs(dx);
+        //     var ady = Math.abs(dy);
+        //     if(adx<this.w/2 && ady < this.h/2) {
+        //         // this.onPickup();
+        //         this.scene.loadNextLevel();
+        //     }
+        // })
     }
     draw(canvas) {
         if(this.showGo && frameCount%60<30) {

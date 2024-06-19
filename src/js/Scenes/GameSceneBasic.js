@@ -10,6 +10,7 @@ class GameSceneBasic extends Scene {
       this.maxY = this.startingY + this.groundHeight/2;
       this.enemies = [];
       this.players = [];
+      this.interactables = [];
       this.items = [];
       this.cameraLerpSpeed = 10;
       

@@ -14,6 +14,7 @@ class Player extends BeatEmUpper {
     this.networkedState = {};
     this.networkedStateDiff = {};
     this.attackHitbox = {width: 80, height: 70};
+    this.interactablesRange = 100;
   }
   
   addShoes() {
@@ -48,6 +49,7 @@ class Player extends BeatEmUpper {
       // if(this.needsNetworkUpdate) {
       //   this.sendNetworkedState();
       // }
+      this.closestInteractable = null;
       return;
     }
     // if(this.scene.dialogueController.simpleDialogue.text&&!this.scene.dialogueController.current.done) {
@@ -117,6 +119,27 @@ class Player extends BeatEmUpper {
     // if(this.needsNetworkUpdate) {
     //   this.sendNetworkedState();
     // }
+    this.updateClosestInteractable();
+    if(this.closestInteractable) {
+      if(getButtonDown(this.buttons.highFive)) {
+        this.closestInteractable.onInteract(this);
+      }
+    }
+  }
+  updateClosestInteractable() {
+    var rr = this.interactablesRange*this.interactablesRange;
+    var minDist = rr;
+    var closest = null;
+    this.scene.interactables.forEach(interactable => {
+      if(!interactable.isInteractable)return;
+      const {dx,dy,dz} = vector3Diff(interactable, this);
+      var sqrDiff = diffSqrd(dx,dy,dz);
+      if(sqrDiff<minDist) {
+        closest = interactable;
+        minDist = sqrDiff;
+      }
+    })
+    this.closestInteractable = closest;
   }
   setNetworkedStateAttr(attr, value) {
     if(this.networkedState[attr] != value) {
@@ -143,5 +166,15 @@ class Player extends BeatEmUpper {
     SOUNDS.blowImpact.play();
     setTimeout(e=>
       this.scene.respawn(), 1000);
+  }
+  draw(canvas) {
+    super.draw(canvas);
+    if(this.closestInteractable)this.drawInteractPrompt(canvas, this.closestInteractable)
+  }
+  drawInteractPrompt(canvas,obj) {
+    canvas.font = '40px' + FONT_FAMILY.default;
+    canvas.fillStyle = 'white';
+    canvas.textAlign='center';
+    canvas.fillText('[X]', obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
   }
 }
