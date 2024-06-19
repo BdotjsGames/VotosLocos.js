@@ -81,6 +81,7 @@ window.addEventListener('load', function (e) {
   Buttons.jump.keys.push(' '.keyCode);
   Buttons.crouch.keys.push(16)
   Buttons.Confirm = {
+    name: 'Confirm',
     keys: ['J'.keyCode, 'X'.keyCode],
     buttons: [...Buttons.jump.buttons]
   }
@@ -98,6 +99,7 @@ window.addEventListener('load', function (e) {
   // }
   Buttons.highFive = Buttons.Y;
   Buttons.pause = {
+    name: 'pause',
     keys: [27],
     buttons: [gamepadConfig.start],
     touchButtons: [4]
@@ -125,5 +127,10 @@ window.addEventListener('load', function (e) {
   Buttons.chapterSkip = {
     keys: [67, 77],
     allKeys: true,
+  }
+  try{
+    loadControls();
+  } catch(e) {
+      console.error(e)
   }
 })
