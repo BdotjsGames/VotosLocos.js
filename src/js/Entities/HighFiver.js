@@ -10,6 +10,7 @@ class HighFiver extends BeatEmUpper {
         this.invulTime = 40;
         this.speed = 2;
         this.isHighFiver = true;
+        this.canHighFive = true;
         highFivers.push(this);
         this.grav*=0.8;
         // this.friction = 0.1;

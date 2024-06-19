@@ -111,6 +111,7 @@ GameSequence = [
     {
         name: "Registrar Office Reached",
         Goal: "Enter the Registrar Office",
+        environment: Environments.Street,
         DialogueData: [
             {person: LouChalibre, text: "you made it to the Registrar office!"},
             // {text: "<color red> you received a ballot!"},
@@ -149,6 +150,7 @@ GameSequence = [
             npc.getInputs = e=>{}
             npc.beHappy();
             npc.name = "Clerk"
+            npc.canHighFive = false;
             npc.lookingAt = scene.players[0]
             npc.dialogue = [
                 {person: npc, text: "Hi!||| are you here to receive your ballot?", zoom:2},
@@ -190,6 +192,9 @@ GameSequence = [
             var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,0))
             lowRider.w *= 3;
             lowRider.h *= 3;
+
+            scene.addEntity(new EnterableDoor(250+lowRider.w*.4,lowRider.h,0));
+
         },
         night: true,
     },
@@ -197,6 +202,21 @@ GameSequence = [
         name: "Go to Community Rally",
         Goal: "Enter the Community Rally",
         levelData: {},
+        onLoad: (scene) => {
+            var deskImage =  new ImageDrawable(IMAGES.rallyTableBase, 0,0);
+            deskImage.w *= 3;
+            deskImage.h *= 3;
+            deskImage.y = -deskImage.h;
+            var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
+            var npc = scene.addEntity(new HighFiver(500,100))
+            // npc.shouldStartDiaolgueOnProximity = true;
+            npc.dx = -1
+            npc.getInputs = e=>{}
+            npc.beHappy();
+            npc.name = "Clerk"
+            npc.canHighFive = false;
+            npc.lookingAt = scene.players[0]
+        }
     },
     {
         name: "Community Rally - 1",

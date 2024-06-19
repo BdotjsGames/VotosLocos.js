@@ -385,6 +385,7 @@ class BeatEmUpper {
         highFivers.forEach(h=> {
             if(h.shouldDelete)return;
             if(h.following)return;
+            if(!h.canHighFive)return;
             if(Math.sign(h.x-this.x) != this.dx)return;
             if(h.dx==this.dx)return;
             var p = {
