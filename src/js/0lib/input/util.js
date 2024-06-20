@@ -21,6 +21,17 @@ function sqrDist(a,b) {
   return dx*dx+dy*dy;
 }
 
+function vector3Diff(a,b) {
+  return {
+    dx: a.x-b.x,
+    dy: a.y-b.y,
+    dz: a.z-b.z,
+  }
+}
+function diffSqrd(dx,dy=0,dz=0) {
+  return dx*dx+dy*dy+dz*dz;
+}
+
 function sqrDistCheck(a,b,r) {
   var dx = a.x-b.x;
   var dy = a.y-b.y;

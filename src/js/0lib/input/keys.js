@@ -20,7 +20,7 @@ function onkeydown(e) {
   var k = e.keyCode;
   if(keyLogging)console.log(e);
   if(listeningForNextKey) {
-    specialCharacterDisplays[e.keyCode] = e.code;
+    specialCharacterDisplays[e.keyCode] = e.code.replace('Key', '');
     listeningCallback(k);
     listeningForNextKey = false;
     return;

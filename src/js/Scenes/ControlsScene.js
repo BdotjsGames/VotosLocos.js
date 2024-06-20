@@ -19,7 +19,7 @@ class ControlsScene extends AdditiveScene {
             {name: 'Attack', buttons: Buttons.B},
             {name: 'Crouch', buttons: Buttons.X},
             {name: 'Interact', buttons: Buttons.Y},
-            {name: '[UI] Confirm', buttons: Buttons.A},
+            {name: '[UI] Confirm', buttons: Buttons.Confirm},
         ]
         buttons.forEach(button => {
             
@@ -44,5 +44,41 @@ class ControlsScene extends AdditiveScene {
             // )
             // y+=spacing
         })
+        this.addSelectableButton(
+            new ButtonUI('save',x-.3,y,w,h,fontSize,b=>{
+                saveControls();
+            })
+        )
+        y+=spacing
     }
+    
+}
+
+function saveControls() {
+    var buttons = [
+        Buttons.A,
+        Buttons.B,
+        Buttons.X,
+        Buttons.Y,
+        Buttons.Confirm,
+    ]
+    localStorage.setItem("controls1", JSON.stringify(buttons));
+    localStorage.setItem("specialCharacterDisplays", JSON.stringify(specialCharacterDisplays));
+    loadControls();
+}
+
+function setButton(a,b) {
+    a.keys= b.keys;
+    a.buttons = b.buttons;
+}
+
+function loadControls() {
+    var buttons = JSON.parse(localStorage.getItem('controls1'));
+    specialCharacterDisplays = JSON.parse(localStorage.getItem('specialCharacterDisplays'))
+    var i =0;
+    setButton(Buttons.A, buttons[i++]);
+    setButton(Buttons.B, buttons[i++]);
+    setButton(Buttons.X, buttons[i++]);
+    setButton(Buttons.Y, buttons[i++]);
+    setButton(Buttons.Confirm, buttons[i++]);
 }

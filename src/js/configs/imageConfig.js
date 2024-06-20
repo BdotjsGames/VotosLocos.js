@@ -18,6 +18,7 @@ IMAGES.lowRider = ImageLoader.loadImage('lowRider2.png')
 
 IMAGES.desk = ImageLoader.loadImage('desk.png')
 IMAGES.deskFront = ImageLoader.loadImage('deskFront.png')
+IMAGES.rallyTableBase = ImageLoader.loadImage('rallyTableBase.png')
 
 
 

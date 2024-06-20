@@ -33,6 +33,7 @@ Object.defineProperty(Number.prototype, 'keyDisplay', {get:function(){ return ke
 var specialCharacterDisplays = {
     13: "Enter",
     16: "Left Shift",
-    27: "Escape"
+    27: "Escape",
+    9: 'Tab',
 }
 specialCharacterDisplays[' '.keyCode] = 'Space'
