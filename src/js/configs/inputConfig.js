@@ -81,7 +81,7 @@ window.addEventListener('load', function (e) {
   Buttons.jump.keys.push(' '.keyCode);
   Buttons.crouch.keys.push(16)
   Buttons.Confirm = {
-    keys: ['J'.keyCode, 'X'.keyCode],
+    keys: ['J'.keyCode, 'X'.keyCode, ' '.keyCode],
     buttons: [...Buttons.jump.buttons]
   }
   // Buttons.Confirm.keys.push(13);
