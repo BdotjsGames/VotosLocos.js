@@ -18,7 +18,7 @@ function hexToRGB(hex) {
     } : null;
 }
 
-if(!ROOT_DIR) ROOT_DIR = './'
+if(ROOT_DIR==undefined) ROOT_DIR = './'
 var ImageLoader = {
   imagesToLoad: 0,
   loaded: 0,

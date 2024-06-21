@@ -175,6 +175,6 @@ class Player extends BeatEmUpper {
     canvas.font = '40px' + FONT_FAMILY.default;
     canvas.fillStyle = 'white';
     canvas.textAlign='center';
-    canvas.fillText('[X]', obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
+    canvas.fillText('[Y]', obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
   }
 }

@@ -37,9 +37,11 @@ function onresize(e){
   if(rw >= rc) {
     canvasWrapper.style.height = iH+'px';
     canvasWrapper.style.width = Math.floor(iH * W/H)+'px';
+
   } else {
     canvasWrapper.style.width = iW + 'px';
     canvasWrapper.style.height = Math.floor(iW * H/W) + 'px';
+
   }
   
   canvas.imageSmoothingEnabled = false;

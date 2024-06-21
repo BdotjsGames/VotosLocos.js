@@ -1,5 +1,12 @@
 //  Copyright Brian Dizon 2019
 
+var touchCE = document.getElementById("touch-canvas");
+var touchCanvas = touchCE.getContext('2d');
+window.addEventListener('load', function() {
+  touchCE.width = CE.width;
+  touchCE.height = CE.height;
+})
+
 var touchOn = false;
 touchStarts = [];
 var touchDown = false;
@@ -82,7 +89,9 @@ function createTouchButton(name,position,rect) {
 
 
 function getTouchPosition(touch, e) {
-  var boundingClientRect = CE.getBoundingClientRect();    
+  var ref = CE;
+  if(!MainDriver.scene.useTouchAsMouse)ref = touchCE;
+  var boundingClientRect = ref.getBoundingClientRect();    
   var x = touch.pageX-boundingClientRect.left;
   var y = touch.pageY-boundingClientRect.top - document.body.scrollTop;
   var W = this.canvas.canvas.offsetWidth;
@@ -98,6 +107,8 @@ function pointInRect(x,y,rect) {
 }
 
 function touchdraw(canvas) {
+  canvas = touchCanvas;
+  canvas.clearRect(0,0,touchCE.width,touchCE.height);
   if(MainDriver.scene.useTouchAsMouse)return;
   for(var i=0;i<touchJoySticks.length;++i) {
     var joyStick = touchJoySticks[i];
