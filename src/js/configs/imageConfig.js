@@ -19,6 +19,7 @@ IMAGES.lowRider = ImageLoader.loadImage('lowRider.png')
 IMAGES.desk = ImageLoader.loadImage('desk.png')
 IMAGES.deskFront = ImageLoader.loadImage('deskFront.png')
 IMAGES.rallyTableBase = ImageLoader.loadImage('rallyTableBase.png')
+IMAGES.rallyTableBaseBack = ImageLoader.loadImage('rallyTableBaseBack.png')
 
 
 
@@ -208,6 +209,11 @@ IMAGES.buildings = [
 // IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk.png")
 IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk2.png")
 IMAGES.backgroundTileOfficeInterior    = ImageLoader.loadImage("backgroundTileOfficeInterror.png")
+IMAGES.backgroundTileGrass    = ImageLoader.loadImage("backgroundTileGrass.png")
+
+
+IMAGES.trashCan = ImageLoader.loadImage("trashCan.png")
+IMAGES.trashCanSmashed = ImageLoader.loadImage("trashCanSmashed.png")
 
 IMAGES.skirts = [
     null,

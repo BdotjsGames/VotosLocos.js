@@ -351,6 +351,7 @@ class BeatEmUpper {
     }
     attackCollisionCheck() {
         this.enemies.forEach(enemy => {
+            if(enemy.invul>0)return;
             var dx = enemy.x - this.x;
             var dy = enemy.y - this.y;
             var dz = enemy.z - this.z;

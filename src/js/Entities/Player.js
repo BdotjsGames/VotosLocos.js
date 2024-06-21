@@ -14,7 +14,7 @@ class Player extends BeatEmUpper {
     this.networkedState = {};
     this.networkedStateDiff = {};
     this.attackHitbox = {width: 80, height: 70};
-    this.interactablesRange = 100;
+    this.interactablesRange = 200;
   }
   
   addShoes() {

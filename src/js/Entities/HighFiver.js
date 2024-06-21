@@ -2,8 +2,8 @@ var highFivers = [];
 class HighFiver extends BeatEmUpper {
     constructor(x, y) {
         super(x, y, 20, 40, '#00b', '#006');
-        this.model.mouth.drawable.image = IMAGES.mouthFrown;
-        this.model.face._y=1;
+        // this.model.mouth.drawable.image = IMAGES.mouthFrown;
+        // this.model.face._y=1;
         // this.canAttack = false;
         this.isEnemy = true;
         this.outlineColor = "black";
@@ -27,6 +27,7 @@ class HighFiver extends BeatEmUpper {
         this.lookingAt = null;
         this.interactable = true;
         this.isInteractable = true;
+        this.interactablesRange = 100;
         this.promptOffsetY = -100;
     }
     startFollow(target, distance) {
@@ -222,6 +223,10 @@ class HighFiver extends BeatEmUpper {
     beHappy() {
         this.model.mouth.drawable.image = IMAGES.mouthSmile;
         this.model.face._y=0;
+    }
+    beSad() {
+        this.model.mouth.drawable.image = IMAGES.mouthFrown;
+        this.model.face._y=1;
     }
     die() {
         if (this.shouldDelete) return;

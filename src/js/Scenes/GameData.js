@@ -15,7 +15,11 @@ var Environments = {
         tileImage: 'backgroundTileOfficeInterior',
         backgroundColor: 'tan',
         minYOffset: 200
-    }
+    },
+    Grass: {
+        tileImage: 'backgroundTileGrass',
+        backgroundColor: "#322f35"
+    },
 }
 
 var BlockWalkDoor = {};
@@ -159,6 +163,7 @@ GameSequence = [
                         {person: npc, text: "Wow you were just in time, we were just about to close!"},
                         {person: npc, text: "Well, here you go!"},
                         {onStart: dia => {
+                            npc.isInteractable = false;
                             var ballot = scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 500,250,64,64))
                             // npc.shouldStartDiaolgueOnProximity = false;
                             ballot.afterPickup = e=>{
@@ -201,14 +206,28 @@ GameSequence = [
     {
         name: "Go to Community Rally",
         Goal: "Enter the Community Rally",
+        environment: Environments.Grass,
         levelData: {},
+        spawnRandom: [
+            [HighFiver, 5],
+            [TrashCan, 5],
+        ],
         onLoad: (scene) => {
-            var deskImage =  new ImageDrawable(IMAGES.rallyTableBase, 0,0);
-            deskImage.w *= 3;
-            deskImage.h *= 3;
-            deskImage.y = -deskImage.h;
-            var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
-            var npc = scene.addEntity(new HighFiver(500,100))
+            {
+                var deskImage =  new ImageDrawable(IMAGES.rallyTableBaseBack, 0,0);
+                deskImage.w *= 3;
+                deskImage.h *= 3;
+                deskImage.y = -deskImage.h+60;
+                var deskBack = scene.addEntity(new EntityTwoPointFiveD(450,160-60,0,deskImage))
+            }
+            {
+                var deskImage =  new ImageDrawable(IMAGES.rallyTableBase, 0,0);
+                deskImage.w *= 3;
+                deskImage.h *= 3;
+                deskImage.y = -deskImage.h;
+                var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
+            }
+            var npc = scene.addEntity(new HighFiver(520,100))
             // npc.shouldStartDiaolgueOnProximity = true;
             npc.dx = -1
             npc.getInputs = e=>{}
@@ -216,6 +235,24 @@ GameSequence = [
             npc.name = "Clerk"
             npc.canHighFive = false;
             npc.lookingAt = scene.players[0]
+            npc.inter
+            npc.onAfterDialogue = e=> {
+            }
+            npc.dialogue = [
+                {person: npc, text: "Hi!||| would you like to support our cause?", zoom:2},
+                {options:[
+                    {text: 'yes', sequence:[
+                        {person: npc, text: "Okay cool!"},
+                        {onStart: dia => {
+                            npc.isInteractable = false
+                            // npc.shouldStartDiaolgueOnProximity = false;
+                        }}
+                    ]},
+                    {text: 'no', sequence:[{
+                        person: npc, text: "oh. okay"
+                    }]},
+                ]},
+            ]
         }
     },
     {

@@ -4,11 +4,13 @@ class EntityTwoPointFiveD {
         this.y=y;
         this.z=z;
         this.drawable = drawable;
+        this.rotation = 0;
     }
     update() {}
     draw(canvas) {
         canvas.save();
         canvas.translate(this.x,this.y+this.z);
+        if(this.rotation)canvas.rotate(this.rotation);
         this.drawShape(canvas)
         canvas.restore()
     }
