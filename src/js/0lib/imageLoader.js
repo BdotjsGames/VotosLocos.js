@@ -18,11 +18,12 @@ function hexToRGB(hex) {
     } : null;
 }
 
+if(!ROOT_DIR) ROOT_DIR = './'
 var ImageLoader = {
   imagesToLoad: 0,
   loaded: 0,
   onCompleteEvents: [],
-  directory: './Assets/images/',
+  directory: ROOT_DIR + 'Assets/images/',
   getLoaded() {
     return ImageLoader.loaded/ImageLoader.imagesToLoad;
   },

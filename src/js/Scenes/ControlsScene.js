@@ -73,7 +73,9 @@ function setButton(a,b) {
 }
 
 function loadControls() {
-    var buttons = JSON.parse(localStorage.getItem('controls1'));
+    var buttons = localStorage.getItem('controls1');
+    if(!buttons)return;
+    var buttons = JSON.parse(buttons);
     specialCharacterDisplays = JSON.parse(localStorage.getItem('specialCharacterDisplays'))
     var i =0;
     setButton(Buttons.A, buttons[i++]);

@@ -1,6 +1,7 @@
 //  Copyright Brian Dizon 2019
 
 var SOUNDASSETS='sounds/';
+if(ROOT_DIR) SOUNDASSETS = ROOT_DIR + SOUNDASSETS
 var VOLUME = 2;
 
 var AUDIOCONTEXT;

@@ -17,7 +17,7 @@ IMAGES.registrarOffice = ImageLoader.loadImage('RegistrarOffice.png')
 IMAGES.lowRider = ImageLoader.loadImage('lowRider2.png')
 
 IMAGES.desk = ImageLoader.loadImage('desk.png')
-IMAGES.deskFront = ImageLoader.loadImage('deskFront.png')
+IMAGES.deskFront = ImageLoader.loadImage('DeskFront.png')
 IMAGES.rallyTableBase = ImageLoader.loadImage('rallyTableBase.png')
 IMAGES.rallyTableBaseBack = ImageLoader.loadImage('rallyTableBaseBack.png')
 
@@ -216,7 +216,7 @@ IMAGES.trashCan = ImageLoader.loadImage("trashCan.png")
 IMAGES.trashCanSmashed = ImageLoader.loadImage("trashCanSmashed.png")
 
 IMAGES.skirts = [
-    null,
+    null, null, null,
     IMAGES.skirt1 = ImageLoader.loadImage("skirt.png"),
     
 ]

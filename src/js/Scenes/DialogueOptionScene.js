@@ -1,7 +1,6 @@
 class DialogueOptionScene extends AdditiveScene {
     constructor(prevScene, options, dialogueController) {
         super(prevScene);
-        console.log('creating scene');
 
         var y = 0.35;
         this.useTouchAsMouse = true;
@@ -24,7 +23,6 @@ class DialogueOptionScene extends AdditiveScene {
             var btn = this.addSelectableButton(new ButtonUI(
                 option.text, x, yy, 0.2,0.1,0.07,b=>{
                     dialogueController.selectOption(i,b);
-                    console.log('selecting option');
                     // this.back();
                     this.driver.setScene(this.prevScene,0);
                 }

@@ -1,6 +1,8 @@
 //  Copyright Brian Dizon 2019
 
 SOUNDASSETS='Assets/sounds/';
+if(ROOT_DIR) SOUNDASSETS = ROOT_DIR + SOUNDASSETS
+
 
 SOUNDS.select = new SoundTag('pop1.wav',2,1);
 SOUNDS.hover = new SoundTag('pop2.wav',2,1);

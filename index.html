@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- $head.html -->
+<link rel="stylesheet" href="./src/Assets/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">    <title>Votos Locos-DEV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+  </head>
+  <body>
+    <!-- $body.html -->
+<div class="webgl-content" id="canvas-wrapper">
+  <canvas id="gc"></canvas>
+  <div class="footer b-js-webgl-footer">
+    <div class="webgl-logo"></div>
+    <!-- <div class="fullscreen b-js-fullscreen-btn"></div> -->
+    <div class="title">Votos Locos</div>
+  </div>
+</div>    <script>
+      var DEV = true;
+      var ROOT_DIR = './src/'
+    </script>
+    <!-- $scripts -->
+
+<script src='./src/js/0lib/GUI/0Color.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/0Drawable.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/1DrawableText.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/2ButtonUI.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/BackAndForther.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/CircleDrawable.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/Group.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/ImageButton.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/KnobUI.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/SliderOptionUI.js?1718934247N'></script>
+<script src='./src/js/0lib/GUI/UIGroup.js?1718934247N'></script>
+<script src='./src/js/0lib/Model/0Model.js?1718934247N'></script>
+<script src='./src/js/0lib/Model/Limb.js?1718934247N'></script>
+<script src='./src/js/0lib/Morph/Morph.js?1718934247N'></script>
+<script src='./src/js/0lib/Morph/MorphType.js?1718934247N'></script>
+<script src='./src/js/0lib/Morph/Morphable.js?1718934247N'></script>
+<script src='./src/js/0lib/canvas.js?1718934247N'></script>
+<script src='./src/js/0lib/direction.js?1718934247N'></script>
+<script src='./src/js/0lib/drm.js?1718934247N'></script>
+<script src='./src/js/0lib/fullscreen.js?1718934247N'></script>
+<script src='./src/js/0lib/imageLoader.js?1718934247N'></script>
+<script src='./src/js/0lib/input/0Time.js?1718934247N'></script>
+<script src='./src/js/0lib/input/gamepad.js?1718934247N'></script>
+<script src='./src/js/0lib/input/input.js?1718934247N'></script>
+<script src='./src/js/0lib/input/inputDisplay.js?1718934247N'></script>
+<script src='./src/js/0lib/input/keyCode.js?1718934247N'></script>
+<script src='./src/js/0lib/input/keys.js?1718934247N'></script>
+<script src='./src/js/0lib/input/mouse.js?1718934247N'></script>
+<script src='./src/js/0lib/input/multiplayerManager.js?1718934247N'></script>
+<script src='./src/js/0lib/input/touch.js?1718934247N'></script>
+<script src='./src/js/0lib/input/util.js?1718934247N'></script>
+<script src='./src/js/0lib/peerjs/peerjs.min.js?1718934247N'></script>
+<script src='./src/js/0lib/peerjs/peerjsHandler.js?1718934247N'></script>
+<script src='./src/js/0lib/peerjs/peerjsHandler2.js?1718934247N'></script>
+<script src='./src/js/0lib/sound.js?1718934247N'></script>
+<script src='./src/js/Entities/0BeatEmUpper.js?1718934247N'></script>
+<script src='./src/js/Entities/0Platformer.js?1718934247N'></script>
+<script src='./src/js/Entities/BackgroundBuilding.js?1718934247N'></script>
+<script src='./src/js/Entities/Block.js?1718934247N'></script>
+<script src='./src/js/Entities/Bot.js?1718934247N'></script>
+<script src='./src/js/Entities/CheeseburgerJohnson.js?1718934247N'></script>
+<script src='./src/js/Entities/Chomper.js?1718934247N'></script>
+<script src='./src/js/Entities/Cloud.js?1718934247N'></script>
+<script src='./src/js/Entities/Drone.js?1718934247N'></script>
+<script src='./src/js/Entities/Enemies/TestEnemy.js?1718934247N'></script>
+<script src='./src/js/Entities/EnterableDoor.js?1718934247N'></script>
+<script src='./src/js/Entities/EntityTwoPointFiveD.js?1718934247N'></script>
+<script src='./src/js/Entities/Ground.js?1718934247N'></script>
+<script src='./src/js/Entities/HighFiver.js?1718934247N'></script>
+<script src='./src/js/Entities/ItemPickup.js?1718934247N'></script>
+<script src='./src/js/Entities/LaserBeam.js?1718934247N'></script>
+<script src='./src/js/Entities/LightSource.js?1718934247N'></script>
+<script src='./src/js/Entities/NPC.js?1718934247N'></script>
+<script src='./src/js/Entities/Ninja.js?1718934247N'></script>
+<script src='./src/js/Entities/Particle.js?1718934247N'></script>
+<script src='./src/js/Entities/Pickup.js?1718934247N'></script>
+<script src='./src/js/Entities/Player.js?1718934247N'></script>
+<script src='./src/js/Entities/PlayerNetworked.js?1718934247N'></script>
+<script src='./src/js/Entities/Sunflower.js?1718934247N'></script>
+<script src='./src/js/Entities/TalkableNPC.js?1718934247N'></script>
+<script src='./src/js/Entities/TrashCan.js?1718934247N'></script>
+<script src='./src/js/Entities/World/KnockableDoor.js?1718934247N'></script>
+<script src='./src/js/Entities/World/TransitionEntrance.js?1718934247N'></script>
+<script src='./src/js/LevelLoading/Level.js?1718934247N'></script>
+<script src='./src/js/LevelLoading/LevelLoader.js?1718934247N'></script>
+<script src='./src/js/LevelLoading/World.js?1718934247N'></script>
+<script src='./src/js/Levels/Generated/AnityEntrance.ALEVEL.js?1718934247N'></script>
+<script src='./src/js/Models/1PlatformerModel.js?1718934247N'></script>
+<script src='./src/js/Models/BotModel.js?1718934247N'></script>
+<script src='./src/js/Models/CheeseburgerJohnson.js?1718934247N'></script>
+<script src='./src/js/Models/ChomperModel.js?1718934247N'></script>
+<script src='./src/js/Models/DroneModel.js?1718934247N'></script>
+<script src='./src/js/Models/NinjaModel.js?1718934247N'></script>
+<script src='./src/js/Models/PlayerModel.js?1718934247N'></script>
+<script src='./src/js/Models/StickModel.js?1718934247N'></script>
+<script src='./src/js/Models/Wobbly.js?1718934247N'></script>
+<script src='./src/js/Scenes/0Scene.js?1718934247N'></script>
+<script src='./src/js/Scenes/1AdditiveScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/CharacterCustomizerScreen.js?1718934247N'></script>
+<script src='./src/js/Scenes/ConfirmationScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/ControlsEditorScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/ControlsScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/CurleyDialogueData.js?1718934247N'></script>
+<script src='./src/js/Scenes/DialogueController.js?1718934247N'></script>
+<script src='./src/js/Scenes/DialogueOptionScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/GameData.js?1718934247N'></script>
+<script src='./src/js/Scenes/GameScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/GameSceneBasic.js?1718934247N'></script>
+<script src='./src/js/Scenes/LevelEditorScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/LoadingScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/MenuScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/ModelEditorScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/ModelOptionSelectorScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/OptionsScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/PauseScene.js?1718934247N'></script>
+<script src='./src/js/Scenes/Sorter.js?1718934247N'></script>
+<script src='./src/js/configs/canvasSize.js?1718934247N'></script>
+<script src='./src/js/configs/fonts.js?1718934247N'></script>
+<script src='./src/js/configs/imageConfig.js?1718934247N'></script>
+<script src='./src/js/configs/inputConfig.js?1718934247N'></script>
+<script src='./src/js/configs/soundConfig.js?1718934247N'></script>
+<script src='./src/js/main.js?1718934247N'></script>
+<script src='./src/js/start.js?1718934247N'></script>
+    
+  </body>
+</html>

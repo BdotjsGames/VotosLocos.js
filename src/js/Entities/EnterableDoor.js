@@ -6,6 +6,7 @@ class EnterableDoor {
         this.h = 100;
         this.interactable = true;
         this.isInteractable = true;
+        this.interactablesRange = 100;
     }
     setScene(scene) {
         this.scene=scene;

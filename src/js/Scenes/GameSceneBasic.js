@@ -199,11 +199,12 @@ class GameSceneBasic extends Scene {
         if(data.environment.tileImage) {
           this.ground.tile = IMAGES[data.environment.tileImage]
         }
-
+        if(data.environment.width)this.level.width = data.environment.width;
       } else {
         this.addClouds();
         this.addBuildings();
       }
+      if(data.width) this.level.width = data.width;
     }
     spawnRandom(className, num) {
       for(var i=0;i<num;i++) {

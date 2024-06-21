@@ -765,6 +765,7 @@ class PlatformerModel extends Model {
     // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
   }
   draw(canvas, x,y) {
+    if(this.hidden)return;
     // canvas.strokeRect(x-this.w/2,y-this.h/2,this.w,this.h);
     this.drawOutline(canvas, x,y);
     super.draw(canvas, x,y);

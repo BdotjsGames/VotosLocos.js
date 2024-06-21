@@ -14,7 +14,8 @@ var Environments = {
     OfficeInterior: {
         tileImage: 'backgroundTileOfficeInterior',
         backgroundColor: 'tan',
-        minYOffset: 200
+        minYOffset: 200,
+        width: 1000
     },
     Grass: {
         tileImage: 'backgroundTileGrass',
@@ -193,15 +194,35 @@ GameSequence = [
             {person: LouChalibre, text: "Need a ride?"},
             
         ],
+        dontShowGo: true,
         onLoad: (scene) => {
-            var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,0))
+            var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,-100))
             lowRider.w *= 3;
             lowRider.h *= 3;
 
-            scene.addEntity(new EnterableDoor(250+lowRider.w*.4,lowRider.h,0));
-
+            var door = scene.addEntity(new EnterableDoor(250+lowRider.w*.4,lowRider.y+lowRider.h,0));
+            door.afterDialogue = () => {
+                scene.loadNextLevel();
+                player.hidden = false;
+            }
+            door.onInteract = player => {
+                player.hidden = true;
+                player.scene.dialogueController.speakerImage = null;
+                player.x = lowRider.x + lowRider.w/2 + 100
+                var dialogue = [
+                    {onStart: () => {
+                        lowRider.update = () => {
+                            lowRider.x += 10;
+                            player.x += 10;
+                        }
+                    }, waitFor: 120}
+                ]
+                player.scene.playDialogue(
+                    dialogue, true, door.afterDialogue
+                )
+            }
         },
-        night: true,
+        // night: true,
     },
     {
         name: "Go to Community Rally",
