@@ -4,11 +4,11 @@ var mouse = {
   x: 0, y:0,
 }
 function onmousemove(e) {
-  var boundingClientRect = e.target.getBoundingClientRect();
+  var boundingClientRect = CE.getBoundingClientRect();
   x = e.clientX-boundingClientRect.left;
   y = e.clientY-boundingClientRect.top;
-  x *= CE.width/e.target.offsetWidth;
-  y *= CE.height/e.target.offsetHeight;
+  x *= CE.width/CE.offsetWidth;
+  y *= CE.height/CE.offsetHeight;
   mouse.x = x;
   mouse.y = y;
 }

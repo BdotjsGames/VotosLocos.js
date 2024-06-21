@@ -58,6 +58,7 @@ class BeatEmUpper {
         this.obj = this;
         this.talkSound = SOUNDS.johsonTalk;
         this.every = 2;
+        this.jumpSpeedBoost = 0;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -88,6 +89,8 @@ class BeatEmUpper {
         if (other.knockBack) k = other.knockBack;
         k = k * this.getknockBack;
         var dx = other.x - this.x > 0 ? 1 : -1;
+        if(dx==undefined) console.log('dx is undefined');
+        if(k==undefined) console.log('k is undefined');
         this.vx = -dx * k * 10;
         this.x += this.vx;
         this.vy = -5;
@@ -143,6 +146,12 @@ class BeatEmUpper {
         }
     }
     update() {
+        if(isNaN(this.x))this.x = 0;
+        if(isNaN(this.y))this.y = 0;
+        if(isNaN(this.z))this.z = 0;
+        if(isNaN(this.vx))this.vx = 0;
+        if(isNaN(this.vy))this.vy = 0;
+        if(isNaN(this.vz))this.vz = 0;
         if(this.dx==0) {
             console.log("WTF")
         }
