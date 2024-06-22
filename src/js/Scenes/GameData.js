@@ -31,7 +31,7 @@ function randomEnemies() {
 }
 
 var LouChalibre = {
-    name: "Lou Chailbre",
+    name: "Lou Chalibre",
     image: IMAGES.LouChalibre,
     talkSound: SOUNDS.LouTalk,
     every: 3,

@@ -191,12 +191,23 @@ IMAGES.armOptions = [
     IMAGES.armVLTee = ImageLoader.loadImage("armVLTee.png", PALLETE_KEY.skin),
     IMAGES.armVLTee,
     IMAGES.armPlaid = ImageLoader.loadImage("armPlaid.png", PALLETE_KEY.skin),
+    IMAGES.armSuit1,
+    IMAGES.armSuit1,
+    IMAGES.armSuit1,
+    IMAGES.armSuit1,
+    IMAGES.armSuit1,
 ]
 IMAGES.bodyOptions = [
     IMAGES.torsoTie        = ImageLoader.loadImage("torsoTie.png"),
     IMAGES.torsoVLTee        = ImageLoader.loadImage("torsoVLTee.png"),
     IMAGES.torsoVLTeeF        = ImageLoader.loadImage("torsoVLTeeF.png"),
     IMAGES.torsoPlaid        = ImageLoader.loadImage("tosoPlaid.png"),
+    IMAGES.torso2        = ImageLoader.loadImage("torso2.png"),
+    IMAGES.torso3        = ImageLoader.loadImage("torso3.png"),
+    IMAGES.torso3        = ImageLoader.loadImage("torso4.png"),
+    createTorso(4),
+    createTorso(8),
+    createTorso(12),
 ]
 
 IMAGES.buildings = [
