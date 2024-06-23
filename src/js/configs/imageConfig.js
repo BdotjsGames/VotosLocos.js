@@ -205,9 +205,9 @@ IMAGES.bodyOptions = [
     IMAGES.torso2        = ImageLoader.loadImage("torso2.png"),
     IMAGES.torso3        = ImageLoader.loadImage("torso3.png"),
     IMAGES.torso3        = ImageLoader.loadImage("torso4.png"),
-    createTorso(4),
-    createTorso(8),
-    createTorso(12),
+    // createTorso(4),
+    // createTorso(8),
+    // createTorso(12),
 ]
 
 IMAGES.buildings = [
