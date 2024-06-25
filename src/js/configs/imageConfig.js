@@ -95,12 +95,33 @@ function shadingFunction(rgb, data, index,width,height, mappingIndex) {
     };
 }
 
+function toRgbRecur(listOfHexString) {
+    return listOfHexString.map(entry => {
+        if(Array.isArray(entry)) {
+            return toRgbRecur(entry)
+        }
+        return rgb(entry)
+    })
+}
+
 var PALLETE_KEY = {
     skin: {
         label: 'skin', 
-        inputHexes: [rgb("#ffe0b7")],
+        inputHexes: [rgb("#ffe0b7"), rgb("#fca570")],
         //creates 3 alternatives with default skin replaced with the following colors:
-        mapping: [[rgb('#e88a36')], [rgb('#673931')],[rgb('#ffe0b7')]]
+        mapping: toRgbRecur([
+            // ['#e88a36','#b05b2c'],
+            // ['#673931', '#271f1b'],
+            // ['#ffe0b7', "#fca570"],
+            ['#fbf236', "#222034"],
+
+            ["#f8d262", "#c5802f"],
+            ["#59483e", "#342821"],
+            ["#986b47", "#613d28"],
+            ["#dec3a1", "#c0916b"],
+            ["#f6e1c5", "#d3a684"],
+            ["#ffffff", "#000000"],
+        ])
     },
     hair: {
         label: 'hair',
@@ -147,11 +168,17 @@ IMAGES.GoArrow = ImageLoader.loadImage('GoArrow.png');
 
 IMAGES.highFivePow = ImageLoader.loadImage('highFivePow.png');
 IMAGES.pow = ImageLoader.loadImage('pow.png');
+IMAGES.whiteFlash = ImageLoader.loadImage('flashExplosion.png');
+IMAGES.redFlash = ImageLoader.loadImage('redFlash.png');
+
 
 IMAGES.headOptions = [
-    IMAGES.baseHead1    = ImageLoader.loadImage("baseHead1.png"),
-    IMAGES.baseHead2    = ImageLoader.loadImage("baseHead2.png"),
-    IMAGES.baseHead3    = ImageLoader.loadImage("baseHead3.png")
+    IMAGES.baseHead1    = ImageLoader.loadImage("baseHead3.png", PALLETE_KEY.skin),
+    IMAGES.baseHead1    = ImageLoader.loadImage("baseHead4.png", PALLETE_KEY.skin),
+    IMAGES.baseHead1    = ImageLoader.loadImage("baseHead5.png", PALLETE_KEY.skin),
+    IMAGES.baseHead1    = ImageLoader.loadImage("baseHead6.png", PALLETE_KEY.skin),
+    // IMAGES.baseHead2    = ImageLoader.loadImage("baseHead2.png"),
+    // IMAGES.baseHead3    = ImageLoader.loadImage("baseHead3.png")
 ]
 IMAGES.baseEyes1    = ImageLoader.loadImage("baseEyes1.png")
 IMAGES.pupils1      = ImageLoader.loadImage("pupils1.png")
@@ -170,6 +197,9 @@ IMAGES.hairOptions = [
     IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png", PALLETE_KEY.hair),
     IMAGES.hairCholo      = ImageLoader.loadImage("hairCholo2.png", PALLETE_KEY.hair),
     IMAGES.hijab         = ImageLoader.loadImage("hijab.png", PALLETE_KEY.hair),
+    IMAGES.hairWillie         = ImageLoader.loadImage("hairWillie.png"),
+    // IMAGES.hairEars1         = ImageLoader.loadImage("hairAnimalEars1.png", PALLETE_KEY.hair),
+    // IMAGES.hairEars2         = ImageLoader.loadImage("hairAnimalEars2.png", PALLETE_KEY.hair),
     null,
 ]
 
@@ -191,13 +221,28 @@ IMAGES.armOptions = [
     IMAGES.armVLTee = ImageLoader.loadImage("armVLTee.png", PALLETE_KEY.skin),
     IMAGES.armVLTee,
     IMAGES.armPlaid = ImageLoader.loadImage("armPlaid.png", PALLETE_KEY.skin),
+    IMAGES.armWillie = ImageLoader.loadImage('armWillie.png'),
+    IMAGES.armBare = ImageLoader.loadImage('armBare.png', PALLETE_KEY.skin),
+    IMAGES.armBare,
+    IMAGES.armBare,
+    IMAGES.armBare,
+    IMAGES.armBare,
 ]
-IMAGES.bodyOptions = [
+IMAGES.torsoOptions = [
     IMAGES.torsoTie        = ImageLoader.loadImage("torsoTie.png"),
     IMAGES.torsoVLTee        = ImageLoader.loadImage("torsoVLTee.png"),
     IMAGES.torsoVLTeeF        = ImageLoader.loadImage("torsoVLTeeF.png"),
     IMAGES.torsoPlaid        = ImageLoader.loadImage("tosoPlaid.png"),
+    IMAGES.torsoTankF        = ImageLoader.loadImage("torsoWillie.png"),
+    IMAGES.torsoTankF        = ImageLoader.loadImage("torsoTankF.png", PALLETE_KEY.skin),
+    IMAGES.torso2        = ImageLoader.loadImage("torso2.png"),
+    IMAGES.torso3        = ImageLoader.loadImage("torso3.png"),
+    IMAGES.torso3        = ImageLoader.loadImage("torso4.png"),
+    // createTorso(4),
+    // createTorso(8),
+    // createTorso(12),
 ]
+
 
 IMAGES.buildings = [
     // IMAGES.buildingBrickWall = ImageLoader.loadImage("buildingBrickWall.png"),
@@ -216,14 +261,27 @@ IMAGES.trashCan = ImageLoader.loadImage("trashCan.png")
 IMAGES.trashCanSmashed = ImageLoader.loadImage("trashCanSmashed.png")
 
 IMAGES.skirts = [
-    null, null, null,
+    null,
     IMAGES.skirt1 = ImageLoader.loadImage("skirt.png"),
+    IMAGES.williePants = ImageLoader.loadImage("williePants.png"),
     
 ]
 IMAGES.tutu = ImageLoader.loadImage('tutu.png', PALLETE_KEY.skirt, swaps => {
     // IMAGES.skirts.push(IMAGES.rainbowSkirt = swaps[0])
     IMAGES.skirts=IMAGES.skirts.concat(swaps);
 })
+
+IMAGES.customOutfits = [
+    {
+        name: "Willie",
+        options: [
+            {
+                name: 'head',
+                value: IMAGES.willieMask = ImageLoader.loadImage("willieMask.png"),
+            }
+        ]
+    }
+]
 
 IMAGES.boot = ImageLoader.loadImage('fist.png')
 // IMAGES.tilesetPortalRoom    = ImageLoader.loadImage("tilesetPortalRoom.png")

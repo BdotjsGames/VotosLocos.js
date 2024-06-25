@@ -16,7 +16,7 @@ class BotModel extends PlatformerModel {
         super.createOptions({
             headOptions: [IMAGES.botHeadOptions[0]],
             hairOptions: [],
-            bodyOptions: [IMAGES.botTorsoOptions[3]],
+            torsoOptions: [IMAGES.botTorsoOptions[3]],
             armOptions: [IMAGES.armOptions[0]],
             legOptions:[6],
             glassesOptions: [],

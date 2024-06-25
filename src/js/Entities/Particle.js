@@ -8,8 +8,11 @@ class Particle {
     this.maxLife=
     this.life=life;
     this.alpha =1;
+    this.t= 0;
+    this.z = 0;
   }
   update() {
+    this.t+=1;
     this.vy += this.grav;
     this.x+=this.vx;
     this.y+=this.vy;
@@ -21,11 +24,12 @@ class Particle {
     if(this.customUpdate) this.customUpdate();
   }
   draw(canvas) {
+    if(this.t<0)return;
     canvas.fillStyle = this.color;
     // canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
     canvas.globalAlpha = this.alpha;
     canvas.beginPath();
-    canvas.arc(this.x,this.y,this.w/2,0,Math.PI*2);
+    canvas.arc(this.x,this.y+this.z,this.w/2,0,Math.PI*2);
     canvas.fill();
     canvas.globalAlpha = 1;
   }
@@ -40,6 +44,7 @@ class ImageParticle extends Drawable {
     this.maxLife=
     this.life=life;
     this.image = image;
+    this.z=0;
     // this.sortOffset = -15;
     // this.y += this.sortOffset;
     this.trueCoords = true;
@@ -61,7 +66,7 @@ class ImageParticle extends Drawable {
     // canvas.beginPath();
     // canvas.arc(this.x,this.y,this.w/2,0,Math.PI*2);
     // canvas.fill();
-    canvas.drawImage(this.image, 0,0,this.w,this.h);
+    canvas.drawImage(this.image, -this.w/2,-this.h/2+this.z,this.w,this.h);
     canvas.globalAlpha = 1;
   }
 }

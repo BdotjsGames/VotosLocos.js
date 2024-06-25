@@ -63,8 +63,9 @@ class CharacterCustomizerScene extends Scene{
         var plb;// = this.backButton;
         var prb;// = this.backButton;
 
-        
-        model.customizableOptions.forEach((customizableOption,i) => {
+        i = 0;
+        model.customizableOptions.forEach((customizableOption) => {
+            if(customizableOption.dontShowInOptions)return;
             var x = 0.75;
             var y = 0.1+0.1*i;
             var btn = this.addSelectableButton(new BackAndForther(
@@ -78,6 +79,7 @@ class CharacterCustomizerScene extends Scene{
             ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
             );
             if(i==0)btn.setSelected();
+            i++
             // this.optionsGroup.addEntity(
             //     new DrawableText(customizableOption.name, x,y,0.4,0.1,size)
             //     .setTrueCoords(false)
