@@ -12,8 +12,10 @@ IMAGES.drone = ImageLoader.loadImage('drone.png');
 IMAGES.wheelchairBack = ImageLoader.loadImage('wheelchairBack.png');
 IMAGES.wheelchairWheelFront = ImageLoader.loadImage('wheelchairWheelFront.png');
 
+IMAGES.skateBoard = ImageLoader.loadImage('skateBoard.png');
+
 IMAGES.ballotItem = ImageLoader.loadImage('ballotItem.png')
-IMAGES.registrarOffice = ImageLoader.loadImage('RegistrarOffice.png')
+// IMAGES.registrarOffice = ImageLoader.loadImage('RegistrarOffice.png')
 IMAGES.rallyBackgroundEntrance = ImageLoader.loadImage('RallyBackgroundEntrance.png')
 IMAGES.lowRider = ImageLoader.loadImage('lowRider2.png')
 
@@ -121,7 +123,8 @@ var PALLETE_KEY = {
             ["#986b47", "#613d28"],
             ["#dec3a1", "#c0916b"],
             ["#f6e1c5", "#d3a684"],
-            ["#ffffff", "#000000"],
+            ["#639bff", "#5b6ee1"],
+            // ["#ffffff", "#000000"],
         ])
     },
     hair: {
@@ -213,6 +216,7 @@ IMAGES.hairOptions = [
     IMAGES.hair5         = ImageLoader.loadImage("hair5.png", PALLETE_KEY.hair),
     IMAGES.hair6         = ImageLoader.loadImage("hair6.png", PALLETE_KEY.hair),
     IMAGES.hairLong         = ImageLoader.loadImage("hairLong.png", PALLETE_KEY.hair),
+    IMAGES.hairLong2         = ImageLoader.loadImage("hairLong2.png", PALLETE_KEY.hair),
     // IMAGES.hair1Y        = ImageLoader.loadImage("hair1Y.png"),
     // IMAGES.hair2Y        = ImageLoader.loadImage("hair2Y.png"),
     // IMAGES.hair3Y        = ImageLoader.loadImage("hair3Y.png"),
@@ -246,6 +250,9 @@ IMAGES.armOptions = [
     IMAGES.armPlaid = ImageLoader.loadImage("armPlaid.png", PALLETE_KEY.skin),
     IMAGES.armWillie = ImageLoader.loadImage('armWillie.png'),
     IMAGES.armBare = ImageLoader.loadImage('armBare.png', PALLETE_KEY.skin),
+    IMAGES.armPlaidJacket = ImageLoader.loadImage("armPlaidJacket.png", PALLETE_KEY.skin),
+    IMAGES.armLeatherJacket = ImageLoader.loadImage("armLeatherJacket.png", PALLETE_KEY.skin),
+    IMAGES.armMilitary = ImageLoader.loadImage("armMilitary.png", PALLETE_KEY.skin),
     IMAGES.armBare,
     IMAGES.armBare,
     IMAGES.armBare,
@@ -256,8 +263,11 @@ IMAGES.torsoOptions = [
     IMAGES.torsoVLTee        = ImageLoader.loadImage("torsoVLTee.png"),
     IMAGES.torsoVLTeeF        = ImageLoader.loadImage("torsoVLTeeF.png"),
     IMAGES.torsoPlaid        = ImageLoader.loadImage("tosoPlaid.png"),
-    IMAGES.torsoTankF        = ImageLoader.loadImage("torsoWillie.png"),
+    IMAGES.torsoWillie        = ImageLoader.loadImage("torsoWillie.png"),
     IMAGES.torsoTankF        = ImageLoader.loadImage("torsoTankF.png", PALLETE_KEY.skin),
+    IMAGES.torsoPlaidJacket        = ImageLoader.loadImage("torsoPlaidJacket.png", PALLETE_KEY.skin),
+    IMAGES.torsoLeatherJacket        = ImageLoader.loadImage("torsoLeatherJacket.png", PALLETE_KEY.skin),
+    IMAGES.torsoMilitary        = ImageLoader.loadImage("torsoMilitary.png", PALLETE_KEY.skin),
     IMAGES.torso2        = ImageLoader.loadImage("torso2.png"),
     IMAGES.torso3        = ImageLoader.loadImage("torso3.png"),
     IMAGES.torso3        = ImageLoader.loadImage("torso4.png"),
@@ -289,6 +299,7 @@ IMAGES.skirts = [
     IMAGES.williePants = ImageLoader.loadImage("williePants.png"),
     
 ]
+IMAGES.williePants.isWilliePants = true;
 IMAGES.tutu = ImageLoader.loadImage('tutu.png', PALLETE_KEY.skirt, swaps => {
     // IMAGES.skirts.push(IMAGES.rainbowSkirt = swaps[0])
     IMAGES.skirts=IMAGES.skirts.concat(swaps);
