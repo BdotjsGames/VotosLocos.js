@@ -64,7 +64,9 @@ class PlatformerModel extends Model {
     }
     if(options.canWheelchair) {
       // legOptions.push(wheelChairLegValue)
-      skirtOptions.push(wheelChairLegValue)
+      // skirtOptions.push(wheelChairLegValue);
+      skirtOptions = [...skirtOptions, wheelChairLegValue]
+      // skirtOptions = [].concat(skirtOptions, [wheelChairLegValue])
     }
     this.customizableOptions = [
       {
@@ -145,7 +147,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "Legs",
-        options: options.skirtOptions||IMAGES.skirts,
+        options: skirtOptions,
         displayOffsetY: -80,
         index: 0,
         onChange: (value,i) => {
