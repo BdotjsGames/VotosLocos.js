@@ -1,4 +1,5 @@
 index=./src/index.html
+rootIndex=./index.html
 html=./src/html
 rm ${index}
 cp ${html}/skeletonDev.html ${index}
@@ -26,3 +27,7 @@ sed -i -e '/$scripts/r src/html/scripts.html' ${index}
 sed -i -e "s/\$name/$(cat src/html/title.txt)/g" ${index}
 
 rm ${index}-e
+
+cp ${index} ${rootIndex}
+sed -i -e 's~\./~\./src/~g' ${rootIndex}
+rm ${rootIndex}-e

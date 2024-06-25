@@ -51,6 +51,21 @@ class ImageDrawable {
     this.x-=this.w/2;
     this.y-=this.h/2;
   }
+  reInit() {
+    var image = this.image;
+    if(!this.w&&!this.h) {
+      this.w = image.width;
+      this.h = image.height;
+    }
+    else if(!this.w) {
+      this.w = image.width/image.height*this.h;
+    }else if(!this.h) {
+      this.h = image.height/image.width*this.w;
+    }
+    this.hidden = false;
+    this.x-=this.w/2;
+    this.y-=this.h/2;
+  }
   setScaleToImage() {
     if(!this.image)return;
     this.w = this.image.width;
@@ -61,6 +76,7 @@ class ImageDrawable {
     if(override)return;
     if(this.hidden)return;
     if(!this.image)return;
+    if(this.image.width==0)return;
     canvas.drawImage(this.image,this.x,this.y,this.w,this.h);
   }
 }
@@ -76,14 +92,33 @@ class ExtendableImageDrawable extends ImageDrawable{
     if(override)return;
     if(this.hidden)return;
     if(!this.image)return;
-    canvas.drawImage(this.image,this.pivotX,0,1,this.image.height,
-      this.x+(this.pivotX)*(this.w/this.image.width)-1,this.y,this.extendX*(this.w/this.image.width)+2,this.h);
-    
+    // if(true)
+    // {
+    //   canvas.drawImage(this.image,this.x,this.y,this.w,this.h);
+    //   canvas.drawImage(this.image,this.pivotX,12,this.image.width-this.pivotX,this.image.height-12,
+    //     this.x+this.w*(this.pivotX+this.extendX)/this.image.width, this.y+(12)*this.h/this.image.height,
+    //     this.w*(1-this.pivotX/this.image.width),
+    //     (this.image.height-12)*this.h/this.image.height,
+    //   )
+    //   return;
+    // }
+    if(this.extendX>0) {
+      canvas.drawImage(this.image,this.pivotX,0,1,this.image.height,
+        this.x+(this.pivotX)*(this.w/this.image.width)-1,this.y,this.extendX*(this.w/this.image.width)+2,this.h);
+    }
     canvas.drawImage(this.image,this.pivotX,0,this.image.width-this.pivotX,this.image.height,
       this.x+this.w*((this.pivotX+this.extendX)/this.image.width),this.y,this.w*(1-this.pivotX/this.image.width),this.h);
     
       canvas.drawImage(this.image,0,0,this.pivotX,this.image.height,
-        this.x,this.y,this.w*(this.pivotX/this.image.width),this.h);
+        this.x-.1,this.y,this.w*(this.pivotX/this.image.width)+.2,this.h);
+
+    
+        // if(this.extendX>4) {
+        //   canvas.globalAlpha=0.5;
+        //   canvas.drawImage(this.image,this.pivotX+1,0,1,this.image.height,
+        //     this.x+(this.pivotX+4)*(this.w/this.image.width)-1,this.y,(this.extendX-3)*(this.w/this.image.width)+2,this.h);
+        //   canvas.globalAlpha = 1;
+        // }
   }
 }
 

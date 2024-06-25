@@ -11,7 +11,7 @@ class CharacterCustomizerScene extends Scene{
         
         this.loadModel(new PlayerModel());
         var s = 0.05
-        this.playButton = this.addSelectableButton(new ButtonUI("PLAY", 0.5,0.85,0.3,0.1,s,() => {
+        this.playButton = this.addSelectableButton(new ButtonUI("PLAY", 0.5,0.9,0.3,0.1,s,() => {
             this.playGame()
         }).center())
 

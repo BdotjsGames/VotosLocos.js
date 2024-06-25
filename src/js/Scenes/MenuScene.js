@@ -4,7 +4,7 @@ class MenuScene extends Scene {
     this.useTouchAsMouse = true;
     for(var i=0;i<10;i++) {
       var x = CE.width*Math.random();
-      var y = CE.height*Math.random()/3;
+      var y = CE.height*Math.random()/4;
       var cloud = this.addEntity(new ImageDrawable(IMAGES.cloud, x,y))
       cloud.vx = Math.random();
       cloud.update = function() {

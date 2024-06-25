@@ -23,6 +23,9 @@ var ImageLoader = {
   loaded: 0,
   onCompleteEvents: [],
   directory: ROOT_DIR + 'Assets/images/',
+  isLoading() {
+    return this.imagesToLoad>this.loaded;
+  },
   getLoaded() {
     return ImageLoader.loaded/ImageLoader.imagesToLoad;
   },
@@ -74,10 +77,12 @@ var ImageLoader = {
     img.src=this.directory+src;
     this.imagesToLoad += 1; 
     img.onload = this.onLoad; 
+    img.callback = callback;
     img.isImg = true;
     return img;
   }, 
   onLoad() {
+    if(this.callback)this.callback(this);
     ImageLoader.loaded++;
     if(ImageLoader.loaded>=ImageLoader.imagesToLoad) {
       ImageLoader.onCompleteEvents.forEach(function(f){f()});

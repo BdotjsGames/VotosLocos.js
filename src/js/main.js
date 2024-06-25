@@ -136,6 +136,16 @@ var MainDriver = {
     if(touchOn && !this.scene.dialogueBlocking) {
       touchdraw(canvas);
     }
+    if(ImageLoader.isLoading()) {
+      canvas.fillStyle = "white";
+      canvas.strokeStyle = "black";
+      canvas.font = '40px ' + FONT_FAMILY.default;
+      canvas.textAlign = 'center';
+      canvas.lineWidth = 5;
+      canvas.miterLimit = 2;
+      canvas.strokeText("loading", CE.width/2,CE.height/2);
+      canvas.fillText("loading", CE.width/2,CE.height/2);
+    }
   }
 }
 

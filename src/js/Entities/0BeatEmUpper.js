@@ -190,7 +190,7 @@ class BeatEmUpper {
             
             var accel = this.groundAcceleration;
             if(this.mx==0&&this.my==0) accel = this.groundDeceleration;
-            if(!this.grounded)accel *=0.2;
+            if(!this.grounded || this.model.skateBoardOn||this.model.inWheelChair)accel *=0.2;
             this.vx = linearMove(this.vx, this.mx*speed, accel);
             this.vy = linearMove(this.vy, this.my*speed, accel);
             
