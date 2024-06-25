@@ -36,8 +36,7 @@ class TrashCan extends EntityTwoPointFiveD {
     }
     setScene(scene) {
         this.scene=scene;
-        this.scene.enemies.push(this);
-        this.enemies = this.scene.players;
+        this.scene.hitables.push(this);
     }
     getHit(other){
         this.invul = this.invulTime;

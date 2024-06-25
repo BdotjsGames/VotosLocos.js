@@ -197,6 +197,7 @@ IMAGES.headOptions = [
     IMAGES.baseHead9    = ImageLoader.loadImage("baseHead9.png", PALLETE_KEY.skin),
     IMAGES.baseHead10   = ImageLoader.loadImage("baseHead10.png", PALLETE_KEY.skin),
     IMAGES.baseHead11   = ImageLoader.loadImage("baseHead11.png", PALLETE_KEY.skin),
+    IMAGES.baseHead12   = ImageLoader.loadImage("baseHead12.png", PALLETE_KEY.skin),
     IMAGES.wrestlerHead1    = ImageLoader.loadImage("baseHeadWrestler.png", PALLETE_KEY.skin),
     IMAGES.wrestlerHead2    = ImageLoader.loadImage("baseHeadWrestler2.png", PALLETE_KEY.skin),
     // IMAGES.baseHead2    = ImageLoader.loadImage("baseHead2.png"),

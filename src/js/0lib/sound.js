@@ -59,20 +59,33 @@ function decode(response, callback) {
   );
 }
 
+var soundsCache = {};
 function loadBuffer(url, callback) {
   // Load buffer asynchronously
+  var callbacks = soundsCache[url];
+  if(callbacks) {
+    callbacks.push(callback);
+    return;
+  }
+  soundsCache[url]=callbacks = [callback];
   var request = new XMLHttpRequest();
   // if(OnFile) url = webDomain + url;
   // else url = '.' + url;
+  SOUNDS.soundsToLoad ++;
+
   request.open("GET", url, true);
   request.responseType = "arraybuffer";
 
   request.onload = function() {
     SOUNDS.onLoad();
     // Asynchronously decode the audio file data in request.response
-    if(SOUND_INITIALIZED) decode(request.response, callback);
+    if(SOUND_INITIALIZED) decode(request.response, (buffer) => {
+      callbacks.forEach(c => c(buffer))
+    });
     else
-    DecodeBuffer.push([request.response, callback]);
+    DecodeBuffer.push([request.response,  (buffer) => {
+      callbacks.forEach(c => c(buffer))
+    }]);
   }
 
   request.onerror = function() {
@@ -92,7 +105,6 @@ class SoundSource {
     this.loops=loops||false;
     BUFFERBUFFER.push(this);
     this.lastSound = null;
-    SOUNDS.soundsToLoad ++;
     this.beginLoad();
   }
   addOnLoad(callback) {

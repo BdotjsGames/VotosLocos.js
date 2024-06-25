@@ -167,18 +167,22 @@ GameSequence = [
         ], //give ballot cutscene
         dontShowGo: true,
         onLoad: (scene) => {
-            var office = scene.addEntity(new ImageDrawable(IMAGES.registrarOffice, 350,0))
+            var office = scene.addEntity(
+                new ImageDrawable(
+                    ImageLoader.loadImage("RegistrarOffice.png",null, (img) => {
+                        office.reInit();
+                        office.w *= 4
+                        office.h *= 4
+                        window.office=office;
+                        office.y=-office.h - 80
+                        // scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
+                        scene.addEntity(new EnterableDoor(office.x+office.w/2+30,-100,0));
+                        scene.defaultZoom = 0.5
+                        scene.cameraLerpSpeed = 40
+                        // scene.camera.zoom = 0.5
+                        scene.camera.offsetY = -200
+                    }), 350,0))
             
-            office.w *= 4
-            office.h *= 4
-            window.office=office;
-            office.y=-office.h - 80
-            // scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
-            scene.addEntity(new EnterableDoor(office.x+office.w/2+30,-100,0));
-            scene.defaultZoom = 0.5
-            scene.cameraLerpSpeed = 40
-            // scene.camera.zoom = 0.5
-            scene.camera.offsetY = -200
         }
         
     },

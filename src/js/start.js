@@ -9,7 +9,6 @@ window.addEventListener('load', function(e) {
             MainDriver.setScene(new MenuScene());
             // MainDriver.setScene(new GameSceneBasic());
             // MainDriver.setScene(new ModelEditorScene());
-            console.log('%c', devtools);
           },1000);
         })
       })

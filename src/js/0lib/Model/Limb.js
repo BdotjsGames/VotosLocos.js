@@ -51,6 +51,21 @@ class ImageDrawable {
     this.x-=this.w/2;
     this.y-=this.h/2;
   }
+  reInit() {
+    var image = this.image;
+    if(!this.w&&!this.h) {
+      this.w = image.width;
+      this.h = image.height;
+    }
+    else if(!this.w) {
+      this.w = image.width/image.height*this.h;
+    }else if(!this.h) {
+      this.h = image.height/image.width*this.w;
+    }
+    this.hidden = false;
+    this.x-=this.w/2;
+    this.y-=this.h/2;
+  }
   setScaleToImage() {
     if(!this.image)return;
     this.w = this.image.width;
@@ -61,6 +76,7 @@ class ImageDrawable {
     if(override)return;
     if(this.hidden)return;
     if(!this.image)return;
+    if(this.image.width==0)return;
     canvas.drawImage(this.image,this.x,this.y,this.w,this.h);
   }
 }
