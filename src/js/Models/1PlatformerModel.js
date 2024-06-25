@@ -106,6 +106,13 @@ class PlatformerModel extends Model {
         onChange: (value, i) => {
           this.headBase.drawable.image = value;
           this.changeSkinColor(this.skinColorIndex);
+          if(i>9) {
+            this.mouth.hidden = true;
+            this.face.hidden = true;
+          } else {
+            this.mouth.hidden = false;
+            this.face.hidden = false;
+          }
         }
       },
       {
@@ -773,7 +780,11 @@ class PlatformerModel extends Model {
     var t = keyFrame.time;
     keyFrame.limbs.forEach(limbData => {
       var limb = this[limbData.limb];
-      limb.drotation = (limbData.rotation-limb.rotation)/t || 0
+      var dr = (limbData.rotation-limb.rotation) || 0
+      while(dr>Math.PI*2)dr-=Math.PI*2;
+      while(dr<-Math.PI*2)dr+=Math.PI*2;
+      // dr -= Math.floor(dr/(Math.PI*2))*Math.PI*2;
+      limb.drotation = dr/t||0;
       limb.dx = (limbData.x-limb.x)/t || 0
       limb.d_x = (limbData._x-limb._x)/t || 0
       limb.dy = (limbData.y-limb.y)/t || 0

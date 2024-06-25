@@ -375,6 +375,20 @@ class BeatEmUpper {
                 if(this.jumpCount !=0) this.jumpCount = 1
             }
         })
+        this.scene.hitables.forEach(enemy => {
+            if(enemy.invul>0)return;
+            var dx = enemy.x - this.x;
+            var dy = enemy.y - this.y;
+            var dz = enemy.z - this.z;
+            var adx = Math.abs(dx);
+            var ady = Math.abs(dy);
+            var adz = Math.abs(dz);
+            if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
+                enemy.getHit(this);
+                // this.vx = 0;
+                if(this.jumpCount !=0) this.jumpCount = 1
+            }
+        })
     }
     canJump() {
         return this.jumpCount < this.numJumps;
