@@ -14,6 +14,7 @@ IMAGES.wheelchairWheelFront = ImageLoader.loadImage('wheelchairWheelFront.png');
 
 IMAGES.ballotItem = ImageLoader.loadImage('ballotItem.png')
 IMAGES.registrarOffice = ImageLoader.loadImage('RegistrarOffice.png')
+IMAGES.rallyBackgroundEntrance = ImageLoader.loadImage('RallyBackgroundEntrance.png')
 IMAGES.lowRider = ImageLoader.loadImage('lowRider2.png')
 
 IMAGES.desk = ImageLoader.loadImage('desk.png')
@@ -161,6 +162,20 @@ IMAGES.ninjaTorsoOptions = [
 ]
 
 
+IMAGES.trollHeadOptions = [
+    IMAGES.trollHead1 = ImageLoader.loadImage('TrollHead2.png'),
+]
+
+IMAGES.trollTorsoOptions = [
+    IMAGES.trollTorso1 = ImageLoader.loadImage('TrollTorso1.png'),
+]
+
+
+IMAGES.trollArmOptions = [
+    IMAGES.trollArm1 = ImageLoader.loadImage('TrollArm3.png'),
+]
+
+
 // IMAGES.drone = ImageLoader.loadImage('drone.png');
 IMAGES.drone = ImageLoader.loadImage('RussianBot1.png');
 IMAGES.GoArrow = ImageLoader.loadImage('GoArrow.png');
@@ -174,9 +189,16 @@ IMAGES.redFlash = ImageLoader.loadImage('redFlash.png');
 
 IMAGES.headOptions = [
     IMAGES.baseHead1    = ImageLoader.loadImage("baseHead3.png", PALLETE_KEY.skin),
-    IMAGES.baseHead1    = ImageLoader.loadImage("baseHead4.png", PALLETE_KEY.skin),
-    IMAGES.baseHead1    = ImageLoader.loadImage("baseHead5.png", PALLETE_KEY.skin),
-    IMAGES.baseHead1    = ImageLoader.loadImage("baseHead6.png", PALLETE_KEY.skin),
+    IMAGES.baseHead2    = ImageLoader.loadImage("baseHead4.png", PALLETE_KEY.skin),
+    IMAGES.baseHead3    = ImageLoader.loadImage("baseHead5.png", PALLETE_KEY.skin),
+    IMAGES.baseHead4    = ImageLoader.loadImage("baseHead6.png", PALLETE_KEY.skin),
+    IMAGES.baseHead7    = ImageLoader.loadImage("baseHead7.png", PALLETE_KEY.skin),
+    IMAGES.baseHead8    = ImageLoader.loadImage("baseHead8.png", PALLETE_KEY.skin),
+    IMAGES.baseHead9    = ImageLoader.loadImage("baseHead9.png", PALLETE_KEY.skin),
+    IMAGES.baseHead10   = ImageLoader.loadImage("baseHead10.png", PALLETE_KEY.skin),
+    IMAGES.baseHead11   = ImageLoader.loadImage("baseHead11.png", PALLETE_KEY.skin),
+    IMAGES.wrestlerHead1    = ImageLoader.loadImage("baseHeadWrestler.png", PALLETE_KEY.skin),
+    IMAGES.wrestlerHead2    = ImageLoader.loadImage("baseHeadWrestler2.png", PALLETE_KEY.skin),
     // IMAGES.baseHead2    = ImageLoader.loadImage("baseHead2.png"),
     // IMAGES.baseHead3    = ImageLoader.loadImage("baseHead3.png")
 ]

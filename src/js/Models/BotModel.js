@@ -156,5 +156,63 @@ var botanims = {
           },
           time: 60, dx: 0
         }
-      ]
+      ],
+      armSpinny: [
+        {
+          limbs: [
+            {limb: 'arm1', rotation: Math.PI},
+            {limb: 'arm2', rotation: Math.PI},
+            {limb: 'body2', rotation: -Math.PI/4},
+            {limb: 'body', rotation: -Math.PI/4, _y:-10},
+            {limb: 'head', rotation: -Math.PI/4},
+            {limb: 'legL', rotation: 0},
+            {limb: 'legL2', rotation: 0},
+          ],time:20, onStart : (self) => {
+            self.vz = -10;
+            self.attacking = false;
+          },
+        },
+      {
+        limbs: [],
+        customUpdate: self=>{
+          var aa = self.arm1.rotation;
+          self.attacking = true
+          self.parent.attackHitbox = self.parent.defaultAttackHitbox;
+          self.parent.vx = self.parent.dx*self.parent.speed;
+          self.parent.vz = 0;
+          self.walk();
+          self.arm1.rotation = aa + Math.PI/4;
+          self.arm2.rotation = aa + Math.PI/4+Math.PI;
+        }, time: 50,
+      },
+      
+      {
+        limbs: [
+          {limb: 'arm1', rotation: Math.PI},
+          {limb: 'arm2', rotation: Math.PI},
+          {limb: 'body2', rotation: 0},
+          {limb: 'body', rotation: Math.PI/2, _y:10},
+          {limb: 'head', rotation: Math.PI/4},
+          {limb: 'legL', rotation: 0},
+          {limb: 'legL2', rotation: 0},
+        ],dx:60,time:10, onStart : (self) => {
+          self.attacking = false;
+        },
+      },
+      {
+        limbs:[],
+        dx: 10, time: 50,
+      },
+      {
+        limbs: [
+          {limb: 'arm1', rotation: 0},
+          {limb: 'arm2', rotation: 0},
+          {limb: 'body2', rotation: 0},
+          {limb: 'body', rotation: 0, _y:0},
+          {limb: 'head', rotation: 0},
+          {limb: 'legL', rotation: 0},
+          {limb: 'legL2', rotation: 0},
+        ],time:60
+      }
+    ]
   }

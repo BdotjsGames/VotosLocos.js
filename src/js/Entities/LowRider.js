@@ -7,6 +7,7 @@ class LowRider {
         this.wheel = (ImageLoader.loadImage('lowRiderWheel.png'));
         this.front = (ImageLoader.loadImage('lowRiderFront.png'));
         this.frontOffset = 0;
+        this.flip=false;
     }
     update() {
         // if(this.bouncing) {
@@ -25,7 +26,9 @@ class LowRider {
     draw(canvas) {
         canvas.save();
         canvas.translate(this.x,this.y);
-        canvas.scale(this.scale,this.scale);
+        var s = this.scale;
+        if(this.flip)s=-s;
+        canvas.scale(s,this.scale);
         // canvas.fillStyle = 'red';
         // canvas.fillRect(0,0,100,100);
         canvas.drawImage(this.back,0,0);

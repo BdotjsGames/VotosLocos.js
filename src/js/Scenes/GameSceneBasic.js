@@ -9,6 +9,7 @@ class GameSceneBasic extends Scene {
       this.minY = this.startingY - this.groundHeight/2+15;
       this.maxY = this.startingY + this.groundHeight/2;
       this.enemies = [];
+      this.hitables = [];
       this.players = [];
       this.interactables = [];
       this.items = [];
@@ -337,6 +338,7 @@ class GameSceneBasic extends Scene {
       if(this.transitioningOut)return;
       this.transitioningOut = true;
       this.enemies = [];
+      this.hitables = [];
       this.players = [];
       highFivers = [];
       if(levelNumber<0)levelNumber=0;

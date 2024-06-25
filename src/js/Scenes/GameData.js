@@ -47,6 +47,50 @@ ImageLoader.onComplete( () => {
 //     LouChalibre.talkSound = SOUNDS.LouTalk;
 // });
 
+function rallyScene(scene) {
+    {
+        var deskImage =  new ImageDrawable(IMAGES.rallyTableBaseBack, 0,0);
+        deskImage.w *= 3;
+        deskImage.h *= 3;
+        deskImage.y = -deskImage.h+60;
+        var deskBack = scene.addEntity(new EntityTwoPointFiveD(450,160-60,0,deskImage))
+    }
+    {
+        var deskImage =  new ImageDrawable(IMAGES.rallyTableBase, 0,0);
+        deskImage.w *= 3;
+        deskImage.h *= 3;
+        deskImage.y = -deskImage.h;
+        var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
+    }
+    var npc = scene.addEntity(new HighFiver(520,100))
+    // npc.shouldStartDiaolgueOnProximity = true;
+    npc.dx = -1
+    npc.getInputs = e=>{}
+    npc.beHappy();
+    npc.name = "Clerk"
+    npc.canHighFive = false;
+    npc.lookingAt = scene.players[0]
+    npc.inter
+    npc.onAfterDialogue = e=> {
+    }
+    npc.dialogue = [
+        {person: npc, text: "Hi!||| would you like to support our cause?", zoom:2},
+        {options:[
+            {text: 'yes', sequence:[
+                {person: npc, text: "Okay cool!"},
+                {onStart: dia => {
+                    npc.isInteractable = false;
+                    scene.showGo = true;
+                    // npc.shouldStartDiaolgueOnProximity = false;
+                }}
+            ]},
+            {text: 'no', sequence:[{
+                person: npc, text: "oh. okay"
+            }]},
+        ]},
+    ]
+}
+
 
 GameSequence = [
     {
@@ -232,6 +276,32 @@ GameSequence = [
     {
         name: "Go to Community Rally",
         Goal: "Enter the Community Rally",
+        environment: Environments.Street,
+        levelData: {},
+        width: 1000,
+        spawnRandom: [
+            [HighFiver, 5],
+            [TrashCan, 1],
+        ],
+        onLoad: (scene) => {
+            var office = scene.addEntity(new ImageDrawable(IMAGES.rallyBackgroundEntrance, 0,0))
+            
+            office.w *= 4
+            office.h *= 4
+            window.office=office;
+            office.y=-office.h - 80
+            // scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
+            scene.addEntity(new EnterableDoor(office.x+office.w/2+30,-100,0));
+            scene.defaultZoom = 0.5
+            scene.cameraLerpSpeed = 40
+            // scene.camera.zoom = 0.5
+            scene.camera.offsetY = -200
+        }
+        
+    },
+    {
+        name: "Community Rally - 1",
+        Goal: "Join the cause",
         environment: Environments.Grass,
         levelData: {},
         spawnRandom: [
@@ -239,73 +309,52 @@ GameSequence = [
             [TrashCan, 5],
         ],
         onLoad: (scene) => {
-            {
-                var deskImage =  new ImageDrawable(IMAGES.rallyTableBaseBack, 0,0);
-                deskImage.w *= 3;
-                deskImage.h *= 3;
-                deskImage.y = -deskImage.h+60;
-                var deskBack = scene.addEntity(new EntityTwoPointFiveD(450,160-60,0,deskImage))
-            }
-            {
-                var deskImage =  new ImageDrawable(IMAGES.rallyTableBase, 0,0);
-                deskImage.w *= 3;
-                deskImage.h *= 3;
-                deskImage.y = -deskImage.h;
-                var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
-            }
-            var npc = scene.addEntity(new HighFiver(520,100))
-            // npc.shouldStartDiaolgueOnProximity = true;
-            npc.dx = -1
-            npc.getInputs = e=>{}
-            npc.beHappy();
-            npc.name = "Clerk"
-            npc.canHighFive = false;
-            npc.lookingAt = scene.players[0]
-            npc.inter
-            npc.onAfterDialogue = e=> {
-            }
-            npc.dialogue = [
-                {person: npc, text: "Hi!||| would you like to support our cause?", zoom:2},
-                {options:[
-                    {text: 'yes', sequence:[
-                        {person: npc, text: "Okay cool!"},
-                        {onStart: dia => {
-                            npc.isInteractable = false
-                            // npc.shouldStartDiaolgueOnProximity = false;
-                        }}
-                    ]},
-                    {text: 'no', sequence:[{
-                        person: npc, text: "oh. okay"
-                    }]},
-                ]},
-            ]
+            rallyScene(scene);
         }
     },
     {
-        name: "Community Rally - 1",
-        npcTexts: [
-            "hello join us",
-            "we are representing something"
-        ],
-        spawnRandom: [
-            [HighFiver, 3]
-        ]
-    },
-    {
         name: "Community Rally - 2",
+        environment: Environments.Grass,
         spawnRandom: [
-            [Bot, 4]
+            [Troll, 4],
+            [TrashCan, 5],
         ]
     },
     {
-        name: "Community Rally - 1",
-        npcTexts: [
-            "hello join us",
-            "we are representing something"
-        ],
+        name: "Community Rally - 3",
+        Goal: "Join the cause",
+        environment: Environments.Grass,
+        levelData: {},
         spawnRandom: [
-            [HighFiver, 3]
+            [HighFiver, 5],
+            [TrashCan, 5],
+        ],
+        onLoad: (scene) => {
+            rallyScene(scene);
+        }
+    },
+    {
+        name: "Community Rally - 4",
+        environment: Environments.Grass,
+        spawnRandom: [
+            [Bot, 4],
+            [Ninja, 4],
+            [Troll, 1],
+            [TrashCan, 5],
         ]
+    },
+    {
+        name: "Community Rally - 5",
+        Goal: "Join the cause",
+        environment: Environments.Grass,
+        levelData: {},
+        spawnRandom: [
+            [HighFiver, 5],
+            [TrashCan, 5],
+        ],
+        onLoad: (scene) => {
+            rallyScene(scene);
+        }
     },
     // {
     //     name: "Community Rally",
