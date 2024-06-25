@@ -83,8 +83,8 @@ class BeatEmUpper {
         other.model.impactStop(5);
         this.dx = this.x<other.x?1:-1;
         this.model.impactStop(25);
-        createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
-        
+        // createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
+        spawnHitParticles(this.scene,(other.x+this.x)/2,(this.y+other.y)/2, (this.z+other.z)/2-20)
         var k = 1;
         if (other.knockBack) k = other.knockBack;
         k = k * this.getknockBack;
@@ -494,11 +494,14 @@ class BeatEmUpper {
         return textParticle;
     }
     die() {
+        spawnDeathParticles(this.scene,this.x,this.y-20, this.z);
         this.shouldDelete = true;
         var g = 0.2;
         var x = this.x;
         var y = this.y;
-        createFadingParticle(this.scene,x,y-20,this.z,100)
+        // createFadingParticleCluster(this.scene,x,y-20,this.z,10,100)
+        
+        // createFadingParticle(this.scene,x,y-20,this.z,100)
         // var pow = this.scene.addEntity(new ImageParticle(IMAGES.pow, (this.x+closest.x)/2-32, this.y-128, 64,64,0,0,50,-0.00));
         //     pow.addMorph("pow",new Morph(null, {scaleW: 0.5, scaleH: 0.5, alpha: 0.5}, {scaleW: 1.5, scaleH: 1.5, alpha: 1}, 5, MorphType.easeOutQuad), true)
         for (var i = 0; i < 9; i++) {
@@ -514,10 +517,13 @@ class BeatEmUpper {
 }
 
 function createFadingParticleCluster(scene,x,y,z,size,variance) {
-    for(var i=0;i<3;i++ ) {
+    for(var i=0;i<6;i++ ) {
+        var a = Math.random()*Math.PI*2;
+        var r = Math.random()*variance;
+
         createFadingParticle(scene,
-            x + (Math.random()*2-1)*variance,
-            y + (Math.random()*2-1)*variance,
+            x + Math.cos(a)*r,
+            y + Math.sin(a)*r,
             z,
             size+Math.random()*variance/2
         );
@@ -525,20 +531,30 @@ function createFadingParticleCluster(scene,x,y,z,size,variance) {
 }
 
 function createFadingParticle(scene,x,y,z,size){
-    var p = scene.addEntity(new Particle(x,y-50+z,size,size,"#ffffff", 0,0, 15,0))
+    var p = scene.addEntity(new Particle(x,y+z,size,size,"#ffffff", 0,0, 30,0))
     p.colorValue = 1;
     p.customUpdate = fadingParticleUpdate;
-
+    p.vy = Math.random()*-3;
+    p.t=-Math.random()*10;
+    return p;
     // var p2 = scene.addEntity(new Particle(x,y-50,size*.9,size*.9,"#ffffff", 0,0, 15,0))
     // p2.colorValue = 1;
     // p2.customUpdate = fadingParticleUpdate;
 }
 
 function fadingParticleUpdate() {
-    this.colorValue = (0.5-this.colorValue)*0.8;
-    var v = Math.floor(this.colorValue*255);
-    this.color = `rgb(${v},${v/2},${v/2})`
-    this.alpha = clamp((this.life/this.maxLife)*2,0,1);
+    this.t+= 0.5;
+    if(this.t<0)return;
+    // this.colorValue = (0.5-this.colorValue)*0.8;
+    // var v = Math.floor(this.colorValue*255);
+    var colors = this.colorsOverride||['#fff',"#fff", '#f00', "#fa0", "#ff0","a70", "#120", "#000"]
+    var i = Math.min(Math.floor(this.t),colors.length-1);
+    this.color = colors[i];
+    this.y += this.vy;
+    this.x += Math.cos(this.t*Math.PI/2)*4;
+    this.w*=0.95;
+    // this.color = `rgb(${v},${v/2},${v/2})`
+    // this.alpha = clamp((this.life/this.maxLife)*2,0,1);
     // console.log(this);
 }
 
@@ -549,4 +565,31 @@ function fadingParticleUpdate2() {
     this.color = `rgb(${v},${v},${v})`
     this.alpha = clamp((this.life/this.maxLife)*2,0,1);
     // console.log(this);
+}
+
+function spawnHitParticles(scene,x,y,z) {
+    var p = scene.addEntity(new ImageParticle(IMAGES.whiteFlash, x,y, 32*3,32*3, 0,0,10,0))
+    p.z = z;
+}
+
+function spawnDeathParticles(scene,x,y,z) {
+    var f = scene.addEntity(new ImageParticle(IMAGES.whiteFlash, x,y, 32*6,32*6, 0,0,10,0))
+    f.z= z;
+        for(var i=0;i<12;i++) {
+            var a = Math.random()*Math.PI*2;
+            var r= Math.random()*50;
+            var p  = createFadingParticle(scene,x+Math.cos(a)*r,y+Math.sin(a)*r,0,30)
+            p.life+=Math.random()*10;
+            p.z = z;
+
+            var p2  = createFadingParticle(scene,x+Math.cos(a)*r,y+Math.sin(a)*r,0,30)
+            p2.t = p.t - 50
+            p2.y += p.vy*p.life;
+            p2.life = 10;
+            p2.alpha = 0.4;
+            p2.color = "black";
+            p2.colorsOverride = ["#ddd", "#555","#333","#000"]
+            p2.z=z;
+            p2.vy = 0;
+        }
 }

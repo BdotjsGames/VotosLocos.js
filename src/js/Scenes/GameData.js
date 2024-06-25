@@ -196,11 +196,13 @@ GameSequence = [
         ],
         dontShowGo: true,
         onLoad: (scene) => {
-            var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,-100))
-            lowRider.w *= 3;
-            lowRider.h *= 3;
+            // var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,-100))
+            // lowRider.w *= 3;
+            // lowRider.h *= 3;
+            var lowRider = scene.addEntity(new LowRider(150,-100))
 
-            var door = scene.addEntity(new EnterableDoor(250+lowRider.w*.4,lowRider.y+lowRider.h,0));
+
+            var door = scene.addEntity(new EnterableDoor(lowRider.x+250,lowRider.y+250,0));
             door.afterDialogue = () => {
                 scene.loadNextLevel();
                 player.hidden = false;
@@ -208,12 +210,15 @@ GameSequence = [
             door.onInteract = player => {
                 player.hidden = true;
                 player.scene.dialogueController.speakerImage = null;
-                player.x = lowRider.x + lowRider.w/2 + 100
+                player.x = lowRider.x + 300
                 var dialogue = [
                     {onStart: () => {
+                        lowRider.bouncing = true;
                         lowRider.update = () => {
                             lowRider.x += 10;
                             player.x += 10;
+                            lowRider.frontOffset = Math.sin(frameCount * Math.PI/25);
+                            lowRider.frontOffset = lowRider.frontOffset*lowRider.frontOffset*3;
                         }
                     }, waitFor: 120}
                 ]

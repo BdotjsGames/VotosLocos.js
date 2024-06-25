@@ -74,6 +74,7 @@ var ImageLoader = {
     img.src=this.directory+src;
     this.imagesToLoad += 1; 
     img.onload = this.onLoad; 
+    img.isImg = true;
     return img;
   }, 
   onLoad() {

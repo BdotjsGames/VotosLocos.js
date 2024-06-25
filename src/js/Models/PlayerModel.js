@@ -8,6 +8,14 @@ class PlayerModel extends PlatformerModel {
     super.createOptions({
         canWheelchair: true,
     });
+    IMAGES.customOutfits.forEach(outfit => {
+      outfit.options.forEach(option=>{
+        this.customizableOptions.forEach(cust =>{
+          if(cust.name == option.name) cust.options = [].concat(cust.options,[option.value]);
+        })
+      })
+    })
+
   }
   // draw(canvas, x,y){
   //   super.draw(canvas, x,y);

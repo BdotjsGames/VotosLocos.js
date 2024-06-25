@@ -10,7 +10,6 @@ class PlatformerModel extends Model {
     this.highFiveCount = 0;
     this.highFiveTime = 12;
     this.frameCount = 0;
-    this.createOptions();
     this.hairColor = 0;
     this.skinColorIndex = 0;
     this.impactStopTimer=0;
@@ -30,6 +29,7 @@ class PlatformerModel extends Model {
       }
     }
     this.createModel();
+    this.createOptions();
     if(this.modelOptions) {
       this.modelOptions.forEach((index, i) => {
         var option = this.customizableOptions[i]
@@ -40,6 +40,7 @@ class PlatformerModel extends Model {
       this.customizableOptions.forEach(option => {
         if(!option.options||!option.options.length)return;
         var index = Math.floor(Math.random()*option.options.length)
+        if(option.name=="Legs")if(Math.random()>.5)index=0;
         option.index = index;
         option.onChange(option.options[index], index)
       });
@@ -54,10 +55,15 @@ class PlatformerModel extends Model {
   }
   createOptions(options={}) {
     var armOptions = options.armOptions||IMAGES.armOptions;
-    var legOptions = options.legOptions||[5,6,7,8];
+    var legOptions = options.legOptions||[8];
+    var skirtOptions = options.skirtOptions || IMAGES.skirts;
     var wheelChairLegValue = -1;
+    if(options.headOptions) {
+      this.headBase.drawable.image = options.headOptions[0];
+    }
     if(options.canWheelchair) {
-      legOptions.push(wheelChairLegValue)
+      // legOptions.push(wheelChairLegValue)
+      skirtOptions.push(wheelChairLegValue)
     }
     this.customizableOptions = [
       {
@@ -82,12 +88,21 @@ class PlatformerModel extends Model {
       },
       {
         name: "skin",
-        options: options.headOptions||IMAGES.headOptions,
+        options: options.headOptions||PALLETE_KEY.skin.mapping,
         index: 0,
         onChange: (value, i) => {
           this.skinColorIndex = i;
-          this.headBase.drawable.image = value;
+          // this.headBase.drawable.image = value;
           this.changeSkinColor(i);
+        }
+      },
+      {
+        name: "head",
+        options: options.headOptions||IMAGES.headOptions,
+        index: 0,
+        onChange: (value, i) => {
+          this.headBase.drawable.image = value;
+          this.changeSkinColor(this.skinColorIndex);
         }
       },
       {
@@ -102,7 +117,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "Torso",
-        options: options.bodyOptions||IMAGES.bodyOptions,
+        options: options.torsoOptions||IMAGES.torsoOptions,
         index: 0,
         onChange: (value,i) => {
           this.hairType = value;
@@ -114,18 +129,50 @@ class PlatformerModel extends Model {
         }
       },
       {
-        name: "Skirt",
-        options: options.skirtOptions||IMAGES.skirts,
-        displayOffsetY: -80,
+        name: "width",
+        options: [-2,-1,0,1,2,4],
         index: 0,
-        onChange: (value,i) => {
-          this.skirt.drawable.image = value;
-          this.skirtOn = value;
+        onChange: (value) => {
+          this.bwidth = 15+value;
+          this.arm1.x = -this.bwidth/2;
+          this.arm2.x = this.bwidth-9;
+          this.body2.drawable.extendX = value;
+          this.body2.drawable.x = -18 - Math.floor(value/2);
+          this.skirt.drawable.extendX = value;
+          this.skirt.x = -Math.floor(value/2);
         }
       },
       {
         name: "Legs",
+        options: options.skirtOptions||IMAGES.skirts,
+        displayOffsetY: -80,
+        index: 0,
+        onChange: (value,i) => {
+
+          if(value==wheelChairLegValue) {
+            this.inWheelChair = true;
+            this.wheelchair.hidden = false;
+            this.wheelchair.wheel.hidden = false;
+            this.legL.hidden=true;
+            this.legR.hidden=true;
+            value = 8;
+          } else {
+            this.inWheelChair = false;
+            this.wheelchair.hidden = true;
+            this.wheelchair.wheel.hidden = true;
+            this.legL.hidden=false;
+            this.legR.hidden=false;
+
+              this.skirt.drawable.image = value;
+              this.skirtOn = value;
+          }
+          this.skirt.hidden = !this.wheelchair.hidden;
+        }
+      },
+      {
+        name: "height",
         options: legOptions,
+        dontShowInOptions: true,
         displayOffsetY: -80,
         index: 0,
         onChange: (value,i) => {
@@ -177,7 +224,7 @@ class PlatformerModel extends Model {
     this.glasses.changePalette('hair', i);
   }
   changeSkinColor(i) {
-    var skinable = [this.arm1, this.arm2]
+    var skinable = [this.arm1, this.arm2, this.headBase, this.body2]
     skinable.forEach(limb => {
       limb.changePalette('skin', i);
     })
@@ -208,7 +255,7 @@ class PlatformerModel extends Model {
 
 
     var db2 = 12
-    this.body2 = this.body.createAfter(0,-3+db2,new ImageDrawable(IMAGES.bodyOptions[0],-2,5-db2,32,32));
+    this.body2 = this.body.createAfter(0,-3+db2,new ExtendableImageDrawable(IMAGES.torsoOptions[0],-2,5-db2,32,32, 14,0));
     this.arm2 = this.body2.createBefore(this.bwidth/2,-1-db2,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),-Math.PI/4);
     this.hips = this.body.createBefore(0,12);
 
@@ -222,7 +269,7 @@ class PlatformerModel extends Model {
     this.wheelchair.hidden = true;
     this.wheelchair.wheel.hidden = true;
 
-    this.skirt = this.body2.createAfter(0,6+3,new ImageDrawable(IMAGES.skirt1))
+    this.skirt = this.body2.createAfter(0,6+3,new ExtendableImageDrawable(IMAGES.skirt1,0,0,null,null,33))
     this.skirt.drawable.image = null;
 
     this.legR= this.hips.createBefore(2,0,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
@@ -615,6 +662,8 @@ class PlatformerModel extends Model {
       this.hitRotation = (Math.random()*2-1) * Math.PI/5;
       this.scaleX = 1.2;
       this.scaleY = 1.2;
+      this.head.scaleX = 2;
+      this.head.scaleY = 2;
       this.endAnim();
     }
     this.scaleY += (1-this.scaleY)/2;
@@ -647,6 +696,9 @@ class PlatformerModel extends Model {
       }
       return;
     }
+
+    this.head.scaleX += (1-this.head.scaleX)*0.9;
+    this.head.scaleY += (1-this.head.scaleY)*0.9;
     this.moveLocked = this.attacking||this.highFiving;
     if(this.cooldownTimer>0) this.cooldownTimer--;
     if(this.parent.passedOut) {

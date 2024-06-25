@@ -11,7 +11,7 @@ class NinjaModel extends PlatformerModel {
         super.createOptions({
             headOptions: [IMAGES.ninjaHeadOptions[0]],
             hairOptions: [],
-            bodyOptions: [IMAGES.ninjaTorsoOptions[0]],
+            torsoOptions: [IMAGES.ninjaTorsoOptions[0]],
             armOptions: [IMAGES.armOptions[0]],
             legOptions:[5],
             glassesOptions: [],
