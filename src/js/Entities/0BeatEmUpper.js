@@ -30,7 +30,9 @@ class BeatEmUpper {
         this.wallCollidingWith = null;
         this.standingOn = null;
         this.canAttack = true;
-        this.attackHitbox = {width: 70, height: 70};
+        this.defaultAttackHitbox = {width: 70, height: 70};
+        this.largeHitbox= { width: 200, height: 70};
+        this.attackHitbox = this.defaultAttackHitbox;
         if(model) {
             this.model = model;
             model.parent = this;

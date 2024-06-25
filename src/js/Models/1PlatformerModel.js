@@ -15,7 +15,8 @@ class PlatformerModel extends Model {
     this.impactStopTimer=0;
     this.self = this;
     this.anims=anims;
-    this.attackCombo = [anims.strike, -1,anims.flipKick, anims.armSpinny];
+    this.attackCombo = [anims.strike, -1,anims.flipKick, anims.groundSlam, anims.armSpinny];
+    // this.attackCombo = [anims.groundSlam];
     // this.attackCombo = [anims.punch1, anims.punch2, anims.strike];
     this.attackComboIndex = 0;
     this.attackAnim = anims.strike;
@@ -401,6 +402,7 @@ class PlatformerModel extends Model {
   
   attack() {
     // if(this.attacking)return;
+    if(this.unInteruptable)return;
     if(this.cooldownTimer>0)return;
     if(this.crouching)return this.slide();
     // if(this.anims.flipKick && this.parent.vz <-this.parent.jumpStrength*.9) {
@@ -430,6 +432,7 @@ class PlatformerModel extends Model {
     this.doubleJumping=false;
     this.parent.wallColliding = false;
     this.attacking = true;
+    this.parent.attackHitbox = this.parent.defaultAttackHitbox;
     var dx = this.parent.dx;
     this.idle();
     this.rotation = 0;
@@ -749,6 +752,7 @@ class PlatformerModel extends Model {
     }
   }
   startAnim(anim) {
+    this.unInteruptable = false;
     this.anim = anim;
     this.animIndex = 0;
     this.animFrameCount = -1;
@@ -760,6 +764,7 @@ class PlatformerModel extends Model {
     if(this.attacking) {
       this.attacking = false;
     }
+    this.unInteruptable = false;
     this.wheelchair.rotation = 0;
   }
   animStartFrame(keyFrame) {
@@ -775,6 +780,8 @@ class PlatformerModel extends Model {
     if(keyFrame.onStart) {
       keyFrame.onStart(this);
     }
+    if(keyFrame.unInteruptable) this.unInteruptable = true;
+    if(keyFrame.interuptable)this.unInteruptable = false;
   }
   animProcessor() {
     this.scaleY += (1-this.scaleY)/2;
@@ -849,6 +856,7 @@ var anims = {
       ],
       onStart: self=>{
         self.attacking=true
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox;
         var p = self.parent;
         if(!p.grounded && p.mx || p.isBot) {
           p.vx = (p.dx*p.jumpSpeedBoost)
@@ -967,6 +975,7 @@ var anims = {
       ], time: 5,
       onStart: self=> {
         self.attacking = true;
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox;
         self.knockbackUp = -10;
       },
     },
@@ -998,12 +1007,90 @@ var anims = {
       }
     }
   ],
+  groundSlam: [
+    {
+      limbs: [
+        {limb: 'body2', rotation: -Math.PI/4},
+        {limb: 'body', rotation: -Math.PI/4},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI},
+        {limb: 'arm2', rotation: -Math.PI},
+      ],
+      unInteruptable: true,
+      customUpdate: self => {
+        self.parent.vz= -10;
+      },
+      time: 8
+    },
+    {
+      limbs:[],
+      time:8
+    },
+    {
+      limbs: [
+        {limb: 'body2', rotation: Math.PI/4},
+        {limb: 'body', rotation: Math.PI/2},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI/2},
+        {limb: 'arm2', rotation: -Math.PI/2},
+      ],
+      customUpdate: self => {
+        self.parent.vz= 0;
+      },
+      time: 8
+    },
+    {
+      limbs: [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: Math.PI/2},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI},
+        {limb: 'arm2', rotation: -Math.PI},
+      ],
+      customUpdate: self => {
+        self.parent.vz= 40;
+      },
+      onStart: self => {
+        self.parent.vz = 30;
+        self.attacking = true
+        self.parent.attackHitbox = self.parent.largeHitbox;
+        self.knockbackUp = 20;
+      },
+      time: 20
+    },
+    {
+      unInteruptable: false,
+      interuptable: true,
+      limbs: 
+      [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: 0},
+        {limb: 'arm2', rotation: 0},
+        // {limb: 'hips', rotation: -Math.PI/2},
+      ], time: 10, onStart: self=>{
+        self.attacking=false;
+        self.knockbackUp = 0;
+      }
+    }
+  ],
   armSpinny: [
     {
       limbs: [],
       customUpdate: self=>{
         var aa = self.arm1.rotation;
-        self.attacking = true;
+        self.attacking = true
+self.parent.attackHitbox = self.parent.defaultAttackHitbox;
+;
         self.parent.vx = self.parent.dx*self.parent.speed;
         self.parent.vz = 0;
         self.walk();
