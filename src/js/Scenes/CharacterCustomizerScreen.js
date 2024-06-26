@@ -15,6 +15,10 @@ class CharacterCustomizerScene extends Scene{
             this.playGame()
         }).center())
 
+        this.playButton = this.addSelectableButton(new ButtonUI("🎲", 0.2,0.9,0.2,0.1,s,() => {
+            this.model.randomize();
+        }).center())
+
         // this.addEntity(new ButtonUI("⚙️", 0.1,0.1,0.1,0.1,0.05,() => {
         //     this.driver.setScene(new OptionsScene(this))
         // }).center())

@@ -39,14 +39,17 @@ class PlatformerModel extends Model {
         option.onChange(option.options[index], index);
       })
     } else {
-      this.customizableOptions.forEach(option => {
-        if(!option.options||!option.options.length)return;
-        var index = Math.floor(Math.random()*option.options.length)
-        if(option.name=="Legs")if(Math.random()>.5)index=0;
-        option.index = index;
-        option.onChange(option.options[index], index)
-      });
+      this.randomize();
     }
+  }
+  randomize() {
+    this.customizableOptions.forEach(option => {
+      if(!option.options||!option.options.length)return;
+      var index = Math.floor(Math.random()*option.options.length)
+      if(option.name=="Legs")if(Math.random()>.5)index=0;
+      option.index = index;
+      option.onChange(option.options[index], index)
+    });
   }
   getModelOptions() {
     var modelOptions = []
@@ -529,6 +532,9 @@ class PlatformerModel extends Model {
     } else {
       this.body._y=0;
     }
+    if(this.skateBoardOn) {
+      this.skateBoard.rotation = 0;
+    }
     this.scaleY += (1-this.scaleY)/7;
     this.scaleX += (1-this.scaleX)/7;
     this.legL.rotation = Math.PI/10;
@@ -686,8 +692,13 @@ class PlatformerModel extends Model {
     if(this.doubleJumpTimer<=0) {
       this.doubleJumping = false;
     }
+    
     var dx = 1;//this.parent.dx;
     var t = this.doubleJumpTimer/20;
+    if(this.skateBoardOn) {
+      this.skateBoard.rotation = -t*Math.PI*2*dx;
+      // return
+    } 
     this.arm1.rotation = 0;
     this.arm2.rotation = 0;
     this.body2.rotation = Math.PI/4;
@@ -695,6 +706,7 @@ class PlatformerModel extends Model {
     this.legR.rotation = -Math.PI/2;
     this.head.rotation = Math.PI/2;
     t = t*t;
+    
     this.body.rotation = -t*Math.PI*2*dx;
   }
   doubleJump() {
@@ -811,6 +823,8 @@ class PlatformerModel extends Model {
     this.animIndex = 0;
     this.animFrameCount = -1;
     this.animKeyFrame = this.anim[this.animIndex];
+    this.legL.scaleY = 1;
+    this.legR.scaleY = 1;
     this.animStartFrame(this.animKeyFrame);
   }
   endAnim() {
