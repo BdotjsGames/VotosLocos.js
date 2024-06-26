@@ -58,6 +58,12 @@ class CharacterCustomizerScene extends Scene{
         model.x = CE.width/2;
         model.y = CE.height/2;
         model.scaleBoth = 2
+        this.model.customizableOptions.forEach(option => {
+            // if(option.name=="hair") {
+                option.index = 0;
+                option.onChange(option.options[0], 0)
+            // }
+          });
         this.optionsGroup.entities = []
         var size = 0.05;
         var plb;// = this.backButton;
