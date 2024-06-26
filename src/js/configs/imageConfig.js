@@ -209,6 +209,8 @@ IMAGES.headOptions = [
 IMAGES.baseEyes1    = ImageLoader.loadImage("baseEyes1.png")
 IMAGES.pupils1      = ImageLoader.loadImage("pupils1.png")
 IMAGES.hairOptions = [
+    null,
+    IMAGES.hairWillie         = ImageLoader.loadImage("hairWillie.png"),
     IMAGES.hair1         = ImageLoader.loadImage("hair1.png", PALLETE_KEY.hair),
     IMAGES.hair2         = ImageLoader.loadImage("hair2.png", PALLETE_KEY.hair),
     IMAGES.hair3         = ImageLoader.loadImage("hair3.png", PALLETE_KEY.hair),
@@ -224,10 +226,8 @@ IMAGES.hairOptions = [
     IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png", PALLETE_KEY.hair),
     IMAGES.hairCholo      = ImageLoader.loadImage("hairCholo2.png", PALLETE_KEY.hair),
     IMAGES.hijab         = ImageLoader.loadImage("hijab.png", PALLETE_KEY.hair),
-    IMAGES.hairWillie         = ImageLoader.loadImage("hairWillie.png"),
     // IMAGES.hairEars1         = ImageLoader.loadImage("hairAnimalEars1.png", PALLETE_KEY.hair),
     // IMAGES.hairEars2         = ImageLoader.loadImage("hairAnimalEars2.png", PALLETE_KEY.hair),
-    null,
 ]
 
 IMAGES.glassesOptions = [
