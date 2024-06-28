@@ -425,10 +425,47 @@ GameSequence = [
     // },
     {
         name :"Community Rally complete",
-        DialogueData: []
+        environment: Environments.Grass,
+        DialogueData: [
+            {person: LouChalibre, text: "Its time for the march!"},
+        
+        ],
+        continueOnDialogueFinish: true,
     },
     {
-        name: "Rally March Transition"
+        name: "Rally March Transition",
+        environment: Environments.Grass,
+        notBlocking: true,
+        DialogueData: [
+            {text: "wooo yeahh"},
+            {waitFor: 120},
+            {text: "wooo yeahh"},
+        ],
+        onLoad: scene => {
+            var w = scene.level.width/2;
+            var h = scene.maxY - scene.minY;
+            var is = 5;
+            var js = 6;
+            for(var i=0;i<is;i++) {
+                for(var j=0;j<js;j++ ){
+                    var x = w * (i+j/js)/is;
+                    var y = scene.minY + j*h/js;
+                    if(i==2&&j==3) {
+                        scene.player.x = x;
+                        scene.player.y = y;
+                        continue;
+                    };
+                    var npc = scene.addEntity(new HighFiver(x,y))
+                    npc.getInputs = ()=>{}
+                    npc.mx = 0.5;
+                    npc.speed = 2;
+                }
+            }
+            scene.player.model.endAnim();
+            scene.player.mx = 0.5;
+            scene.player.speed = 2;
+            scene.player.inputBlocked = true;
+        }
     },
     {
         name :"Block Walking Introduction",

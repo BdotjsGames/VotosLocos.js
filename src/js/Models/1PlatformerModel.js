@@ -327,9 +327,10 @@ class PlatformerModel extends Model {
     // this.body.createAfter(-10,0,new CheeseburgerJohnsonModel(40,40,this));
     // this.face = this.head.createAfter(0,-7);
     this.face = this.headBase.createAfter(0,0,new ImageDrawable(IMAGES.pupils1, 0,0,27,25));
-    this.glasses = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
+    // this.glasses = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
     // var hairtype = randomFromList(IMAGES.hairOptions);
     this.hair = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
+    this.glasses = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
     // this.eye1 = this.face.createAfter(-3,0,new Circle(0,0,2,'white'));
     // this.eye2 = this.face.createAfter(3,0,new Circle(0,0,2,'white'));
     // var grd = canvas.createRadialGradient(0,0,0,0,0,50);
@@ -1085,8 +1086,10 @@ var anims = {
         {limb: 'body2', rotation: -Math.PI/4},
         {limb: 'body', rotation: -Math.PI/4},
         {limb: 'head', rotation: 0},
-        {limb: 'legL', rotation: 0},
+        {limb: 'legL', rotation: Math.PI/6},
         {limb: 'legL2', rotation: 0},
+        {limb: 'legR', rotation: -Math.PI/6},
+        {limb: 'legR2', rotation: 0},
         {limb: 'arm1', rotation: -Math.PI},
         {limb: 'arm2', rotation: -Math.PI},
       ],
@@ -1105,8 +1108,10 @@ var anims = {
         {limb: 'body2', rotation: Math.PI/4},
         {limb: 'body', rotation: Math.PI/2},
         {limb: 'head', rotation: 0},
-        {limb: 'legL', rotation: 0},
-        {limb: 'legL2', rotation: 0},
+        {limb: 'legL', rotation: Math.PI/6},
+        {limb: 'legL2', rotation: Math.PI/2},
+        {limb: 'legR', rotation: -Math.PI/6},
+        {limb: 'legR2', rotation: Math.PI/2},
         {limb: 'arm1', rotation: -Math.PI/2},
         {limb: 'arm2', rotation: -Math.PI/2},
       ],
@@ -1120,8 +1125,6 @@ var anims = {
         {limb: 'body2', rotation: 0},
         {limb: 'body', rotation: Math.PI/2},
         {limb: 'head', rotation: 0},
-        {limb: 'legL', rotation: 0},
-        {limb: 'legL2', rotation: 0},
         {limb: 'arm1', rotation: -Math.PI},
         {limb: 'arm2', rotation: -Math.PI},
       ],
@@ -1161,8 +1164,7 @@ var anims = {
       customUpdate: self=>{
         var aa = self.arm1.rotation;
         self.attacking = true
-self.parent.attackHitbox = self.parent.defaultAttackHitbox;
-;
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox;
         self.parent.vx = self.parent.dx*self.parent.speed;
         self.parent.vz = 0;
         self.walk();

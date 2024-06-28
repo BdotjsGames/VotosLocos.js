@@ -3,8 +3,8 @@
 SOUNDASSETS='Assets/sounds/';
 if(ROOT_DIR) SOUNDASSETS = ROOT_DIR + SOUNDASSETS
 
-SOUNDS.norteno = new SoundTag('music/Votos_locos_8Bit_Norteno.mp3')
-SOUNDS.cumbia = new SoundTag('music/Votos_locos_8Bit_Cumbia.mp3')
+// SOUNDS.norteno = new SoundTag('music/Votos_locos_8Bit_Norteno.mp3')
+// SOUNDS.cumbia = new SoundTag('music/Votos_locos_8Bit_Cumbia.mp3')
 
 
 SOUNDS.select = new SoundTag('pop1.wav',2,1);

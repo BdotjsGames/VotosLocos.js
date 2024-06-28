@@ -155,7 +155,7 @@ class GameSceneBasic extends Scene {
       this.goal = data.Goal;
       
       if(data.DialogueData && data.DialogueData.length>0 && !dialogueSkip) {
-        this.playDialogue(data.DialogueData, true, b=>{
+        this.playDialogue(data.DialogueData, !data.notBlocking, b=>{
           if(data.continueOnDialogueFinish) {
             this.loadNextLevel();
           } else {
