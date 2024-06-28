@@ -299,9 +299,9 @@ GameSequence = [
             var office = scene.addEntity(new ImageDrawable(IMAGES.rallyBackgroundEntrance, 0,0))
             
             office.w *= 4
-            office.h *= 4
+            office.h *= 2
             window.office=office;
-            office.y=-office.h - 80
+            office.y=-office.h - 100
             // scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
             scene.addEntity(new EnterableDoor(office.x+office.w/2+30,-100,0));
             scene.defaultZoom = 0.5
@@ -439,8 +439,8 @@ GameSequence = [
         DialogueData: [
             {text: "wooo yeahh"},
             {waitFor: 120},
-            {text: "wooo yeahh"},
         ],
+        continueOnDialogueFinish: true,
         onLoad: scene => {
             var w = scene.level.width/2;
             var h = scene.maxY - scene.minY;
@@ -456,6 +456,41 @@ GameSequence = [
                         continue;
                     };
                     var npc = scene.addEntity(new HighFiver(x,y))
+                    npc.shouldSceneCollide = false;
+                    npc.getInputs = ()=>{}
+                    npc.mx = 0.5;
+                    npc.speed = 2;
+                }
+            }
+            scene.player.model.endAnim();
+            scene.player.mx = 0.5;
+            scene.player.speed = 2;
+            scene.player.inputBlocked = true;
+        }
+    },
+    {
+        name: "Rally March Transition-2",
+        notBlocking: true,
+        DialogueData: [
+            {waitFor: 120},
+        ],
+        continueOnDialogueFinish: true,
+        onLoad: scene => {
+            var w = scene.level.width/2;
+            var h = scene.maxY - scene.minY;
+            var is = 5;
+            var js = 6;
+            for(var i=0;i<is;i++) {
+                for(var j=0;j<js;j++ ){
+                    var x = w * (i+j/js)/is;
+                    var y = scene.minY + j*h/js;
+                    if(i==2&&j==3) {
+                        scene.player.x = x;
+                        scene.player.y = y;
+                        continue;
+                    };
+                    var npc = scene.addEntity(new HighFiver(x,y))
+                    npc.shouldSceneCollide = false;
                     npc.getInputs = ()=>{}
                     npc.mx = 0.5;
                     npc.speed = 2;

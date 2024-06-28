@@ -60,7 +60,7 @@ class PlatformerModel extends Model {
   }
   createOptions(options={}) {
     var armOptions = options.armOptions||IMAGES.armOptions;
-    var legOptions = options.legOptions||[8];
+    var legOptions = options.legOptions||[8,10,4,5,6,7];
     var skirtOptions = options.skirtOptions || IMAGES.skirts;
     var wheelChairLegValue = -1;
     var skateBoardValue = -2;
@@ -209,7 +209,7 @@ class PlatformerModel extends Model {
       {
         name: "height",
         options: legOptions,
-        dontShowInOptions: true,
+        // dontShowInOptions: true,
         displayOffsetY: -80,
         index: 0,
         onChange: (value,i) => {

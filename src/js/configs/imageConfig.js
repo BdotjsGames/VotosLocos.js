@@ -5,7 +5,7 @@ canvas.backgroundImage = IMAGES.backgroundImage;
 
 IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
 
-IMAGES.LouChalibre = ImageLoader.loadImage('Luchador1.png');
+IMAGES.LouChalibre = ImageLoader.loadImage('Luchador2.png');
 IMAGES.ChomperTop = ImageLoader.loadImage('ChomperTop.png');
 IMAGES.drone = ImageLoader.loadImage('drone.png');
 
@@ -310,7 +310,7 @@ IMAGES.skirts = [
     
 ]
 IMAGES.williePants.isWilliePants = true;
-IMAGES.tutu = ImageLoader.loadImage('tutu.png', PALLETE_KEY.skirt, swaps => {
+IMAGES.tutu = ImageLoader.loadImage('tutu2.png', PALLETE_KEY.skirt, swaps => {
     // IMAGES.skirts.push(IMAGES.rainbowSkirt = swaps[0])
     IMAGES.skirts=IMAGES.skirts.concat(swaps);
 })
@@ -333,3 +333,8 @@ IMAGES.boot = ImageLoader.loadImage('fist.png')
 // IMAGES.tilesetVents         = ImageLoader.loadImage("tilesetVents.png")
 // IMAGES.tilesetOutside       = ImageLoader.loadImage("tilesetOutside.png")
 // IMAGES.tilesetLab           = ImageLoader.loadImage("tileSetLab.png")
+
+IMAGES.projectiles = [
+    IMAGES.redKunai = ImageLoader.loadImage('redKunai.png'),
+    IMAGES.redNinjaStar = ImageLoader.loadImage('redNinjaStar.png'),
+]

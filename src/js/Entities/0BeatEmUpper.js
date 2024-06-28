@@ -61,6 +61,7 @@ class BeatEmUpper {
         this.talkSound = SOUNDS.johsonTalk;
         this.every = 2;
         this.jumpSpeedBoost = 0;
+        this.shouldSceneCollide = true;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -233,7 +234,7 @@ class BeatEmUpper {
             }
             this.grounded = true;
         }
-
+        if(this.shouldSceneCollide)
         this.scene.collideCheck(this);
         //   var grav = this.grav * 0.4;
         //   // if(this.wallColliding&&this.vy>0) {

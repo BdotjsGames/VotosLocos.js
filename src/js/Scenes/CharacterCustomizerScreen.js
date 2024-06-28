@@ -77,7 +77,7 @@ class CharacterCustomizerScene extends Scene{
         model.customizableOptions.forEach((customizableOption) => {
             if(customizableOption.dontShowInOptions)return;
             var x = 0.75;
-            var y = 0.1+0.1*i;
+            var y = 0.1+0.09*i;
             var btn = this.addSelectableButton(new BackAndForther(
                 customizableOption.name.toUpperCase(), x,y,0.3,0.08,value=>{
                     customizableOption.index = value;
