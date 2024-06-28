@@ -66,7 +66,7 @@ class ImageParticle extends Drawable {
     // canvas.beginPath();
     // canvas.arc(this.x,this.y,this.w/2,0,Math.PI*2);
     // canvas.fill();
-    canvas.drawImage(this.image, -this.w/2,-this.h/2+this.z,this.w,this.h);
+    canvas.drawImage(this.image, -this.w/2,-this.h/2,this.w,this.h);
     canvas.globalAlpha = 1;
   }
 }

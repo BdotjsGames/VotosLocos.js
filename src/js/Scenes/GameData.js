@@ -98,12 +98,15 @@ function rallyScene(scene) {
     ]
 }
 
+var GameSequence;
 
+window.addEventListener('load', function() {
+    
 GameSequence = [
     {
         name: "opening cutscene",
+        music: SOUNDS.norteno,
         DialogueData: [
-            {music: new SoundTag('music/Votos_locos_8Bit_Norteno.mp3')},
             {person: LouChalibre, text: "The time to <color red>vote</color> is <wiggle>approaching!"},
             {person: LouChalibre, text: "Are you ready to cast your ballot?"},
         ],
@@ -146,7 +149,9 @@ GameSequence = [
     {
         name: "First combat",
         Goal: "Defeat the enemies!",
+        music: SOUNDS.cumbia,
         DialogueData: [
+            {music: SOUNDS.cumbia},
             {person: LouChalibre, text: "<bam>Uh Oh!"},
             {person: LouChalibre, text: "Watch out for the bots!"},
             {person: LouChalibre, text: "Press the [Attack] button to teach 'em a lesson"},
@@ -168,6 +173,7 @@ GameSequence = [
     {
         name: "Registrar Office Reached",
         Goal: "Enter the Registrar Office",
+        music: SOUNDS.norteno,
         environment: Environments.Street,
         DialogueData: [
             {person: LouChalibre, text: "you made it to the Registrar office!"},
@@ -197,6 +203,19 @@ GameSequence = [
     {
         name: 'Registrar Office Interior',
         Goal: "Get your ballot!",
+        music: SOUNDS.cumbia,
+        environment: Environments.OfficeInterior,
+        spawnRandom: [
+            [Ninja, 3]
+        ],
+        onLoad: (scene) => {
+            scene.minY += 200
+        }
+    },
+    {
+        name: 'Registrar Office Interior',
+        Goal: "Get your ballot!",
+        music: SOUNDS.norteno,
         environment: Environments.OfficeInterior,
         onLoad: (scene) => {
             scene.minY += 200
@@ -304,10 +323,10 @@ GameSequence = [
             office.y=-office.h - 100
             // scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
             scene.addEntity(new EnterableDoor(office.x+office.w/2+30,-100,0));
-            scene.defaultZoom = 0.5
-            scene.cameraLerpSpeed = 40
-            // scene.camera.zoom = 0.5
-            scene.camera.offsetY = -200
+            // scene.defaultZoom = 0.8
+            // scene.cameraLerpSpeed = 40
+            // // scene.camera.zoom = 0.5
+            // scene.camera.offsetY = 0
         }
         
     },
@@ -327,6 +346,7 @@ GameSequence = [
     {
         name: "Community Rally - 2",
         environment: Environments.Grass,
+        music: SOUNDS.cumbia,
         spawnRandom: [
             [Troll, 4],
             [TrashCan, 5],
@@ -335,6 +355,7 @@ GameSequence = [
     {
         name: "Community Rally - 3",
         Goal: "Join the cause",
+        music: SOUNDS.norteno,
         environment: Environments.Grass,
         levelData: {},
         spawnRandom: [
@@ -348,6 +369,7 @@ GameSequence = [
     {
         name: "Community Rally - 4",
         environment: Environments.Grass,
+        music: SOUNDS.cumbia,
         spawnRandom: [
             [Bot, 4],
             [Ninja, 4],
@@ -358,6 +380,7 @@ GameSequence = [
     {
         name: "Community Rally - 5",
         Goal: "Join the cause",
+        music: SOUNDS.norteno,
         environment: Environments.Grass,
         levelData: {},
         spawnRandom: [
@@ -436,12 +459,14 @@ GameSequence = [
         name: "Rally March Transition",
         environment: Environments.Grass,
         notBlocking: true,
+        music: SOUNDS.marchMusic,
         DialogueData: [
             {text: "wooo yeahh"},
-            {waitFor: 120},
+            {waitFor: 620},
         ],
-        continueOnDialogueFinish: true,
+        // continueOnDialogueFinish: true,
         onLoad: scene => {
+            scene.showGo = true;
             var w = scene.level.width/2;
             var h = scene.maxY - scene.minY;
             var is = 5;
@@ -472,18 +497,20 @@ GameSequence = [
         name: "Rally March Transition-2",
         notBlocking: true,
         DialogueData: [
-            {waitFor: 120},
+            {waitFor: 620},
         ],
-        continueOnDialogueFinish: true,
+        // continueOnDialogueFinish: true,
         onLoad: scene => {
             var w = scene.level.width/2;
-            var h = scene.maxY - scene.minY;
+            var h = (scene.maxY - scene.minY)*.8;
+            var sy = scene.minY + 100;
             var is = 5;
-            var js = 6;
+            var js = 5;
+            scene.showGo = true;
             for(var i=0;i<is;i++) {
                 for(var j=0;j<js;j++ ){
                     var x = w * (i+j/js)/is;
-                    var y = scene.minY + j*h/js;
+                    var y = sy + j*h/js;
                     if(i==2&&j==3) {
                         scene.player.x = x;
                         scene.player.y = y;
@@ -504,6 +531,8 @@ GameSequence = [
     },
     {
         name :"Block Walking Introduction",
+        musicOff: true,
+        // music: SOUNDS.norteno,
         DialogueData: []
     },
     {
@@ -556,3 +585,5 @@ GameSequence = [
     }
 
 ]
+
+})

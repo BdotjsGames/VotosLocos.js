@@ -481,7 +481,9 @@ class BeatEmUpper {
         // canvas.fillRect(this.x,this.y,10,10);
         canvas.save();
         canvas.translate(this.x,this.y);
-        canvas.scale(1,0.5);
+        var sx = 1;
+        if(this.model.sliding) sx =2;
+        canvas.scale(sx,0.5);
         canvas.fillStyle = this.shadow;
         canvas.fillRect(-30,-30,60,60);
         canvas.restore();

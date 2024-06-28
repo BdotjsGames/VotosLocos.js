@@ -1,6 +1,6 @@
 //  Copyright Brian Dizon 2019
 
-var SOUNDASSETS='sounds/';
+var SOUNDASSETS='Assets/sounds/';
 if(ROOT_DIR) SOUNDASSETS = ROOT_DIR + SOUNDASSETS
 var VOLUME = 2;
 
@@ -304,8 +304,8 @@ var MusicHandler = {
   },
   onLoad() {
     if(this.waitingOn) {
-      console.log("attempting to play ");
-      console.log(this.waitingOn);
+      // console.log("attempting to play ");
+      // console.log(this.waitingOn);
       this.playMusic(this.waitingOn);
     }
   },
@@ -321,8 +321,9 @@ var MusicHandler = {
   },
   playMusic(music) {
     if(this.musicSource == music)return;
-    console.log('playing music', music)
-    this.musicSource = music;
+    // console.log('playing music', music)
+    if(SOUND_INITIALIZED)
+      this.musicSource = music;
     music.loops = true;
     this.waitingOn = null;
     this.stop();

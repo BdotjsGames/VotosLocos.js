@@ -14,6 +14,10 @@ class Scene {
     btn = this.addEntity(btn);
     // btn.shouldSetSelectOnClick = true;
     // btn.shouldSetSelectOnHover = true;
+    if(dir==DIRECTION.none) {
+      this.buttonToLink = btn;
+      return btn;
+    }
     if(this.buttonToLink) {
       this.buttonToLink.linkButton(btn, dir)
       btn.linkButton(this.buttonToLink, DIRECTION.opposite(dir))

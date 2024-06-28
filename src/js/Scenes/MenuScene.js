@@ -2,6 +2,7 @@ class MenuScene extends Scene {
   constructor() {
     super();
     this.useTouchAsMouse = true;
+    MusicHandler.playMusic(SOUNDS.norteno);
     for(var i=0;i<10;i++) {
       var x = CE.width*Math.random();
       var y = CE.height*Math.random()/4;

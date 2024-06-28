@@ -54,6 +54,72 @@ class CharacterCustomizerScene extends Scene{
         super.draw(canvas);
 
     }
+    loadMainMenu(btn) {
+        // i=0;
+        this.entities.forEach(e=>{
+            if(e.isButton) {
+                if(e.category) {
+                    e.hidden = true;
+                    e.disabled = true;
+                } else {
+
+                    e.hidden = false;
+                    e.disabled = false;
+                    // if(i==0)e.setSelected();
+                    // i++;
+                }
+            }
+        })
+        btn.setSelected();
+    }
+    loadSubMenu(subMenuData) {
+        this.entities.forEach(e=>{
+            if(e.isButton) {
+                e.hidden = true;
+                e.disabled = true;
+            }
+        })
+        subMenuData.btns.forEach((btn,i)=>{
+            if(i==0)btn.setSelected();
+            btn.hidden = false;
+            btn.disabled =false;
+        })
+        
+    }
+    generateSubMenus(categories) {
+        categories.forEach(subMenuData => {
+            this.buttonToLink = null;
+            var x = 0.72;
+            var y = 0.1;
+            var backButton = this.addSelectableButton(new ButtonUI("BACK", x,y,0.25,0.1,0.05,() => {
+                this.loadMainMenu(subMenuData.btn);
+            }).center())
+            backButton.disabled = true;
+            backButton.hidden = true;
+            backButton.category = subMenuData;
+            subMenuData.btns = [backButton];
+            y +=0.09;
+            var btn;
+            subMenuData.options.forEach(customizableOption => {
+                    btn = this.addSelectableButton(new BackAndForther(
+                    customizableOption.name.toUpperCase(), x,y,0.3,0.08,value=>{
+                        customizableOption.index = value;
+                        customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
+                    },
+                    () => {
+                        // this.driver.setScene(new ModelOptionSelectorScene(this, this.model, customizableOption));
+                    }
+                ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
+                );
+                btn.category = subMenuData;
+                subMenuData.btns.push(btn);
+                btn.hidden = true;
+                btn.disabled = true;
+                y +=0.09;
+            })
+            btn.linkButton(backButton, DIRECTION.down);
+        });
+    }
     loadModel(model) {
         // if(this.model&&this.model!=model) {
         //     this.model.shouldDelete = true;
@@ -74,10 +140,46 @@ class CharacterCustomizerScene extends Scene{
         var prb;// = this.backButton;
 
         i = 0;
+        var categoriesList = [];
+        var categories = {
+
+        }
+        var y = 0.2;
+        var x = 0.72;
+
         model.customizableOptions.forEach((customizableOption) => {
             if(customizableOption.dontShowInOptions)return;
-            var x = 0.75;
-            var y = 0.1+0.09*i;
+            if(customizableOption.category) {
+                if(categories[customizableOption.category]) {
+                    categories[customizableOption.category].options.push(customizableOption)
+                } else {
+                    var subMenuData = categories[customizableOption.category] = {
+                        name: customizableOption.category,
+                        options: [customizableOption]
+                    }
+                    categoriesList.push(subMenuData);
+                    
+                    var btn = this.addSelectableButton(new ButtonUI(customizableOption.category.toUpperCase(),x,y,0.3,0.08,.05, () => {
+                        this.loadSubMenu(subMenuData)
+                    })).center();
+                    subMenuData.btn = btn;
+                    // var btn = this.addSelectableButton(new BackAndForther(
+                    //     customizableOption.name.toUpperCase(), x,y,0.3,0.08,value=>{
+                    //         customizableOption.index = value;
+                    //         customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
+                    //     },
+                    //     () => {
+                    //         // this.driver.setScene(new ModelOptionSelectorScene(this, this.model, customizableOption));
+                    //     }
+                    // ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
+                    // );
+                    // if(i==0)btn.setSelected();
+                    if(i==0)btn.setSelected();
+                    y +=0.09;
+                    i++
+                }
+                return;
+            }
             var btn = this.addSelectableButton(new BackAndForther(
                 customizableOption.name.toUpperCase(), x,y,0.3,0.08,value=>{
                     customizableOption.index = value;
@@ -89,6 +191,7 @@ class CharacterCustomizerScene extends Scene{
             ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
             );
             if(i==0)btn.setSelected();
+            y +=0.09;
             i++
             // this.optionsGroup.addEntity(
             //     new DrawableText(customizableOption.name, x,y,0.4,0.1,size)
@@ -129,6 +232,9 @@ class CharacterCustomizerScene extends Scene{
             // plb = lb;
             // prb = rb;
         })
+        var lastButton = this.buttonToLink;
+        this.generateSubMenus(categoriesList);
+        this.buttonToLink = lastButton;
         // plb.linkButton(this.playButton, DIRECTION.down);
         // prb.linkButton(this.playButton, DIRECTION.down);
         // this.playButton.linkButton(plb, DIRECTION.up);

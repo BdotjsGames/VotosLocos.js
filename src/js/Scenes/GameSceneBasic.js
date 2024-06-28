@@ -206,6 +206,13 @@ class GameSceneBasic extends Scene {
         this.addBuildings();
       }
       if(data.width) this.level.width = data.width;
+      if(data.music) {
+        console.log('data music')
+        MusicHandler.playMusic(data.music);
+      }
+      if(data.musicOff) {
+        MusicHandler.stop();
+      }
     }
     spawnRandom(className, num) {
       for(var i=0;i<num;i++) {

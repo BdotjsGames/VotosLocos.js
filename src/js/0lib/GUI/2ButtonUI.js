@@ -25,6 +25,9 @@ class ButtonUI extends DrawableText{
       this.directionallyLinkedButtons = [];
       this.drawBallotMark = true;
       this.ballotMarkFilled = false;
+      this.disabled = false;
+      this.hidden = false;
+      this.isButton = true;
 
       if(w>.1) {
         this.textAlign = 'left';
@@ -117,6 +120,7 @@ class ButtonUI extends DrawableText{
       this.justSelected = false;
     }
     update() {
+      if(this.disabled)return;
       super.update();
       this.mouseUpdate();
       this.selectedUpdate();

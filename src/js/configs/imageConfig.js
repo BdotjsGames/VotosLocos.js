@@ -320,7 +320,7 @@ IMAGES.customOutfits = [
         name: "Willie",
         options: [
             {
-                name: 'head',
+                name: 'face',
                 value: IMAGES.willieMask = ImageLoader.loadImage("willieMask.png"),
             }
         ]

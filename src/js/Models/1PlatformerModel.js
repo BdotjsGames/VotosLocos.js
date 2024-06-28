@@ -75,9 +75,20 @@ class PlatformerModel extends Model {
     }
     this.customizableOptions = [
       {
-        name: "head",
+        name: "skin",
+        options: options.headOptions||PALLETE_KEY.skin.mapping,
+        index: 0,
+        onChange: (value, i) => {
+          this.skinColorIndex = i;
+          // this.headBase.drawable.image = value;
+          this.changeSkinColor(i);
+        }
+      },
+      {
+        name: "face",
         options: options.headOptions||IMAGES.headOptions,
         index: 0,
+        category: "head",
         onChange: (value, i) => {
           this.headBase.drawable.image = value;
           this.changeSkinColor(this.skinColorIndex);
@@ -91,17 +102,8 @@ class PlatformerModel extends Model {
         }
       },
       {
-        name: "skin",
-        options: options.headOptions||PALLETE_KEY.skin.mapping,
-        index: 0,
-        onChange: (value, i) => {
-          this.skinColorIndex = i;
-          // this.headBase.drawable.image = value;
-          this.changeSkinColor(i);
-        }
-      },
-      {
         name: "hair",
+        category: "head",
         options: options.hairOptions||IMAGES.hairOptions,
         index: 0,
         onChange: (value) => {
@@ -113,6 +115,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "hair color",
+        category: "head",
         options: PALLETE_KEY.hair.mapping,
         index: 0,
         onChange: (value,i) => {
@@ -122,6 +125,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "glasses",
+        category: "head",
         options: options.glassesOptions||IMAGES.glassesOptions,
         index: 0,
         onChange: (value) => {
@@ -132,6 +136,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "Torso",
+        category: "body",
         options: options.torsoOptions||IMAGES.torsoOptions,
         index: 0,
         onChange: (value,i) => {
@@ -145,6 +150,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "width",
+        category: "body",
         options: [0,1,2,4,6,-2,-1,],
         index: 0,
         onChange: (value) => {
@@ -156,11 +162,13 @@ class PlatformerModel extends Model {
 
           this.body2.drawable.extendX = value;
           this.skirt.drawable.extendX = value;
+          this.skirt.drawable._extendX = value;
           
         }
       },
       {
         name: "Legs",
+        category: "body",
         options: skirtOptions,
         displayOffsetY: -80,
         index: 0,
@@ -208,6 +216,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "height",
+        category: "body",
         options: legOptions,
         // dontShowInOptions: true,
         displayOffsetY: -80,
@@ -470,6 +479,7 @@ class PlatformerModel extends Model {
     this.endAnim();
 
     this.attackSound.play();
+    this.sliding = true;
     this.doubleJumping=false;
     this.parent.wallColliding = false;
     this.attacking = true;
@@ -497,6 +507,7 @@ class PlatformerModel extends Model {
   }
   attackEnd() {
     this.attacking =false;
+    this.sliding = false;
     this.legL.scaleY = 1;
     this.legR.scaleY = 1;
     this.legL._y=0;
@@ -582,7 +593,7 @@ class PlatformerModel extends Model {
     var frq = this.frameCount*Math.PI/10;
     var angle = Math.PI/4*(dv);
 
-    if(this.skirtOn)angle *= 0.5;
+    if(this.skirtOn)angle *= 0.6;
     var cos = Math.cos(frq);
     if(this.skateBoardOn) {
       // frq = frq/2;
@@ -750,6 +761,13 @@ class PlatformerModel extends Model {
   update() {
     // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
     this.skirt.rotation = (this.legL.rotation + this.legR.rotation)/2
+    if(this.skirtOn) {
+      // console.log(this.legR.rotation, this.legL.rotation);
+      // console.log(Math.sin(this.legL.rotation)-Math.sin(this.legR.rotation));
+      var sx= Math.max((Math.sin(this.legL.rotation)-Math.sin(this.legR.rotation)+1)/1.6180339887498948,1);
+      this.skirt.scaleX = sx;
+      // this.skirt.drawable.extendX = this.skirt.drawable._extendX + (sx-1)*4;
+    }
     if(this.inWheelChair) this.skirt.rotation = -Math.PI/3
     if(this.impactStopTimer>0) {
       this.impactStopTimer--;

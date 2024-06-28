@@ -66,6 +66,7 @@ class BackAndForther extends ButtonUI {
     }
     // mouseUpdate(){}
     update() {
+        if(this.disabled)return;
         // super.super.update();
         super.update();
         if (this.selected && !this.justSelected) {
@@ -114,6 +115,7 @@ class BackAndForther extends ButtonUI {
     //     // // this.morphs['click'].activate();
     // }
     draw(canvas) {
+        if(this.hidden)return;
         super.draw(canvas);
         this.leftButton.draw(canvas);
         this.rightButton.draw(canvas);
