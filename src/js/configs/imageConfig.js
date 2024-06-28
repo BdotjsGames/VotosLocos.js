@@ -24,6 +24,10 @@ IMAGES.deskFront = ImageLoader.loadImage('DeskFront.png')
 IMAGES.rallyTableBase = ImageLoader.loadImage('rallyTableBase.png')
 IMAGES.rallyTableBaseBack = ImageLoader.loadImage('rallyTableBaseBack.png')
 
+IMAGES.rallyTables = [
+    IMAGES.rallyTableGetOutTheVote = ImageLoader.loadImage('rallyTables/getOutTheVote.png'),
+]
+
 
 
 var rgb = hexToRGB;
@@ -201,6 +205,7 @@ IMAGES.headOptions = [
     IMAGES.baseHead10   = ImageLoader.loadImage("baseHead10.png", PALLETE_KEY.skin),
     IMAGES.baseHead11   = ImageLoader.loadImage("baseHead11.png", PALLETE_KEY.skin),
     IMAGES.baseHead12   = ImageLoader.loadImage("baseHead12.png", PALLETE_KEY.skin),
+    // IMAGES.baseHead13   = ImageLoader.loadImage("baseHeadOld.png", PALLETE_KEY.skin),
     IMAGES.wrestlerHead1    = ImageLoader.loadImage("baseHeadWrestler.png", PALLETE_KEY.skin),
     IMAGES.wrestlerHead2    = ImageLoader.loadImage("baseHeadWrestler2.png", PALLETE_KEY.skin),
     // IMAGES.baseHead2    = ImageLoader.loadImage("baseHead2.png"),
@@ -235,6 +240,11 @@ IMAGES.glassesOptions = [
     IMAGES.sunglasses      = ImageLoader.loadImage("sunglasses.png"),
     IMAGES.glasses1      = ImageLoader.loadImage("glasses1.png"),
     IMAGES.glassesFrames      = ImageLoader.loadImage("glassesFrames.png"),
+    IMAGES.glassesCatsEye1      = ImageLoader.loadImage("glassesCatsEye1.png"),
+    IMAGES.glassesCatsEye2      = ImageLoader.loadImage("glassesCatsEye2.png"),
+    IMAGES.glassesRose1      = ImageLoader.loadImage("glassesRose1.png"),
+    IMAGES.glassesRose2      = ImageLoader.loadImage("glassesRose2.png"),
+    IMAGES.glassesCrescent1      = ImageLoader.loadImage("glassesCrescent1.png"),
     IMAGES.glassesGoatee      = ImageLoader.loadImage("glassesGoatee.png", PALLETE_KEY.hair),
 ]
 

@@ -321,6 +321,7 @@ var MusicHandler = {
   },
   playMusic(music) {
     if(this.musicSource == music)return;
+    console.log('playing music', music)
     this.musicSource = music;
     music.loops = true;
     this.waitingOn = null;

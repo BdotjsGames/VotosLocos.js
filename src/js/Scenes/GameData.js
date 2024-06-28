@@ -46,6 +46,14 @@ ImageLoader.onComplete( () => {
 // SOUNDS.onComplete( () => {
 //     LouChalibre.talkSound = SOUNDS.LouTalk;
 // });
+var rallyTables = [
+    {
+        fullName: 'Get Out The Vote!',
+        acronymn: "GOTV",
+        rallyTableFront: ImageLoader.loadImage('rallyTables/getOutTheVote.png'),
+    }
+]
+
 
 function rallyScene(scene) {
     {
@@ -56,7 +64,7 @@ function rallyScene(scene) {
         var deskBack = scene.addEntity(new EntityTwoPointFiveD(450,160-60,0,deskImage))
     }
     {
-        var deskImage =  new ImageDrawable(IMAGES.rallyTableBase, 0,0);
+        var deskImage =  new ImageDrawable(IMAGES.rallyTableGetOutTheVote, 0,0);
         deskImage.w *= 3;
         deskImage.h *= 3;
         deskImage.y = -deskImage.h;
@@ -81,7 +89,6 @@ function rallyScene(scene) {
                 {onStart: dia => {
                     npc.isInteractable = false;
                     scene.showGo = true;
-                    // npc.shouldStartDiaolgueOnProximity = false;
                 }}
             ]},
             {text: 'no', sequence:[{
@@ -96,6 +103,7 @@ GameSequence = [
     {
         name: "opening cutscene",
         DialogueData: [
+            {music: new SoundTag('music/Votos_locos_8Bit_Norteno.mp3')},
             {person: LouChalibre, text: "The time to <color red>vote</color> is <wiggle>approaching!"},
             {person: LouChalibre, text: "Are you ready to cast your ballot?"},
         ],

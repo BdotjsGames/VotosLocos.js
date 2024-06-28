@@ -145,7 +145,7 @@ class PlatformerModel extends Model {
       },
       {
         name: "width",
-        options: [-2,-1,0,1,2,4,6],
+        options: [0,1,2,4,6,-2,-1,],
         index: 0,
         onChange: (value) => {
           this.bwidth = 15+value;
