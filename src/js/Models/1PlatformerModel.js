@@ -76,12 +76,12 @@ class PlatformerModel extends Model {
     this.customizableOptions = [
       {
         name: "skin",
-        options: options.headOptions||PALLETE_KEY.skin.mapping,
+        options: options.skinOptions||PALLETE_KEY.skin.mapping.map((a,i)=>i),
         index: 0,
         onChange: (value, i) => {
-          this.skinColorIndex = i;
+          this.skinColorIndex = value;
           // this.headBase.drawable.image = value;
-          this.changeSkinColor(i);
+          this.changeSkinColor(value);
         }
       },
       {
@@ -151,7 +151,7 @@ class PlatformerModel extends Model {
       {
         name: "width",
         category: "body",
-        options: [0,1,2,4,6,-2,-1,],
+        options: options.widthOptions||[0,1,2,4,6,-2,-1,],
         index: 0,
         onChange: (value) => {
           this.bwidth = 15+value;

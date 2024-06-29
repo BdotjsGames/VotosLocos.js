@@ -182,6 +182,19 @@ IMAGES.trollArmOptions = [
     IMAGES.trollArm1 = ImageLoader.loadImage('TrollArm3.png'),
 ]
 
+IMAGES.putinHeadOptions = [
+    IMAGES.putinHead1 = ImageLoader.loadImage('PutinHead1.png'),
+]
+
+IMAGES.putinTorsoOptions = [
+    IMAGES.putinTorso1 = ImageLoader.loadImage('PutinTorso1.png'),
+]
+
+IMAGES.putinSkirtOptions = [
+    IMAGES.putinShorts1 = ImageLoader.loadImage('PutinShorts1.png'),
+    IMAGES.putinShorts2 = ImageLoader.loadImage('PutinShorts2.png'),
+]
+
 
 // IMAGES.drone = ImageLoader.loadImage('drone.png');
 IMAGES.drone = ImageLoader.loadImage('RussianBot1.png');
