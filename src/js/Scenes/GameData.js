@@ -158,6 +158,7 @@ GameSequence = [
         ],
         spawnRandom: [
             [Bot, 4],
+            [Putin, 1],
         ]
     },
     {
