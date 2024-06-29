@@ -11,11 +11,12 @@ class PutinModel extends PlatformerModel {
         super.createOptions({
             headOptions: [IMAGES.putinHeadOptions[0]],
             hairOptions: [],
-            bodyOptions: [IMAGES.putinTorsoOptions[0]],
-            armOptions: [IMAGES.armOptions[0]],
-            legOptions:[5],
+            torsoOptions: [IMAGES.putinTorsoOptions[0]],
+            armOptions: [IMAGES.armBare],
+            legOptions:[10],
             glassesOptions: [],
-            skinOptions: [],
+            widthOptions: [0],
+            skinOptions: [5],
             skirtOptions: [IMAGES.putinSkirtOptions[0]],
             canWheelchair: false,
         });
