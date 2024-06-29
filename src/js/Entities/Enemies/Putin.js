@@ -2,6 +2,7 @@
 class Putin extends Bot {
     constructor(x,y) {
         super(x,y);
+        this.health = this.maxHealth = 60;
         
     }
     initModel(w, h, color,color2) {
