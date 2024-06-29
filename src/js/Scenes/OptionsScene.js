@@ -22,6 +22,24 @@ class OptionsScene extends AdditiveScene {
             }).setTrueCoords(false).setBounds(0,1).setValue(VOLUME)
         )
         y+=spacing;
+        this.addSelectableButton(
+            new SliderOptionUI('sound effects',x,y,0.3,0.05,(value,self)=>{
+                if(VOLUME_SOUND_EFFECTS!=value) SOUNDS.select.play();
+                localStorage.setItem("volume_sound_effects", value);
+                VOLUME_SOUND_EFFECTS = value;
+                DESTINATION_SOUND_EFFECTS.gain.setValueAtTime(value, 0); 
+            }).setTrueCoords(false).setBounds(0,1).setValue(VOLUME_SOUND_EFFECTS)
+        )
+        y+=spacing;
+        this.addSelectableButton(
+            new SliderOptionUI('music',x,y,0.3,0.05,(value,self)=>{
+                if(VOLUME_MUSIC!=value) SOUNDS.select.play();
+                localStorage.setItem("volume_music", value);
+                VOLUME_MUSIC = value;
+                DESTINATION_MUSIC.gain.setValueAtTime(value, 0); 
+            }).setTrueCoords(false).setBounds(0,1).setValue(VOLUME_MUSIC)
+        )
+        y+=spacing;
         var toggles = [
             {
                 text: 'Auto Pause ' ,

@@ -3,18 +3,28 @@
 var SOUNDASSETS='Assets/sounds/';
 if(ROOT_DIR) SOUNDASSETS = ROOT_DIR + SOUNDASSETS
 var VOLUME = 2;
+var VOLUME_SOUND_EFFECTS = localStorage.getItem("volume_sound_effects") || 1;
+var VOLUME_MUSIC = localStorage.getItem("volume_music") || 1;
 
 var AUDIOCONTEXT;
 var DESTINATION;
+var DESTINATION_SOUND_EFFECTS;
+var DESTINATION_MUSIC;
 var BUFFERBUFFER = [];
 var SOUND_INITIALIZED = false;
 var DecodeBuffer = [];
+
+
 function setVolume(val) {
   if(val < 0) val = 0;
   if(val > 1) val = 1;
   VOLUME = val;
   DESTINATION.gain.setValueAtTime(val, 0);  
 }
+
+
+
+
 function initializeSound() {
   if(SOUND_INITIALIZED) return false;
   try {
@@ -27,6 +37,15 @@ function initializeSound() {
     var GAIN = AUDIOCONTEXT.createGain();
     GAIN.connect(AUDIOCONTEXT.destination);
     DESTINATION = GAIN;
+
+    DESTINATION_SOUND_EFFECTS = AUDIOCONTEXT.createGain();
+    DESTINATION_SOUND_EFFECTS.connect(DESTINATION);
+    DESTINATION_SOUND_EFFECTS.gain.setValueAtTime(VOLUME_SOUND_EFFECTS, 0);  
+
+    DESTINATION_MUSIC = AUDIOCONTEXT.createGain();
+    DESTINATION_MUSIC.connect(DESTINATION);
+    DESTINATION_MUSIC.gain.setValueAtTime(VOLUME_MUSIC, 0);
+
     var savedVolume = localStorage.getItem("mainVolume");
     setVolume(savedVolume||0.5);
     // for(var i in BUFFERBUFFER) {
@@ -147,7 +166,8 @@ class SoundSource {
   play(playbackRate) {
     if(!playbackRate)playbackRate=0;
     var audioContext= AUDIOCONTEXT;
-    var destination = DESTINATION;
+    var destination = DESTINATION_SOUND_EFFECTS;
+    if(this.isMusic)destination = DESTINATION_MUSIC
     if(!destination)return;
     var time = audioContext.currentTime;
     var source = audioContext.createBufferSource();
@@ -200,6 +220,13 @@ class SoundSource {
       }
     }
     return source;
+  }
+}
+
+class Music extends SoundSource {
+  constructor(...args) {
+    super(...args);
+    this.isMusic = true;
   }
 }
 

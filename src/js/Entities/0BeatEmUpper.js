@@ -134,6 +134,7 @@ class BeatEmUpper {
     }
     initModel(w, h, color,color2) {
         this.model = new PlatformerModel(w, h, color,color2, this);
+        // this.model = new CheeseburgerJohnsonModel(this);
     }
     getInputs() { }
     attack() {

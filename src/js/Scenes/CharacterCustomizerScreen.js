@@ -106,7 +106,8 @@ class CharacterCustomizerScene extends Scene{
                         customizableOption.index = value;
                         customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
                     },
-                    () => {
+                    (b) => {
+                        b.increment();
                         // this.driver.setScene(new ModelOptionSelectorScene(this, this.model, customizableOption));
                     }
                 ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
@@ -185,7 +186,8 @@ class CharacterCustomizerScene extends Scene{
                     customizableOption.index = value;
                     customizableOption.onChange(customizableOption.options[customizableOption.index],customizableOption.index );
                 },
-                () => {
+                (b) => {
+                    b.increment();
                     // this.driver.setScene(new ModelOptionSelectorScene(this, this.model, customizableOption));
                 }
             ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
