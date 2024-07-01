@@ -34,7 +34,10 @@ class Scene {
   init() {}
   update() {
     this.entities.forEach(function(e) {e.update()});
-    this.entities = this.entities.filter(function(e){return !e.shouldDelete});
+    this.entities = this.entities.filter(function(e){
+      if(e.shouldDelete&&e.onDelete)e.onDelete();
+      return !e.shouldDelete
+    });
     this.buttonsDown.forEach(b=>{
       if(getButtonDown(b[0]))b[1]();
     })

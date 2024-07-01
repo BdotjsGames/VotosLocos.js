@@ -87,7 +87,7 @@ class BeatEmUpper {
         this.dx = this.x<other.x?1:-1;
         this.model.impactStop(25);
         // createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
-        spawnHitParticles(this.scene,(other.x+this.x)/2,(this.y+other.y)/2, (this.z+other.z)/2-20)
+        spawnHitParticles(this.scene,(other.x+this.x)/2,(this.y+other.y)/2-10, (this.z+other.z)/2-30)
         var k = 1;
         if (other.knockBack) k = other.knockBack;
         k = k * this.getknockBack;
@@ -588,12 +588,12 @@ function fadingParticleUpdate2() {
 }
 
 function spawnHitParticles(scene,x,y,z) {
-    var p = scene.addEntity(new ImageParticle(IMAGES.whiteFlash, x,y, 32*3,32*3, 0,0,10,0))
+    var p = scene.addEntity(new ImageParticle(IMAGES.whiteFlash, x,y, 32*6,32*6, 0,0,10,0))
     p.z = z;
 }
 
 function spawnDeathParticles(scene,x,y,z) {
-    var f = scene.addEntity(new ImageParticle(IMAGES.whiteFlash, x,y, 32*6,32*6, 0,0,10,0))
+    var f = scene.addEntity(new ImageParticle(IMAGES.whiteFlash, x,y, 32*10,32*10, 0,0,10,0))
     f.z= z;
         for(var i=0;i<12;i++) {
             var a = Math.random()*Math.PI*2;

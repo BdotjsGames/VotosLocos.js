@@ -1,7 +1,7 @@
 
 
 class CharacterCustomizerScene extends Scene{
-    constructor() {
+    constructor(model) {
         super();
         this.useTouchAsMouse = true;
         this.backButton = this.addSelectableButton(new ButtonUI("BACK", 0.15,0.1,0.25,0.1,0.05,() => {
@@ -9,7 +9,7 @@ class CharacterCustomizerScene extends Scene{
         }).center())
         this.optionsGroup = this.addEntity(new Group(0,0));
         
-        this.loadModel(new PlayerModel());
+        this.loadModel(model||this.createModel());
         var s = 0.05
         this.playButton = this.addSelectableButton(new ButtonUI("PLAY", 0.5,0.9,0.3,0.1,s,() => {
             this.playGame()
@@ -87,7 +87,14 @@ class CharacterCustomizerScene extends Scene{
         
     }
     generateSubMenus(categories) {
+        var lastSubMenuData=null;
         categories.forEach(subMenuData => {
+            if(lastSubMenuData) {
+                lastSubMenuData.nextBtn.callback = b=>{
+                    this.loadSubMenu(subMenuData)
+                }
+            }
+            lastSubMenuData = subMenuData;
             this.buttonToLink = null;
             var x = 0.72;
             var y = 0.1;
@@ -118,8 +125,30 @@ class CharacterCustomizerScene extends Scene{
                 btn.disabled = true;
                 y +=0.09;
             })
+            btn = this.addSelectableButton(new ButtonUI("next", x,y,0.25,0.1,0.05,() => {
+                this.loadMainMenu(subMenuData.btn);
+            }).center())
+            btn.category = subMenuData;
+            subMenuData.nextBtn = btn;
+            subMenuData.btns.push(btn);
+            btn.hidden = true;
+            btn.disabled = true;
             btn.linkButton(backButton, DIRECTION.down);
         });
+        lastSubMenuData.nextBtn.text = "PLAY";
+        lastSubMenuData.nextBtn.callback = b=>{
+            this.playGame();
+        }
+    }
+    createModel() {
+        this.model = new PlayerModel();
+        this.model.customizableOptions.forEach(option => {
+            // if(option.name=="hair") {
+                option.index = 0;
+                option.onChange(option.options[0], 0)
+            // }
+          });
+          return this.model;
     }
     loadModel(model) {
         // if(this.model&&this.model!=model) {
@@ -129,12 +158,7 @@ class CharacterCustomizerScene extends Scene{
         model.x = CE.width/2;
         model.y = CE.height/2;
         model.scaleBoth = 2
-        this.model.customizableOptions.forEach(option => {
-            // if(option.name=="hair") {
-                option.index = 0;
-                option.onChange(option.options[0], 0)
-            // }
-          });
+        
         this.optionsGroup.entities = []
         var size = 0.05;
         var plb;// = this.backButton;
@@ -147,7 +171,7 @@ class CharacterCustomizerScene extends Scene{
         }
         var y = 0.2;
         var x = 0.72;
-
+        var lastSubMenuData;
         model.customizableOptions.forEach((customizableOption) => {
             if(customizableOption.dontShowInOptions)return;
             if(customizableOption.category) {
@@ -164,6 +188,7 @@ class CharacterCustomizerScene extends Scene{
                         this.loadSubMenu(subMenuData)
                     })).center();
                     subMenuData.btn = btn;
+                    
                     // var btn = this.addSelectableButton(new BackAndForther(
                     //     customizableOption.name.toUpperCase(), x,y,0.3,0.08,value=>{
                     //         customizableOption.index = value;

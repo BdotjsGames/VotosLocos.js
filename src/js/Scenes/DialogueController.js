@@ -390,7 +390,6 @@ class DialogueController {
       this.gameScene.loadNextLevel();
     }
     if(event.music) {
-      console.log('event music')
       MusicHandler.playMusic(event.music);
     }
     if(event.musicStop) {
@@ -439,7 +438,7 @@ class DialogueController {
     }
     if(this.current) {
       this.current.update();
-      if(getButtonDown(Buttons.Confirm) || mouse.down) {
+      if(getButtonDown(Buttons.A) || mouse.down) {
         this.current.progress();
       }
       if(this.current.done) {

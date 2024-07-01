@@ -3,6 +3,7 @@ class Drawable {
     constructor(x,y,w,h) {
       this.x=x;
       this.y=y;
+      this.z = 0;
       this.w=w;
       this.h=h;
       this.z=0;
@@ -145,7 +146,7 @@ class Drawable {
       var ps = this.pixelSpace();
       var H = ps.H;
       var x = (this.x+this.dx+this.pivotX) * ps.W;
-      var y = (this.y+this.dy+this.pivotY+this.dz) * ps.H;
+      var y = (this.y+this.dy+this.pivotY+this.dz+this.z) * ps.H;
       canvas.translate(x, y-this.sortOffset+this.z);
       canvas.scale(this.scaleW, this.scaleH);
       canvas.rotate(this.angle);

@@ -30,4 +30,5 @@ rm ${index}-e
 
 cp ${index} ${rootIndex}
 sed -i -e 's~\./~\./src/~g' ${rootIndex}
+sed -i -e 's~DEV = true~DEV = false~g' ${rootIndex}
 rm ${rootIndex}-e

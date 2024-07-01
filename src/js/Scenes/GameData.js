@@ -537,6 +537,21 @@ GameSequence = [
         DialogueData: []
     },
     {
+        name :"Block Walking Introduction",
+        musicOff: true,
+        // music: SOUNDS.norteno,
+        environment: Environments.Street,
+        debugStartWithThisOne: true,
+        DialogueData: [],
+        onLoad: scene =>{
+            // scene.minY = 0;
+            for(var i=0;i<4;i++) {
+                scene.addEntity(new KnockableHouse((i+0.5)*400, scene.minY))
+            }
+        }
+
+    },
+    {
         name :"Block Walking",
         Goal :"Knock on 10 doors",
         ecnouters: [

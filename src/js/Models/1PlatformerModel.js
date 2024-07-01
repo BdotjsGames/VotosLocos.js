@@ -60,7 +60,7 @@ class PlatformerModel extends Model {
   }
   createOptions(options={}) {
     var armOptions = options.armOptions||IMAGES.armOptions;
-    var legOptions = options.legOptions||[8,10,4,5,6,7];
+    var legOptions = options.legOptions||[8,10,5,6,7];
     var skirtOptions = options.skirtOptions || IMAGES.skirts;
     var wheelChairLegValue = -1;
     var skateBoardValue = -2;
@@ -739,7 +739,8 @@ class PlatformerModel extends Model {
         this.mouthType = this.mouth.drawable.image;
         this.mouth.drawable.image = IMAGES.mouthOpenDistress;
       }
-      this.hitRotation = (Math.random()*2-1) * Math.PI/5;
+      this.hitRotation = Math.PI/5;//(Math.random()*2-1) * Math.PI/5;
+      this.rotation = 0;
       this.scaleX = 1.2;
       this.scaleY = 1.2;
       this.head.scaleX = 2;
@@ -753,8 +754,8 @@ class PlatformerModel extends Model {
     this.body.rotation = -this.hitRotation;
     this.body2.rotation = -this.hitRotation;
     this.head.rotation = -this.hitRotation;
-    this.arm1.rotation = Math.PI;
-    this.arm2.rotation = Math.PI;
+    this.arm1.rotation = -Math.PI*1.2;
+    this.arm2.rotation = -Math.PI*0.5;
     this.legL.rotation = Math.PI/4;
     this.legR.rotation = -Math.PI/4;
   }

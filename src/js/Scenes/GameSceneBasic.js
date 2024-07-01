@@ -207,12 +207,22 @@ class GameSceneBasic extends Scene {
       }
       if(data.width) this.level.width = data.width;
       if(data.music) {
-        console.log('data music')
         MusicHandler.playMusic(data.music);
       }
       if(data.musicOff) {
         MusicHandler.stop();
       }
+    }
+    addEntity (entity) {
+      if(entity.setScene)entity.setScene(this);
+      else {
+        entity.scene = this
+        if(entity.interactable) {
+          this.interactables.push(entity);
+        }
+      };
+      this.entities.push(entity);
+      return entity;
     }
     spawnRandom(className, num) {
       for(var i=0;i<num;i++) {
@@ -366,6 +376,9 @@ class GameSceneBasic extends Scene {
     }
     loadPrevLevel(skipTransition) {
       // var nextLevel = World.getPrevLevel(this.level);
+      if(this.levelNumber==0) {
+          return this.driver.setScene(new CharacterCustomizerScene(this.player.model))
+      }
       this.loadLevel(this.levelNumber-1,skipTransition);
     }
     draw(canvas) {

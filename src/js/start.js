@@ -6,6 +6,14 @@ window.addEventListener('load', function(e) {
         SOUNDS.onComplete(function() {
           setTimeout(function() {
             // MainDriver.setScene(new SplashScreen(MenuScene));
+            for(var i=0;i<GameSequence.length;i++) {
+              var level = GameSequence[i];
+              if(DEV&& level.debugStartWithThisOne) {
+                MainDriver.setScene(new GameSceneBasic(null,i ))
+                return;
+              }
+            }
+
             MainDriver.setScene(new MenuScene());
             // MainDriver.setScene(new GameSceneBasic());
             // MainDriver.setScene(new ModelEditorScene());

@@ -10,9 +10,10 @@ window.addEventListener('load', function() {
 var touchOn = false;
 touchStarts = [];
 var touchDown = false;
+var y = .3;
 var touchJoySticks = [
   {
-    x: .15, y:.80, r: .2,
+    x: .15, y:y+.2, r: .2,
     area: {
       x: 0, y: 0, w: 0.5, h: 1
     },
@@ -20,7 +21,7 @@ var touchJoySticks = [
     held: false,
   },
   {
-    x: -.85, y:.75, r: .2,
+    x: -.85, y:y+.15, r: .2,
     area: {
       x: 0, y: 0, w: 0, h: 1
     },
@@ -32,35 +33,35 @@ var touchJoySticks = [
 var touchButtons = [
   {
     name: 'A',
-    x: .85, y:.85, r:.1,
+    x: .85, y:y+.25, r:.1,
     area: {
       // x: 0.75, y: 0, w: 0.25, h:1
-      x: .85-.1, y:.85-.1, w: .2, h: .2
+      x: .85-.1, y:y+.25-.1, w: .2, h: .2
     },
     held: false,
   },
   {
     name: 'B',
-    x: .65, y:.85, r:.1,
+    x: .65, y:y+.25, r:.1,
     area: {
-      x: .65-.1, y:.85-.1, w: .2, h: .2
+      x: .65-.1, y:y+.25-.1, w: .2, h: .2
     },
     held: false,
   },
   {
     name: 'X',
-    x: .75, y:.65, r:.1,
+    x: .75, y:y+.05, r:.1,
     area: {
       // x: 0.5, y: 0, w: 0.25, h:1
-      x: .75-.1, y:.65-.1, w: .2, h: .2
+      x: .75-.1, y:y+.05-.1, w: .2, h: .2
     },
     held: false,
   },{
     name: 'Y',
-    x: .95, y:.65, r:.1,
+    x: .95, y:y+.05, r:.1,
     area: {
       // x: 0.75, y: 0, w: 0.25, h:1
-      x: .95-.1, y:.65-.1, w: .2, h: .2
+      x: .95-.1, y:y+.05-.1, w: .2, h: .2
     },
     held: false,
   },

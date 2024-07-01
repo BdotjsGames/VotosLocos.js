@@ -301,11 +301,12 @@ IMAGES.torsoOptions = [
 
 
 IMAGES.buildings = [
-    // IMAGES.buildingBrickWall = ImageLoader.loadImage("buildingBrickWall.png"),
+    IMAGES.buildingBrickWall = ImageLoader.loadImage("buildingBrickWall.png"),
     IMAGES.buildingBrickWall2 = ImageLoader.loadImage("buildingBrickWall2.png"),
     IMAGES.buildingBlock = ImageLoader.loadImage("buildingBlock.png"),
     IMAGES.buildingBlock2 = ImageLoader.loadImage("buildingBlock2.png"),
     IMAGES.buildingBlock3 = ImageLoader.loadImage("buildingBlock3.png"),
+    // createHouse(),
 ]
 // IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk.png")
 IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk2.png")
@@ -351,3 +352,9 @@ IMAGES.projectiles = [
     IMAGES.redKunai = ImageLoader.loadImage('redKunai.png'),
     IMAGES.redNinjaStar = ImageLoader.loadImage('redNinjaStar.png'),
 ]
+
+IMAGES.house1 = ImageLoader.loadImage('house/house.png')
+IMAGES.house1Open = ImageLoader.loadImage('house/houseOpenDoor.png')
+
+IMAGES.door = ImageLoader.loadImage('house/door.png');
+IMAGES.doorOpen = ImageLoader.loadImage('house/doorOpen.png');
