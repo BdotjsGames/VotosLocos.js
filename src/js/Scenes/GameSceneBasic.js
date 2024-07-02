@@ -206,6 +206,7 @@ class GameSceneBasic extends Scene {
         this.addBuildings();
       }
       if(data.width) this.level.width = data.width;
+      this.ground.w = this.level.width;
       if(data.music) {
         MusicHandler.playMusic(data.music);
       }

@@ -29,8 +29,11 @@ class HighFiver extends BeatEmUpper {
         this.isInteractable = true;
         this.interactablesRange = 100;
         this.promptOffsetY = -100;
+        this.attackRange = 100;
+        this.enemySeekRange = 500;
     }
     startFollow(target, distance) {
+        this.playerTarget = target;
         this.isInteractable = false;
         this.following = true;
         this.followDistance = distance;
@@ -83,7 +86,45 @@ class HighFiver extends BeatEmUpper {
             this.my = 0;
         }
     }
+    enemySearchUpdate() {
+        this.seeking = false;
+        for(var i=0;i<this.enemies.length;i++) {
+            var enemy = this.enemies[i];
+            if(enemy.shouldDelete)continue;
+
+            var {dx,dy,dz} = vector3Diff(enemy, this);
+            var drr = diffSqrd(dx,dy,dz);
+            if(drr< this.attackRange*this.attackRange) {
+                var r = Math.sqrt(dx*dx+dy*dy);
+                if(r==0) {
+                    dx=1;
+                    dy=0;
+                    r=1;
+                }
+                this.mx = dx/r;
+                this.my = dy/r;
+                this.attack();
+                this.seeking = true;
+                return;
+            }
+            if(drr<this.enemySeekRange*this.enemySeekRange) {
+                var r = Math.sqrt(dx*dx+dy*dy);
+                if(r==0) {
+                    dx=1;
+                    dy=0;
+                    r=1;
+                }
+                this.mx = dx/r;
+                this.my = dy/r;
+                this.seeking=true;
+                return;
+            }
+        }
+    }
     followUpdate() {
+        this.enemySearchUpdate();
+        if(this.seeking)return;
+        if(this.model.attacking)return;
         var target = this.followTarget;
         if(this.followCountIndex>1) {
             target = this.followTarget.followersList[this.followCountIndex-2]

@@ -62,6 +62,9 @@ class BeatEmUpper {
         this.every = 2;
         this.jumpSpeedBoost = 0;
         this.shouldSceneCollide = true;
+
+        this.attackRange = 100;
+        this.enemySeekRange = 500;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -118,6 +121,42 @@ class BeatEmUpper {
                 var vx = (Math.random() - 0.5) * 2 + this.vx / 5;
                 var vy = (Math.random() - 0.5) * 2;
                 this.scene.addEntity(new Particle(this.x + this.vx, this.y, 10, 10, this.color, vx, vy, 40, 0));
+            }
+        }
+    }
+    enemySearchUpdate() {
+        this.seeking = false;
+        if(this.model.attacking)return;
+        for(var i=0;i<this.enemies.length;i++) {
+            var enemy = this.enemies[i];
+            if(enemy.shouldDelete)continue;
+
+            var {dx,dy,dz} = vector3Diff(enemy, this);
+            var drr = diffSqrd(dx,dy,dz);
+            if(drr< this.attackRange*this.attackRange) {
+                var r = Math.sqrt(dx*dx+dy*dy);
+                if(r==0) {
+                    dx=1;
+                    dy=0;
+                    r=1;
+                }
+                this.mx = dx/r;
+                this.my = dy/r;
+                this.attack();
+                this.seeking = true;
+                return;
+            }
+            if(drr<this.enemySeekRange*this.enemySeekRange) {
+                var r = Math.sqrt(dx*dx+dy*dy);
+                if(r==0) {
+                    dx=1;
+                    dy=0;
+                    r=1;
+                }
+                this.mx = dx/r;
+                this.my = dy/r;
+                this.seeking=true;
+                return;
             }
         }
     }

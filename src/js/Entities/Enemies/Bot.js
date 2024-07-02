@@ -24,6 +24,7 @@ class Bot extends BeatEmUpper {
         this.noticeDistance = 300
         this.attackX = 240
         this.attackY = 120
+        this.enemySeekRange = 20;
     }
     setScene(scene) {
         this.scene=scene;
@@ -44,6 +45,8 @@ class Bot extends BeatEmUpper {
             this.my = 0;
             return;
         }
+        this.enemySearchUpdate();
+        // return;
         var player = this.scene.player;
         if(!player)return;
         var dx = player.x-this.x;
@@ -96,5 +99,6 @@ class Bot extends BeatEmUpper {
                 this.y -= dy/r;
             }
         })
+
     }
 }

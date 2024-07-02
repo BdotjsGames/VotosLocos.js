@@ -78,7 +78,7 @@ function rallyScene(scene, x=0) {
     npc.name = "Clerk"
     npc.canHighFive = false;
     npc.lookingAt = scene.players[0]
-    npc.inter
+    npc.interactablesRange = 200;
     npc.onAfterDialogue = e=> {
     }
     npc.dialogue = [
@@ -353,22 +353,39 @@ GameSequence = [
         }
     },
     {
-        name: "Community Rally - 2",
+        name: "Community Rally Fight",
         environment: Environments.Grass,
         music: SOUNDS.cumbia,
+        debugStartWithThisOne: true,
         spawnRandom: [
-            [Troll, 4],
+            // [Troll, 4],
             [TrashCan, 2],
         ],
-        width: 2000,
+        width: 5000,
         onLoad: (scene) => {
             rallyScene(scene,-100);
             rallyScene(scene, 400);
             rallyScene(scene, 900);
+
+
+            rallyScene(scene,-100+3000);
+            rallyScene(scene, 400+3000);
+            rallyScene(scene, 900+3000);
             for(var i=0;i<5;i++) {
                 var x = Math.random()*2000;
                 var y = 1000;
                 scene.addEntity(new HighFiver(x,y))
+            }
+
+            for(var i=0;i<5;i++) {
+                var x = Math.random()*1000+2000;
+                var y = 1000;
+                scene.addEntity(new Troll(x,y))
+            }
+            for(var i=0;i<5;i++) {
+                var x = Math.random()*500+2500;
+                var y = 1000;
+                scene.addEntity(new Bot(x,y))
             }
         }
     },
@@ -381,6 +398,9 @@ GameSequence = [
         spawnRandom: [
             [HighFiver, 5],
             [TrashCan, 5],
+            [Bot, 4],
+            [Ninja, 4],
+            [Troll, 1],
         ],
         onLoad: (scene) => {
             rallyScene(scene);
