@@ -17,14 +17,7 @@
 </style>
 
 <body>
-	<v-drag-and-drop></v-drag-and-drop>
-	<div class="v-col">
-		<p>height: </p>
-		<div class="v-row">
-			<canvas></canvas>
-			<p>width:</p>
-		</div>
-	</div>
+	<v-drop-image></v-drop-image>
 </body>
 
 <script>
@@ -92,7 +85,7 @@
 					return this.querySelectorAll(`[ref=${prop}]`);
 				}
 			});
-			const html = document.currentScript.previousElementSibling.content.cloneNode(true);
+			const html = this.constructor.template.content.cloneNode(true);
 			this.append(html);
 		}
 
@@ -110,7 +103,7 @@
 		static define() {
 			const tagName = this.camelToHyphen(this.name);
 			if (customElements.get(tagName)) return;
-
+			this.template = document.currentScript.previousElementSibling
 			customElements.define(tagName, this);
 		}
 
@@ -170,26 +163,18 @@
 		 * @param {Event} ev
 		 */
 		_handleDrop(ev) {
-			debugger;
 			ev.stopPropagation();
 			ev.preventDefault();
 			const dndElem = this.refs.refDragAndDropContainer[0];
-			dndElem.style.boxShadow = ""
-			if (ev.dataTransfer.files.length) {
-				// Use DataTransfer interface to access the file(s)
-				[...ev.dataTransfer.files].forEach((file, i) => {
-					console.log(`… file[${i}].name = ${file.name}`);
-				});
-			} else {
-				// Use DataTransferItemList interface to access the file(s)
-				[...ev.dataTransfer.items].forEach((item, i) => {
-					// If dropped items aren't files, reject them
-					if (item.kind === "file") {
-						const file = item.getAsFile();
-						console.log(`… file[${i}].name = ${file.name}`);
-					}
-				});
-			}
+			dndElem.style.boxShadow = "";
+
+			const files = ev.dataTransfer.files.length
+				? ev.dataTransfer.files
+				: [...ev.dataTransfer.items]
+					.filter((item) => item.kind === "file")
+					.map((item) => item.getAsFile);
+			
+			this.evEmitter.emit('files', undefined, ev, files);
 		}
 
 		_unmounted() {
@@ -200,6 +185,62 @@
 	}
 
 	VDragAndDrop.define();
+</script>
+
+<template>
+	<v-drag-and-drop ref="refDragAndDrop"></v-drag-and-drop>
+	<div class="v-col">
+		<p>height: </p>
+		<div class="v-row">
+			<canvas ref="refCanvas"></canvas>
+			<p>width:</p>
+		</div>
+	</div>
+</template>
+<script>
+	class VDropImage extends VSimpleComponent {
+		constructor() {
+			super();
+
+			this._mounted = this._mounted.bind(this);
+			this._unmounted = this._unmounted.bind(this);
+			this._handleFiles = this._handleFiles.bind(this);
+
+			this.evEmitter.on('mounted', this._mounted);
+			this.evEmitter.on('unmounted', this._unmounted);
+		}
+
+		/**
+		 * @param {Event}
+		 * @param {File[]}
+		 */
+		_handleFiles(ev, files) {
+			const canvas = this.refs.refCanvas[0],
+			context = canvas.getContext('2d');
+			const urlCreator = window.URL || window.webkitURL;
+
+			const base_image = new Image();
+			base_image.onload = function() {
+				canvas.width = this.width;
+				canvas.height = this.height;
+				context.drawImage(base_image, 0, 0, this.width, this.height);
+				urlCreator.revokeObjectURL(base_image.src);
+			}
+			base_image.src = urlCreator.createObjectURL(files[0]);
+		}
+
+		_mounted() {
+			const dndElem = this.refs.refDragAndDrop[0];
+			dndElem.evEmitter.on("files", this._handleFiles);
+		}
+
+		_unmounted() {
+			const dndElem = this.refs.refDragAndDrop[0];
+			dndElem.evEmitter.off("files", this._handleFiles);
+		}
+	}
+
+	VDropImage.define();
 </script>
 
 </html>
