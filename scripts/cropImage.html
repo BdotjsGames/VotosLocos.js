@@ -322,8 +322,8 @@
 
 			const newX = (Number(paddingLeft.value) || 0);
 			const newY = (Number(paddingTop.value) || 0)
-			const newWidth = canvas.width + (Number(paddingRight.value) || 0) - newX;
-			const newHeight = canvas.height + (Number(paddingBottom.value) || 0) - newY;
+			const newWidth = hiddenCanvas.width + (Number(paddingRight.value) || 0) - newX;
+			const newHeight = hiddenCanvas.height + (Number(paddingBottom.value) || 0) - newY;
 
 			const oldContext = canvas.getContext("2d");
 			oldContext.clearRect(0, 0, canvas.width, canvas.height);
