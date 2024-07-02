@@ -199,11 +199,13 @@
 <template>
 	<v-drag-and-drop ref="refDragAndDrop"></v-drag-and-drop>
 	<div class="v-col">
-		<p>height: </p>
+		<p>height: <span ref="refHeightSpan"></span></p>
 		<div class="v-row">
 			<canvas ref="refHiddenCanvas" style="display: none;"></canvas>
-			<canvas ref="refCanvas"></canvas>
-			<p>width:</p>
+			<div style="border: 2px solid black; width: auto; height: auto;">
+				<canvas ref="refCanvas"></canvas>
+			</div>
+			<p>width: <span ref="refWidthSpan"></span></p>
 		</div>
 	</div>
 </template>
@@ -296,6 +298,9 @@
 			/** @type {HTMLInputElement} */
 			const paddingBottom = this.refs.refPaddingBottom[0];
 			paddingBottom.addEventListener("change", this._handleValueChange);
+
+			const dndElem = this.refs.refDragAndDrop[0];
+			dndElem.evEmitter.on("files", this._handleValueChange);
 		}
 
 		_unmounted() {
@@ -322,14 +327,16 @@
 
 			const newX = (Number(paddingLeft.value) || 0);
 			const newY = (Number(paddingTop.value) || 0)
-			const newWidth = hiddenCanvas.width + (Number(paddingRight.value) || 0) - newX;
-			const newHeight = hiddenCanvas.height + (Number(paddingBottom.value) || 0) - newY;
+			const newWidth = hiddenCanvas.width - (Number(paddingRight.value) || 0);
+			const newHeight = hiddenCanvas.height - (Number(paddingBottom.value) || 0);
 
 			const oldContext = canvas.getContext("2d");
 			oldContext.clearRect(0, 0, canvas.width, canvas.height);
 			canvas.width = newWidth;
 			canvas.height = newHeight;
-			oldContext.drawImage(hiddenCanvas, Number(paddingLeft.value) || 0, Number(paddingTop.value) || 0, hiddenCanvas.width, hiddenCanvas.height);
+			this.refs.refWidthSpan[0].textContent = newWidth;
+			this.refs.refHeightSpan[0].textContent = newHeight;
+			oldContext.drawImage(hiddenCanvas, newX, newY, hiddenCanvas.width, hiddenCanvas.height);
 		}
 	}
 
