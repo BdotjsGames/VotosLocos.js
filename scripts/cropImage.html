@@ -17,7 +17,7 @@
 </style>
 
 <body>
-	<v-drop-image></v-drop-image>
+	<v-crop-image></v-crop-image>
 </body>
 
 <script>
@@ -76,6 +76,7 @@
 	}
 
 	class VSimpleComponent extends HTMLElement {
+		#mapOfDebounce = new Map();
 		constructor() {
 			super();
 
@@ -98,6 +99,14 @@
 				.replace(/[A-Z]/g, (substr) => {
 					return `-${substr.replace(substr.charAt(0), substr.charAt(0).toLowerCase())}`;
 				});
+		}
+
+		debounce(fn, ms = 300) {
+			const oldTimeoutID = this.#mapOfDebounce.get(fn);
+			clearTimeout(oldTimeoutID);
+
+			const timeoutID = setTimeout(fn, ms);
+			this.#mapOfDebounce.set(fn, timeoutID);
 		}
 
 		static define() {
@@ -192,6 +201,7 @@
 	<div class="v-col">
 		<p>height: </p>
 		<div class="v-row">
+			<canvas ref="refHiddenCanvas" style="display: none;"></canvas>
 			<canvas ref="refCanvas"></canvas>
 			<p>width:</p>
 		</div>
@@ -218,12 +228,14 @@
 			const canvas = this.refs.refCanvas[0],
 			context = canvas.getContext('2d');
 			const urlCreator = window.URL || window.webkitURL;
+			const hiddenCanvas = this.refs.refHiddenCanvas[0];
 
 			const base_image = new Image();
 			base_image.onload = function() {
-				canvas.width = this.width;
-				canvas.height = this.height;
+				hiddenCanvas.width = canvas.width = this.width;
+				hiddenCanvas.height = canvas.height = this.height;
 				context.drawImage(base_image, 0, 0, this.width, this.height);
+				hiddenCanvas.getContext("2d").drawImage(base_image, 0, 0, this.width, this.height);
 				urlCreator.revokeObjectURL(base_image.src);
 			}
 			base_image.src = urlCreator.createObjectURL(files[0]);
@@ -241,6 +253,87 @@
 	}
 
 	VDropImage.define();
+</script>
+
+<template>
+	<div class="v-col" style="width: 50vw; align-items: center; justify-content: center;">
+		<input ref="refPaddingTop" style="width: auto;" type="number" placeholder="top" value="0"/>
+		<div class="v-row" style="align-items: center; justify-content: center;">
+			<input ref="refPaddingLeft" style="width: 100%;" type="number" placeholder="left" value="0"/>
+			<div>crop</div>
+			<input ref="refPaddingRight" style="width: 100%;" type="number" placeholder="right" value="0"/>
+		</div>
+		<input ref="refPaddingBottom" style="width: auto;" type="number" placeholder="bottom" value="0"/>
+	</div>
+	<br/>
+	<v-drop-image></v-drop-image>
+</template>
+<script>
+	class VCropImage extends VSimpleComponent {
+		constructor() {
+			super();
+
+			this._mounted = this._mounted.bind(this);
+			this._unmounted = this._unmounted.bind(this);
+			this._handleValueChange = this._handleValueChange.bind(this);
+			this.debounce = this.debounce.bind(this);
+			this.updateCanvas = this.updateCanvas.bind(this);
+
+			this.evEmitter.on("mounted", this._mounted);
+			this.evEmitter.on("unmounted", this._unmounted);
+		}
+
+		_mounted() {
+			/** @type {HTMLInputElement} */
+			const paddingTop = this.refs.refPaddingTop[0];
+			paddingTop.addEventListener("change", this._handleValueChange);
+			/** @type {HTMLInputElement} */
+			const paddingLeft = this.refs.refPaddingLeft[0];
+			paddingLeft.addEventListener("change", this._handleValueChange);
+			/** @type {HTMLInputElement} */
+			const paddingRight = this.refs.refPaddingRight[0];
+			paddingRight.addEventListener("change", this._handleValueChange);
+			/** @type {HTMLInputElement} */
+			const paddingBottom = this.refs.refPaddingBottom[0];
+			paddingBottom.addEventListener("change", this._handleValueChange);
+		}
+
+		_unmounted() {
+			
+		}
+
+		_handleValueChange() {
+			this.debounce(this.updateCanvas);
+		}
+
+		updateCanvas() {
+			/** @type {HTMLInputElement} */
+			const paddingTop = this.refs.refPaddingTop[0];
+			/** @type {HTMLInputElement} */
+			const paddingRight = this.refs.refPaddingRight[0];
+			/** @type {HTMLInputElement} */
+			const paddingBottom = this.refs.refPaddingBottom[0];
+			/** @type {HTMLInputElement} */
+			const paddingLeft = this.refs.refPaddingLeft[0];
+			
+			/** @type {HTMLCanvasElement} */
+			const canvas = this.refs.refCanvas[0];
+			const hiddenCanvas = this.refs.refHiddenCanvas[0];
+
+			const newX = (Number(paddingLeft.value) || 0);
+			const newY = (Number(paddingTop.value) || 0)
+			const newWidth = canvas.width + (Number(paddingRight.value) || 0) - newX;
+			const newHeight = canvas.height + (Number(paddingBottom.value) || 0) - newY;
+
+			const oldContext = canvas.getContext("2d");
+			oldContext.clearRect(0, 0, canvas.width, canvas.height);
+			canvas.width = newWidth;
+			canvas.height = newHeight;
+			oldContext.drawImage(hiddenCanvas, Number(paddingLeft.value) || 0, Number(paddingTop.value) || 0, hiddenCanvas.width, hiddenCanvas.height);
+		}
+	}
+
+	VCropImage.define();
 </script>
 
 </html>
