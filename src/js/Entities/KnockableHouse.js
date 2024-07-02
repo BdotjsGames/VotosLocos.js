@@ -13,6 +13,9 @@ class KnockableHouse {
     setScene(scene) {
         this.scene=scene;
         scene.addEntity(this.door = new KnockableDoor(this.x+3.5*16.5,this.y))
+        this.bg = scene.addEntity(new DrawableImage(this.x,this.y, IMAGES.houseBackground,3.5))
+        this.bg.y-=50;
+        this.bg.z+=50;
         this.y -= .01;
     }
     onInteract() {

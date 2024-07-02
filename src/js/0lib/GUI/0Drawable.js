@@ -147,7 +147,7 @@ class Drawable {
       var H = ps.H;
       var x = (this.x+this.dx+this.pivotX) * ps.W;
       var y = (this.y+this.dy+this.pivotY+this.dz+this.z) * ps.H;
-      canvas.translate(x, y-this.sortOffset+this.z);
+      canvas.translate(x, y-this.sortOffset);
       canvas.scale(this.scaleW, this.scaleH);
       canvas.rotate(this.angle);
       canvas.translate(-this.pivotX*ps.W, -this.pivotY*H);

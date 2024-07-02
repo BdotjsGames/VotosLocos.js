@@ -164,6 +164,8 @@ class PlatformerModel extends Model {
           this.skirt.drawable.extendX = value;
           this.skirt.drawable._extendX = value;
           
+          // this.legL.x= -2-  value/4;
+          this.legR.x= 2 + value/4;
         }
       },
       {
@@ -761,7 +763,7 @@ class PlatformerModel extends Model {
   }
   update() {
     // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
-    this.skirt.rotation = (this.legL.rotation + this.legR.rotation)/2
+    // this.skirt.rotation = (this.legL.rotation + this.legR.rotation)/2
     if(this.skirtOn) {
       // console.log(this.legR.rotation, this.legL.rotation);
       // console.log(Math.sin(this.legL.rotation)-Math.sin(this.legR.rotation));
@@ -769,7 +771,6 @@ class PlatformerModel extends Model {
       this.skirt.scaleX = sx;
       // this.skirt.drawable.extendX = this.skirt.drawable._extendX + (sx-1)*4;
     }
-    if(this.inWheelChair) this.skirt.rotation = -Math.PI/3
     if(this.impactStopTimer>0) {
       this.impactStopTimer--;
       if(this.isHit) {

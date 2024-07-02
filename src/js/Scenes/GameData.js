@@ -356,7 +356,6 @@ GameSequence = [
         name: "Community Rally Fight",
         environment: Environments.Grass,
         music: SOUNDS.cumbia,
-        debugStartWithThisOne: true,
         spawnRandom: [
             // [Troll, 4],
             [TrashCan, 2],
@@ -573,16 +572,31 @@ GameSequence = [
         name :"Block Walking Introduction",
         musicOff: true,
         // music: SOUNDS.norteno,
+        debugStartWithThisOne: true,
         environment: Environments.Street,
+        width: 5000,
         DialogueData: [
             {person: LouChalibre, text: 'Lets get the word out!'},
             {person: LouChalibre, text: 'Knock on some doors to spread the word!'},
         ],
         onLoad: scene =>{
             // scene.minY = 0;
-            for(var i=0;i<4;i++) {
+            for(var i=0;i<12;i++) {
                 scene.addEntity(new KnockableHouse((i+0.5)*400, scene.minY))
             }
+            for(var i=0;i<4;i++) {
+                scene.addEntity(new Ninja((i+0.5)*50+2000, 500))
+            }
+            for(var i=0;i<4;i++) {
+                scene.addEntity(new Bot((i+0.5)*50+2000, 200))
+            }
+            for(var i=0;i<8;i++) {
+                scene.addEntity(new Troll((i+0.5)*50+3000, 500))
+            }
+            for(var i=0;i<8;i++) {
+                scene.addEntity(new Troll((i+0.5)*50+3000, 200))
+            }
+            
         }
 
     },

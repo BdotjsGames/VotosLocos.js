@@ -373,6 +373,7 @@ IMAGES.projectiles = [
 ]
 
 IMAGES.house1 = ImageLoader.loadImage('house/house.png')
+IMAGES.houseBackground = ImageLoader.loadImage('house/houseBackground.png')
 IMAGES.house1Open = ImageLoader.loadImage('house/houseOpenDoor.png')
 
 IMAGES.door = ImageLoader.loadImage('house/door.png');
