@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<style>
+	:root {
+		--var-color-file-drop: #9292ff
+	}
+
+	.v-row {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.v-col {
+		display: flex;
+		flex-direction: column;
+	}
+</style>
+
+<body>
+	<v-drag-and-drop></v-drag-and-drop>
+	<div class="v-col">
+		<p>height: </p>
+		<div class="v-row">
+			<canvas></canvas>
+			<p>width:</p>
+		</div>
+	</div>
+</body>
+
+<script>
+	class VEventEmitter {
+		/**
+		 * @type {Record<string, Array<{
+		 * 		fn: ()=> {},
+		 * 		scope: unknown,
+		 * 		once: boolean,
+		 * 		didCallOnce: boolean
+		 * 	}>>
+		 * }
+		 * */
+		#listeners = {};
+
+		constructor() {
+		}
+
+		on(evName, fn, scope, { once } = {}) {
+			if (!this.#listeners[evName]) this.#listeners[evName] = [];
+
+			this.#listeners[evName].push({
+				fn, scope, once
+			});
+		}
+
+		off(evName, fn, scope) {
+			if (!this.#listeners[evName]) return;
+
+			const listenersArr = this.#listeners[evName];
+			const len = listenersArr.length;
+			for (let i = len - 1; i >= 0; i--) {
+				const listener = listenersArr[i];
+				if ((scope == listener.scope) || (fn == listener.fn)) {
+					listenersArr.splice(i, 1);
+				}
+			}
+		}
+
+		async emit(evName, opts = {}, ...args) {
+			const listenersArr = this.#listeners[evName] || [];
+			for (const listener of listenersArr) {
+				const didGetCalledOnce = listener.didCallOnce;
+				if (listener.once) listener.didCallOnce = true;
+
+				if (!listener.once || !didGetCalledOnce) {
+					await Promise.resolve(listener.fn.apply(listener.scope, args));
+				}
+			}
+
+			const len = listenersArr.length;
+			for (let i = len - 1; i >= 0; i--) {
+				if (listenersArr[i].once) listenersArr.splice(i, 1);
+			}
+		}
+	}
+
+	class VSimpleComponent extends HTMLElement {
+		constructor() {
+			super();
+
+			this.evEmitter = new VEventEmitter();
+			this.refs = new Proxy({}, {
+				get: (_targ, prop) => {
+					return this.querySelectorAll(`[ref=${prop}]`);
+				}
+			});
+			const html = document.currentScript.previousElementSibling.content.cloneNode(true);
+			this.append(html);
+		}
+
+		/**
+		 * @param {string} str
+		 */
+		static camelToHyphen(str) {
+			return str
+				.replace(str.charAt(0), str.charAt(0).toLowerCase())
+				.replace(/[A-Z]/g, (substr) => {
+					return `-${substr.replace(substr.charAt(0), substr.charAt(0).toLowerCase())}`;
+				});
+		}
+
+		static define() {
+			const tagName = this.camelToHyphen(this.name);
+			if (customElements.get(tagName)) return;
+
+			customElements.define(tagName, this);
+		}
+
+		connectedCallback() {
+			this.evEmitter.emit('mounted');
+		}
+
+		disconnectedCallback() {
+			this.evEmitter.emit('unmounted');
+		}
+	}
+	
+	window.VSimpleComponent = VSimpleComponent
+</script>
+
+<template>
+	<div ref="refDragAndDropContainer" style="
+				border: 2px dashed var(--var-color-file-drop);
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+			">
+		<p style="color: var(--var-color-file-drop); font-weight: 900;">
+			Drop Files Here
+		</p>
+	</div>
+</template>
+<script>
+	class VDragAndDrop extends VSimpleComponent {
+		constructor() {
+			super();
+
+			this._mounted = this._mounted.bind(this);
+			this._unmounted = this._unmounted.bind(this);
+			this._handleDragOver = this._handleDragOver.bind(this);
+			this._handleDrop = this._handleDrop.bind(this);
+
+			this.evEmitter.on('mounted', this._mounted);
+			this.evEmitter.on('unmounted', this._unmounted);
+		}
+
+		_mounted() {
+			const dndElem = this.refs.refDragAndDropContainer[0];
+			dndElem.addEventListener("drop", this._handleDrop);
+			dndElem.addEventListener("dragover", this._handleDragOver);
+		}
+		
+		_handleDragOver(ev) {
+			ev.stopPropagation();
+			ev.preventDefault();
+			ev.dataTransfer.dropEffect = "copy"
+			const dndElem = this.refs.refDragAndDropContainer[0];
+			dndElem.style.boxShadow = "0px 0px 4px black inset";
+		}
+
+		/**
+		 * @param {Event} ev
+		 */
+		_handleDrop(ev) {
+			debugger;
+			ev.stopPropagation();
+			ev.preventDefault();
+			const dndElem = this.refs.refDragAndDropContainer[0];
+			dndElem.style.boxShadow = ""
+			if (ev.dataTransfer.files.length) {
+				// Use DataTransfer interface to access the file(s)
+				[...ev.dataTransfer.files].forEach((file, i) => {
+					console.log(`… file[${i}].name = ${file.name}`);
+				});
+			} else {
+				// Use DataTransferItemList interface to access the file(s)
+				[...ev.dataTransfer.items].forEach((item, i) => {
+					// If dropped items aren't files, reject them
+					if (item.kind === "file") {
+						const file = item.getAsFile();
+						console.log(`… file[${i}].name = ${file.name}`);
+					}
+				});
+			}
+		}
+
+		_unmounted() {
+			const dndElem = this.refs.refDragAndDropContainer[0];
+			dndElem.removeEventListener("drop", this._handleDrop);
+			dndElem.removeEventListener("dragover", this._handleDragOver);
+		}
+	}
+
+	VDragAndDrop.define();
+</script>
+
+</html>
