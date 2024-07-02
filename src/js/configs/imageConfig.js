@@ -24,9 +24,20 @@ IMAGES.deskFront = ImageLoader.loadImage('DeskFront.png')
 IMAGES.rallyTableBase = ImageLoader.loadImage('rallyTableBase.png')
 IMAGES.rallyTableBaseBack = ImageLoader.loadImage('rallyTableBaseBack.png')
 
-IMAGES.rallyTables = [
-    IMAGES.rallyTableGetOutTheVote = ImageLoader.loadImage('rallyTables/getOutTheVote.png'),
-]
+var tablesNames = `AAPI, Lavender,
+Able2Vote,           PoliceOversight,
+AffordableHousing,   PunkTheVote,
+ArabAmericans,       VietNow,
+BlackVotesMatterv2,  VoteBlueDemon,
+ClimateAction,       YoungAmericans,
+GrrrlVote,           getOutTheVote,
+KeepOnCrossin,       getOutTheVote`
+
+IMAGES.rallyTables = tablesNames.split(',').map(src=>src.trim()).map(src => IMAGES[src] = ImageLoader.loadImage('rallyTables/'+src+'.png'))
+// IMAGES.rallyTables = [
+//     IMAGES.rallyTableGetOutTheVote = ImageLoader.loadImage('rallyTables/getOutTheVote.png'),
+    
+// ]
 
 
 
@@ -235,6 +246,10 @@ IMAGES.hairOptions = [
     IMAGES.hair4         = ImageLoader.loadImage("hair4.png", PALLETE_KEY.hair),
     IMAGES.hair5         = ImageLoader.loadImage("hair5.png", PALLETE_KEY.hair),
     IMAGES.hair6         = ImageLoader.loadImage("hair6.png", PALLETE_KEY.hair),
+    IMAGES.hair7         = ImageLoader.loadImage("hair7.png", PALLETE_KEY.hair),
+    IMAGES.hair8         = ImageLoader.loadImage("hair8.png", PALLETE_KEY.hair),
+    IMAGES.hair9         = ImageLoader.loadImage("hair9.png", PALLETE_KEY.hair),
+    IMAGES.hairMed         = ImageLoader.loadImage("hairMed.png", PALLETE_KEY.hair),
     IMAGES.hairLong         = ImageLoader.loadImage("hairLong.png", PALLETE_KEY.hair),
     IMAGES.hairLong2         = ImageLoader.loadImage("hairLong2.png", PALLETE_KEY.hair),
     // IMAGES.hair1Y        = ImageLoader.loadImage("hair1Y.png"),
@@ -244,7 +259,7 @@ IMAGES.hairOptions = [
     IMAGES.hairAfro      = ImageLoader.loadImage("hairAfro.png", PALLETE_KEY.hair),
     IMAGES.hairCholo      = ImageLoader.loadImage("hairCholo2.png", PALLETE_KEY.hair),
     IMAGES.hijab         = ImageLoader.loadImage("hijab.png", PALLETE_KEY.hair),
-    // IMAGES.hairEars1         = ImageLoader.loadImage("hairAnimalEars1.png", PALLETE_KEY.hair),
+    // IMAGES.sombrero         = ImageLoader.loadImage("sombrero.png", PALLETE_KEY.hair),
     // IMAGES.hairEars2         = ImageLoader.loadImage("hairAnimalEars2.png", PALLETE_KEY.hair),
 ]
 
@@ -259,6 +274,10 @@ IMAGES.glassesOptions = [
     IMAGES.glassesRose2      = ImageLoader.loadImage("glassesRose2.png"),
     IMAGES.glassesCrescent1      = ImageLoader.loadImage("glassesCrescent1.png"),
     IMAGES.glassesGoatee      = ImageLoader.loadImage("glassesGoatee.png", PALLETE_KEY.hair),
+    IMAGES.hairEars1         = ImageLoader.loadImage("hairAnimalEars1.png", PALLETE_KEY.hair),
+    // IMAGES.animalEars3         = ImageLoader.loadImage("animalEars3.png", PALLETE_KEY.hair),
+    IMAGES.animalEars4         = ImageLoader.loadImage("animalEars4.png", PALLETE_KEY.hair),
+
 ]
 
 IMAGES.mouthSmile        = ImageLoader.loadImage("mouthSmile.png")

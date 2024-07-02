@@ -55,22 +55,22 @@ var rallyTables = [
 ]
 
 
-function rallyScene(scene) {
+function rallyScene(scene, x=0) {
     {
         var deskImage =  new ImageDrawable(IMAGES.rallyTableBaseBack, 0,0);
         deskImage.w *= 3;
         deskImage.h *= 3;
         deskImage.y = -deskImage.h+60;
-        var deskBack = scene.addEntity(new EntityTwoPointFiveD(450,160-60,0,deskImage))
+        var deskBack = scene.addEntity(new EntityTwoPointFiveD(450+x,160-60,0,deskImage))
     }
     {
-        var deskImage =  new ImageDrawable(IMAGES.rallyTableGetOutTheVote, 0,0);
+        var deskImage =  new ImageDrawable(randomFromList(IMAGES.rallyTables), 0,0);
         deskImage.w *= 3;
         deskImage.h *= 3;
         deskImage.y = -deskImage.h;
-        var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
+        var desk = scene.addEntity(new EntityTwoPointFiveD(450+x,160,0,deskImage))
     }
-    var npc = scene.addEntity(new HighFiver(520,100))
+    var npc = scene.addEntity(new HighFiver(520+x,100))
     // npc.shouldStartDiaolgueOnProximity = true;
     npc.dx = -1
     npc.getInputs = e=>{}
@@ -336,12 +336,20 @@ GameSequence = [
         Goal: "Join the cause",
         environment: Environments.Grass,
         levelData: {},
+        width: 2000,
         spawnRandom: [
-            [HighFiver, 5],
-            [TrashCan, 5],
+            // [HighFiver, 5],
+            [TrashCan, 2],
         ],
         onLoad: (scene) => {
-            rallyScene(scene);
+            rallyScene(scene,-100);
+            rallyScene(scene, 400);
+            rallyScene(scene, 900);
+            for(var i=0;i<5;i++) {
+                var x = Math.random()*2000;
+                var y = 1000;
+                scene.addEntity(new HighFiver(x,y))
+            }
         }
     },
     {
@@ -350,8 +358,19 @@ GameSequence = [
         music: SOUNDS.cumbia,
         spawnRandom: [
             [Troll, 4],
-            [TrashCan, 5],
-        ]
+            [TrashCan, 2],
+        ],
+        width: 2000,
+        onLoad: (scene) => {
+            rallyScene(scene,-100);
+            rallyScene(scene, 400);
+            rallyScene(scene, 900);
+            for(var i=0;i<5;i++) {
+                var x = Math.random()*2000;
+                var y = 1000;
+                scene.addEntity(new HighFiver(x,y))
+            }
+        }
     },
     {
         name: "Community Rally - 3",
@@ -534,15 +553,11 @@ GameSequence = [
         name :"Block Walking Introduction",
         musicOff: true,
         // music: SOUNDS.norteno,
-        DialogueData: []
-    },
-    {
-        name :"Block Walking Introduction",
-        musicOff: true,
-        // music: SOUNDS.norteno,
         environment: Environments.Street,
-        debugStartWithThisOne: true,
-        DialogueData: [],
+        DialogueData: [
+            {person: LouChalibre, text: 'Lets get the word out!'},
+            {person: LouChalibre, text: 'Knock on some doors to spread the word!'},
+        ],
         onLoad: scene =>{
             // scene.minY = 0;
             for(var i=0;i<4;i++) {

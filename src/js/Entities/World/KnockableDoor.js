@@ -60,7 +60,10 @@ class KnockableDoor extends DrawableImage {
         {person: npc, text: 'hi'},
         {person: npc, text: 'lets go!'},
         {person: npc, set: {my: 1}, waitFor: 20},
-        {onStart: ()=>npc.startFollow(this.player, 80)}
+        {onStart: ()=> {
+          npc.startFollow(this.player, 80);
+          npc.shouldSceneCollide = false;
+        }}
       ], true, () => {
         this.image = IMAGES.door;
       })
