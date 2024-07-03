@@ -126,7 +126,6 @@ class BeatEmUpper {
     }
     enemySearchUpdate() {
         this.seeking = false;
-        if(this.model.attacking)return;
         for(var i=0;i<this.enemies.length;i++) {
             var enemy = this.enemies[i];
             if(enemy.shouldDelete)continue;
@@ -142,7 +141,9 @@ class BeatEmUpper {
                 }
                 this.mx = dx/r;
                 this.my = dy/r;
-                this.attack();
+                if(!this.attacking)
+                    this.attack();
+                this.attacking = true;
                 this.seeking = true;
                 return;
             }
@@ -159,6 +160,7 @@ class BeatEmUpper {
                 return;
             }
         }
+        this.attacking = false;
     }
     collide(other) {
         if (this.model.attacking) {
