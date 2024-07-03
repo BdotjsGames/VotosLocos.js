@@ -95,6 +95,11 @@ class Bot extends BeatEmUpper {
             var rr = dx*dx+dy*dy
             if(rr<2500) {
                 var r = Math.sqrt(rr);
+                if(r==0) {
+                    dx = 1;
+                    dy = 0;
+                    r = 1;
+                }
                 this.x -= dx/r;
                 this.y -= dy/r;
             }

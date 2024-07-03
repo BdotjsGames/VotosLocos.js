@@ -139,6 +139,7 @@ class BeatEmUpper {
                     dy=0;
                     r=1;
                 }
+                console.log(dx,dy,r);
                 this.mx = dx/r;
                 this.my = dy/r;
                 if(!this.attacking)
@@ -154,6 +155,7 @@ class BeatEmUpper {
                     dy=0;
                     r=1;
                 }
+                console.log(dx,dy,r);
                 this.mx = dx/r;
                 this.my = dy/r;
                 this.seeking=true;
@@ -191,7 +193,7 @@ class BeatEmUpper {
         }
     }
     update() {
-        if(isNaN(this.x))this.x = 0;
+        if(isNaN(this.x))this.x = 0, console.log('NaN X');
         if(isNaN(this.y))this.y = 0;
         if(isNaN(this.z))this.z = 0;
         if(isNaN(this.vx))this.vx = 0;
