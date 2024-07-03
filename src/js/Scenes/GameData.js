@@ -571,9 +571,11 @@ GameSequence = [
     {
         name :"Block Walking Introduction",
         musicOff: true,
+        Goal: 'knock on every door 3 times',
         // music: SOUNDS.norteno,
         debugStartWithThisOne: true,
         environment: Environments.Street,
+        dontShowGo: true,
         width: 5000,
         DialogueData: [
             {person: LouChalibre, text: 'Lets get the word out!'},
