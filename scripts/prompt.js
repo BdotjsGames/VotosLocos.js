@@ -1,7 +1,9 @@
 class Prompt {
-	static async run(questionPrompt) {
+	static async run(options) {
+		options = options || process.argv;
 		const prom = new Promise((resolve, reject) => {
 			try {
+				const questionPrompt = options.at(options.indexOf("--question") + 1);
 				const readline = require('readline').createInterface({
 					input: process.stdin,
 					output: process.stdout
@@ -24,8 +26,5 @@ module.exports = {
 	default: Prompt
 }
 
-// test
-// Prompt.run("Hello, whats your name?")
-// 	.then(result => {
-// 		console.log(result);
-// 	});
+
+if (process.argv.includes("--test-prompt")) Prompt.run();

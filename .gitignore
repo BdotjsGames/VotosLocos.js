@@ -1,3 +1,4 @@
 *.zip
 src (2).zip
 node_modules/
+.env

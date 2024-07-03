@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"prompt": "node ./scripts/prompt.js",
-	"export_aseprite": "node ./scripts/exportImages.js"
+    "prompt": "node ./scripts/prompt.js",
+    "export_aseprite": "node ./scripts/exportImages.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "puppeteer": "^22.12.1"
   },
   "devDependencies": {
+    "dotenv": "^16.4.5",
     "node": "^22.4.0"
   }
 }

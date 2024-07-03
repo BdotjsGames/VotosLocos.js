@@ -5,13 +5,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"command": "npm run prompt",
+			"command": "npm run prompt -- --run",
 			"name": "Run npm prompt",
 			"request": "launch",
 			"type": "node-terminal"
 		},
 		{
-			"command": "npm run export_aseprite",
+			"command": "npm run export_aseprite -- --run",
 			"name": "Run npm export_aseprite",
 			"request": "launch",
 			"type": "node-terminal"
