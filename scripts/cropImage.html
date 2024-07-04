@@ -211,6 +211,18 @@
 			</div>
 			<p>width: <span ref="refWidthSpan"></span></p>
 		</div>
+		<br/>
+		<a ref="refDownload" download="download.png"
+			class="v-col"
+			style="
+				background-color: dodgerblue;
+				color: azure;
+				width: fit-content;
+				height: fit-content;
+				border-radius: 4px;
+				padding: 4px 8px;
+			"
+		>Download Canvas</a>
 	</div>
 </template>
 <script>
@@ -220,17 +232,30 @@
 
 			this._mounted = this._mounted.bind(this);
 			this._unmounted = this._unmounted.bind(this);
+			this._handleDownloadClick = this._handleDownloadClick.bind(this);
 			this._handleFiles = this._handleFiles.bind(this);
 
 			this.evEmitter.on('mounted', this._mounted);
 			this.evEmitter.on('unmounted', this._unmounted);
+
+			this._fileName = ""
+		}
+
+		get fileName() {
+			return this._fileName || "unknown";
+		}
+
+		set fileName(val) {
+			this._fileName = val;
+			this.refs.refDownload.download = val;
 		}
 
 		/**
-		 * @param {Event}
-		 * @param {File[]}
+		 * @param {Event} ev
+		 * @param {File[]} files
 		 */
 		async _handleFiles(ev, files) {
+			const i = 0;
 			const prom = new Promise((resolve, reject) => {
 				try {
 
@@ -240,7 +265,10 @@
 					const hiddenCanvas = this.refs.refHiddenCanvas[0];
 		
 					const base_image = new Image();
+					const that = this;
 					base_image.onload = function() {
+						debugger;
+						that._fileName = files[i].name;
 						hiddenCanvas.width = canvas.width = this.width;
 						hiddenCanvas.height = canvas.height = this.height;
 						context.drawImage(base_image, 0, 0, this.width, this.height);
@@ -249,10 +277,11 @@
 						resolve();
 					}
 					base_image.onerror = function(e) {
-						reject(e);
+						throw(e);
 					}
-					base_image.src = urlCreator.createObjectURL(files[0]);
+					base_image.src = urlCreator.createObjectURL(files[i]);
 				} catch(e) {
+					this._fileName = "";
 					reject(e);
 				}
 			});
@@ -260,9 +289,25 @@
 			return prom;
 		}
 
+
+		_handleDownloadClick() {
+			/** @type {HTMLCanvasElement} */
+			const canvas = this.refs.refHiddenCanvas[0];
+			const dt = canvas.toDataURL('image/png');
+
+			/** @type {HTMLAnchorElement} */
+			const anchorElem = this.refs.refDownload[0];
+			anchorElem.download = this.fileName;
+			anchorElem.href = dt;
+		}
+
 		_mounted() {
 			const dndElem = this.refs.refDragAndDrop[0];
 			dndElem.evEmitter.on("files", this._handleFiles);
+
+			/** @type {HTMLAnchorElement} */
+			const refDownload =  this.refs.refDownload[0];
+			refDownload.addEventListener("click", this._handleDownloadClick);
 		}
 
 		_unmounted() {
