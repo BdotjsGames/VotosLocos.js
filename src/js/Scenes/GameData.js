@@ -216,6 +216,7 @@ GameSequence = [
     {
         name: 'Registrar Office Interior',
         Goal: "Get your ballot!",
+        debugStartWithThisOne: true,
         music: SOUNDS.norteno,
         environment: Environments.OfficeInterior,
         onLoad: (scene) => {
@@ -245,6 +246,7 @@ GameSequence = [
                             // npc.shouldStartDiaolgueOnProximity = false;
                             ballot.afterPickup = e=>{
                                 scene.showGo = true;
+                                scene.driver.setScene(new VoterGuideScene(scene))
                             }
                         }}
                     ]},
@@ -573,7 +575,6 @@ GameSequence = [
         musicOff: true,
         Goal: 'knock on every door 3 times',
         // music: SOUNDS.norteno,
-        debugStartWithThisOne: true,
         environment: Environments.Street,
         dontShowGo: true,
         width: 5000,

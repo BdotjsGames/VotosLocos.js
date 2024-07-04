@@ -1,5 +1,5 @@
 class PlatformerModel extends Model {
-  constructor(w,h,color,color2,parent, modelOptions) {
+  constructor(w,h,color,color2,parent, modelOptions, modelOptions2) {
     super(parent);
     this.modelOptions = modelOptions;
     this.w=w;this.h=h;this.color=color;   
@@ -31,7 +31,7 @@ class PlatformerModel extends Model {
       }
     }
     this.createModel();
-    this.createOptions();
+    this.createOptions(modelOptions2);
     if(this.modelOptions) {
       this.modelOptions.forEach((index, i) => {
         var option = this.customizableOptions[i]
