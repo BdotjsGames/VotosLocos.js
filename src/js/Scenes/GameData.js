@@ -485,15 +485,15 @@ GameSequence = [
     //         },
     //     ]
     // },
-    {
-        name :"Community Rally complete",
-        environment: Environments.Grass,
-        DialogueData: [
-            {person: LouChalibre, text: "Its time for the march!"},
+    // {
+    //     name :"Community Rally complete",
+    //     environment: Environments.Grass,
+    //     DialogueData: [
+    //         {person: LouChalibre, text: "Its time for the march!"},
         
-        ],
-        continueOnDialogueFinish: true,
-    },
+    //     ],
+    //     continueOnDialogueFinish: true,
+    // },
     {
         name: "Rally March Transition",
         environment: Environments.Grass,
@@ -583,8 +583,30 @@ GameSequence = [
         ],
         onLoad: scene =>{
             // scene.minY = 0;
+            var houses = [];
             for(var i=0;i<12;i++) {
-                scene.addEntity(new KnockableHouse((i+0.5)*400, scene.minY))
+                var house = scene.addEntity(new KnockableHouse((i+0.5)*400, scene.minY))
+                houses[i]=house;
+            }
+            var numEnemies = 2;
+            var numBads = 3;
+            for(var j=0;j<numEnemies&&j<houses.length;j++) {
+                var i = Math.floor(Math.random()*houses.length)
+                var house = houses[i];
+                if(house.door.onOpen != house.door.createFollower) {
+                    numEnemies++
+                    continue;
+                }
+                house.door.setTrap();
+            }
+            for(var j=0;j<numBads&&j<houses.length;j++) {
+                var i = Math.floor(Math.random()*houses.length)
+                var house = houses[i];
+                if(house.door.onOpen != house.door.createFollower) {
+                    numBads += 1;
+                    continue;
+                }
+                house.door.onOpen = house.door.createRefuser
             }
             for(var i=0;i<4;i++) {
                 scene.addEntity(new Ninja((i+0.5)*50+2000, 500))

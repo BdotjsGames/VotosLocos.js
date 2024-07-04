@@ -139,11 +139,10 @@ class BeatEmUpper {
                     dy=0;
                     r=1;
                 }
-                console.log(dx,dy,r);
                 this.mx = dx/r;
                 this.my = dy/r;
-                if(!this.attacking)
-                    this.attack();
+                // if(!this.model.anim)
+                //     this.attack();
                 this.attacking = true;
                 this.seeking = true;
                 return;
@@ -155,7 +154,6 @@ class BeatEmUpper {
                     dy=0;
                     r=1;
                 }
-                console.log(dx,dy,r);
                 this.mx = dx/r;
                 this.my = dy/r;
                 this.seeking=true;
@@ -261,6 +259,9 @@ class BeatEmUpper {
                     this.vx = (this.dx*this.jumpSpeedBoost)
                 }
                 this.dx = dx;
+            }
+            if(this.my !=0) {
+                this.dy = this.my>0?1:-1;
             }
 
             if (this.vz < 0) {
@@ -405,34 +406,30 @@ class BeatEmUpper {
             }
         }
     }
+    attackCollisionCheckEntity(enemy) {
+        if(enemy.invul>0)return;
+        var dx = enemy.x - this.x;
+        var dy = enemy.y - this.y;
+        var dz = enemy.z - this.z;
+        var adx = Math.abs(dx);
+        var ady = Math.abs(dy);
+        var adz = Math.abs(dz);
+        if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
+            enemy.getHit(this);
+            // this.vx = 0;
+            if(this.jumpCount !=0) this.jumpCount = 1
+        }
+    }
     attackCollisionCheck() {
         this.enemies.forEach(enemy => {
-            if(enemy.invul>0)return;
-            var dx = enemy.x - this.x;
-            var dy = enemy.y - this.y;
-            var dz = enemy.z - this.z;
-            var adx = Math.abs(dx);
-            var ady = Math.abs(dy);
-            var adz = Math.abs(dz);
-            if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
-                enemy.getHit(this);
-                // this.vx = 0;
-                if(this.jumpCount !=0) this.jumpCount = 1
+            this.attackCollisionCheckEntity(enemy);
+            if(enemy.followersList) {
+                enemy.followersList.forEach(enemy => this.attackCollisionCheckEntity(enemy))
             }
         })
         this.scene.hitables.forEach(enemy => {
-            if(enemy.invul>0)return;
-            var dx = enemy.x - this.x;
-            var dy = enemy.y - this.y;
-            var dz = enemy.z - this.z;
-            var adx = Math.abs(dx);
-            var ady = Math.abs(dy);
-            var adz = Math.abs(dz);
-            if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
-                enemy.getHit(this);
-                // this.vx = 0;
-                if(this.jumpCount !=0) this.jumpCount = 1
-            }
+            this.attackCollisionCheckEntity(enemy);
+           
         })
     }
     canJump() {

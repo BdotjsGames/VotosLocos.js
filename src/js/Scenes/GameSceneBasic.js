@@ -358,6 +358,7 @@ class GameSceneBasic extends Scene {
       this.enemies = [];
       this.hitables = [];
       this.players = [];
+      this.npcs = [];
       highFivers = [];
       if(levelNumber<0)levelNumber=0;
       if(levelNumber>=GameSequence.length) {

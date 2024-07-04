@@ -814,6 +814,14 @@ class PlatformerModel extends Model {
     }
     else if(this.moving&&!this.wallColliding) {
       this.highFiveCount = 0;
+      if(this.lastDX!=this.parent.dx) {
+        this.frameCount = 0;
+      }
+      this.lastDX = this.parent.dx;
+      if(this.lastDY!=this.parent.dy) {
+        this.frameCount = 0;
+      }
+      this.lastDY = this.parent.dy;
       this.walk();
     } else {
       this.idle();

@@ -302,6 +302,12 @@ class DialogueController {
     if(event.fourthWall !=undefined) {
       this.fourthWall = event.fourthWall;
     }
+
+    if(event.person) {
+      this.speakerImage = event.person.image;
+    } else {
+      this.speakerImage = null;
+    }
     if(event.text) {
       this.simpleDialogue.setText(event, event.persist)
       this.current = this.simpleDialogue;
@@ -311,11 +317,6 @@ class DialogueController {
         this.lastSpeaker = event.person.obj;
         if(event.zoom)this.gameScene.camera.targetZoom = event.zoom;
         // this.gameScene.camera.zoom = 2;
-      }
-      if(event.person) {
-        this.speakerImage = event.person.image;
-      } else {
-        this.speakerImage = null;
       }
       if(event.doNotWait) {
         this.simpleDialogue.progress();

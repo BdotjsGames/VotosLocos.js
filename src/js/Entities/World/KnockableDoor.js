@@ -13,7 +13,7 @@ class KnockableDoor extends DrawableImage {
             [{
               // scaleW: 1.23, scaleH:1.23, dy: -.01, 
               angle: -.05}, 2],
-            [{scaleW: 1, scaleH:1, dy: 0,angle:0}, 5, null, this.onKnock.bind(this)],
+            this.endFrame = [{scaleW: 1, scaleH:1, dy: 0,angle:0}, 5, null, this.onKnock.bind(this)],
           ]));
         
 
@@ -23,14 +23,46 @@ class KnockableDoor extends DrawableImage {
         this.interactablesRange = 100;
         this.knocksRequired = 3;
         this.knocks = 0;
+        this.onOpen = this.createFollower;
     }
     onKnock() {
       if(this.knocks>=this.knocksRequired) {
         this.image = IMAGES.doorOpen;
         this.isInteractable = false;
-        this.createFollower();
+        this.onOpen();
+        // this.createEnemies();
+        // this.createFollower();
       }
       this.knocking = false;
+    }
+    setTrap() {
+      this.onOpen = this.createEnemies;
+      this.endFrame[1]= 20
+    }
+    createEnemies() {
+      var enemies = []
+      for(var i=0;i<3;i++) {
+        var troll =this.scene.addEntity(new Troll(this.x+20+i*5,this.y-10))
+        troll.inputBlocking = true;
+        troll.my = .4
+        troll.mx = (i-1)*.4
+        enemies.push(troll);
+      }
+      this.player.model.getHit(1)
+      this.player.model.impactStop(20)
+      // this.player.mx = this.player.x>this.x+20?1:-1
+
+      this.scene.playDialogue([
+        {waitFor: 20},
+        {onStart: () => enemies.forEach(enemy=>{
+          enemy.mx=0
+          enemy.my=0
+        })},
+        {waitFor: 10},
+      ], true, () => {
+        // this.image = IMAGES.door;
+        enemies.forEach(enemy=>enemy.inputBlocking=false)
+      })
     }
     createNpc() {
       var npc = new HighFiver(this.x+20,this.y-10);

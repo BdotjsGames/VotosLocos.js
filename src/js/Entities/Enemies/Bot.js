@@ -40,6 +40,7 @@ class Bot extends BeatEmUpper {
         this.shootTimer = 0;
     }
     getInputs() {
+        if(this.inputBlocking)return;
         if(this.scene.dialogueBlocking) {
             this.mx = 0;
             this.my = 0;

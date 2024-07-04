@@ -86,41 +86,7 @@ class HighFiver extends BeatEmUpper {
             this.my = 0;
         }
     }
-    enemySearchUpdate() {
-        this.seeking = false;
-        for(var i=0;i<this.enemies.length;i++) {
-            var enemy = this.enemies[i];
-            if(enemy.shouldDelete)continue;
-
-            var {dx,dy,dz} = vector3Diff(enemy, this);
-            var drr = diffSqrd(dx,dy,dz);
-            if(drr< this.attackRange*this.attackRange) {
-                var r = Math.sqrt(dx*dx+dy*dy);
-                if(r==0) {
-                    dx=1;
-                    dy=0;
-                    r=1;
-                }
-                this.mx = dx/r;
-                this.my = dy/r;
-                this.attack();
-                this.seeking = true;
-                return;
-            }
-            if(drr<this.enemySeekRange*this.enemySeekRange) {
-                var r = Math.sqrt(dx*dx+dy*dy);
-                if(r==0) {
-                    dx=1;
-                    dy=0;
-                    r=1;
-                }
-                this.mx = dx/r;
-                this.my = dy/r;
-                this.seeking=true;
-                return;
-            }
-        }
-    }
+   
     followUpdate() {
         this.enemySearchUpdate();
         if(this.seeking)return;
@@ -272,8 +238,6 @@ class HighFiver extends BeatEmUpper {
     die() {
         if (this.shouldDelete) return;
         super.die();
-        SOUNDS.blowImpact.play();
-        setTimeout(e =>
-            this.scene.respawn(), 1000);
+        // SOUNDS.blowImpact.play();
     }
 }
