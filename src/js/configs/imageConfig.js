@@ -378,3 +378,6 @@ IMAGES.house1Open = ImageLoader.loadImage('house/houseOpenDoor.png')
 
 IMAGES.door = ImageLoader.loadImage('house/door.png');
 IMAGES.doorOpen = ImageLoader.loadImage('house/doorOpen.png');
+
+
+IMAGES.waterBottle = ImageLoader.loadImage('Items/WaterBottle.png');
