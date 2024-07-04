@@ -12,11 +12,11 @@ class CropImage {
 			const filePath = await Prompt.run(["--question", "What is the .aseprite file absolute path?"]);
 			const fileName = filePath.replace(/\\/g, "/").split("/").pop().replace(/\s/g, "").replace(".aseprite", "");
 			const outputPath = path.join(__dirname, "./../src/Assets/images/");
-			const asepritePath = process.env.ASEPRITE_PATH || (await Prompt.run(["--question", `What is the absolute path for aseprite.exe? [${"C:/Program Files/Aseprite/"}]`])) || "C:/Program Files/Aseprite/";
+			const asepritePath = process.env.ASEPRITE_PATH || (await Prompt.run(["--question", `What is the absolute path for aseprite.exe? [default: ${"C:/Program Files/Aseprite/aseprite.exe"}]`])) || "C:/Program Files/Aseprite/aseprite.exe";
 
 			for (const aPart of parts) {
 				const outputPathWithFilename = path.join(outputPath, `./${fileName}/`, `${fileName}-${aPart}`);
-				const stdOut = execSync(`"${path.join(asepritePath, "aseprite.exe")}" -b ${isTesting ? "--preview" : ""} --ignore-empty --verbose --layer ${aPart} "${filePath}" --sheet "${outputPathWithFilename}.png" --data "${outputPathWithFilename}.json"`, {
+				const stdOut = execSync(`"${path.join(asepritePath)}" -b ${isTesting ? "--preview" : ""} --ignore-empty --verbose --layer ${aPart} "${filePath}" --sheet "${outputPathWithFilename}.png" --data "${outputPathWithFilename}.json"`, {
 					encoding: "utf-8"
 				});
 				console.log(stdOut);
