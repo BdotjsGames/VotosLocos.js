@@ -5,6 +5,10 @@
 		--var-color-file-drop: #9292ff
 	}
 
+	* {
+		box-sizing: border-box;
+	}
+
 	.v-row {
 		display: flex;
 		flex-direction: row;
@@ -202,7 +206,7 @@
 		<p>height: <span ref="refHeightSpan"></span></p>
 		<div class="v-row">
 			<canvas ref="refHiddenCanvas" style="display: none;"></canvas>
-			<div style="border: 2px solid black; width: auto; height: auto;">
+			<div class="v-col" style="border: 2px solid black; width: fit-content; height: fit-content;">
 				<canvas ref="refCanvas"></canvas>
 			</div>
 			<p>width: <span ref="refWidthSpan"></span></p>
@@ -226,21 +230,34 @@
 		 * @param {Event}
 		 * @param {File[]}
 		 */
-		_handleFiles(ev, files) {
-			const canvas = this.refs.refCanvas[0],
-			context = canvas.getContext('2d');
-			const urlCreator = window.URL || window.webkitURL;
-			const hiddenCanvas = this.refs.refHiddenCanvas[0];
+		async _handleFiles(ev, files) {
+			const prom = new Promise((resolve, reject) => {
+				try {
 
-			const base_image = new Image();
-			base_image.onload = function() {
-				hiddenCanvas.width = canvas.width = this.width;
-				hiddenCanvas.height = canvas.height = this.height;
-				context.drawImage(base_image, 0, 0, this.width, this.height);
-				hiddenCanvas.getContext("2d").drawImage(base_image, 0, 0, this.width, this.height);
-				urlCreator.revokeObjectURL(base_image.src);
-			}
-			base_image.src = urlCreator.createObjectURL(files[0]);
+					const canvas = this.refs.refCanvas[0],
+					context = canvas.getContext('2d');
+					const urlCreator = window.URL || window.webkitURL;
+					const hiddenCanvas = this.refs.refHiddenCanvas[0];
+		
+					const base_image = new Image();
+					base_image.onload = function() {
+						hiddenCanvas.width = canvas.width = this.width;
+						hiddenCanvas.height = canvas.height = this.height;
+						context.drawImage(base_image, 0, 0, this.width, this.height);
+						hiddenCanvas.getContext("2d").drawImage(base_image, 0, 0, this.width, this.height);
+						urlCreator.revokeObjectURL(base_image.src);
+						resolve();
+					}
+					base_image.onerror = function(e) {
+						reject(e);
+					}
+					base_image.src = urlCreator.createObjectURL(files[0]);
+				} catch(e) {
+					reject(e);
+				}
+			});
+
+			return prom;
 		}
 
 		_mounted() {
@@ -261,6 +278,10 @@
 	<div class="v-col" style="width: 50vw; align-items: center; justify-content: center;">
 		<input ref="refPaddingTop" style="width: auto;" type="number" placeholder="top" value="0"/>
 		<div class="v-row" style="align-items: center; justify-content: center;">
+			<label>
+				<input ref="refShrinkToFit" type="checkbox">
+				<span>Shrink To Fit</span>
+			</label>
 			<input ref="refPaddingLeft" style="width: 100%;" type="number" placeholder="left" value="0"/>
 			<div>crop</div>
 			<input ref="refPaddingRight" style="width: 100%;" type="number" placeholder="right" value="0"/>
@@ -278,6 +299,7 @@
 			this._mounted = this._mounted.bind(this);
 			this._unmounted = this._unmounted.bind(this);
 			this._handleValueChange = this._handleValueChange.bind(this);
+			this._handleChangeShrinkToFit = this._handleChangeShrinkToFit.bind(this);
 			this.debounce = this.debounce.bind(this);
 			this.updateCanvas = this.updateCanvas.bind(this);
 
@@ -301,10 +323,66 @@
 
 			const dndElem = this.refs.refDragAndDrop[0];
 			dndElem.evEmitter.on("files", this._handleValueChange);
+
+			/** @type {HTMLInputElement} */
+			const shrinkToFitElem = this.refs.refShrinkToFit[0];
+			shrinkToFitElem.addEventListener("change", this._handleChangeShrinkToFit)
 		}
 
 		_unmounted() {
 			
+		}
+
+		/**
+		 * @param {InputEvent} ev
+		 */
+		_handleChangeShrinkToFit(ev) {
+			if (!ev.target.checked) return;
+			
+			/** @type {HTMLCanvasElement} */
+			const hiddenCanvas = this.refs.refHiddenCanvas[0];
+			const imgData = hiddenCanvas.getContext("2d").getImageData(0, 0, hiddenCanvas.width, hiddenCanvas.height);
+
+			const bounds = {
+				top: Infinity,
+				left: Infinity,
+				right: -Infinity,
+				bottom: -Infinity,
+			};
+
+			const INCR_BY_ALPHA_INDEX = 4;
+			for (let i = 3; i < imgData.data.length; i = i + INCR_BY_ALPHA_INDEX) {
+				if (imgData.data[i] <= 0.0) continue;
+
+				const iModifiedForAlpha = (((i + 1) / INCR_BY_ALPHA_INDEX) - 1);
+				const currX = iModifiedForAlpha % imgData.width;
+				const currY = Math.floor(iModifiedForAlpha / imgData.width);
+
+				bounds.top = Math.min(bounds.top, currY);
+				bounds.bottom = Math.max(bounds.bottom, currY);
+				bounds.left = Math.min(bounds.left, currX);
+				bounds.right = Math.max(bounds.right, currX);
+			}
+
+			if (bounds.top == Infinity) bounds.top = 0;
+			if (bounds.left == Infinity) bounds.left = 0;
+			if (bounds.right == -Infinity) bounds.right = imgData.width;
+			if (bounds.bottom == -Infinity) bounds.bottom = imgData.height;
+
+			/** @type {HTMLInputElement} */
+			const paddingTop = this.refs.refPaddingTop[0];
+			paddingTop.value = -bounds.top;
+			/** @type {HTMLInputElement} */
+			const paddingLeft = this.refs.refPaddingLeft[0];
+			paddingLeft.value = -bounds.left;
+			/** @type {HTMLInputElement} */
+			const paddingRight = this.refs.refPaddingRight[0];
+			paddingRight.value = bounds.left + (hiddenCanvas.width - bounds.right) - 1;
+			/** @type {HTMLInputElement} */
+			const paddingBottom = this.refs.refPaddingBottom[0];
+			paddingBottom.value = bounds.top + (hiddenCanvas.height - bounds.bottom) - 1;
+
+			this.debounce(this.updateCanvas);
 		}
 
 		_handleValueChange() {
