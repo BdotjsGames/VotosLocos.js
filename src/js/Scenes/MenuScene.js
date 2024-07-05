@@ -22,6 +22,16 @@ class MenuScene extends Scene {
     this.addEntity(new DrawableImage(0.5,0.35, IMAGES.VotosLocosLogo,4))
       .setTrueCoords(false)
     var x = 0.3
+    var savedGame = localStorage.getItem('savedGame') 
+    if(savedGame){
+      
+      this.addSelectableButton(new ButtonUI("CONTINUE", x,0.6, 0.4,0.1,0.05,e=>{
+        // console.log('pressed');
+        var {model, levelNumber} = loadGameData(savedGame);
+        MainDriver.setScene(new GameSceneBasic(model, levelNumber));
+        // MainDriver.setScene(new GameSceneBasic());
+      })).center().color(250,250,250)
+    }
     this.addSelectableButton(new ButtonUI("PLAY", x,0.7, 0.4,0.1,0.05,e=>{
       // console.log('pressed');
       MainDriver.setScene(new CharacterCustomizerScene());

@@ -13,7 +13,7 @@ window.addEventListener('load', function(e) {
         },
         {
             text: 'Touch As Mouse' ,
-            startingValue: touchAsMouseEnabled = (localStorage.getItem("autopause")=='true'),
+            startingValue: touchAsMouseEnabled = ((localStorage.getItem("touchAsMouseEnabled")||'true')=='true'),
             callback: b=>{
                 touchAsMouseEnabled = !touchAsMouseEnabled;
                 b.value = touchAsMouseEnabled;
@@ -96,6 +96,21 @@ class OptionsScene extends AdditiveScene {
             })
         )
         y+=spacing;
+        if(this.prevScene.player && this.prevScene.player.model) {
+            this.addSelectableButton(
+                new ButtonUI('characterCustomizer',x,y,w,h,fontSize,(b)=>{
+                    this.driver.setScene(new CharacterCustomizerScene(this.prevScene.player.model, this))
+                })
+            )
+            y+=spacing;
+
+            this.addSelectableButton(
+                new ButtonUI('save game',x,y,w,h,fontSize,(b)=>{
+                    saveGameData(this.prevScene);
+                })
+            )
+            y+=spacing;
+        }
     }
     update() {
         super.update();

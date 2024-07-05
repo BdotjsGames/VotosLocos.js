@@ -42,6 +42,16 @@ class PlatformerModel extends Model {
       this.randomize();
     }
   }
+  loadModelOptions(modelOptions) {
+    this.modelOptions = modelOptions;
+    if(this.modelOptions) {
+      this.modelOptions.forEach((index, i) => {
+        var option = this.customizableOptions[i]
+        option.index = index;
+        option.onChange(option.options[index], index);
+      })
+    }
+  }
   randomize() {
     this.customizableOptions.forEach(option => {
       if(!option.options||!option.options.length)return;

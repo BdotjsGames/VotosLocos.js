@@ -393,3 +393,6 @@ IMAGES.doorOpen = ImageLoader.loadImage('house/doorOpen.png');
 
 
 IMAGES.waterBottle = ImageLoader.loadImage('Items/WaterBottle.png');
+
+IMAGES.touchDpad = ImageLoader.loadImage('touchUI/dpad.png');
+IMAGES.touchDpadRed = ImageLoader.loadImage('touchUI/dpadRed.png');

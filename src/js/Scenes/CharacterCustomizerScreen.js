@@ -1,10 +1,12 @@
 
 class CharacterCustomizerScene extends Scene{
-    constructor(model) {
+    constructor(model, prevScene) {
         super();
         canvas.backgroundImage = IMAGES.backgroundSky
         this.useTouchAsMouse = true;
+        this.prevScene = prevScene; 
         this.backButton = this.addSelectableButton(new ButtonUI("BACK", 0.15,0.1,0.25,0.1,0.05,() => {
+            if(this.prevScene) return this.driver.setScene(this.prevScene)
             this.driver.setScene(new MenuScene(this))
         }).center())
         this.optionsGroup = this.addEntity(new Group(0,0));
@@ -29,7 +31,8 @@ class CharacterCustomizerScene extends Scene{
     }
     playGame() {
         this.model.scaleBoth=1;
-        this.model.modelOptions = this.model.getModelOptions();
+        this.model.modelOptions = this.model.getModelOptions()
+        if(this.prevScene) return this.driver.setScene(this.prevScene);
         this.driver.setScene(new GameSceneBasic(this.model))
     }
     update() {

@@ -466,3 +466,18 @@ class GameSceneBasic extends Scene {
 
     }
   }
+
+
+  function loadGameData(savedString) {
+    var data = JSON.parse(savedString)
+    var model = new PlayerModel(null, data.modelOptions)
+    var levelNumber = data.levelNumber;
+    return {
+      model, levelNumber
+    }
+  }
+  function saveGameData(scene) {
+    var data = {}
+    data.modelOptions = scene.player.model.getModelOptions();
+    data.levelNumber = scene.levelNumber
+  }

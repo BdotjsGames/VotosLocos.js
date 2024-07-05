@@ -1,8 +1,13 @@
 //  Copyright Brian Dizon 2019
-var touchAsMouseEnabled = false;
+var touchAsMouseEnabled = true;
 
 var touchCE = document.getElementById("touch-canvas");
 var touchCanvas = touchCE.getContext('2d');
+touchCanvas.imageSmoothingEnabled = false;
+touchCanvas.mozImageSmoothingEnabled=false;
+touchCanvas.msImageSmoothingEnabled = false;
+touchCanvas.oImageSmoothingEnabled=false;
+touchCanvas.webkitImageSmoothingEnabled=false;
 window.addEventListener('load', function() {
   touchCE.width = CE.width;
   touchCE.height = CE.height;
@@ -14,7 +19,7 @@ var touchDown = false;
 var y = .3;
 var touchJoySticks = [
   {
-    x: .15, y:y+.2, r: .2,
+    x: .25, y:y+.2, r: .25,
     area: {
       x: 0, y: 0, w: 0.5, h: 1
     },
@@ -92,7 +97,7 @@ function createTouchButton(name,position,rect) {
 
 function getTouchPosition(touch, e) {
   var ref = CE;
-  if(!MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled)ref = touchCE;
+  if(!(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled))ref = touchCE;
   var boundingClientRect = ref.getBoundingClientRect();    
   var x = touch.pageX-boundingClientRect.left;
   var y = touch.pageY-boundingClientRect.top - document.body.scrollTop;
@@ -119,11 +124,14 @@ function touchdraw(canvas) {
     var h = w*60/50;
     canvas.save();
     canvas.translate(joyStick.x*CE.width, joyStick.y*CE.height);
-    canvas.rotate(angle+Math.PI/2);
-    var color = 'rgba(255,255,255,0.5)';
-    if(joyStick.held)color = 'rgba(255,0,0,0.5)';
-    canvas.fillStyle = color;
-    canvas.fillRect(-w/2,-h/2,w,h);
+    var img = IMAGES.touchDpad;
+    if(joyStick.held)img= IMAGES.touchDpadRed
+    canvas.drawImage(img, -w,-w,w*2,w*2);
+    // canvas.rotate(angle+Math.PI/2);
+    // var color = 'rgba(255,255,255,0.5)';
+    // if(joyStick.held)color = 'rgba(255,0,0,0.5)';
+    // canvas.fillStyle = color;
+    // canvas.fillRect(-w/2,-h/2,w,h);
     canvas.restore();
   }
   for(var i=0;i<touchButtons.length;i++) {
