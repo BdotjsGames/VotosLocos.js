@@ -12,14 +12,7 @@ class BotModel extends PlatformerModel {
             this.body2.drawable.image = IMAGES.botTorso1;
         // }
     }
-    update() {
-      super.update();
-      if(this.attacking) {
-        this.outlineColor = 'red';
-      }else {
-        this.outlineColor = 'black';
-      }
-    }
+    
     createOptions(){
         super.createOptions({
             headOptions: [IMAGES.botHeadOptions[0]],

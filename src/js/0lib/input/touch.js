@@ -92,7 +92,7 @@ function createTouchButton(name,position,rect) {
 
 function getTouchPosition(touch, e) {
   var ref = CE;
-  if(!MainDriver.scene.useTouchAsMouse)ref = touchCE;
+  if(!MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled)ref = touchCE;
   var boundingClientRect = ref.getBoundingClientRect();    
   var x = touch.pageX-boundingClientRect.left;
   var y = touch.pageY-boundingClientRect.top - document.body.scrollTop;
