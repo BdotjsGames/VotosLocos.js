@@ -1,7 +1,11 @@
-IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo.png');
+IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo2.png');
 
-IMAGES.backgroundImage = ImageLoader.loadImage('backgroundSky.png');
-canvas.backgroundImage = IMAGES.backgroundImage;
+IMAGES.backgroundSky = ImageLoader.loadImage('backgroundSky.png');
+IMAGES.Purlsey1 = ImageLoader.loadImage('Pursley/Pursley1.png');
+IMAGES.Purlsey1S = ImageLoader.loadImage('Pursley/Pursley1-sharp.png');
+IMAGES.Purlsey2 = ImageLoader.loadImage('Pursley/Pursley2.png');
+IMAGES.Purlsey2S = ImageLoader.loadImage('Pursley/Pursley2-sharp.png');
+canvas.backgroundImage = IMAGES.Purlsey1S;
 
 IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
 
@@ -295,7 +299,7 @@ IMAGES.armOptions = [
     IMAGES.armPlaidJacket = ImageLoader.loadImage("armPlaidJacket.png", PALLETE_KEY.skin),
     IMAGES.armLeatherJacket = ImageLoader.loadImage("armLeatherJacket.png", PALLETE_KEY.skin),
     IMAGES.armMilitary = ImageLoader.loadImage("armMilitary.png", PALLETE_KEY.skin),
-    IMAGES.armBare,
+    IMAGES.armBlouse = ImageLoader.loadImage('armBlouse.png', PALLETE_KEY.skin),
     IMAGES.armBare,
     IMAGES.armBare,
     IMAGES.armBare,
@@ -311,6 +315,7 @@ IMAGES.torsoOptions = [
     IMAGES.torsoLeatherJacket        = ImageLoader.loadImage("torsoLeatherJacket.png", PALLETE_KEY.skin),
     IMAGES.torsoMilitary        = ImageLoader.loadImage("torsoMilitary.png", PALLETE_KEY.skin),
     IMAGES.torso2        = ImageLoader.loadImage("torso2.png"),
+    // IMAGES.torso2Sk        = ImageLoader.loadImage("torso2Sk.png"),
     IMAGES.torso3        = ImageLoader.loadImage("torso3.png"),
     IMAGES.torso3        = ImageLoader.loadImage("torso4.png"),
     // createTorso(4),
@@ -336,12 +341,18 @@ IMAGES.backgroundTileGrass    = ImageLoader.loadImage("backgroundTileGrass.png")
 IMAGES.trashCan = ImageLoader.loadImage("trashCan.png")
 IMAGES.trashCanSmashed = ImageLoader.loadImage("trashCanSmashed.png")
 
+
+
 IMAGES.skirts = [
     null,
     IMAGES.skirt1 = ImageLoader.loadImage("skirt.png"),
+    IMAGES.skirt2 = ImageLoader.loadImage("skirtSk.png"),
     IMAGES.williePants = ImageLoader.loadImage("williePants.png"),
+    IMAGES.boot1 = ImageLoader.loadImage('boot1.png'),
     
 ]
+IMAGES.boot1.isShoe = true;
+
 IMAGES.williePants.isWilliePants = true;
 IMAGES.tutu = ImageLoader.loadImage('tutu2.png', PALLETE_KEY.skirt, swaps => {
     // IMAGES.skirts.push(IMAGES.rainbowSkirt = swaps[0])
@@ -371,6 +382,7 @@ IMAGES.projectiles = [
     IMAGES.redKunai = ImageLoader.loadImage('redKunai.png'),
     IMAGES.redNinjaStar = ImageLoader.loadImage('redNinjaStar.png'),
 ]
+
 
 IMAGES.house1 = ImageLoader.loadImage('house/house.png')
 IMAGES.houseBackground = ImageLoader.loadImage('house/houseBackground.png')

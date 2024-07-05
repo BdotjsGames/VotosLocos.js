@@ -177,6 +177,15 @@ class PlatformerModel extends Model {
         onChange: (value,i) => {
           this.skateBoardOn = value==skateBoardValue;
           this.skateBoard.hidden = !this.skateBoardOn;
+          if(value&&value.isShoe) {
+            this.shoeL.drawable.image = value;
+            this.shoeR.drawable.image = value;
+
+            value = null;
+          } else {
+            this.shoeL.drawable.image = null;
+            this.shoeR.drawable.image = null;
+          }
           if(value==wheelChairLegValue) {
             this.inWheelChair = true;
             this.wheelchair.hidden = false;
@@ -184,6 +193,9 @@ class PlatformerModel extends Model {
             this.legL.hidden=true;
             this.legR.hidden=true;
             value = 8;
+            var db1 = 6
+            this.body.y = -12-value*4+db1;
+            this.skirtOn = false;
           } else {
             if(value<0)value=null;
             this.inWheelChair = false;
@@ -193,7 +205,20 @@ class PlatformerModel extends Model {
             this.legR.hidden=false;
             this.skirt.drawable.image = value;
             this.skirtOn = value;
+
+            var ll = this.legLength;
+            var db1 = 6
+            this.body.y = -12-ll*4+db1;
+            this.legL2.y=ll;
+            this.legR2.y=ll;
+            this.legL.drawable.y2 = ll*.6;
+            this.legR.drawable.y2 = ll*.6;
+            this.legL2.drawable.y2 = ll;
+            this.legR2.drawable.y2 = ll;
+            this.shoeL.y = ll-4;
+            this.shoeR.y = ll-4;
           }
+          this.skirt.hidden = !this.wheelchair.hidden;
           if(value&&value.isWilliePants) {
             this.legL.drawable.color = "#000";
             this.legR.drawable.color = "#000";
@@ -224,22 +249,25 @@ class PlatformerModel extends Model {
         displayOffsetY: -80,
         index: 0,
         onChange: (value,i) => {
-          if(value==wheelChairLegValue) {
-            this.inWheelChair = true;
-            this.wheelchair.hidden = false;
-            this.wheelchair.wheel.hidden = false;
-            this.legL.hidden=true;
-            this.legR.hidden=true;
-            value = 8;
-          } else {
-            this.inWheelChair = false;
-            this.wheelchair.hidden = true;
-            this.wheelchair.wheel.hidden = true;
-            this.legL.hidden=false;
-            this.legR.hidden=false;
-          }
-          this.skirt.hidden = !this.wheelchair.hidden;
           this.legLength = value;
+          if(this.inWheelChair) {
+            value = 8;
+          }
+          // if(value==wheelChairLegValue) {
+          //   this.inWheelChair = true;
+          //   this.wheelchair.hidden = false;
+          //   this.wheelchair.wheel.hidden = false;
+          //   this.legL.hidden=true;
+          //   this.legR.hidden=true;
+          //   value = 8;
+          // } else {
+          //   this.inWheelChair = false;
+          //   this.wheelchair.hidden = true;
+          //   this.wheelchair.wheel.hidden = true;
+          //   this.legL.hidden=false;
+          //   this.legR.hidden=false;
+          // }
+          // this.skirt.hidden = !this.wheelchair.hidden;
           var ll = value;
           var db1 = 6
           this.body.y = -12-ll*4+db1;
@@ -249,6 +277,8 @@ class PlatformerModel extends Model {
           this.legR.drawable.y2 = ll*.6;
           this.legL2.drawable.y2 = ll;
           this.legR2.drawable.y2 = ll;
+          this.shoeL.y = ll-4;
+          this.shoeR.y = ll-4;
         }
       },
       // {
@@ -324,9 +354,12 @@ class PlatformerModel extends Model {
     this.legR= this.hips.createBefore(2,0,new Line(0,0,0,ll,6,lineCap,color2),-Math.PI/10);
     this.legL= this.hips.createBefore(-2,0,new Line(0,0,0,ll,6,lineCap,color),Math.PI/10);
     this.legL2 = this.legL.createAfter(0,ll,new Line(0,0,0,ll,4,lineCap,color),-Math.PI/10);
-    this.legR2 = this.legR.createBefore(0,ll,new Line(0,0,0,ll,4,lineCap,color2),Math.PI/10);
+    this.legR2 = this.legR.createAfter(0,ll,new Line(0,0,0,ll,4,lineCap,color2),Math.PI/10);
 
-
+    this.shoeL = this.legL2.createAfter(1,4, new ImageDrawable(IMAGES.boot1, 0,0));
+    this.shoeR = this.legR2.createAfter(1,4, new ImageDrawable(IMAGES.boot1, 0,0));
+    this.shoeL.drawable.image = null;
+    this.shoeR.drawable.image = null;
 
     this.head = this.body2.createAfter(0,-6-db2);
     this.arm1 = this.body2.createAfter(-this.bwidth/2,-1-db2,new ImageDrawable(IMAGES.armSuit1,-1,8,16,24),Math.PI/4);
@@ -605,8 +638,10 @@ class PlatformerModel extends Model {
       }
       cos = Math.cos(frq);
     }
-    this.rotation = Math.cos(this.frameCount*Math.PI/10)*Math.PI/30*dv;
-
+    var bodyRot = Math.cos(frq)*Math.PI/30*dv;
+    // this.rotation = Math.cos(this.frameCount*Math.PI/10)*Math.PI/30*dv;
+    this.rotation = bodyRot;
+    // this.body.rotation = bodyRot;
 
     this.legL.rotation = cos*angle;
     this.legR.rotation = -cos*angle;
@@ -616,7 +651,9 @@ class PlatformerModel extends Model {
     this.arm2.rotation = cos*angle;
     this.body2.rotation = 0;
     // this.body.rotation = Math.PI/100*Math.abs(this.parent.vx);
-    this.head.rotation = -this.body.rotation;
+    // this.head.rotation = -this.body.rotation;
+    // this.body._y = -Math.cos(Math.cos(frq)*Math.PI/2)*10;
+    // this.body._y = -(Math.sin(bodyRot))*50;
 
     if(this.skateBoardOn) {
       this.body2._y = Math.sin(frq)*5

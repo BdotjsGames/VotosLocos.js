@@ -115,6 +115,8 @@ GameSequence = [
     {
         name: "Level 1",
         Goal: "Get to The Registrar Office!",
+        debugStartWithThisOne: true,
+
         DialogueData: [
             {person: LouChalibre, text: "You're not registered to vote? Today is the last day!"},
             {person: LouChalibre, text: "Hurry! you better get to the Registrar Office!"},
@@ -158,7 +160,6 @@ GameSequence = [
         ],
         spawnRandom: [
             [Bot, 4],
-            [Putin, 1],
         ]
     },
     {
@@ -168,6 +169,7 @@ GameSequence = [
             // [KnockableDoor, 10],
             [Bot, 8],
             [Ninja, 3],
+            [Putin, 1],
             // [Bot, 10],
         ]
     },
@@ -216,7 +218,6 @@ GameSequence = [
     {
         name: 'Registrar Office Interior',
         Goal: "Get your ballot!",
-        debugStartWithThisOne: true,
         music: SOUNDS.norteno,
         environment: Environments.OfficeInterior,
         onLoad: (scene) => {
@@ -333,27 +334,27 @@ GameSequence = [
         }
         
     },
-    {
-        name: "Community Rally - 1",
-        Goal: "Join the cause",
-        environment: Environments.Grass,
-        levelData: {},
-        width: 2000,
-        spawnRandom: [
-            // [HighFiver, 5],
-            [TrashCan, 2],
-        ],
-        onLoad: (scene) => {
-            rallyScene(scene,-100);
-            rallyScene(scene, 400);
-            rallyScene(scene, 900);
-            for(var i=0;i<5;i++) {
-                var x = Math.random()*2000;
-                var y = 1000;
-                scene.addEntity(new HighFiver(x,y))
-            }
-        }
-    },
+    // {
+    //     name: "Community Rally - 1",
+    //     Goal: "Join the cause",
+    //     environment: Environments.Grass,
+    //     levelData: {},
+    //     width: 2000,
+    //     spawnRandom: [
+    //         // [HighFiver, 5],
+    //         [TrashCan, 2],
+    //     ],
+    //     onLoad: (scene) => {
+    //         rallyScene(scene,-100);
+    //         rallyScene(scene, 400);
+    //         rallyScene(scene, 900);
+    //         for(var i=0;i<5;i++) {
+    //             var x = Math.random()*2000;
+    //             var y = 1000;
+    //             scene.addEntity(new HighFiver(x,y))
+    //         }
+    //     }
+    // },
     {
         name: "Community Rally Fight",
         environment: Environments.Grass,
@@ -362,6 +363,7 @@ GameSequence = [
             // [Troll, 4],
             [TrashCan, 2],
         ],
+
         width: 5000,
         onLoad: (scene) => {
             rallyScene(scene,-100);
@@ -390,48 +392,48 @@ GameSequence = [
             }
         }
     },
-    {
-        name: "Community Rally - 3",
-        Goal: "Join the cause",
-        music: SOUNDS.norteno,
-        environment: Environments.Grass,
-        levelData: {},
-        spawnRandom: [
-            [HighFiver, 5],
-            [TrashCan, 5],
-            [Bot, 4],
-            [Ninja, 4],
-            [Troll, 1],
-        ],
-        onLoad: (scene) => {
-            rallyScene(scene);
-        }
-    },
-    {
-        name: "Community Rally - 4",
-        environment: Environments.Grass,
-        music: SOUNDS.cumbia,
-        spawnRandom: [
-            [Bot, 4],
-            [Ninja, 4],
-            [Troll, 1],
-            [TrashCan, 5],
-        ]
-    },
-    {
-        name: "Community Rally - 5",
-        Goal: "Join the cause",
-        music: SOUNDS.norteno,
-        environment: Environments.Grass,
-        levelData: {},
-        spawnRandom: [
-            [HighFiver, 5],
-            [TrashCan, 5],
-        ],
-        onLoad: (scene) => {
-            rallyScene(scene);
-        }
-    },
+    // {
+    //     name: "Community Rally - 3",
+    //     Goal: "Join the cause",
+    //     music: SOUNDS.norteno,
+    //     environment: Environments.Grass,
+    //     levelData: {},
+    //     spawnRandom: [
+    //         [HighFiver, 5],
+    //         [TrashCan, 5],
+    //         [Bot, 4],
+    //         [Ninja, 4],
+    //         [Troll, 1],
+    //     ],
+    //     onLoad: (scene) => {
+    //         rallyScene(scene);
+    //     }
+    // },
+    // {
+    //     name: "Community Rally - 4",
+    //     environment: Environments.Grass,
+    //     music: SOUNDS.cumbia,
+    //     spawnRandom: [
+    //         [Bot, 4],
+    //         [Ninja, 4],
+    //         [Troll, 1],
+    //         [TrashCan, 5],
+    //     ]
+    // },
+    // {
+    //     name: "Community Rally - 5",
+    //     Goal: "Join the cause",
+    //     music: SOUNDS.norteno,
+    //     environment: Environments.Grass,
+    //     levelData: {},
+    //     spawnRandom: [
+    //         [HighFiver, 5],
+    //         [TrashCan, 5],
+    //     ],
+    //     onLoad: (scene) => {
+    //         rallyScene(scene);
+    //     }
+    // },
     // {
     //     name: "Community Rally",
     //     Goal: "Talk to 5 tables",
@@ -626,43 +628,91 @@ GameSequence = [
 
     },
     {
-        name :"Block Walking",
-        Goal :"Knock on 10 doors",
-        ecnouters: [
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            randomEnemies(),
-            BlockWalkDoor,
-            BusStop,
-        ]
-    },
-    {
-        name: "Bus Transition"
+        name: "Bus Transition",
+        DialogueData: [
+            {person: LouChalibre, text: "We need to get you to the polling location"},
+            {person: LouChalibre, text: "Lets take the bus!"},
+            {person: LouChalibre, text: "Many cities have free public buses to the polling location."},
+            {person: LouChalibre, text: "..."},
+            {person: LouChalibre, text: "We havent made a bus asset yet, so just pretend this is the bus okay?"},
+            
+        ],
+        dontShowGo: true,
+        onLoad: (scene) => {
+            // var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,-100))
+            // lowRider.w *= 3;
+            // lowRider.h *= 3;
+            var lowRider = scene.addEntity(new LowRider(150,-100))
+
+
+            var door = scene.addEntity(new EnterableDoor(lowRider.x+250,lowRider.y+250,0));
+            door.afterDialogue = () => {
+                scene.loadNextLevel();
+                player.hidden = false;
+            }
+            door.onInteract = player => {
+                player.hidden = true;
+                player.scene.dialogueController.speakerImage = null;
+                player.x = lowRider.x + 300
+                var dialogue = [
+                    {onStart: () => {
+                        lowRider.bouncing = true;
+                        lowRider.update = () => {
+                            lowRider.x += 10;
+                            player.x += 10;
+                            lowRider.frontOffset = Math.sin(frameCount * Math.PI/25);
+                            lowRider.frontOffset = lowRider.frontOffset*lowRider.frontOffset*3;
+                        }
+                    }, waitFor: 120}
+                ]
+                player.scene.playDialogue(
+                    dialogue, true, door.afterDialogue
+                )
+            }
+        },
+        // night: true,
     },
     {
         name: "To The Polling Station",
         Goal: "Get to the Polling Station!",
+        showGo: true,
+
         encounters: [
             BusStop, 
             {name: "blockade"},
             {name: "enemy swarm"},
             {name: "polling station"},
         ]
+    },
+    {
+        name: "Polling Station",
+        Goal: "Enter the Polling Station",
+        music: SOUNDS.norteno,
+        environment: Environments.Street,
+        DialogueData: [
+            {person: LouChalibre, text: "you made it to the Polling station!", zoom: 0.5},
+            // {text: "<color red> you received a ballot!"},
+        ], //give ballot cutscene
+        dontShowGo: true,
+        onLoad: (scene) => {
+            var office = scene.addEntity(
+                new ImageDrawable(
+                    ImageLoader.loadImage("RegistrarOffice.png",null, (img) => {
+                        office.reInit();
+                        office.w *= 4
+                        office.h *= 4
+                        window.office=office;
+                        office.y=-office.h - 80
+                        // scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 600,100,64,64))
+                        scene.addEntity(new EnterableDoor(office.x+office.w/2+30,-100,0));
+                        scene.defaultZoom = 0.5
+                        scene.cameraLerpSpeed = 40
+                        // scene.camera.zoom = 0.5
+                        scene.camera.offsetY = -200
+                    }), 350,0))
+            
+        }
+        
     },
     {
         name: "Boss cutscene"

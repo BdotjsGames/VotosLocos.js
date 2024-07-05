@@ -6,8 +6,8 @@ class ControlsEditorScene extends AdditiveScene {
         var x = 0.4
         var y = 0.12;
         var spacing = 0.1;
-        var w = 0.3;
-        var fontSize = 0.04;
+        var w = 0.5;
+        var fontSize = 0.035;
         var h = 0.07;
         var text = buttonConfigToString(button.buttons);
 

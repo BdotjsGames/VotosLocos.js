@@ -8,11 +8,12 @@ class KnockableHouse {
 
         // this.isInteractable = true;
         // this.interactablesRange = 100;
+        this.door = new KnockableDoor(this.x+3.5*16.5,this.y)
     }
     update() {}
     setScene(scene) {
         this.scene=scene;
-        scene.addEntity(this.door = new KnockableDoor(this.x+3.5*16.5,this.y))
+        scene.addEntity(this.door)
         this.bg = scene.addEntity(new DrawableImage(this.x,this.y, IMAGES.houseBackground,3.5))
         this.bg.y-=50;
         this.bg.z+=50;

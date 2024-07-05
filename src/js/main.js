@@ -7,6 +7,8 @@ var MainDriver = {
   FPS: 60,
   paused: false,
   pausesOnClickOff: false,
+  deltaTime: 1,
+  lastUpdate: Date.now(),
   fadeToBlack(time,callback) {
     this.fadeTime = time;
     this.fadeTimer = time;
@@ -83,6 +85,30 @@ var MainDriver = {
     this.paused = false;
   },
   update() {
+    var now = Date.now();
+    var msPerFrame = 1000/this.FPS;
+    if(now-this.lastUpdate>msPerFrame) {
+      this.updateStep();
+      this.lastUpdate += msPerFrame;
+    }
+    if(now-this.lastUpdate>msPerFrame) {
+      this.updateStep();
+      this.lastUpdate += msPerFrame;
+    }
+    // if(this.lastTime) {
+    //   var dt = now-this.lastTime;
+      // var msPerFrame = 1000/this.FPS;
+    //   this.deltaTime = dt;
+    //   if(dt>msPerFrame*1.5) {
+    //     this.updateStep();
+    //   }
+    // }
+    // this.updateStep();
+
+    // this.lastTime = now;
+
+  },
+  updateStep() {
     frameCount += 1;
     if(this.paused)return inputUpdate();
     try {

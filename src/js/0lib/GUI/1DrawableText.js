@@ -7,6 +7,15 @@ class DrawableText extends Drawable{
       this.textAlign ='center';
       this.textBaseline = 'middle';
       this.textPosition = w/2;
+      this.shouldStroke = false;
+      this.lineWidth = 2;
+      this.strokeStyle = '#000';
+    }
+    Stroke(width=2, style="#000") {
+      this.shouldStroke = true;
+      this.lineWidth = width;
+      this.strokeStyle = style;
+      return this;
     }
     drawShape(canvas) {
       // super.drawShape(canvas);
@@ -19,6 +28,12 @@ class DrawableText extends Drawable{
       canvas.font = this.fontSize*ps.W +'px ' + this.fontFamily;
       canvas.textAlign = this.textAlign;
       canvas.textBaseline=this.textBaseline;
+      if(this.shouldStroke) {
+        canvas.lineWidth = this.lineWidth;
+        canvas.strokeStyle = this.strokeStyle;
+        canvas.strokeText(this.text,this.textPosition, h/2,w);
+      }
       canvas.fillText(this.text,this.textPosition, h/2,w);
+      
     }
   }

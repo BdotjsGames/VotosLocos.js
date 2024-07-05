@@ -1,4 +1,5 @@
 //  Copyright Brian Dizon 2019
+var touchAsMouseEnabled = false;
 
 var touchCE = document.getElementById("touch-canvas");
 var touchCanvas = touchCE.getContext('2d');
@@ -110,7 +111,7 @@ function pointInRect(x,y,rect) {
 function touchdraw(canvas) {
   canvas = touchCanvas;
   canvas.clearRect(0,0,touchCE.width,touchCE.height);
-  if(MainDriver.scene.useTouchAsMouse)return;
+  if(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled)return;
   for(var i=0;i<touchJoySticks.length;++i) {
     var joyStick = touchJoySticks[i];
     var angle = joyStick.output.angle;
@@ -154,7 +155,7 @@ function touchstart(e) {
   for(var i=0;i<touches.length;i++) {
     var touch = e.changedTouches[i];
     var {x, y} = this.getTouchPosition(touch, e);
-    if(MainDriver.scene.useTouchAsMouse) {
+    if(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled) {
       mouse.x = x*CE.width;
       mouse.y = y*CE.height;
       // mouse.down = true;
@@ -202,7 +203,7 @@ function touchend(e) {
   for(var i=0;i<touches.length;i++) {
     var touch = e.changedTouches[i];
     var {x, y} = this.getTouchPosition(touch, e);
-    if(MainDriver.scene.useTouchAsMouse) {
+    if(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled) {
       mouse.x = x*CE.width;
       mouse.y = y*CE.height;
       mouse.held = false;
@@ -225,7 +226,7 @@ function touchend(e) {
 
 function touchStartForMouse() {
   // touchDown = true;
-  if(MainDriver.scene.useTouchAsMouse)
+  if(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled)
     mouse.down = true;
 }
 

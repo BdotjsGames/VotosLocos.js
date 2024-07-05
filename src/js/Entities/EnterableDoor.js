@@ -11,7 +11,6 @@ class EnterableDoor {
     setScene(scene) {
         this.scene=scene;
         this.scene.interactables.push(this);
-        this.enemies = this.scene.enemies;
     }
     onInteract(player) {
         this.scene.loadNextLevel();

@@ -7,9 +7,14 @@ class AdditiveScene extends Scene {
         this.drawsPanel = true;
         this.updatesPrevious = false;
         this.panelColor = "#333e";
+        this.timeOut = 2;
     }
     update() {
         if(this.updatesPrevious)this.prevScene.update();
+        if(this.timeOut>0) {
+            this.timeOut -= 1;
+            return;
+        }
         super.update();
     }
     back() {

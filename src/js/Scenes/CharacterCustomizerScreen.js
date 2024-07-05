@@ -1,8 +1,8 @@
 
-
 class CharacterCustomizerScene extends Scene{
     constructor(model) {
         super();
+        canvas.backgroundImage = IMAGES.backgroundSky
         this.useTouchAsMouse = true;
         this.backButton = this.addSelectableButton(new ButtonUI("BACK", 0.15,0.1,0.25,0.1,0.05,() => {
             this.driver.setScene(new MenuScene(this))

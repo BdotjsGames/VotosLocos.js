@@ -76,10 +76,10 @@ class BackAndForther extends ButtonUI {
             else if (inputX < 0) this.leftButton.click();
             // else if (inputY > 0) this.tryMove(DIRECTION.down);
             // else if (inputY < 0) this.tryMove(DIRECTION.up);
-            else if (getButtonDown(Buttons.Confirm)) {
-                this.increment();
-                // this.click();
-            }
+            // else if (getButtonDown(Buttons.Confirm)) {
+            //     this.increment();
+            //     // this.click();
+            // }
         }
         this.leftButton.update();
         this.rightButton.update();
@@ -116,9 +116,9 @@ class BackAndForther extends ButtonUI {
     // }
     draw(canvas) {
         if(this.hidden)return;
-        super.draw(canvas);
         this.leftButton.draw(canvas);
         this.rightButton.draw(canvas);
+        super.draw(canvas);
     }
 
 }

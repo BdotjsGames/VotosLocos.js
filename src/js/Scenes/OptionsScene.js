@@ -1,3 +1,29 @@
+var toggles = [];
+window.addEventListener('load', function(e) {
+    toggles = [
+        {
+            text: 'Auto Pause ' ,
+            startingValue: AUTOPAUSE,
+            callback: b=>{
+                AUTOPAUSE = !AUTOPAUSE;
+                b.value = AUTOPAUSE;
+                b.ballotMarkFilled = AUTOPAUSE
+                localStorage.setItem("autopause", AUTOPAUSE);
+            }
+        },
+        {
+            text: 'Touch As Mouse' ,
+            startingValue: touchAsMouseEnabled = (localStorage.getItem("autopause")=='true'),
+            callback: b=>{
+                touchAsMouseEnabled = !touchAsMouseEnabled;
+                b.value = touchAsMouseEnabled;
+                b.ballotMarkFilled = touchAsMouseEnabled
+                localStorage.setItem("touchAsMouseEnabled", touchAsMouseEnabled);
+            }
+        }
+    ]
+})
+
 class OptionsScene extends AdditiveScene {
     constructor(prevScene) {
         super(prevScene);
@@ -6,7 +32,7 @@ class OptionsScene extends AdditiveScene {
         var x = 0.4
         var y = 0.2;
         var spacing = 0.1;
-        var w = 0.3;
+        var w = 0.5;
         var fontSize = 0.04;
         var h = 0.07;
         this.addSelectableButton(
@@ -40,19 +66,7 @@ class OptionsScene extends AdditiveScene {
             }).setTrueCoords(false).setBounds(0,1).setValue(VOLUME_MUSIC)
         )
         y+=spacing;
-        var toggles = [
-            {
-                text: 'Auto Pause ' ,
-                startingValue: AUTOPAUSE,
-                callback: b=>{
-                    AUTOPAUSE = !AUTOPAUSE;
-                    // b.text = 'Auto Pause ' + (AUTOPAUSE?'☑':'☐');
-                    b.value = AUTOPAUSE;
-                    b.ballotMarkFilled = AUTOPAUSE
-                    localStorage.setItem("autopause", AUTOPAUSE);
-                }
-            }
-        ]
+        
         toggles.forEach((toggle,i) => {
             // var check = this.addEntity(
             //     new DrawableText(toggle.startingValue?'☑':'☐',x-0.05,y,0.05,h,fontSize*1.2,b=>{

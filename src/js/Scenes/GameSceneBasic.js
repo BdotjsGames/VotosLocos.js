@@ -123,7 +123,7 @@ class GameSceneBasic extends Scene {
     }
     setGoal(goal) {
       if(!this.goalText) {
-        this.goalText = this.addUI(new DrawableText(goal, -0.45,0.05,1,.1,.03)
+        this.goalText = this.addUI(new DrawableText(goal, 0,0.05,1,.1,.03)
         .setTrueCoords(false)
         .setAttr('textAlign', 'left')
         .color(0,0,0)
@@ -153,7 +153,7 @@ class GameSceneBasic extends Scene {
         ), true)
       );
       this.goal = data.Goal;
-      
+      if(data.showGo)this.showGo = true;
       if(data.DialogueData && data.DialogueData.length>0 && !dialogueSkip) {
         this.playDialogue(data.DialogueData, !data.notBlocking, b=>{
           if(data.continueOnDialogueFinish) {

@@ -2,10 +2,18 @@ class ButtonUI extends DrawableText{
     constructor(text, x,y,w,h,size, callback, callback2) {
       super(text, x,y,w,h,size);
       this.trueCoords=false;
-      this.addMorph('hoverOn', new Morph(null, {}, {scaleW: 1.2, scaleH:1.2}, 5, MorphType.easeOutQuad));
-      this.addMorph('hoverOff', new Morph(null, {}, {scaleW: 1, scaleH: 1}, 5));
-      this.addMorph('heldOn', new Morph(null, {}, {alpha: 0.5, scaleW: 1.1, scaleH: 1.1}, 10));    
-      this.addMorph('heldOff', new Morph(null, {}, {alpha: 1}, 10)); 
+      this.addMorph('hoverOn', new Morph(null, {}, {
+        scaleW: 1.2, scaleH:1.2
+      },5, MorphType.easeOutQuad));
+      this.addMorph('hoverOff', new Morph(null, {}, {
+        scaleW: 1, scaleH: 1
+      }, 5));
+      this.addMorph('heldOn', new Morph(null, {}, {
+        alpha: 0.5, 
+        scaleW: 1.1, scaleH: 1.1
+      }, 10));    
+      this.addMorph('heldOff', new Morph(null, {}, 
+        {alpha: 1}, 10)); 
       this.addMorph('click', new MorphGroup(null, [
         [{alpha: 0.5, scaleW: 1.1, scaleH: 1.1}, 1],
         [{scaleW: 1.23, scaleH:1.23, alpha: 1, dy: -.01}, 10],
@@ -34,6 +42,8 @@ class ButtonUI extends DrawableText{
         this.textPosition = 40;
       }
       this.children = [];
+      // this.Stroke(20,"#000")
+      this.timeOut=1;
     }
     addChild(child) {
       child.parent = this;
@@ -122,6 +132,10 @@ class ButtonUI extends DrawableText{
     update() {
       if(this.disabled)return;
       super.update();
+      if(this.timeOut>0) {
+        this.timeOut-=1;
+        return;
+      }
       this.mouseUpdate();
       this.selectedUpdate();
       this.alpha = 1;
@@ -154,20 +168,26 @@ class ButtonUI extends DrawableText{
     }
     drawShape(canvas) {
       // canvas.globalAlpha = this.alpha;
+
+      canvas.strokeStyle = "#000";
+      canvas.strokeRect(0,0,this._w, this._h);
+      canvas.fillStyle = "#bbb";
+      canvas.fillRect(0,0,this._w,this._h);
       if(this.backColor) {
         canvas.fillStyle = this.backColor;
         canvas.fillRect(0,0,this._w, this._h);
       }
       if(this.selected) {
-        canvas.fillStyle = "#999a";
+        canvas.fillStyle = "#fff";
         canvas.fillRect(0,0,this._w, this._h);
       }
       if((this.hover) && this.outlineOnHover) {
-        canvas.strokeStyle = 'white';
+        canvas.strokeStyle = '#999';
         // canvas.lineWidth = .001;      
         canvas.strokeRect(0,0,this._w,this._h);
       }
       canvas.fillstyle = this._color;
+      this._color = "#000"
       super.drawShape(canvas);
       this.children.forEach(child => child.draw(canvas))
       if(this.drawBallotMark){
