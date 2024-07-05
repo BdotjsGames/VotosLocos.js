@@ -133,14 +133,23 @@ class BeatEmUpper {
             var {dx,dy,dz} = vector3Diff(enemy, this);
             var drr = diffSqrd(dx,dy,dz);
             if(drr< this.attackRange*this.attackRange) {
-                var r = Math.sqrt(dx*dx+dy*dy);
-                if(r==0) {
-                    dx=1;
-                    dy=0;
-                    r=1;
+                // var r = Math.sqrt(dx*dx+dy*dy);
+                // if(r==0) {
+                //     dx=1;
+                //     dy=0;
+                //     r=1;
+                // }
+                // this.mx = dx/r;
+                // this.my = dy/r;
+                // this.mx = 0;
+                // this.my = 0;
+                if(dy>20)this.my = 1;
+                else if(dy<-20)this.my = -1;
+                else this.my = 0;
+                this.mx = 0;
+                if(this.model.anim) {
+                    this.mx=0;this.my=0;
                 }
-                this.mx = dx/r;
-                this.my = dy/r;
                 // if(!this.model.anim)
                 //     this.attack();
                 this.attacking = true;

@@ -7,6 +7,14 @@ class NinjaModel extends PlatformerModel {
         this.attackAnim = this.anims.punch1;
         this.attackCombo = [this.anims.punch1];
     }
+    update() {
+        super.update();
+        if(this.attacking) {
+          this.outlineColor = 'red';
+        }else {
+          this.outlineColor = 'black';
+        }
+      }
     createOptions(){
         super.createOptions({
             headOptions: [IMAGES.ninjaHeadOptions[0]],

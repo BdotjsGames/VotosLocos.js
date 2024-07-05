@@ -12,6 +12,14 @@ class BotModel extends PlatformerModel {
             this.body2.drawable.image = IMAGES.botTorso1;
         // }
     }
+    update() {
+      super.update();
+      if(this.attacking) {
+        this.outlineColor = 'red';
+      }else {
+        this.outlineColor = 'black';
+      }
+    }
     createOptions(){
         super.createOptions({
             headOptions: [IMAGES.botHeadOptions[0]],
@@ -80,7 +88,7 @@ var botanims = {
             {limb: 'legL', rotation: 0},
             {limb: 'legL2', rotation: 0},
         ],
-        onstart: self=> {
+        onStart: self=> {
             self.attacking =false;
             self.parent.vx = 0;
             self.parent.vy = 0;
@@ -147,7 +155,7 @@ var botanims = {
               {limb: 'legL', rotation: 0},
               {limb: 'legL2', rotation: 0},
           ],
-          onstart: self=> {
+          onStart: self=> {
               self.attacking =false;
               self.parent.vx = 0;
               self.parent.vy = 0;

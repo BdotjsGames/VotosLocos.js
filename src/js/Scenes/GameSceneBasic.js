@@ -441,4 +441,28 @@ class GameSceneBasic extends Scene {
       this.transitioningOut = true;
       this.driver.transitionToScene(new GameSceneBasic(this.player.model, this.levelNumber));
     }
+    toDeathScene() {
+      var conf;
+      this.driver.setScene(conf = new DeathScene(this,
+        "You fell down the rabbit hole",
+        [
+            {
+                name: "retry",
+                callback: b=>{
+                  // b.scene.back();
+                  this.respawn();
+                }
+            },
+            {
+                name: "quit to menu",
+                callback: b=>{
+                  b.driver.setScene(new MenuScene())
+                }
+            },
+        ]
+    ))
+    conf.drawsPrevscene=false;
+    conf.panelColor = "#000";
+
+    }
   }

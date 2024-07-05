@@ -33,7 +33,10 @@ class Circle {
     canvas.fill();
   }
 }
-
+var offCanvasE = document.createElement('canvas');
+offCanvasE.width = 128;
+offCanvasE.height = 128;
+var offCanvas = offCanvasE.getContext('2d');
 class ImageDrawable {
   constructor(image,x=0,y=0,w,h) {
     this.image = image;
@@ -73,10 +76,26 @@ class ImageDrawable {
   }
   update() {}
   draw(canvas,override) {
-    if(override)return;
     if(this.hidden)return;
     if(!this.image)return;
     if(this.image.width==0)return;
+    if(override
+      &&override.color!='black'
+    ) {
+      offCanvasE.width = this.image.width;
+      offCanvasE.height = this.image.height;
+      offCanvas.fillStyle = override.color;
+      offCanvas.fillRect(0,0,this.image.width,this.image.height);
+      offCanvas.globalCompositeOperation='destination-in'
+      offCanvas.drawImage(this.image,0,0);
+
+      // canvas.save();
+      // canvas.scale(1+override.dw/10,1+override.dw/10)
+      var dw = override.dw+1;
+      canvas.drawImage(offCanvasE,0,0,this.image.width,this.image.height,this.x-dw,this.y-dw,this.w+dw*2,this.h+dw*2);
+      // canvas.restore();
+      return;
+    }
     canvas.drawImage(this.image,this.x,this.y,this.w,this.h);
   }
 }

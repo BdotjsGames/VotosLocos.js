@@ -105,6 +105,10 @@ class Bot extends BeatEmUpper {
                 this.y -= dy/r;
             }
         })
-
+        if(this.model.attacking) {
+            this.model.outlineColor = 'red';
+        }else {
+            this.model.outlineColor = 'black';
+        }
     }
 }

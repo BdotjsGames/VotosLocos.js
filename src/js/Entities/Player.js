@@ -165,7 +165,7 @@ class Player extends BeatEmUpper {
     super.die();
     SOUNDS.blowImpact.play();
     setTimeout(e=>
-      this.scene.respawn(), 1000);
+      this.scene.toDeathScene(), 1000);
   }
   draw(canvas) {
     super.draw(canvas);
