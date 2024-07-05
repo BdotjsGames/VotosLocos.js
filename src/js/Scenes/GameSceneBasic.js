@@ -456,7 +456,7 @@ class GameSceneBasic extends Scene {
             {
                 name: "quit to menu",
                 callback: b=>{
-                  b.driver.setScene(new MenuScene())
+                  this.driver.setScene(new MenuScene())
                 }
             },
         ]

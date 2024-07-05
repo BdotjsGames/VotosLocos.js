@@ -94,6 +94,7 @@ var MainDriver = {
     if(now-this.lastUpdate>msPerFrame) {
       this.updateStep();
       this.lastUpdate += msPerFrame;
+      this.lastUpdate = now;
     }
     // if(this.lastTime) {
     //   var dt = now-this.lastTime;

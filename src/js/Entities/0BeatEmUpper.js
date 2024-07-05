@@ -150,8 +150,8 @@ class BeatEmUpper {
                 if(this.model.anim) {
                     this.mx=0;this.my=0;
                 }
-                // if(!this.model.anim)
-                //     this.attack();
+                if(!this.model.anim)
+                    this.attack();
                 this.attacking = true;
                 this.seeking = true;
                 return;

@@ -29,7 +29,7 @@ class HighFiver extends BeatEmUpper {
         this.isInteractable = true;
         this.interactablesRange = 100;
         this.promptOffsetY = -100;
-        this.attackRange = 100;
+        this.attackRange = 200;
         this.enemySeekRange = 500;
     }
     startFollow(target, distance) {
