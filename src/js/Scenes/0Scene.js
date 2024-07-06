@@ -43,7 +43,14 @@ class Scene {
     })
   }
   draw(canvas) {
-    this.entities.forEach(function(e) {if(e.draw)e.draw(canvas)});
+    var deferred = [];
+    this.entities.forEach(function(e) {
+      if(e.selected) {
+        deferred.push(e);return;
+      }
+      if(e.draw)e.draw(canvas)
+    });
+    deferred.forEach(function(e) {e.draw(canvas);})
   }
   onLeave() {}
   isActive() {
