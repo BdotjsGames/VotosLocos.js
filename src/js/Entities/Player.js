@@ -132,6 +132,7 @@ class Player extends BeatEmUpper {
     var closest = null;
     this.scene.interactables.forEach(interactable => {
       if(!interactable.isInteractable)return;
+      if(interactable.shouldDelete)return;
       const {dx,dy,dz} = vector3Diff(interactable, this);
       var sqrDiff = diffSqrd(dx,dy,dz);
       if(sqrDiff<minDist) {
