@@ -27,6 +27,7 @@ canvas.fillRectFloor = function(x,y,w,h){
   this.fillRect(Math.floor(x),Math.floor(y),Math.floor(w),Math.floor(h));
 }
 
+var WIDTH_BIGGER = true;
 function onresize(e){
   var W = CE.width;
   var H = CE.height+43;
@@ -37,10 +38,13 @@ function onresize(e){
   if(rw >= rc) {
     canvasWrapper.style.height = iH+'px';
     canvasWrapper.style.width = Math.floor(iH * W/H)+'px';
-
+    setButtonsWithShrink(shrink*.5);
+    WIDTH_BIGGER = true;
   } else {
     canvasWrapper.style.width = iW + 'px';
     canvasWrapper.style.height = Math.floor(iW * H/W) + 'px';
+    setButtonsWithShrink(shrink);
+    WIDTH_BIGGER = false
 
   }
   

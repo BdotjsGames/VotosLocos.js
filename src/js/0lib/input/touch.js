@@ -13,74 +13,100 @@ window.addEventListener('load', function() {
   touchCE.height = CE.height;
 })
 
-var touchOn = false;
+var touchOn = true;
 touchStarts = [];
 var touchDown = false;
 var y = .3;
-var touchJoySticks = [
-  {
-    x: .25, y:y+.2, r: .25,
-    area: {
-      x: 0, y: 0, w: 0.5, h: 1
+var touchJoySticks;
+var touchButtons;
+function setButtonsWithShrink(shrinkAmount) {
+  touchJoySticks = [
+    {
+      x: .25, y:y+.2, r: .25,
+      area: {
+        x: 0, y: 0, w: 0.5, h: 1
+      },
+      output: {x: 0, y: 0, angle: 0,r:0},
+      held: false,
     },
-    output: {x: 0, y: 0, angle: 0,r:0},
-    held: false,
-  },
-  {
-    x: -.85, y:y+.15, r: .2,
-    area: {
-      x: 0, y: 0, w: 0, h: 1
-    },
-    output: {x: 0, y: 0, angle: 0,r:0},
-    held: false,
-  }
-];
+    {
+      x: -.85, y:y+.15, r: .2,
+      area: {
+        x: 0, y: 0, w: 0, h: 1
+      },
+      output: {x: 0, y: 0, angle: 0,r:0},
+      held: false,
+    }
+  ];
 
-var touchButtons = [
-  {
-    name: 'A',
-    x: .85, y:y+.25, r:.1,
-    area: {
-      // x: 0.75, y: 0, w: 0.25, h:1
-      x: .85-.1, y:y+.25-.1, w: .2, h: .2
+
+  touchButtons = [
+    {
+      name: 'A',
+      x: .85, y:y+.25, r:.1,
+      area: {
+        // x: 0.75, y: 0, w: 0.25, h:1
+        x: .85-.1, y:y+.25-.1, w: .2, h: .2
+      },
+      held: false,
     },
-    held: false,
-  },
-  {
-    name: 'B',
-    x: .65, y:y+.25, r:.1,
-    area: {
-      x: .65-.1, y:y+.25-.1, w: .2, h: .2
+    {
+      name: 'B',
+      x: .65, y:y+.25, r:.1,
+      area: {
+        x: .65-.1, y:y+.25-.1, w: .2, h: .2
+      },
+      held: false,
     },
-    held: false,
-  },
-  {
-    name: 'X',
-    x: .75, y:y+.05, r:.1,
-    area: {
-      // x: 0.5, y: 0, w: 0.25, h:1
-      x: .75-.1, y:y+.05-.1, w: .2, h: .2
+    {
+      name: 'X',
+      x: .75, y:y+.05, r:.1,
+      area: {
+        // x: 0.5, y: 0, w: 0.25, h:1
+        x: .75-.1, y:y+.05-.1, w: .2, h: .2
+      },
+      held: false,
+    },{
+      name: 'Y',
+      x: .95, y:y+.05, r:.1,
+      area: {
+        // x: 0.75, y: 0, w: 0.25, h:1
+        x: .95-.1, y:y+.05-.1, w: .2, h: .2
+      },
+      held: false,
     },
-    held: false,
-  },{
-    name: 'Y',
-    x: .95, y:y+.05, r:.1,
-    area: {
-      // x: 0.75, y: 0, w: 0.25, h:1
-      x: .95-.1, y:y+.05-.1, w: .2, h: .2
+    {
+      name: '||',
+      x: .95, y:.05, r:.1,
+      area: {
+        // x: 0.75, y: 0, w: 0.25, h:1
+        x: .95-.1, y:.05-.1, w: .2, h: .2
+      },
+      held: false,
     },
-    held: false,
-  },
-  {
-    name: '||',
-    x: .95, y:.05, r:.1,
-    area: {
-      // x: 0.75, y: 0, w: 0.25, h:1
-      x: .95-.1, y:.05-.1, w: .2, h: .2
-    },
-    held: false,
-  },
-]
+  ]
+
+    this.touchJoySticks.forEach(j=> {
+      j.r *= shrinkAmount
+      j.y += (1-j.y)*(1-shrinkAmount)
+      j.x += (0-j.x)*(1-shrinkAmount)
+    })
+    var w = .2*shrinkAmount
+    this.touchButtons.forEach(b=> {
+      // b.y += 0.25;
+      // b.area.y+=0.25
+      b.x += (1-b.x)*(1-shrinkAmount)
+      b.y += (1-b.y)*(1-shrinkAmount);
+      b.area.x = b.x - w/2;
+      b.area.y = b.y - w/2;
+      b.area.w = w;
+      b.area.h=w;
+    })
+}
+var shrink = localStorage.getItem('touchShrink')
+if(shrink) shrink= parseFloat(shrink);
+else shrink = 1;
+setButtonsWithShrink(shrink);
 
 function createTouchButton(name,position,rect) {
   var button = {
@@ -94,15 +120,17 @@ function createTouchButton(name,position,rect) {
   return button;
 }
 
-
+var lastTouchPosition;
 function getTouchPosition(touch, e) {
   var ref = CE;
   if(!(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled))ref = touchCE;
   var boundingClientRect = ref.getBoundingClientRect();    
   var x = touch.pageX-boundingClientRect.left;
   var y = touch.pageY-boundingClientRect.top - document.body.scrollTop;
-  var W = this.canvas.canvas.offsetWidth;
-  var H = this.canvas.canvas.offsetHeight;
+  var W = ref.offsetWidth;
+  var H = ref.offsetHeight;
+  lastTouchPosition = {x,y}
+
   x = x/W;
   y = y/H;
   return{x,y};
@@ -142,12 +170,20 @@ function touchdraw(canvas) {
     var h = button.r * CE.height;
     var color = 'rgba(255,255,255,0.5)';
     if(button.held)color = 'rgba(255,0,0,0.5)';
+    if(pointInRect(mouse.x/CE.width,mouse.y/CE.height,button.area)) {
+      color = 'rgba(255,0,0,0.5)';
+    }
     canvas.fillStyle = color
     canvas.fillRect(x-w/2,y-h/2,w,h);
     canvas.fillStyle = "#fff";
     canvas.textAlign = 'center';
     canvas.font = "20px Arial";
     canvas.fillText(button.name, x,y);
+  }
+  if(lastTouchPosition) {
+    canvas.fillStyle = 'red';
+    // canvas.fillRect(lastTouchPosition.x,lastTouchPosition.y,20,20)
+    canvas.fillRect(lastTouchPosition.x*touchCE.width,lastTouchPosition.y*touchCE.height,20,20)
   }
 }
 

@@ -91,26 +91,22 @@ class OptionsScene extends AdditiveScene {
             y+=spacing;
         })
         this.addSelectableButton(
+            new SliderOptionUI('Touch Scale',x,y,0.3,0.05,(value,self)=>{
+                localStorage.setItem("touchShrink", value);
+                shrink = value;
+                if(WIDTH_BIGGER) value *= 0.5;
+                setButtonsWithShrink(value);
+                touchOn = true;
+            }).setTrueCoords(false).setBounds(0.1,1.2).setValue(shrink)
+        )
+        y+=spacing;
+        this.addSelectableButton(
             new ButtonUI('controls',x,y,w,h,fontSize,(b)=>{
                 this.driver.setScene(new ControlsScene(this))
             })
         )
         y+=spacing;
-        if(this.prevScene.player && this.prevScene.player.model) {
-            this.addSelectableButton(
-                new ButtonUI('characterCustomizer',x,y,w,h,fontSize,(b)=>{
-                    this.driver.setScene(new CharacterCustomizerScene(this.prevScene.player.model, this))
-                })
-            )
-            y+=spacing;
-
-            this.addSelectableButton(
-                new ButtonUI('save game',x,y,w,h,fontSize,(b)=>{
-                    saveGameData(this.prevScene);
-                })
-            )
-            y+=spacing;
-        }
+        
     }
     update() {
         super.update();
