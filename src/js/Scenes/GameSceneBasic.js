@@ -14,6 +14,7 @@ class GameSceneBasic extends Scene {
       this.interactables = [];
       this.items = [];
       this.cameraLerpSpeed = 10;
+      canvas.backgroundImage = IMAGES.backgroundSky
       
       this.backgrounds = [];
       this.backgrounds.push(this.ground=new Ground(0,this.startingY-this.groundHeight/2,2000,this.groundHeight));

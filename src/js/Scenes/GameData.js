@@ -115,7 +115,6 @@ GameSequence = [
     {
         name: "Level 1",
         Goal: "Get to The Registrar Office!",
-        debugStartWithThisOne: true,
 
         DialogueData: [
             {person: LouChalibre, text: "You're not registered to vote? Today is the last day!"},
@@ -169,6 +168,16 @@ GameSequence = [
             // [KnockableDoor, 10],
             [Bot, 8],
             [Ninja, 3],
+            [QAnonShamon, 1],
+            // [Bot, 10],
+        ]
+    },
+    {
+        name: "1-2",
+        DialogueData: [], //give ballot cutscene
+        spawnRandom: [
+            // [KnockableDoor, 10],
+            [Bot, 3],
             [Putin, 1],
             // [Bot, 10],
         ]

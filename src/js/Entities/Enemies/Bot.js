@@ -21,6 +21,8 @@ class Bot extends BeatEmUpper {
         this.attackHitbox = {
             width: 40, height: 40,
         }
+        this.largeHitbox= { width: 70, height: 70};
+
         this.noticeDistance = 300
         this.attackX = 240
         this.attackY = 120
@@ -105,10 +107,10 @@ class Bot extends BeatEmUpper {
                 this.y -= dy/r;
             }
         })
-        if(this.model.attacking) {
-            this.model.outlineColor = 'red';
-        }else {
-            this.model.outlineColor = 'black';
-        }
+        // if(this.model.attacking) {
+        //     this.model.outlineColor = 'red';
+        // }else {
+        //     this.model.outlineColor = 'black';
+        // }
     }
 }

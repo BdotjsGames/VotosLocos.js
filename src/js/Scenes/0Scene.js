@@ -23,6 +23,9 @@ class Scene {
       btn.linkButton(this.buttonToLink, DIRECTION.opposite(dir))
     }
     this.buttonToLink = btn;
+    if(!this.selectedButton) {
+      btn.setSelected();
+    }
     return btn;
   }
   addEntity (entity) {
@@ -45,7 +48,7 @@ class Scene {
   draw(canvas) {
     var deferred = [];
     this.entities.forEach(function(e) {
-      if(e.selected) {
+      if(e.selected||e.hover) {
         deferred.push(e);return;
       }
       if(e.draw)e.draw(canvas)

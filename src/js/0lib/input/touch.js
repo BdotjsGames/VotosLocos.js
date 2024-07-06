@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
   touchCE.height = CE.height;
 })
 
-var touchOn = true;
+var touchOn = false;
 touchStarts = [];
 var touchDown = false;
 var y = .3;

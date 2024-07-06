@@ -396,3 +396,8 @@ IMAGES.waterBottle = ImageLoader.loadImage('Items/WaterBottle.png');
 
 IMAGES.touchDpad = ImageLoader.loadImage('touchUI/dpad.png');
 IMAGES.touchDpadRed = ImageLoader.loadImage('touchUI/dpadRed.png');
+
+IMAGES.QAnonHead = ImageLoader.loadImage('enemies/QAnonShamon/head1.png');
+
+IMAGES.MagaMargeHead = ImageLoader.loadImage('enemies/MagaMarge/head1.png');
+IMAGES.MagaMargeTorso = ImageLoader.loadImage('enemies/MagaMarge/torso1.png');

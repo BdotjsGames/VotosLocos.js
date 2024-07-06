@@ -101,6 +101,7 @@ class PlatformerModel extends Model {
         category: "head",
         onChange: (value, i) => {
           this.headBase.drawable.image = value;
+          this.headBase.drawable.setScaleToImage();
           this.changeSkinColor(this.skinColorIndex);
           if(i>9) {
             this.mouth.hidden = true;

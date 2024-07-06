@@ -38,7 +38,6 @@ class MenuScene extends Scene {
       // MainDriver.setScene(new GameSceneBasic());
     })).center().color(250,250,250)
     // .Stroke(20,"#000")
-    .setSelected();
     this.addSelectableButton(new ButtonUI("OPTIONS", x,0.8, 0.4,0.1,0.05,e=>{
       MainDriver.setScene(new OptionsScene(this));
       // MainDriver.setScene(new GameSceneBasic());
