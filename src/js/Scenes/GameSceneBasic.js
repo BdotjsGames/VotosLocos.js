@@ -82,6 +82,7 @@ class GameSceneBasic extends Scene {
       if(this.levelNumber<GameSequence.length) {
         this.processLevelData(GameSequence[this.levelNumber]);
       }
+      saveGameData(this, false)
     }
     addClouds() {
       for(var i=0;i<10;i++) {
@@ -476,12 +477,13 @@ class GameSceneBasic extends Scene {
       model, levelNumber
     }
   }
-  function saveGameData(scene) {
+  function saveGameData(scene, showConf = true) {
     try {
       var data = {}
       data.modelOptions = scene.player.model.getModelOptions();
       data.levelNumber = scene.levelNumber
       localStorage.setItem('savedGame', JSON.stringify(data));
+      if(!showConf)return;
       scene.driver.setScene(new ConfirmationScene(scene.driver.scene,
         "Saved",
       [
@@ -491,6 +493,7 @@ class GameSceneBasic extends Scene {
           },
       ]))
     } catch(e) {
+      if(!showConf)return;
       scene.driver.setScene(new ConfirmationScene(scene.driver.scene,
         "Save failed",
       [
