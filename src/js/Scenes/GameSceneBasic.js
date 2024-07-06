@@ -477,7 +477,27 @@ class GameSceneBasic extends Scene {
     }
   }
   function saveGameData(scene) {
-    var data = {}
-    data.modelOptions = scene.player.model.getModelOptions();
-    data.levelNumber = scene.levelNumber
+    try {
+      var data = {}
+      data.modelOptions = scene.player.model.getModelOptions();
+      data.levelNumber = scene.levelNumber
+      localStorage.setItem('savedGame', JSON.stringify(data));
+      scene.driver.setScene(new ConfirmationScene(scene.driver.scene,
+        "Saved",
+      [
+          {
+              name: "okay",
+              callback: b=>b.scene.back()
+          },
+      ]))
+    } catch(e) {
+      scene.driver.setScene(new ConfirmationScene(scene.driver.scene,
+        "Save failed",
+      [
+          {
+              name: "okay",
+              callback: b=>b.scene.back()
+          },
+      ]))
+    }
   }

@@ -7,6 +7,7 @@ class PauseScene extends AdditiveScene {
         var spacing = .05;
         var y = 0.3;
         var w  = 0.6;
+        var x = 0.5;
         this.addSelectableButton(
             new ButtonUI("back",0.05,0.05,0.25,0.08,0.05,e=>{
                 this.back();
@@ -24,6 +25,21 @@ class PauseScene extends AdditiveScene {
             }).center()
         )
         y+= h+spacing;
+        if(this.prevScene.player && this.prevScene.player.model) {
+            this.addSelectableButton(
+                new ButtonUI('Customize',x,y,w,h,fontSize,(b)=>{
+                    this.driver.setScene(new CharacterCustomizerScene(this.prevScene.player.model, this))
+                }).center()
+            )
+            y+=h+spacing;
+
+            this.addSelectableButton(
+                new ButtonUI('Save Game',x,y,w,h,fontSize,(b)=>{
+                    saveGameData(this.prevScene);
+                }).center()
+            )
+            y+=h+spacing;
+        }
         this.addSelectableButton(
             new ButtonUI("Quit to Menu",0.5,y,w,h,fontSize,e=>{
                 this.driver.setScene(new ConfirmationScene(this,
