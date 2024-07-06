@@ -17,6 +17,7 @@ function listenForNextKey(callback) {
 }
 
 function onkeydown(e) {
+
   var k = e.keyCode;
   if(keyLogging)console.log(e);
   if(listeningForNextKey) {

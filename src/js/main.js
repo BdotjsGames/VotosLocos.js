@@ -163,6 +163,8 @@ var MainDriver = {
     if(touchOn && !this.scene.dialogueBlocking) {
       touchdraw(canvas);
     }
+    else touchDrawClear();
+
     if(ImageLoader.isLoading()) {
       canvas.fillStyle = "white";
       canvas.strokeStyle = "black";

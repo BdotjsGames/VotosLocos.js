@@ -187,6 +187,11 @@ function touchdraw(canvas) {
   }
 }
 
+function touchDrawClear() {
+  touchCanvas.clearRect(0,0,touchCE.width,touchCE.height);
+}
+
+
 
 function touchstart(e) {
   initializeSound();
