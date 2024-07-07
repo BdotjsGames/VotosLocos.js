@@ -218,7 +218,8 @@ GameSequence = [
         music: SOUNDS.cumbia,
         environment: Environments.OfficeInterior,
         spawnRandom: [
-            [Ninja, 3]
+            [Ninja, 3],
+            [MagaMarge, 1]
         ],
         onLoad: (scene) => {
             scene.minY += 200

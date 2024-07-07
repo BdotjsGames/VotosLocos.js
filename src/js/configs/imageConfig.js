@@ -401,3 +401,4 @@ IMAGES.QAnonHead = ImageLoader.loadImage('enemies/QAnonShamon/head1.png');
 
 IMAGES.MagaMargeHead = ImageLoader.loadImage('enemies/MagaMarge/head1.png');
 IMAGES.MagaMargeTorso = ImageLoader.loadImage('enemies/MagaMarge/torso1.png');
+IMAGES.MagaMargeArm = ImageLoader.loadImage('enemies/MagaMarge/arm1.png');
