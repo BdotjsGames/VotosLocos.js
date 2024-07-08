@@ -8,6 +8,7 @@ class PauseScene extends AdditiveScene {
         var y = 0.3;
         var w  = 0.6;
         var x = 0.5;
+        MusicHandler.pause()
         this.addSelectableButton(
             new ButtonUI("back",0.05,0.05,0.25,0.08,0.05,e=>{
                 this.back();
@@ -59,6 +60,10 @@ class PauseScene extends AdditiveScene {
             }).center()
         )
         
+    }
+    back() {
+        MusicHandler.resume()
+        super.back();
     }
     update() {
         super.update();

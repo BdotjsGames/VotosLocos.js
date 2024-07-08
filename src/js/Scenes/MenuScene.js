@@ -3,6 +3,7 @@ class MenuScene extends Scene {
     super();
     canvas.backgroundImage = IMAGES.Purlsey1
     this.useTouchAsMouse = true;
+    MusicHandler.resume();
     MusicHandler.playMusic(SOUNDS.norteno);
     // for(var i=0;i<10;i++) {
     //   var x = CE.width*Math.random();
