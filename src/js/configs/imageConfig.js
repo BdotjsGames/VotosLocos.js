@@ -402,3 +402,10 @@ IMAGES.QAnonHead = ImageLoader.loadImage('enemies/QAnonShamon/head1.png');
 IMAGES.MagaMargeHead = ImageLoader.loadImage('enemies/MagaMarge/head1.png');
 IMAGES.MagaMargeTorso = ImageLoader.loadImage('enemies/MagaMarge/torso1.png');
 IMAGES.MagaMargeArm = ImageLoader.loadImage('enemies/MagaMarge/arm1.png');
+
+
+// IMAGES.inputTileMap = ImageLoader.loadImage('kenney_inputPromptsPixel16x/Tilemap/tilemap_packed.png')
+IMAGES.inputPromptButtonY = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0007.png')
+IMAGES.inputPromptKeyE = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0087.png')
+IMAGES.inputPromptKeyEOff = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0360.png')
+IMAGES.inputPromptKeyF = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0123.png')

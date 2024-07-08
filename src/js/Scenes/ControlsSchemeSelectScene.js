@@ -3,11 +3,11 @@ class ControlsSchemeSelectScene extends ConfirmationSceneVertical {
     constructor(prevScene) {
         super(prevScene, "Select Controls Scheme", [
             {
-                name: "WASD + IJKL",
+                name: "WASD + E+JKL",
                 callback: b=>b.scene.selectOption(0)
             },
             {
-                name: "Arrow Keys + XCVB",
+                name: "Arrow Keys + F+XCV",
                 callback: b=>b.scene.selectOption(1)
             },
             {

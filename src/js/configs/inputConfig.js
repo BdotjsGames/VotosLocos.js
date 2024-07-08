@@ -55,7 +55,7 @@ function configureButtonList(buttonNamesList, attributeName, valuesList) {
 window.addEventListener('load', function (e) {
   var buttonNames = ['A', 'B', 'X', 'Y'];
   configureButtonList(buttonNames, 'keys', 'JKLE'.keyCodes);
-  configureButtonList(buttonNames, 'keys', 'XCVB'.keyCodes); //Z is skipped for azerty
+  configureButtonList(buttonNames, 'keys', 'XCVF'.keyCodes); //Z is skipped for azerty
   configureButtonList(buttonNames, 'buttons', [2, 0, 1, 3]);
   configureButtonList(buttonNames, 'touchButtons', [0, 1, 2, 3]);
 
@@ -130,7 +130,7 @@ window.addEventListener('load', function (e) {
     allKeys: true,
   }
   try{
-    // loadControls();
+    loadControls();
   } catch(e) {
       console.error(e)
   }

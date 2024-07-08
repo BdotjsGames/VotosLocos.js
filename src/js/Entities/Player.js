@@ -180,9 +180,20 @@ class Player extends BeatEmUpper {
       `[${Buttons.Y.keys[0].keyDisplay}]`,
       `[${Buttons.Y.keys[1].keyDisplay}]`,
       '(Y)','[Y]'][SelectedSchemeIndex]
-    canvas.lineWidth = 2;
-    canvas.strokeStyle = 'black';
-    canvas.strokeText(interactPrompt, obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
-    canvas.fillText(interactPrompt, obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
+    var interactPromptImage = [
+      IMAGES.inputPromptKeyE,
+      IMAGES.inputPromptKeyF,
+      IMAGES.inputPromptButtonY,
+      IMAGES.inputPromptButtonY,
+    ][SelectedSchemeIndex];
+    var w = interactPromptImage.width;
+    var h = interactPromptImage.height;
+    w*=3;
+    h*=3;
+    canvas.drawImage(interactPromptImage, obj.x-w/2,-h/2+obj.y+obj.z-obj.h+(obj.promptOffsetY||0),w,h);
+    // canvas.lineWidth = 2;
+    // canvas.strokeStyle = 'black';
+    // canvas.strokeText(interactPrompt, obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
+    // canvas.fillText(interactPrompt, obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
   }
 }
