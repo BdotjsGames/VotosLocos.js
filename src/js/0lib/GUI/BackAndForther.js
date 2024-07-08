@@ -39,8 +39,9 @@ class BackAndForther extends ButtonUI {
         // this.center();
     }
 
-    setValue(value) {
+    setValue(value, callOnChange = false) {
         this.value = value;
+        if(callOnChange)this.onValueChanged(value)
         return this;
     }
     setBounds(min,max) {

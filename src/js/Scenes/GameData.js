@@ -643,16 +643,14 @@ GameSequence = [
             {person: LouChalibre, text: "We need to get you to the polling location"},
             {person: LouChalibre, text: "Lets take the bus!"},
             {person: LouChalibre, text: "Many cities have free public buses to the polling location."},
-            {person: LouChalibre, text: "..."},
-            {person: LouChalibre, text: "We havent made a bus asset yet, so just pretend this is the bus okay?"},
-            
         ],
+        // debugStartWithThisOne: true,
         dontShowGo: true,
         onLoad: (scene) => {
             // var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,-100))
             // lowRider.w *= 3;
             // lowRider.h *= 3;
-            var lowRider = scene.addEntity(new LowRider(150,-100))
+            var lowRider = scene.addEntity(new FreedomBus(150,-100))
 
 
             var door = scene.addEntity(new EnterableDoor(lowRider.x+250,lowRider.y+250,0));

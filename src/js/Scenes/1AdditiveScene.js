@@ -3,7 +3,7 @@ class AdditiveScene extends Scene {
         super();
         this.prevScene = prevScene;
         this.isAdditiveScene = true;
-        this.drawsPrevscene = true;
+        this.drawsPrevscene = prevScene!=null;
         this.drawsPanel = true;
         this.updatesPrevious = false;
         this.panelColor = "#333e";

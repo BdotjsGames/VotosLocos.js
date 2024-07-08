@@ -14,8 +14,13 @@ window.addEventListener('load', function(e) {
                   return;
                 }
               }
-
-            MainDriver.setScene(new MenuScene());
+            var controlsScheme = localStorage.getItem('controlsScheme')
+            if(!controlsScheme)
+              MainDriver.setScene(new ControlsSchemeSelectScene());
+            else {
+              SelectedSchemeIndex = parseInt(controlsScheme)
+              MainDriver.setScene(new MenuScene());
+            }
             // MainDriver.setScene(new GameSceneBasic());
             // MainDriver.setScene(new ModelEditorScene());
           },1000);

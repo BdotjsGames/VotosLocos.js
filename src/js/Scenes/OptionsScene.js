@@ -66,6 +66,12 @@ class OptionsScene extends AdditiveScene {
             }).setTrueCoords(false).setBounds(0,1).setValue(VOLUME_MUSIC)
         )
         y+=spacing;
+        this.addSelectableButton(
+            new ButtonUI('controls',x,y,w,h,fontSize,(b)=>{
+                this.driver.setScene(new ControlsScene(this))
+            })
+        )
+        y+=spacing;
         
         toggles.forEach((toggle,i) => {
             // var check = this.addEntity(
@@ -90,6 +96,7 @@ class OptionsScene extends AdditiveScene {
             )
             y+=spacing;
         })
+        y+=spacing;
         this.addSelectableButton(
             new SliderOptionUI('Touch Scale',x,y,0.3,0.05,(value,self)=>{
                 localStorage.setItem("touchShrink", value);
@@ -100,12 +107,7 @@ class OptionsScene extends AdditiveScene {
             }).setTrueCoords(false).setBounds(0.1,1.2).setValue(shrink)
         )
         y+=spacing;
-        this.addSelectableButton(
-            new ButtonUI('controls',x,y,w,h,fontSize,(b)=>{
-                this.driver.setScene(new ControlsScene(this))
-            })
-        )
-        y+=spacing;
+        
         
     }
     update() {

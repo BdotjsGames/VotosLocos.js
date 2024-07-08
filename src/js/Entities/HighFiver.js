@@ -88,7 +88,7 @@ class HighFiver extends BeatEmUpper {
     }
    
     followUpdate() {
-        this.enemySearchUpdate();
+        // this.enemySearchUpdate();
         if(this.seeking)return;
         if(this.model.attacking)return;
         var target = this.followTarget;

@@ -5,15 +5,15 @@ class PauseScene extends AdditiveScene {
         var h = 0.1;
         var fontSize = 0.07;
         var spacing = .05;
-        var y = 0.3;
+        var y = 0.2;
         var w  = 0.6;
         var x = 0.5;
         MusicHandler.pause()
-        this.addSelectableButton(
-            new ButtonUI("back",0.05,0.05,0.25,0.08,0.05,e=>{
-                this.back();
-            })
-        )
+        // this.addSelectableButton(
+        //     new ButtonUI("back",0.05,0.05,0.25,0.08,0.05,e=>{
+        //         this.back();
+        //     })
+        // )
         this.addSelectableButton(
             new ButtonUI("Resume",0.5,y,w,h,fontSize,e=>{
                 this.back();

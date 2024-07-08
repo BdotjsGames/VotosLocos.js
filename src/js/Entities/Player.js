@@ -176,6 +176,13 @@ class Player extends BeatEmUpper {
     canvas.font = '40px' + FONT_FAMILY.default;
     canvas.fillStyle = 'white';
     canvas.textAlign='center';
-    canvas.fillText('[Y]', obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
+    var interactPrompt = [
+      `[${Buttons.Y.keys[0].keyDisplay}]`,
+      `[${Buttons.Y.keys[1].keyDisplay}]`,
+      '(Y)','[Y]'][SelectedSchemeIndex]
+    canvas.lineWidth = 2;
+    canvas.strokeStyle = 'black';
+    canvas.strokeText(interactPrompt, obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
+    canvas.fillText(interactPrompt, obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
   }
 }

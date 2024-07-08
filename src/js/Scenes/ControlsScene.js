@@ -11,8 +11,25 @@ class ControlsScene extends AdditiveScene {
         this.addSelectableButton(
             new ButtonUI("back",0.05,0.05,0.25,0.07,0.05,e=>{
                 this.driver.setScene(this.prevScene);
-            }).setSelected()
+            })
         )
+
+        this.addEntity(new DrawableText('Controls Scheme', 0.5,0.1,0.4,0.05,0.08))
+         .setTrueCoords(false)
+        var btn = this.addSelectableButton(new BackAndForther(
+            ['WASD', 'Arrows', 'Controller', 'touch'][SelectedSchemeIndex],
+             0.5,0.2,0.3,0.08,value=>{
+                btn.text = ['WASD', 'Arrows', 'Controller', 'touch'][value];
+                SelectedSchemeIndex = value;
+                localStorage.setItem('controlsScheme', value)
+            },
+            (b) => {
+                b.increment();
+                // this.driver.setScene(new ModelOptionSelectorScene(this, this.model, customizableOption));
+            }
+        ).setBounds(0,3).setValue(SelectedSchemeIndex)
+        ).setSelected();
+        y+=.1;
        
         var buttons = [
             {name: 'Jump', buttons: Buttons.A},
@@ -45,10 +62,10 @@ class ControlsScene extends AdditiveScene {
             // y+=spacing
         })
         this.addSelectableButton(
-            new ButtonUI('save',x-.3,y,w,h,fontSize,b=>{
+            new ButtonUI('save',0.5,y+.05,w,h,fontSize,b=>{
                 saveControls();
             })
-        )
+        ).center()
         y+=spacing
     }
     
