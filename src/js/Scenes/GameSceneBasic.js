@@ -181,6 +181,7 @@ class GameSceneBasic extends Scene {
         this.showGo = false;
         this.showGoOnEnemiesDefeated = true;
       }
+      this.winCondition = data.winCondition;
       this.encounters = data.encounters;
       if(data.night) {
         this.doLighting = true;
@@ -269,6 +270,7 @@ class GameSceneBasic extends Scene {
       if(this.showGoOnEnemiesDefeated) {
         this.showGo= this.enemies.length==0;
       }
+      if(this.winCondition)this.showGo = this.winCondition(this);
       if(this.transitioningOut) return;
       super.update();
       if(DEV) {
@@ -302,7 +304,7 @@ class GameSceneBasic extends Scene {
         }
       }
       var tvx = target.vx||0;
-      var tx = target.x + tvx*5;
+      var tx = target.x + tvx*1;
       var ty = target.y - target.h+target.z;
       if(!this.dialogueController.done) {
         ty += CE.height/40;
@@ -451,7 +453,7 @@ class GameSceneBasic extends Scene {
             {
                 name: "retry",
                 callback: b=>{
-                  // b.scene.back();
+                  b.scene.back();
                   this.respawn();
                 }
             },

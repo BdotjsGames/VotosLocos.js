@@ -16,7 +16,7 @@ class PlatformerModel extends Model {
     this.self = this;
     this.anims=anims;
     this.attackCombo = [anims.strike, -1,anims.flipKick, anims.groundSlam, anims.armSpinny];
-    // this.attackCombo = [anims.groundSlam];
+    // this.attackCombo = [anims.armSpinny];
     // this.attackCombo = [anims.punch1, anims.punch2, anims.strike];
     this.attackComboIndex = 0;
     this.attackAnim = anims.strike;
@@ -783,6 +783,29 @@ class PlatformerModel extends Model {
       this.head.rotation = -Math.PI/20;
       // this.arm1.rotation = Math.PI;
   }
+  neutralFace() {
+    if(this.impactStopTimer>=0)return;
+    this.mouth.drawable.image = this.mouthType;
+
+  }
+  fear() {
+    if(this.mouth.drawable.image!=IMAGES.mouthOpenDistress && this.mouth.drawable.image){
+      this.mouthType = this.mouth.drawable.image;
+      this.mouth.drawable.image = IMAGES.mouthOpenDistress;
+    }
+    this.hitRotation = Math.PI/10;//(Math.random()*2-1) * Math.PI/5;
+    this.rotation = 0;
+    this.body.rotation = -this.hitRotation;
+    this.body2.rotation = -this.hitRotation;
+    this.head.rotation = -this.hitRotation;
+    // this.arm1.rotation = -Math.PI*1.2;
+    // this.arm2.rotation = -Math.PI*0.5;
+    this.legL.rotation = Math.PI/4;
+    this.legR.rotation = -Math.PI/4;
+    this.arm1.rotation = Math.PI;
+    this.arm2.rotation = Math.PI;
+    this.isHit = true;
+}
   getHit(init) {
     if(init || !this.hitRotation) { 
       if(this.mouth.drawable.image!=IMAGES.mouthOpenDistress && this.mouth.drawable.image){
@@ -914,6 +937,7 @@ class PlatformerModel extends Model {
   }
   animStartFrame(keyFrame) {
     var t = keyFrame.time;
+    this.damage = keyFrame.damage;
     keyFrame.limbs.forEach(limbData => {
       var limb = this[limbData.limb];
       var dr = (limbData.rotation-limb.rotation) || 0
@@ -1237,6 +1261,7 @@ var anims = {
   armSpinny: [
     {
       limbs: [],
+      damage: 2,
       customUpdate: self=>{
         var aa = self.arm1.rotation;
         self.attacking = true

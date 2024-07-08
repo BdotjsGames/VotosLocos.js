@@ -5,10 +5,9 @@ class Bot extends BeatEmUpper {
 
         this.speed = 3;
         this.grav = 0.25;
-        this.shootTime = 10;
+        this.shootTime = 60;
         this.shootTimer = 60;
         this.heal = 0.01;
-        this.contactDamage = 0;
         this.health = this.maxHealth = 30;
         this.contactDamage = 3;
         this.name = 'bot';

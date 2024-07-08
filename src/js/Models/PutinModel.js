@@ -5,7 +5,7 @@ class PutinModel extends PlatformerModel {
         this.mouth.hidden = true;
         this.anims = botanims;
         // this.attackAnim = this.anims.punch1;
-        this.attackCombo = [anims.punch1, anims.punch2, botanims.punch1];
+        // this.attackCombo = [anims.punch1, anims.punch2, botanims.punch1];
     }
     createOptions(){
         super.createOptions({

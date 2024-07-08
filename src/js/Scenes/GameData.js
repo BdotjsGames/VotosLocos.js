@@ -594,7 +594,11 @@ GameSequence = [
             {person: LouChalibre, text: 'Lets get the word out!'},
             {person: LouChalibre, text: 'Knock on some doors to spread the word!'},
         ],
+        winCondition: scene => {
+            return scene.enemies.length==0&&openedDoors>=12
+        },
         onLoad: scene =>{
+            openedDoors = 0;
             // scene.minY = 0;
             var houses = [];
             for(var i=0;i<12;i++) {

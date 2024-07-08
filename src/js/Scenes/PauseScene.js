@@ -65,10 +65,4 @@ class PauseScene extends AdditiveScene {
         MusicHandler.resume()
         super.back();
     }
-    update() {
-        super.update();
-        if(getButtonDown(Buttons.pause)) {
-            this.back();
-        }
-    }
 }

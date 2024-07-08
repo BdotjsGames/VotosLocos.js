@@ -15,6 +15,9 @@ class AdditiveScene extends Scene {
             this.timeOut -= 1;
             return;
         }
+        if(getButtonDown(Buttons.pause)) {
+            this.back();
+        }
         super.update();
     }
     back() {

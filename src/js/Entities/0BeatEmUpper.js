@@ -45,7 +45,7 @@ class BeatEmUpper {
         this.heal = 0;//0.05;
         this.color = color || 'darkgrey';
         this.color2 = color2 || 'black';
-        this.knockBack = 1;
+        this.knockBack = 3;
         this.getknockBack = 1;
         this.hitSound = SOUNDS.hit;
         this.friction = 0.5;
@@ -65,6 +65,10 @@ class BeatEmUpper {
 
         this.attackRange = 100;
         this.enemySeekRange = 500;
+        this.avoidRange = 300;
+        this.attackSpeed = 100;
+        this.attackTimer = 0;
+        this.hitResistence = 3;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -84,11 +88,22 @@ class BeatEmUpper {
         ctx.fillRect(0, 0, CE.width, CE.height);
     }
     getHit(other) {
-        if(!other.contactDamage)return;
+        var damage = other.contactDamage;
+        if(other.model.anim&&other.model.damage) {
+            damage= other.model.damage;
+        }
+        if(!damage)return;
         if (this.invul > 0) return;
         other.model.impactStop(5);
         this.dx = this.x<other.x?1:-1;
-        this.model.impactStop(25);
+        // console.log(this.hitResistence,damage)
+        if(this.hitResistence>damage) {
+            // this.outlineColor = 'yellow'
+        } else {
+            this.model.impactStop(25);
+            this.model.getHit(true);
+        }
+
         // createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
         spawnHitParticles(this.scene,(other.x+this.x)/2,(this.y+other.y)/2-10, (this.z+other.z)/2-30)
         var k = 1;
@@ -99,10 +114,9 @@ class BeatEmUpper {
         if(k==undefined) console.log('k is undefined');
         this.vx = -dx * k * 10;
         this.x += this.vx;
-        this.vy = -5;
-        this.health -= other.contactDamage;
+        this.vz = -5;
+        this.health -= damage;
         this.invul = this.invulTime;
-        this.model.getHit(true);
         if(other.model.knockbackUp) {
             this.vz = other.model.knockbackUp;
             other.vz = other.model.knockbackUp;
@@ -124,15 +138,40 @@ class BeatEmUpper {
             }
         }
     }
-    enemySearchUpdate() {
-        this.seeking = false;
+    enemyAvoidUpdate() {
+        this.running = false;
         for(var i=0;i<this.enemies.length;i++) {
             var enemy = this.enemies[i];
             if(enemy.shouldDelete)continue;
 
             var {dx,dy,dz} = vector3Diff(enemy, this);
             var drr = diffSqrd(dx,dy,dz);
+            if(drr<this.avoidRange*this.avoidRange) {
+                var r = Math.sqrt(dx*dx+dy*dy);
+                if(r==0) {
+                    dx=1;
+                    dy=0;
+                    r=1;
+                }
+                this.mx = -dx/r;
+                this.my = -dy/r;
+                this.running=true;
+                return;
+            }
+        }
+    }
+    enemySearchUpdate() {
+        this.seeking = false;
+        this.attackTimer += 1;
+        for(var i=0;i<this.enemies.length;i++) {
+            var enemy = this.enemies[i];
+            if(enemy.shouldDelete)continue;
+
+            var {dx,dy,dz} = vector3Diff(enemy, this);
+            var drr = diffSqrd(dx,dy,dz);
+            if(this.attackTimer>this.attackSpeed)
             if(drr< this.attackRange*this.attackRange) {
+                this.attackTimer = 0;
                 // var r = Math.sqrt(dx*dx+dy*dy);
                 // if(r==0) {
                 //     dx=1;
@@ -235,7 +274,7 @@ class BeatEmUpper {
             else 
                 speed = 0;
         }
-        if(!this.model.impactStopTimer>0) {
+        if(this.model.impactStopTimer<10) {
 
             // this.vx += (this.mx * speed - this.vx) * this.friction;
             // this.vy += (this.my * speed - this.vy) * this.friction;
