@@ -140,7 +140,10 @@ canvas.processTag = function(tag, i) {
         data.scale = [bv,bv];
 
       }
-
+      break;
+    case 'img':
+      
+        break;
   }
 }
 canvas.fillRichText = function(text, x,y,maxWidth, textVertSpacing=0) {

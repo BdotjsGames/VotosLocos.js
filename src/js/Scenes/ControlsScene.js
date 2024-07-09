@@ -20,7 +20,7 @@ class ControlsScene extends AdditiveScene {
             ['WASD', 'Arrows', 'Controller', 'touch'][SelectedSchemeIndex],
              0.5,0.2,0.3,0.08,value=>{
                 btn.text = ['WASD', 'Arrows', 'Controller', 'touch'][value];
-                SelectedSchemeIndex = value;
+                setControlsScheme(value)
                 localStorage.setItem('controlsScheme', value)
             },
             (b) => {

@@ -19,6 +19,21 @@ function listenForNextKey(callback) {
 function onkeydown(e) {
 
   var k = e.keyCode;
+  switch(k) {
+    case 'W'.keyCode:
+    case 'A'.keyCode:
+    case 'S'.keyCode:
+    case 'D'.keyCode:
+      setControlsScheme(CONTROL_SCHEMES.WASD)
+      break;
+    case 37:
+    case 38:
+    case 39:
+    case 40:
+      setControlsScheme(CONTROL_SCHEMES.ARROW)
+      break;
+  }
+  
   if(keyLogging)console.log(e);
   if(listeningForNextKey) {
     specialCharacterDisplays[e.keyCode] = e.code.replace('Key', '');

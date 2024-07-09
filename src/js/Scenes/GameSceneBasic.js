@@ -447,10 +447,38 @@ class GameSceneBasic extends Scene {
         canvas.translate(32,CE.height-32);
         this.player.item.type.drawShape(canvas, 0);
         canvas.fillStyle = 'white';
+        canvas.textAlign = 'left';
+        canvas.textBaseline = 'middle';
         canvas.font = '20px '+ FONT_FAMILY.default;
         canvas.fillText(this.player.item.count, 32,0);
         canvas.restore();
       }
+
+      var w = 32;
+      var h = 32;
+      var x = CE.width/2
+      canvas.textAlign = 'left';
+      canvas.textBaseline = 'middle';
+      canvas.fillStyle = '#0006';
+      canvas.fillRect(x,CE.height-h,CE.width/2,h);
+      canvas.font = '12px '+ FONT_FAMILY.default;
+      canvas.fillStyle = 'white';
+      canvas.drawImage(btnImages[0], x,CE.height-h,w,h);
+      x+= w
+      canvas.fillText('Jump', x,CE.height-h+h/2);
+      x+=w;
+      canvas.drawImage(btnImages[1], x,CE.height-h,w,h);
+      x+= w
+      canvas.fillText('Attack', x,CE.height-h+h/2);
+      x+=w;
+      canvas.drawImage(btnImages[2], x,CE.height-h,w,h);
+      x+= w
+      canvas.fillText('Throw', x,CE.height-h+h/2);
+      x+=w;
+      canvas.drawImage(btnImages[3], x,CE.height-h,w,h);
+      x+=w;
+      canvas.fillText('Interact', x,CE.height-h+h/2);
+      x+=w;
 
       this.dialogueController.draw(canvas);
 

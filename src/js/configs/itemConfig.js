@@ -5,12 +5,19 @@ function drawImage(canvas) {
     var h = this.image.height*s;
     canvas.drawImage(this.image,-w/2,-h/2,w,h);
 }
+function createItemDrop(x,y,item, count) {
+    var drop = new ItemPickup(item.name, item.image, x,y);
+    drop.setItemType(item, count);
+    return drop
+}
 window.addEventListener('load', function() {
     IMAGES.thrownFlag = ImageLoader.loadImage('Items/flag.png')
     ITEMS.flag = {
         damage: 5,
+        name: 'Flags',
         throwable: true,
         frameCount:0,
+        image: IMAGES.thrownFlag,
         drawShape: (canvas, speed=1) => {
             var sx = 1;
             var sy = 1;
@@ -25,6 +32,7 @@ window.addEventListener('load', function() {
         }
     }
     ITEMS.taco = {
+        name: 'Tacos',
         throwable: false,
         onUse: player => {
             player.heal(15)

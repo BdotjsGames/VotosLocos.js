@@ -194,6 +194,7 @@ function touchDrawClear() {
 
 
 function touchstart(e) {
+  setControlsScheme(CONTROL_SCHEMES.TOUCH)
   initializeSound();
   touchOn = true;
   // if(this.scene.startGame)this.scene.startGame();

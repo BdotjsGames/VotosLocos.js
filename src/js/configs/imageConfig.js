@@ -405,6 +405,11 @@ IMAGES.MagaMargeArm = ImageLoader.loadImage('enemies/MagaMarge/arm1.png');
 
 
 // IMAGES.inputTileMap = ImageLoader.loadImage('kenney_inputPromptsPixel16x/Tilemap/tilemap_packed.png')
+// x: 272, y:0 esc
+
+IMAGES.inputPromptButtonA = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0004.png')
+IMAGES.inputPromptButtonB = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0005.png')
+IMAGES.inputPromptButtonX = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0006.png')
 IMAGES.inputPromptButtonY = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0007.png')
 IMAGES.inputPromptKeyE = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0087.png')
 IMAGES.inputPromptKeyEOff = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0360.png')

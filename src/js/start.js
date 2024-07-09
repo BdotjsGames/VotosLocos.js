@@ -18,7 +18,7 @@ window.addEventListener('load', function(e) {
             if(!controlsScheme)
               MainDriver.setScene(new ControlsSchemeSelectScene());
             else {
-              SelectedSchemeIndex = parseInt(controlsScheme)
+              setControlsScheme(parseInt(controlsScheme))
               MainDriver.setScene(new MenuScene());
             }
             // MainDriver.setScene(new GameSceneBasic());

@@ -41,7 +41,7 @@ function handleGamePad() {
       gamepadJoysticks[0].output = {x:x1,y:y1,angle};
       if(x1!=0||y1!=0) {
         gamepadJoysticks[0].held = true;
-        // gamepadOn = true;
+        gamepadOn = true;
       } else {
         gamepadJoysticks[0].held = false;
       }
@@ -61,6 +61,7 @@ function handleGamePad() {
         if(p) {
           gamepadOn = true;
           gamepadAnyButton+=1;
+          setControlsScheme(CONTROL_SCHEMES.GAMEPAD)
           // console.log(gp);
           if(!gamepadButtons[i]) {
             gamepadAnyButtonDown = true;

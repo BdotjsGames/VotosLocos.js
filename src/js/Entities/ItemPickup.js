@@ -23,16 +23,37 @@ class ItemPickup extends ImageDrawable {
         if(i>=0)
             this.scene.interactables.splice(i,1);
     }
-    afterPickup() {
-
+    setItemType(type,count) {
+        this.itemType = type;
+        this.itemCount = count;
+        this.drawShape = type.drawShape;
+        if(type.image)this.image= type.image;
+    }
+    afterPickup(player) {
+        if(this.itemType) {
+            if(player.item.type==this.itemType) {
+                player.item.count += this.itemCount;
+                this.shouldDelete = true;
+                return;
+            }
+            var type = player.item.type;
+            var count = player.item.count;
+            player.item.type = this.itemType;
+            player.item.count = this.itemCount;
+            if(count>0) {
+                this.setItemType(type,count);
+            }
+        }
     }
     onPickup(player) {
+        var count = 'a';
+        if(this.itemCount)count=this.itemCount;
         this.scene.playDialogue(
             [
-                {text: "<color red>you got a " + this.itemName, zoom: 2},
+                {text: "<color red>you got "+count+" " + this.itemName, zoom: 2},
                 // {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
                 // {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
-            ],true, this.afterPickup
+            ],true, ()=>this.afterPickup(player)
         )
     }
     // update() {
@@ -46,9 +67,15 @@ class ItemPickup extends ImageDrawable {
     //         }
     //     })
     // }
+    drawShape(canvas) {
+        canvas.drawImage(this.image,-this.w/2,-this.h,this.w,this.h);
+    }
     draw(canvas) {
         if(this.hidden)return;
         if(!this.image)return;
-        canvas.drawImage(this.image,this.x-this.w/2,this.y-this.h+this.z,this.w,this.h);
+        canvas.save();
+        canvas.translate(this.x,this.y+this.z);
+        this.drawShape(canvas, 0);
+        canvas.restore();
       }
 }

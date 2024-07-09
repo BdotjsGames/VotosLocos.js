@@ -13,6 +13,7 @@ class TrashCan extends EntityTwoPointFiveD {
         this.vy = 0;
         this.vz = 0;
         this.grav = 1;
+        this.dead = false;
     }
     update() {
         // this.hitAmount -= 1;
@@ -51,6 +52,13 @@ class TrashCan extends EntityTwoPointFiveD {
         }
     }
     die() {
+        if(!this.dead) {
+            if(Math.random()<.3)
+                this.scene.addEntity(createItemDrop(this.x,this.y,ITEMS.flag, 10))
+            else if(Math.random()<.3)
+                this.scene.addEntity(new Taco(this.x,this.y))
+        }
+        this.dead = false;
         this.drawable.image = IMAGES.trashCanSmashed
         this.vz = -10;
     }

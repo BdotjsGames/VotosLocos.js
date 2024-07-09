@@ -184,12 +184,13 @@ class Player extends BeatEmUpper {
       `[${Buttons.Y.keys[0].keyDisplay}]`,
       `[${Buttons.Y.keys[1].keyDisplay}]`,
       '(Y)','[Y]'][SelectedSchemeIndex]
-    var interactPromptImage = [
-      IMAGES.inputPromptKeyE,
-      IMAGES.inputPromptKeyF,
-      IMAGES.inputPromptButtonY,
-      IMAGES.inputPromptButtonY,
-    ][SelectedSchemeIndex];
+    // var interactPromptImage = [
+    //   IMAGES.inputPromptKeyE,
+    //   IMAGES.inputPromptKeyF,
+    //   IMAGES.inputPromptButtonX,
+    //   IMAGES.inputPromptButtonY,
+    // ][SelectedSchemeIndex];
+    var interactPromptImage = btnImages[3];
     var w = interactPromptImage.width;
     var h = interactPromptImage.height;
     w*=3;

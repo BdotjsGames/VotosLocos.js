@@ -161,15 +161,18 @@ GameSequence = [
         ],
         spawnRandom: [
             [Bot, 4],
+            [TrashCan, 1],
         ]
     },
     {
         name: "1-2",
         DialogueData: [], //give ballot cutscene
+        music: SOUNDS.cumbia,
         spawnRandom: [
             // [KnockableDoor, 10],
             [Bot, 8],
             [Ninja, 3],
+            [TrashCan, 1],
             [QAnonShamon, 1],
             // [Bot, 10],
         ]
@@ -177,20 +180,24 @@ GameSequence = [
     {
         name: "tacos",
         showGo: true,
-        DialogueData: [], //give ballot cutscene
+        music: SOUNDS.norteno,
+        DialogueData: [], 
         spawnRandom: [
             // [KnockableDoor, 10],
+            [TrashCan, 1],
             [Taco, 3],
             // [Bot, 10],
         ]
     },
     {
         name: "1-2",
-        DialogueData: [], //give ballot cutscene
+        music: SOUNDS.cumbia,
+        DialogueData: [], 
         spawnRandom: [
             // [KnockableDoor, 10],
             [Bot, 3],
             [Putin, 1],
+            [TrashCan, 1],
             // [Bot, 10],
         ]
     },
@@ -206,6 +213,7 @@ GameSequence = [
         dontShowGo: true,
         onLoad: (scene) => {
             scene.player.health = scene.player.maxHealth;
+            scene.addEntity(createItemDrop(300,300, ITEMS.flag, 10))
             var office = scene.addEntity(
                 new ImageDrawable(
                     ImageLoader.loadImage("RegistrarOffice.png",null, (img) => {
@@ -249,6 +257,8 @@ GameSequence = [
             deskImage.w *= 3;
             deskImage.h *= 3;
             deskImage.y = -deskImage.h;
+            scene.addEntity(createItemDrop(750,200, ITEMS.flag, 10))
+
             var desk = scene.addEntity(new EntityTwoPointFiveD(450,160,0,deskImage))
             var npc = scene.addEntity(new HighFiver(500,100))
             // npc.shouldStartDiaolgueOnProximity = true;
@@ -526,6 +536,7 @@ GameSequence = [
         environment: Environments.Grass,
         notBlocking: true,
         music: SOUNDS.marchMusic,
+        continueOnDialogueFinish: true,
         DialogueData: [
             {text: "wooo yeahh"},
             {waitFor: 620},
@@ -563,7 +574,7 @@ GameSequence = [
         name: "Rally March Transition-2",
         notBlocking: true,
         DialogueData: [
-            {waitFor: 620},
+            {waitFor: 120},
         ],
         // continueOnDialogueFinish: true,
         onLoad: scene => {
@@ -606,6 +617,9 @@ GameSequence = [
         DialogueData: [
             {person: LouChalibre, text: 'Lets get the word out!'},
             {person: LouChalibre, text: 'Knock on some doors to spread the word!'},
+        ],
+        spawnRandom: [
+            [Taco, 3],
         ],
         winCondition: scene => {
             return scene.enemies.length==0&&openedDoors>=12
