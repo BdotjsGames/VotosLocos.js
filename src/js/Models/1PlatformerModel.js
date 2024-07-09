@@ -16,6 +16,7 @@ class PlatformerModel extends Model {
     this.self = this;
     this.anims=anims;
     this.attackCombo = [anims.strike, -1,anims.flipKick, anims.groundSlam, anims.armSpinny];
+    // this.attackCombo = [anims.throw];
     // this.attackCombo = [anims.armSpinny];
     // this.attackCombo = [anims.punch1, anims.punch2, anims.strike];
     this.attackComboIndex = 0;
@@ -495,7 +496,12 @@ class PlatformerModel extends Model {
       this.legR._x =0
     }
   }
-  
+  throw() {
+    if(this.unInteruptable)return;
+    if(this.cooldownTimer>0)return;
+    this.startAnim(anims.throw);
+    this.attackTimer = 15;
+  }
   attack() {
     // if(this.attacking)return;
     if(this.unInteruptable)return;
@@ -629,8 +635,9 @@ class PlatformerModel extends Model {
     this.body._y=0;
     this.body2._y=0;
   }
-  walk() {
-    this.idle();
+  walk(noArms = false) {
+    if(!noArms)
+      this.idle();
     // this.scaleX = 1+Math.sin(frameCount*Math.PI/10)*.1;
     // this.scaleY = 1-Math.sin(frameCount*Math.PI/10)*.1;
     var dv = Math.min(1,Math.abs(this.parent.vx/this.parent.speed)+Math.abs(this.parent.vy/this.parent.speed));
@@ -658,9 +665,11 @@ class PlatformerModel extends Model {
     this.legR.rotation = -cos*angle;
     this.legL2.rotation= this.legL.rotation + angle;
     this.legR2.rotation= this.legR.rotation + angle;
-    this.arm1.rotation = -cos*angle;
-    this.arm2.rotation = cos*angle;
-    this.body2.rotation = 0;
+    if(!noArms) {
+      this.arm1.rotation = -cos*angle;
+      this.arm2.rotation = cos*angle;
+      this.body2.rotation = 0;
+    }
     // this.body.rotation = Math.PI/100*Math.abs(this.parent.vx);
     // this.head.rotation = -this.body.rotation;
     // this.body._y = -Math.cos(Math.cos(frq)*Math.PI/2)*10;
@@ -784,7 +793,8 @@ class PlatformerModel extends Model {
       // this.arm1.rotation = Math.PI;
   }
   neutralFace() {
-    if(this.impactStopTimer>=0)return;
+    // if(this.impactStopTimer>=0)return;
+    if(this.mouthType)
     this.mouth.drawable.image = this.mouthType;
 
   }
@@ -866,6 +876,7 @@ class PlatformerModel extends Model {
       return;
     }
     if(this.anim) {
+      this.flip = this.parent.dx<0;
       this.animProcessor();
       return;
     }
@@ -993,6 +1004,9 @@ class PlatformerModel extends Model {
     }
     if(this.animKeyFrame.customUpdate) {
       this.animKeyFrame.customUpdate(this);
+    }
+    if(this.animKeyFrame.doLegWalk&&this.moving) {
+      this.walk(true);
     }
     // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
   }
@@ -1272,6 +1286,50 @@ var anims = {
         self.arm1.rotation = aa + Math.PI/4;
         self.arm2.rotation = aa + Math.PI/4+Math.PI;
       }, time: 50,
+    }
+  ],
+  throw: [
+    {
+      doLegWalk: true,
+      limbs: [
+        {limb: 'body2', rotation: -Math.PI/10},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI*1.3},
+        {limb: 'arm2', rotation: 0},
+      ],
+      time: 2,
+    },
+    {
+      doLegWalk: true,
+      limbs: [
+        {limb: 'body2', rotation: Math.PI/10},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI/2},
+        {limb: 'arm2', rotation: 0},
+      ],
+      time: 2,
+      onStart: self => {
+        self.parent.throwProjectile()
+      }
+    },
+    {
+      doLegWalk: true,
+      limbs: [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: 0},
+        {limb: 'arm2', rotation: 0},
+      ],
+      time: 10,
     }
   ]
 }

@@ -91,6 +91,7 @@ class HighFiver extends BeatEmUpper {
     }
    
     followUpdate() {
+        this.model.neutralFace();
         if(this.health<this.avoidHealth) {
             this.enemyAvoidUpdate();
             if(this.running) {

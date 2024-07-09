@@ -8,7 +8,7 @@ class Chomper extends Platformer {
     // this.wallSlide = false;
     this.speed = 1;
     this.mx = -1;
-    this.heal = 0.01;
+    this.regen = 0.01;
     this.hitSound = SOUNDS.enemyHit;
   }
   die() {

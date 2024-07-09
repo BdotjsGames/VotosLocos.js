@@ -26,7 +26,7 @@ class Platformer {
     this.maxHealth = 30;
     this.invul = 0;
     this.invulTime = 20;
-    this.heal = 0.05;
+    this.regen = 0.05;
     this.color = color||'black';
     this.knockBack = 1;
     this.getknockBack = 1;

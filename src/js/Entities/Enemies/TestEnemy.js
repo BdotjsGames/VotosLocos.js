@@ -7,7 +7,7 @@ class TestEnemy extends BeatEmUpper {
         this.grav = 0.25;
         this.shootTime = 60*2;
         this.shootTimer = 0;
-        this.heal = 0.01;
+        this.regen = 0.01;
         this.contactDamage = 0;
         this.health = this.maxHealth = 15;
         this.contactDamage = 3;

@@ -86,9 +86,11 @@ function rallyScene(scene, x=0) {
         {options:[
             {text: 'yes', sequence:[
                 {person: npc, text: "Okay cool!"},
+                {person: npc, text: "Hey heres some water! Stay hydrated out there!"},
                 {onStart: dia => {
                     npc.isInteractable = false;
                     scene.showGo = true;
+                    scene.addEntity(new WaterBottle(npc.x+100,npc.y+100))
                 }}
             ]},
             {text: 'no', sequence:[{
@@ -173,6 +175,16 @@ GameSequence = [
         ]
     },
     {
+        name: "tacos",
+        showGo: true,
+        DialogueData: [], //give ballot cutscene
+        spawnRandom: [
+            // [KnockableDoor, 10],
+            [Taco, 3],
+            // [Bot, 10],
+        ]
+    },
+    {
         name: "1-2",
         DialogueData: [], //give ballot cutscene
         spawnRandom: [
@@ -193,6 +205,7 @@ GameSequence = [
         ], //give ballot cutscene
         dontShowGo: true,
         onLoad: (scene) => {
+            scene.player.health = scene.player.maxHealth;
             var office = scene.addEntity(
                 new ImageDrawable(
                     ImageLoader.loadImage("RegistrarOffice.png",null, (img) => {
@@ -291,7 +304,7 @@ GameSequence = [
             var lowRider = scene.addEntity(new LowRider(150,-100))
 
 
-            var door = scene.addEntity(new EnterableDoor(lowRider.x+250,lowRider.y+250,0));
+            var door = scene.addEntity(new EnterableDoor(lowRider.x+250,lowRider.y+250,-50));
             door.afterDialogue = () => {
                 scene.loadNextLevel();
                 player.hidden = false;

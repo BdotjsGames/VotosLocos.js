@@ -42,7 +42,7 @@ class BeatEmUpper {
         this.health = this.maxHealth = 30;
         this.invul = 0;
         this.invulTime = 20;
-        this.heal = 0;//0.05;
+        this.regen = 0;//0.05;
         this.color = color || 'darkgrey';
         this.color2 = color2 || 'black';
         this.knockBack = 3;
@@ -69,6 +69,7 @@ class BeatEmUpper {
         this.attackSpeed = 100;
         this.attackTimer = 0;
         this.hitResistence = 3;
+        this.item = {type:{}, count: 0};
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -89,12 +90,14 @@ class BeatEmUpper {
     }
     getHit(other) {
         var damage = other.contactDamage;
+        if(other.model)
         if(other.model.anim&&other.model.damage) {
             damage= other.model.damage;
         }
         if(!damage)return;
         if (this.invul > 0) return;
-        other.model.impactStop(5);
+        if(other.model)
+            other.model.impactStop(5);
         this.dx = this.x<other.x?1:-1;
         // console.log(this.hitResistence,damage)
         if(this.hitResistence>damage) {
@@ -117,6 +120,7 @@ class BeatEmUpper {
         this.vz = -5;
         this.health -= damage;
         this.invul = this.invulTime;
+        if(other.model)
         if(other.model.knockbackUp) {
             this.vz = other.model.knockbackUp;
             other.vz = other.model.knockbackUp;
@@ -230,13 +234,34 @@ class BeatEmUpper {
         if (this.canAttack)
             this.model.attack();
     }
+    throwProjectile() {
+        if(this.item.count <=0 )return;
+        this.item.count -= 1;
+        var data = this.item.type;
+        var z = this.z + (-this.model.legLength-20)*2;
+        var proj = this.scene.addEntity(new LaserBeam(this.x+30*this.dx+this.vx,this.y,z,this.dx*10,5, 100,this.enemies));
+        if(data.drawShape)
+            proj.drawShape = data.drawShape;
+        if(data.damage)
+            proj.damage = data.damage;
+    }
+    useItem() {
+        this.model.throw();
+        if(this.item.count>0){
+            this.model.attackSound.play();
+        }
+    }
     crouch() {
         if (!this.grounded) {
             this.vz += this.crouchFallSpeed;
-            if(this.canAttack) {
-                this.model.slide();
-            }
+            // if(this.canAttack) {
+            //     this.model.slide();
+            // }
         }
+    }
+    heal(amount) {
+        this.health += amount;
+        if(this.health>this.maxHealth)this.health = this.maxHealth;
     }
     update() {
         if(isNaN(this.x))this.x = 0, console.log('NaN X');
@@ -257,7 +282,7 @@ class BeatEmUpper {
                 this.invul--;
         } else {
             if (this.health < this.maxHealth) {
-                this.health += this.heal;
+                this.health += this.regen;
             }
         }
         this.getInputs();

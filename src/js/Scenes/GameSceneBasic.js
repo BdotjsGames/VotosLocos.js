@@ -39,8 +39,16 @@ class GameSceneBasic extends Scene {
       //   this.addEntity(new Drone(x,y)); 
       // }
       this.showGo = false;
-     
-      this.addEntity(this.player = new Player(100,this.startingY,model));
+      if(model.isPlayer) {
+        this.addEntity(this.player = model);
+        this.player.speed = 5;
+        this.player.y = this.startingY;
+        this.player.x = 100;
+        this.player.inputBlocked = false;
+        this.player.z = 0;
+      } else {
+        this.addEntity(this.player = new Player(100,this.startingY,model));
+      }
       // this.addEntity(this.player.networkTester = new PlayerNetworked(80,this.startingY, model.getModelOptions()))
       window.player = this.player;
       // this.addEntity(new Knight(100,-100));
@@ -232,6 +240,8 @@ class GameSceneBasic extends Scene {
       for(var i=0;i<num;i++) {
         var x = 200+Math.random()*(this.ground.w-400);
         var y = Math.random()*this.groundHeight + this.startingY - this.groundHeight/2;
+        if(y<this.minY) y = this.minY;
+        if(y>this.maxY) y = this.maxY;
         this.addEntity(new className(x,y)); 
       }
     }
@@ -370,12 +380,16 @@ class GameSceneBasic extends Scene {
         return;
       }
       if(skipTransition)
-      this.driver.setScene(new GameSceneBasic(this.player.model, levelNumber));
+      this.driver.setScene(new GameSceneBasic(this.player, levelNumber));
       else
-      this.driver.transitionToScene(new GameSceneBasic(this.player.model, levelNumber));
+      this.driver.transitionToScene(new GameSceneBasic(this.player, levelNumber));
       
     }
     loadNextLevel(skipTransition) {
+      this.player.vx = 0;
+      this.player.vy = 0;
+      this.player.vz = 0;
+      this.player.model.endAnim();
       this.player.model.idle();
       this.player.model.update();
       this.loadLevel(this.levelNumber+1,skipTransition);
@@ -428,12 +442,24 @@ class GameSceneBasic extends Scene {
         canvas.drawImage(this.LightMask.CE, 0,0);
         canvas.globalCompositeOperation = "source-over";
       }
+      if(this.player.item.type) {
+        canvas.save();
+        canvas.translate(32,CE.height-32);
+        this.player.item.type.drawShape(canvas, 0);
+        canvas.fillStyle = 'white';
+        canvas.font = '20px '+ FONT_FAMILY.default;
+        canvas.fillText(this.player.item.count, 32,0);
+        canvas.restore();
+      }
+
       this.dialogueController.draw(canvas);
 
       if(this.showGo && frameCount%60<30) {
         canvas.drawImage(IMAGES.GoArrow, CE.width-IMAGES.GoArrow.width,CE.height*.3-IMAGES.GoArrow.height/2);
       }
       this.ui.forEach(u=>u.draw(canvas));
+
+      
     }
     respawn() {
       this.player.health = this.player.maxHealth;

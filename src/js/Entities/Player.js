@@ -15,6 +15,9 @@ class Player extends BeatEmUpper {
     this.networkedStateDiff = {};
     this.attackHitbox = {width: 80, height: 70};
     this.interactablesRange = 200;
+    this.item.type = ITEMS.flag;
+    this.item.count = 10;
+    this.isPlayer = true;
   }
   
   addShoes() {
@@ -80,8 +83,9 @@ class Player extends BeatEmUpper {
       this.setNetworkedStateAttr('unjump', true);
 
     }
-    if(this.crouching = getButton(this.buttons.crouch)) {
-      this.crouch();
+    if(this.crouching = getButtonDown(this.buttons.crouch)) {
+      // this.crouch();
+      this.useItem();
       this.setNetworkedStateAttr('crouch', true);
     } else {
       this.setNetworkedStateAttr('crouch', false);
