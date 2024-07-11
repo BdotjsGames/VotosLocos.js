@@ -27,6 +27,12 @@ class Bot extends BeatEmUpper {
         this.attackY = 120
         this.enemySeekRange = 20;
     }
+    die() {
+        super.die();
+        if(Math.random()<.2) {
+            this.scene.addEntity(createItemDrop(this.x,this.y,ITEMS.flag, 10))
+        }
+    }
     setScene(scene) {
         this.scene=scene;
         this.scene.enemies.push(this);

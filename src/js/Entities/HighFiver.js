@@ -29,11 +29,11 @@ class HighFiver extends BeatEmUpper {
         this.isInteractable = true;
         this.interactablesRange = 100;
         this.promptOffsetY = -100;
-        this.attackRange = 200;
+        this.attackRange = 150;
         this.avoidRange = 200;
-        this.enemySeekRange = 0;
+        this.enemySeekRange = 200;
         this.contactDamage = 1;
-        this.avoidHealth = 31;
+        this.avoidHealth = this.maxHealth/4;
     }
     startFollow(target, distance) {
         this.playerTarget = target;
@@ -251,6 +251,8 @@ class HighFiver extends BeatEmUpper {
     }
     die() {
         if (this.shouldDelete) return;
+        if(this.following)
+        this.stopFollow();
         super.die();
         // SOUNDS.blowImpact.play();
     }

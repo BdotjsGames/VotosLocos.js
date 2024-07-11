@@ -170,7 +170,7 @@ GameSequence = [
         music: SOUNDS.cumbia,
         spawnRandom: [
             // [KnockableDoor, 10],
-            [Bot, 8],
+            // [Bot, 8],
             [Ninja, 3],
             [TrashCan, 1],
             [QAnonShamon, 1],
@@ -752,6 +752,12 @@ GameSequence = [
             
         }
         
+    },
+    {
+        name: "DEMO COMPLETE",
+        DialogueData: [
+            {text: "Congratulations! you made it to the ballot office and completed the demo content so far"},
+        ]
     },
     {
         name: "Boss cutscene"

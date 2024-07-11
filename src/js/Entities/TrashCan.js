@@ -53,9 +53,9 @@ class TrashCan extends EntityTwoPointFiveD {
     }
     die() {
         if(!this.dead) {
-            if(Math.random()<.3)
+            if(Math.random()<.5)
                 this.scene.addEntity(createItemDrop(this.x,this.y,ITEMS.flag, 10))
-            else if(Math.random()<.3)
+            else
                 this.scene.addEntity(new Taco(this.x,this.y))
         }
         this.dead = false;
