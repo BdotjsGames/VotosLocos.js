@@ -262,7 +262,7 @@
 
 		set fileName(val) {
 			this._fileName = val;
-			this.refs.refDownload.download = val;
+			this.refs.refDownload[0].download = val;
 		}
 
 		/**
@@ -305,7 +305,7 @@
 
 		_handleDownloadClick() {
 			/** @type {HTMLCanvasElement} */
-			const canvas = this.refs.refHiddenCanvas[0];
+			const canvas = this.refs.refCanvas[0];
 			const dt = canvas.toDataURL('image/png');
 
 			/** @type {HTMLAnchorElement} */
