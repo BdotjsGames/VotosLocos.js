@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<style>
+	:root {
+		--var-color-file-drop: #9292ff
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	.v-row {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.v-col {
+		display: flex;
+		flex-direction: column;
+	}
+</style>
+
+<body>
+	<v-crop-image></v-crop-image>
+</body>
+
+<script>
+	class VEventEmitter {
+		/**
+		 * @type {Record<string, Array<{
+		 * 		fn: ()=> {},
+		 * 		scope: unknown,
+		 * 		once: boolean,
+		 * 		didCallOnce: boolean
+		 * 	}>>
+		 * }
+		 * */
+		#listeners = {};
+
+		constructor() {
+		}
+
+		on(evName, fn, scope, { once } = {}) {
+			if (!this.#listeners[evName]) this.#listeners[evName] = [];
+
+			this.#listeners[evName].push({
+				fn, scope, once
+			});
+		}
+
+		off(evName, fn, scope) {
+			if (!this.#listeners[evName]) return;
+
+			const listenersArr = this.#listeners[evName];
+			const len = listenersArr.length;
+			for (let i = len - 1; i >= 0; i--) {
+				const listener = listenersArr[i];
+				if ((scope == listener.scope) || (fn == listener.fn)) {
+					listenersArr.splice(i, 1);
+				}
+			}
+		}
+
+		async emit(evName, opts = {}, ...args) {
+			const listenersArr = this.#listeners[evName] || [];
+			for (const listener of listenersArr) {
+				const didGetCalledOnce = listener.didCallOnce;
+				if (listener.once) listener.didCallOnce = true;
+
+				if (!listener.once || !didGetCalledOnce) {
+					await Promise.resolve(listener.fn.apply(listener.scope, args));
+				}
+			}
+
+			const len = listenersArr.length;
+			for (let i = len - 1; i >= 0; i--) {
+				if (listenersArr[i].once) listenersArr.splice(i, 1);
+			}
+		}
+	}
+
+	class VSimpleComponent extends HTMLElement {
+		#mapOfDebounce = new Map();
+		constructor() {
+			super();
+
+			this.evEmitter = new VEventEmitter();
+			this.refs = new Proxy({}, {
+				get: (_targ, prop) => {
+					return this.querySelectorAll(`[ref=${prop}]`);
+				}
+			});
+			const html = this.constructor.template.content.cloneNode(true);
+			this.append(html);
+		}
+
+		/**
+		 * @param {string} str
+		 */
+		static camelToHyphen(str) {
+			return str
+				.replace(str.charAt(0), str.charAt(0).toLowerCase())
+				.replace(/[A-Z]/g, (substr) => {
+					return `-${substr.replace(substr.charAt(0), substr.charAt(0).toLowerCase())}`;
+				});
+		}
+
+		debounce(fn, ms = 300) {
+			const oldTimeoutID = this.#mapOfDebounce.get(fn);
+			clearTimeout(oldTimeoutID);
+
+			const timeoutID = setTimeout(fn, ms);
+			this.#mapOfDebounce.set(fn, timeoutID);
+		}
+
+		static define() {
+			const tagName = this.camelToHyphen(this.name);
+			if (customElements.get(tagName)) return;
+			this.template = document.currentScript.previousElementSibling
+			customElements.define(tagName, this);
+		}
+
+		connectedCallback() {
+			this.evEmitter.emit('mounted');
+		}
+
+		disconnectedCallback() {
+			this.evEmitter.emit('unmounted');
+		}
+	}
+	
+	window.VSimpleComponent = VSimpleComponent
+</script>
+
+<template>
+	<label ref="refDragAndDropContainer" class="v-col" style="
+		color: var(--var-color-file-drop);
+		font-weight: 900; 
+		border: 2px dashed var(--var-color-file-drop);
+		justify-content: center;
+		align-items: center;"
+	>
+		<div>
+			Drop Files Here
+		</div>
+		
+		<input ref="refDragAndDropContainerInputFile" type="file">
+		</input>
+	</label>
+</template>
+<script>
+	class VDragAndDrop extends VSimpleComponent {
+		constructor() {
+			super();
+
+			this._mounted = this._mounted.bind(this);
+			this._unmounted = this._unmounted.bind(this);
+			this._handleDragOver = this._handleDragOver.bind(this);
+			this._handleDrop = this._handleDrop.bind(this);
+			this._handleFileInputChange = this._handleFileInputChange.bind(this);
+
+			this.evEmitter.on('mounted', this._mounted);
+			this.evEmitter.on('unmounted', this._unmounted);
+		}
+
+		_mounted() {
+			const dndElem = this.refs.refDragAndDropContainer[0];
+			dndElem.addEventListener("drop", this._handleDrop);
+			dndElem.addEventListener("dragover", this._handleDragOver);
+			const inputFile = this.refs.refDragAndDropContainerInputFile[0];
+			inputFile.addEventListener("change", this._handleFileInputChange);
+		}
+		
+		_handleDragOver(ev) {
+			ev.stopPropagation();
+			ev.preventDefault();
+			ev.dataTransfer.dropEffect = "copy"
+			const dndElem = this.refs.refDragAndDropContainer[0];
+			dndElem.style.boxShadow = "0px 0px 4px black inset";
+		}
+
+		/**
+		 * @param {Event} ev
+		 */
+		_handleDrop(ev) {
+			ev.stopPropagation();
+			ev.preventDefault();
+			const dndElem = this.refs.refDragAndDropContainer[0];
+			dndElem.style.boxShadow = "";
+
+			const files = ev.dataTransfer.files.length
+				? ev.dataTransfer.files
+				: [...ev.dataTransfer.items]
+					.filter((item) => item.kind === "file")
+					.map((item) => item.getAsFile);
+			
+			this.evEmitter.emit('files', undefined, ev, files);
+		}
+
+		_handleFileInputChange(ev) {
+			this._handleDrop(Object.assign(ev, {
+					dataTransfer: {
+					files: ev.target.files
+				}
+			}))
+		}
+
+		_unmounted() {
+			const dndElem = this.refs.refDragAndDropContainer[0];
+			dndElem.removeEventListener("drop", this._handleDrop);
+			dndElem.removeEventListener("dragover", this._handleDragOver);
+		}
+	}
+
+	VDragAndDrop.define();
+</script>
+
+<template>
+	<v-drag-and-drop ref="refDragAndDrop"></v-drag-and-drop>
+	<div class="v-col">
+		<p>height: <span ref="refHeightSpan"></span></p>
+		<div class="v-row">
+			<canvas ref="refHiddenCanvas" style="display: none;"></canvas>
+			<div class="v-col" style="border: 2px solid black; width: fit-content; height: fit-content;">
+				<canvas ref="refCanvas"></canvas>
+			</div>
+			<p>width: <span ref="refWidthSpan"></span></p>
+		</div>
+		<br/>
+		<a ref="refDownload" download="download.png"
+			class="v-col"
+			style="
+				background-color: dodgerblue;
+				color: azure;
+				width: fit-content;
+				height: fit-content;
+				border-radius: 4px;
+				padding: 4px 8px;
+			"
+		>Download Canvas</a>
+		<a ref="refDownloadJS" download="download.png"
+			class="v-col"
+			style="
+				background-color: dodgerblue;
+				color: azure;
+				width: fit-content;
+				height: fit-content;
+				border-radius: 4px;
+				padding: 4px 8px;
+			"
+		>Download JS</a>
+	</div>
+</template>
+<script>
+	class VDropImage extends VSimpleComponent {
+		constructor() {
+			super();
+
+			this._mounted = this._mounted.bind(this);
+			this._unmounted = this._unmounted.bind(this);
+			this._handleDownloadClick = this._handleDownloadClick.bind(this);
+			this._handleDownloadJSClick = this._handleDownloadJSClick.bind(this);
+			this._handleFiles = this._handleFiles.bind(this);
+
+			this.evEmitter.on('mounted', this._mounted);
+			this.evEmitter.on('unmounted', this._unmounted);
+
+			this._fileName = ""
+		}
+
+		get fileName() {
+			return this._fileName || "unknown";
+		}
+
+		set fileName(val) {
+			this._fileName = val;
+			this.refs.refDownload[0].download = val;
+		}
+
+		/**
+		 * @param {Event} ev
+		 * @param {File[]} files
+		 */
+		async _handleFiles(ev, files) {
+			const i = 0;
+			const prom = new Promise((resolve, reject) => {
+				try {
+					const canvas = this.refs.refCanvas[0],
+					context = canvas.getContext('2d');
+					const urlCreator = window.URL || window.webkitURL;
+					const hiddenCanvas = this.refs.refHiddenCanvas[0];
+		
+					const base_image = new Image();
+					const that = this;
+					base_image.onload = function() {
+						that._fileName = files[i].name;
+						hiddenCanvas.width = canvas.width = this.width;
+						hiddenCanvas.height = canvas.height = this.height;
+						context.drawImage(base_image, 0, 0, this.width, this.height);
+						hiddenCanvas.getContext("2d").drawImage(base_image, 0, 0, this.width, this.height);
+						urlCreator.revokeObjectURL(base_image.src);
+						resolve();
+					}
+					base_image.onerror = function(...args) {
+						throw(args[0]);
+					}
+					base_image.src = urlCreator.createObjectURL(files[i]);
+				} catch(e) {
+					this._fileName = "";
+					reject(e);
+				}
+			});
+
+			return prom;
+		}
+
+
+		_handleDownloadClick() {
+			/** @type {HTMLCanvasElement} */
+			const canvas = this.refs.refCanvas[0];
+			const dt = canvas.toDataURL('image/png');
+
+			/** @type {HTMLAnchorElement} */
+			const anchorElem = this.refs.refDownload[0];
+			anchorElem.download = this.fileName;
+			anchorElem.href = dt;
+		}
+
+		_handleDownloadJSClick() {
+			const downloadJSElem = this.refs.refDownloadJS[0];
+			const propertyName = this.fileName
+				.replace(/\s/g, '')
+				.replace('.png', '')
+				.replace(this.fileName.charAt(0), this.fileName.charAt(0).toLowerCase());
+			const hiddenCanvas = this.refs.refHiddenCanvas[0];
+			const canvas = this.refs.refCanvas[0];
+			const jsStr = `
+globalThis.IMAGE_BOUNDS = globalThis.IMAGE_BOUNDS || {};
+globalThis.IMAGES = globalThis.IMAGES || {};
+IMAGES.${propertyName} = ImageLoader.loadImage('${this.fileName}');
+
+globalThis.IMAGE_BOUNDS.${propertyName} = {
+	layer: ${this.fileName},
+	images: [IMAGES.${propertyName}],
+	originalBounds: {
+		x: 0,
+		y: 0,
+		height: ${hiddenCanvas.height},
+		width: ${hiddenCanvas.width},
+	},
+	visibleBounds: {
+		x: ${-Number(this.parentElement.refs.refPaddingLeft[0].value)},
+		y: ${-Number(this.parentElement.refs.refPaddingTop[0].value)},
+		height: ${canvas.height},
+		width: ${canvas.width},
+	}
+};`;
+			const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(jsStr);
+			downloadJSElem.download = this.fileName.replace(".png", ".js");
+			downloadJSElem.href = dataStr;
+		}
+
+		_mounted() {
+			const dndElem = this.refs.refDragAndDrop[0];
+			dndElem.evEmitter.on("files", this._handleFiles);
+
+			/** @type {HTMLAnchorElement} */
+			const refDownload =  this.refs.refDownload[0];
+			refDownload.addEventListener("click", this._handleDownloadClick);
+			
+			/** @type {HTMLAnchorElement} */
+			const refDownloadJS = this.refs.refDownloadJS[0];
+			refDownloadJS.addEventListener("click", this._handleDownloadJSClick);
+		}
+
+		_unmounted() {
+			const dndElem = this.refs.refDragAndDrop[0];
+			dndElem.evEmitter.off("files", this._handleFiles);
+			
+			/** @type {HTMLAnchorElement} */
+			const refDownload =  this.refs.refDownload[0];
+			refDownload.removeEventListener("click", this._handleDownloadClick);
+			
+			/** @type {HTMLAnchorElement} */
+			const refDownloadJS = this.refs.refDownloadJS[0];
+			refDownloadJS.removeEventListener("click", this._handleDownloadJSClick);
+		}
+	}
+
+	VDropImage.define();
+</script>
+
+<template>
+	<div class="v-col" style="width: 50vw; align-items: center; justify-content: center;">
+		<input ref="refPaddingTop" style="width: auto;" type="number" placeholder="top" value="0"/>
+		<div class="v-row" style="align-items: center; justify-content: center;">
+			<label>
+				<input ref="refShrinkToFit" type="checkbox">
+				<span>Shrink To Fit</span>
+			</label>
+			<input ref="refPaddingLeft" style="width: 100%;" type="number" placeholder="left" value="0"/>
+			<div>crop</div>
+			<input ref="refPaddingRight" style="width: 100%;" type="number" placeholder="right" value="0"/>
+		</div>
+		<input ref="refPaddingBottom" style="width: auto;" type="number" placeholder="bottom" value="0"/>
+	</div>
+	<br/>
+	<v-drop-image></v-drop-image>
+</template>
+<script>
+	class VCropImage extends VSimpleComponent {
+		constructor() {
+			super();
+
+			this._mounted = this._mounted.bind(this);
+			this._unmounted = this._unmounted.bind(this);
+			this._handleValueChange = this._handleValueChange.bind(this);
+			this._handleChangeShrinkToFit = this._handleChangeShrinkToFit.bind(this);
+			this.debounce = this.debounce.bind(this);
+			this.updateCanvas = this.updateCanvas.bind(this);
+
+			this.evEmitter.on("mounted", this._mounted);
+			this.evEmitter.on("unmounted", this._unmounted);
+		}
+
+		_mounted() {
+			/** @type {HTMLInputElement} */
+			const paddingTop = this.refs.refPaddingTop[0];
+			paddingTop.addEventListener("change", this._handleValueChange);
+			/** @type {HTMLInputElement} */
+			const paddingLeft = this.refs.refPaddingLeft[0];
+			paddingLeft.addEventListener("change", this._handleValueChange);
+			/** @type {HTMLInputElement} */
+			const paddingRight = this.refs.refPaddingRight[0];
+			paddingRight.addEventListener("change", this._handleValueChange);
+			/** @type {HTMLInputElement} */
+			const paddingBottom = this.refs.refPaddingBottom[0];
+			paddingBottom.addEventListener("change", this._handleValueChange);
+
+			const dndElem = this.refs.refDragAndDrop[0];
+			dndElem.evEmitter.on("files", this._handleValueChange);
+
+			/** @type {HTMLInputElement} */
+			const shrinkToFitElem = this.refs.refShrinkToFit[0];
+			shrinkToFitElem.addEventListener("change", this._handleChangeShrinkToFit)
+		}
+
+		_unmounted() {
+			
+		}
+
+		/**
+		 * @param {InputEvent} ev
+		 */
+		_handleChangeShrinkToFit(ev) {
+			if (!ev.target.checked) return;
+			
+			/** @type {HTMLCanvasElement} */
+			const hiddenCanvas = this.refs.refHiddenCanvas[0];
+			const imgData = hiddenCanvas.getContext("2d").getImageData(0, 0, hiddenCanvas.width, hiddenCanvas.height);
+
+			const bounds = {
+				top: Infinity,
+				left: Infinity,
+				right: -Infinity,
+				bottom: -Infinity,
+			};
+
+			const INCR_BY_ALPHA_INDEX = 4;
+			for (let i = 3; i < imgData.data.length; i = i + INCR_BY_ALPHA_INDEX) {
+				if (imgData.data[i] <= 0.0) continue;
+
+				const iModifiedForAlpha = (((i + 1) / INCR_BY_ALPHA_INDEX) - 1);
+				const currX = iModifiedForAlpha % imgData.width;
+				const currY = Math.floor(iModifiedForAlpha / imgData.width);
+
+				bounds.top = Math.min(bounds.top, currY);
+				bounds.bottom = Math.max(bounds.bottom, currY);
+				bounds.left = Math.min(bounds.left, currX);
+				bounds.right = Math.max(bounds.right, currX);
+			}
+
+			if (bounds.top == Infinity) bounds.top = 0;
+			if (bounds.left == Infinity) bounds.left = 0;
+			if (bounds.right == -Infinity) bounds.right = imgData.width;
+			if (bounds.bottom == -Infinity) bounds.bottom = imgData.height;
+
+			/** @type {HTMLInputElement} */
+			const paddingTop = this.refs.refPaddingTop[0];
+			paddingTop.value = -bounds.top;
+			/** @type {HTMLInputElement} */
+			const paddingLeft = this.refs.refPaddingLeft[0];
+			paddingLeft.value = -bounds.left;
+			/** @type {HTMLInputElement} */
+			const paddingRight = this.refs.refPaddingRight[0];
+			paddingRight.value = bounds.left + (hiddenCanvas.width - bounds.right) - 1;
+			/** @type {HTMLInputElement} */
+			const paddingBottom = this.refs.refPaddingBottom[0];
+			paddingBottom.value = bounds.top + (hiddenCanvas.height - bounds.bottom) - 1;
+
+			this.debounce(this.updateCanvas);
+		}
+
+		_handleValueChange() {
+			this.debounce(this.updateCanvas);
+		}
+
+		updateCanvas() {
+			/** @type {HTMLInputElement} */
+			const paddingTop = this.refs.refPaddingTop[0];
+			/** @type {HTMLInputElement} */
+			const paddingRight = this.refs.refPaddingRight[0];
+			/** @type {HTMLInputElement} */
+			const paddingBottom = this.refs.refPaddingBottom[0];
+			/** @type {HTMLInputElement} */
+			const paddingLeft = this.refs.refPaddingLeft[0];
+			
+			/** @type {HTMLCanvasElement} */
+			const canvas = this.refs.refCanvas[0];
+			const hiddenCanvas = this.refs.refHiddenCanvas[0];
+
+			const newX = (Number(paddingLeft.value) || 0);
+			const newY = (Number(paddingTop.value) || 0)
+			const newWidth = hiddenCanvas.width - (Number(paddingRight.value) || 0);
+			const newHeight = hiddenCanvas.height - (Number(paddingBottom.value) || 0);
+
+			const oldContext = canvas.getContext("2d");
+			oldContext.clearRect(0, 0, canvas.width, canvas.height);
+			canvas.width = newWidth;
+			canvas.height = newHeight;
+			this.refs.refWidthSpan[0].textContent = newWidth;
+			this.refs.refHeightSpan[0].textContent = newHeight;
+			oldContext.drawImage(hiddenCanvas, newX, newY, hiddenCanvas.width, hiddenCanvas.height);
+		}
+	}
+
+	VCropImage.define();
+</script>
+
+</html>
