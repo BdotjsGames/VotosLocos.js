@@ -39,7 +39,7 @@ class GameSceneBasic extends Scene {
       //   this.addEntity(new Drone(x,y)); 
       // }
       this.showGo = false;
-      if(model.isPlayer) {
+      if(model&&model.isPlayer) {
         this.addEntity(this.player = model);
         this.player.speed = 5;
         this.player.y = this.startingY;
@@ -305,7 +305,7 @@ class GameSceneBasic extends Scene {
         this.dialogueBlocking = false;
       }
       var target = this.camera.target;
-      if(target != this.player) {
+      if(target != this.player && !target.shouldStealCamera) {
         target = {
           x: (target.x + this.player.x)/2,
           y: (target.y + this.player.y)/2,

@@ -724,6 +724,30 @@ GameSequence = [
         ]
     },
     {
+        name: "Blockade",
+        // debugStartWithThisOne: true,
+        onLoad: scene => {
+            var bot1;
+            for(var j=0;j<5;j++) {
+                for(var i=0;i<12;i++) {
+                    var x = 300+i*50 + j*10;
+                    var y = 0 + j * 50;
+                    bot1 = scene.addEntity(new Bot(x,y));
+                }
+            }
+            bot1.obj = bot1;
+            bot1.shouldStealCamera = true;
+            scene.playDialogue([
+                {person: bot1, text: 'you will never get past our blockade!'},
+                {person: bot1, text: 'hahaha'}
+            ], true, )
+        },
+        // DialogueData: [
+        //     {target: {x:500,y:200}, waitFor: 100},
+        //     // {target: {x: 0,y:200}, waitFor: 100},
+        // ]
+    },
+    {
         name: "Polling Station",
         Goal: "Enter the Polling Station",
         music: SOUNDS.norteno,

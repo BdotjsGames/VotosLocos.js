@@ -1,3 +1,4 @@
+var openedDoors = 0;
 class KnockableDoor extends DrawableImage {
     constructor(x,y) {
         super(x,y,IMAGES.door,3.5);
@@ -29,6 +30,7 @@ class KnockableDoor extends DrawableImage {
       if(this.knocks>=this.knocksRequired) {
         this.image = IMAGES.doorOpen;
         this.isInteractable = false;
+        openedDoors += 1;
         this.onOpen();
         // this.createEnemies();
         // this.createFollower();
@@ -100,6 +102,9 @@ class KnockableDoor extends DrawableImage {
     }
     onInteract(player) {
       // if(this.knocking)return;
+      if(this.knocks>=this.knocksRequired) {
+        return;
+      }
       this.knocking = true;
       this.knocks++;
 
