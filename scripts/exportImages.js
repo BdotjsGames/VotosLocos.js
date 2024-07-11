@@ -1,5 +1,6 @@
 require('dotenv').config()
 const { execSync } = require("child_process");
+const { readFileSync } = require('fs');
 const path = require("path");
 
 class CropImage {
@@ -25,16 +26,55 @@ class CropImage {
 					encoding: "utf-8"
 				});
 				console.log(stdOut);
+
+				const puppeteer = require('puppeteer');
+				const browser = await puppeteer.launch({
+					headless: true
+				});
+				const page = await browser.newPage();
+				const client = await page.createCDPSession()
+				await client.send('Page.setDownloadBehavior', {behavior: 'allow', downloadPath: path.join(outputPath, `./${fileName}/`)});
+				const htmlText = readFileSync(path.join(__dirname, './cropImage.html'), 'utf-8');
+				await page.setContent(htmlText);
+				await page.waitForNetworkIdle({ idleTime: 1000 });
+				
+				const [fitToScreenCheckbox, fileInput, downloadAnchor] = await Promise.all([
+					page.waitForSelector(
+						`input[ref="refShrinkToFit"]`
+					),
+					page.waitForSelector(
+						`input[ref="refDragAndDropContainerInputFile"]`
+					),
+					page.waitForSelector(
+						`a[ref="refDownload"]`
+					)
+				]);
+				await fileInput.uploadFile(`${outputPathWithFilename}.png`);
+
+				let prom = new Promise((resolve) => {
+					setTimeout(async () => {
+						await fitToScreenCheckbox.click();
+						resolve();
+					}, 1000);
+				});
+
+				await prom;
+				
+				prom = new Promise((resolve) => {
+					setTimeout(async () => {
+						await downloadAnchor.click();
+						resolve()
+					}, 2000);
+				});
+				await prom;
 			}
+
+			setTimeout(async () => {
+				await browser.close();
+			}, 2000)
 		} catch(e) {
 			console.error(e);
 		}
-		// const puppeteer = require('puppeteer');
-
-		// const browser = await puppeteer.launch();
-		// const page = await browser.newPage();
-
-		// await page.setContent(``);
 	}
 }
 
