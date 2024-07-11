@@ -38,7 +38,7 @@ class CropImage {
 				await page.setContent(htmlText);
 				await page.waitForNetworkIdle({ idleTime: 1000 });
 				
-				const [fitToScreenCheckbox, fileInput, downloadAnchor] = await Promise.all([
+				const [fitToScreenCheckbox, fileInput, downloadAnchor, downloadJSAnchor] = await Promise.all([
 					page.waitForSelector(
 						`input[ref="refShrinkToFit"]`
 					),
@@ -47,6 +47,9 @@ class CropImage {
 					),
 					page.waitForSelector(
 						`a[ref="refDownload"]`
+					),
+					page.waitForSelector(
+						`a[ref="refDownloadJS"]`
 					)
 				]);
 				await fileInput.uploadFile(`${outputPathWithFilename}.png`);
@@ -63,6 +66,7 @@ class CropImage {
 				prom = new Promise((resolve) => {
 					setTimeout(async () => {
 						await downloadAnchor.click();
+						await downloadJSAnchor.click();
 						resolve()
 					}, 2000);
 				});

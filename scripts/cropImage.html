@@ -238,6 +238,17 @@
 				padding: 4px 8px;
 			"
 		>Download Canvas</a>
+		<a ref="refDownloadJS" download="download.png"
+			class="v-col"
+			style="
+				background-color: dodgerblue;
+				color: azure;
+				width: fit-content;
+				height: fit-content;
+				border-radius: 4px;
+				padding: 4px 8px;
+			"
+		>Download JS</a>
 	</div>
 </template>
 <script>
@@ -248,6 +259,7 @@
 			this._mounted = this._mounted.bind(this);
 			this._unmounted = this._unmounted.bind(this);
 			this._handleDownloadClick = this._handleDownloadClick.bind(this);
+			this._handleDownloadJSClick = this._handleDownloadJSClick.bind(this);
 			this._handleFiles = this._handleFiles.bind(this);
 
 			this.evEmitter.on('mounted', this._mounted);
@@ -289,8 +301,8 @@
 						urlCreator.revokeObjectURL(base_image.src);
 						resolve();
 					}
-					base_image.onerror = function(e) {
-						throw(e);
+					base_image.onerror = function(...args) {
+						throw(args[0]);
 					}
 					base_image.src = urlCreator.createObjectURL(files[i]);
 				} catch(e) {
@@ -314,6 +326,40 @@
 			anchorElem.href = dt;
 		}
 
+		_handleDownloadJSClick() {
+			const downloadJSElem = this.refs.refDownloadJS[0];
+			const propertyName = this.fileName
+				.replace(/\s/g, '')
+				.replace('.png', '')
+				.replace(this.fileName.charAt(0), this.fileName.charAt(0).toLowerCase());
+			const hiddenCanvas = this.refs.refHiddenCanvas[0];
+			const canvas = this.refs.refCanvas[0];
+			const jsStr = `
+globalThis.IMAGE_BOUNDS = globalThis.IMAGE_BOUNDS || {};
+globalThis.IMAGES = globalThis.IMAGES || {};
+IMAGES.${propertyName} = ImageLoader.loadImage('${this.fileName}');
+
+globalThis.IMAGE_BOUNDS.${propertyName} = {
+	layer: ${this.fileName},
+	images: [IMAGES.${propertyName}],
+	originalBounds: {
+		x: 0,
+		y: 0,
+		height: ${hiddenCanvas.height},
+		width: ${hiddenCanvas.width},
+	},
+	visibleBounds: {
+		x: ${-Number(this.parentElement.refs.refPaddingLeft[0].value)},
+		y: ${-Number(this.parentElement.refs.refPaddingTop[0].value)},
+		height: ${canvas.height},
+		width: ${canvas.width},
+	}
+};`;
+			const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(jsStr);
+			downloadJSElem.download = this.fileName.replace(".png", ".js");
+			downloadJSElem.href = dataStr;
+		}
+
 		_mounted() {
 			const dndElem = this.refs.refDragAndDrop[0];
 			dndElem.evEmitter.on("files", this._handleFiles);
@@ -321,11 +367,23 @@
 			/** @type {HTMLAnchorElement} */
 			const refDownload =  this.refs.refDownload[0];
 			refDownload.addEventListener("click", this._handleDownloadClick);
+			
+			/** @type {HTMLAnchorElement} */
+			const refDownloadJS = this.refs.refDownloadJS[0];
+			refDownloadJS.addEventListener("click", this._handleDownloadJSClick);
 		}
 
 		_unmounted() {
 			const dndElem = this.refs.refDragAndDrop[0];
 			dndElem.evEmitter.off("files", this._handleFiles);
+			
+			/** @type {HTMLAnchorElement} */
+			const refDownload =  this.refs.refDownload[0];
+			refDownload.removeEventListener("click", this._handleDownloadClick);
+			
+			/** @type {HTMLAnchorElement} */
+			const refDownloadJS = this.refs.refDownloadJS[0];
+			refDownloadJS.removeEventListener("click", this._handleDownloadJSClick);
 		}
 	}
 
