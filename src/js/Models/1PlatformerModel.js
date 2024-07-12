@@ -1282,7 +1282,7 @@ var anims = {
   armSpinny: [
     {
       limbs: [],
-      damage: 2,
+      damage: 5,
       customUpdate: self=>{
         var aa = self.arm1.rotation;
         self.attacking = true

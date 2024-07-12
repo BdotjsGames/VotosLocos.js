@@ -104,7 +104,7 @@ window.addEventListener('load', function (e) {
     name: 'pause',
     keys: [27],
     buttons: [gamepadConfig.start],
-    touchButtons: [4]
+    touchButtons: [5]
   }
   Buttons.start = {
     keys: [13],

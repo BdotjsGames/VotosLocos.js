@@ -1,5 +1,5 @@
 //  Copyright Brian Dizon 2019
-var touchAsMouseEnabled = true;
+var touchAsMouseEnabled = false;
 
 var touchCE = document.getElementById("touch-canvas");
 var touchCanvas = touchCE.getContext('2d');
