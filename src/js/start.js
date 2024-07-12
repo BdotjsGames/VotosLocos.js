@@ -6,6 +6,12 @@ window.addEventListener('load', function(e) {
         SOUNDS.onComplete(function() {
           setTimeout(function() {
             // MainDriver.setScene(new SplashScreen(MenuScene));
+            // MainDriver.setScene(new CharacterCustomizerScene(new BotModel(20,40,"#666","#444")))
+            // return;
+            var controlsScheme = localStorage.getItem('controlsScheme')
+            if(controlsScheme) {
+              setControlsScheme(parseInt(controlsScheme))
+            }
             if(DEV)
               for(var i=0;i<GameSequence.length;i++) {
                 var level = GameSequence[i];
@@ -14,11 +20,9 @@ window.addEventListener('load', function(e) {
                   return;
                 }
               }
-            var controlsScheme = localStorage.getItem('controlsScheme')
             if(!controlsScheme)
               MainDriver.setScene(new ControlsSchemeSelectScene());
             else {
-              setControlsScheme(parseInt(controlsScheme))
               MainDriver.setScene(new MenuScene());
             }
             // MainDriver.setScene(new GameSceneBasic());

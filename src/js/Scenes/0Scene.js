@@ -51,7 +51,12 @@ class Scene {
       if(e.selected||e.hover) {
         deferred.push(e);return;
       }
-      if(e.draw)e.draw(canvas)
+      try{
+        if(e.draw)e.draw(canvas)
+      } catch(er) {
+        console.error(er);
+        console.log(e)
+      }
     });
     deferred.forEach(function(e) {e.draw(canvas);})
   }

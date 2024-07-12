@@ -70,6 +70,7 @@ class BeatEmUpper {
         this.attackTimer = 0;
         this.hitResistence = 3;
         this.item = {type:{}, count: 0};
+        this.attackerCount = 0;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -167,6 +168,8 @@ class BeatEmUpper {
     enemySearchUpdate() {
         this.seeking = false;
         this.attackTimer += 1;
+        var closest = null;
+        var minDist = this.enemySeekRange*this.enemySeekRange;
         for(var i=0;i<this.enemies.length;i++) {
             var enemy = this.enemies[i];
             if(enemy.shouldDelete)continue;
@@ -175,6 +178,7 @@ class BeatEmUpper {
             var drr = diffSqrd(dx,dy,dz);
             if(this.attackTimer>this.attackSpeed)
             if(drr< this.attackRange*this.attackRange) {
+
                 this.attackTimer = 0;
                 // var r = Math.sqrt(dx*dx+dy*dy);
                 // if(r==0) {
@@ -197,20 +201,29 @@ class BeatEmUpper {
                     this.attack();
                 this.attacking = true;
                 this.seeking = true;
+                enemy.attackerCount += 1;
                 return;
             }
-            if(drr<this.enemySeekRange*this.enemySeekRange) {
-                var r = Math.sqrt(dx*dx+dy*dy);
-                if(r==0) {
-                    dx=1;
-                    dy=0;
-                    r=1;
-                }
-                this.mx = dx/r;
-                this.my = dy/r;
-                this.seeking=true;
-                return;
+            if(drr< minDist) {
+                minDist = drr + enemy.attackerCount * 1000;
+                closest = enemy;
             }
+            
+        }
+        if(closest) {
+            var dx = closest.x - this.x;
+            var dy = closest.y - this.y;
+            var r = Math.sqrt(dx*dx+dy*dy);
+            if(r==0) {
+                dx=1;
+                dy=0;
+                r=1;
+            }
+            this.mx = dx/r;
+            this.my = dy/r;
+            this.seeking=true;
+            closest.attackerCount += 1;
+            return;
         }
         this.attacking = false;
     }
@@ -264,6 +277,7 @@ class BeatEmUpper {
         if(this.health>this.maxHealth)this.health = this.maxHealth;
     }
     update() {
+        this.attackerCount = 0;
         if(isNaN(this.x))this.x = 0, console.log('NaN X');
         if(isNaN(this.y))this.y = 0;
         if(isNaN(this.z))this.z = 0;

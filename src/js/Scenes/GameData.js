@@ -725,22 +725,80 @@ GameSequence = [
     },
     {
         name: "Blockade",
-        // debugStartWithThisOne: true,
+        debugStartWithThisOne: true,
+
         onLoad: scene => {
             var bot1;
-            for(var j=0;j<5;j++) {
-                for(var i=0;i<12;i++) {
-                    var x = 300+i*50 + j*10;
+            scene.showGoOnEnemiesDefeated = true;
+            for(var j=0;j<6;j++) {
+                for(var i=0;i<10;i++) {
+                    var x = 400+i*50 + j*15;
                     var y = 0 + j * 50;
                     bot1 = scene.addEntity(new Bot(x,y));
+                    bot1.dx=-1;
+                    bot1.update();
+                    // bot1.getInputs = ()=>{}
                 }
             }
             bot1.obj = bot1;
             bot1.shouldStealCamera = true;
+            scene.player.obj = scene.player;
+            scene.player.name = "";
+            scene.player.model.mouth.drawable.image = IMAGES.mouthFrown;
             scene.playDialogue([
                 {person: bot1, text: 'you will never get past our blockade!'},
-                {person: bot1, text: 'hahaha'}
+                {person: bot1, text: 'hahaha'},
+                {person: scene.player, text: "oh no!"},
+                {person: scene.player, text: "how will we get through?"},
+                {person: scene.player, set:{mx:1}, waitFor: 20},
+                {person: scene.player, set:{mx:0}, waitFor: 20},
+                {person: scene.player, set:{mx:0, dx:-1}, waitFor: 20},
+                {person: scene.player, set:{mx:0, dx:1}, waitFor: 20},
+                {person: scene.player, text: '<color red>*your cell phone rings*'},
+                {person: LouChalibre, text: "Hola!", onStart: () => {
+                    scene.player.model.mouth.drawable.image = IMAGES.mouthSmile;
+                    scene.player.jump();
+                }},
+                {person: LouChalibre, text: "I heard there was some problems at the ballot office!"},
+                {person: LouChalibre, text: "We are on our way to help!"},
+                {person: LouChalibre, text: "All the friends you made along the way will come help you fight"},
+                // {person: scene.player, doA: "jump",waitFor:10},
+                {onStart: () => {
+                    for(var i=0;i<20;i++) {
+                        var x = 0;
+                        var y = Math.random()*scene.maxY + scene.minY;
+                        var e = scene.addEntity(new HighFiver(x,y))
+                        e.startFollow(scene.player,80)
+                        e.contactDamage = 5;
+                        e.mx = Math.random();
+                        e.isBrawlingMode = true;
+                    }
+                }, waitFor: 20},
+                {
+                    onStart: () => {
+                        highFivers.forEach(h=>h.mx=0)
+                    }, waitFor: 20
+                },
+                {
+                    person: {name: "Everyone", obj: scene.player},
+                    text: "Lets go!",
+                    onStart: () => {
+                        highFivers.forEach(h=> {
+                            h.highFive();
+                        })
+                    }
+                },
+                {
+                    onStart: () => {
+                        highFivers.forEach(h=>{
+                            h.mx=1,
+                        h.enemySeekRange=1000;
+
+                    })
+                    }, waitFor: 20
+                },
             ], true, )
+            
         },
         // DialogueData: [
         //     {target: {x:500,y:200}, waitFor: 100},
@@ -783,15 +841,15 @@ GameSequence = [
             {text: "Congratulations! you made it to the ballot office and completed the demo content so far"},
         ]
     },
-    {
-        name: "Boss cutscene"
-    },
-    {
-        name: "Boss Fight"
-    },
-    {
-        name: "Vote Cutscene"
-    }
+    // {
+    //     name: "Boss cutscene"
+    // },
+    // {
+    //     name: "Boss Fight"
+    // },
+    // {
+    //     name: "Vote Cutscene"
+    // }
 
 ]
 

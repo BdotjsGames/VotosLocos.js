@@ -34,6 +34,7 @@ class HighFiver extends BeatEmUpper {
         this.enemySeekRange = 200;
         this.contactDamage = 1;
         this.avoidHealth = this.maxHealth/4;
+        this.isBrawlingMode = false;
     }
     startFollow(target, distance) {
         this.playerTarget = target;
@@ -89,7 +90,6 @@ class HighFiver extends BeatEmUpper {
             this.my = 0;
         }
     }
-   
     followUpdate() {
         this.model.neutralFace();
         if(this.health<this.avoidHealth) {
@@ -164,6 +164,21 @@ class HighFiver extends BeatEmUpper {
     }
     update(){
         super.update();
+        if(this.isBrawlingMode) {
+            this.model.neutralFace();
+            if(this.health<this.avoidHealth) {
+                this.enemyAvoidUpdate();
+                if(this.running) {
+                    this.model.fear();
+                    return;
+                } else {
+                    this.model.neutralFace();
+                }
+            } else {
+                this.enemySearchUpdate();
+            }
+            return;
+        }
         if(this.following)this.followUpdate();
         if(this.shouldStartDiaolgueOnProximity) {
             this.scene.players.forEach(p=>{
