@@ -36,6 +36,7 @@ class ControlsScene extends AdditiveScene {
             {name: 'Attack', buttons: Buttons.B},
             {name: 'Crouch', buttons: Buttons.X},
             {name: 'Interact', buttons: Buttons.Y},
+            {name: 'Use Item', buttons: Buttons.R},
             {name: '[UI] Confirm', buttons: Buttons.Confirm},
         ]
         buttons.forEach(button => {
@@ -78,6 +79,7 @@ function saveControls() {
         Buttons.X,
         Buttons.Y,
         Buttons.Confirm,
+        Buttons.R
     ]
     localStorage.setItem("controls1", JSON.stringify(buttons));
     localStorage.setItem("specialCharacterDisplays", JSON.stringify(specialCharacterDisplays));
@@ -85,6 +87,7 @@ function saveControls() {
 }
 
 function setButton(a,b) {
+    if(!b)return;
     a.keys= b.keys;
     a.buttons = b.buttons;
 }
@@ -100,4 +103,6 @@ function loadControls() {
     setButton(Buttons.X, buttons[i++]);
     setButton(Buttons.Y, buttons[i++]);
     setButton(Buttons.Confirm, buttons[i++]);
+    setButton(Buttons.R, buttons[i++]);
+
 }

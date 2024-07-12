@@ -2,6 +2,7 @@
 
 var gamepadConfig = {
   leftBumper: 4,
+  rightBumper: 5, //untested
   A: 0,
   B: 1,
   X: 2, //untested
@@ -53,11 +54,11 @@ function configureButtonList(buttonNamesList, attributeName, valuesList) {
 }
 
 window.addEventListener('load', function (e) {
-  var buttonNames = ['A', 'B', 'X', 'Y'];
-  configureButtonList(buttonNames, 'keys', 'JKLE'.keyCodes);
-  configureButtonList(buttonNames, 'keys', 'XCVF'.keyCodes); //Z is skipped for azerty
-  configureButtonList(buttonNames, 'buttons', [2, 0, 1, 3]);
-  configureButtonList(buttonNames, 'touchButtons', [0, 1, 2, 3]);
+  var buttonNames = ['A', 'B', 'X', 'Y', 'R'];
+  configureButtonList(buttonNames, 'keys', 'JKLEI'.keyCodes);
+  configureButtonList(buttonNames, 'keys', 'XCVFB'.keyCodes); //Z is skipped for azerty
+  configureButtonList(buttonNames, 'buttons', [2, 0, 1, 3, 5]);
+  configureButtonList(buttonNames, 'touchButtons', [0, 1, 2, 3,4]);
 
   // configureABXY('JKLI'.keyCodes, [gamepadConfig.A,gamepadConfig.B,gamepadConfig.X,gamepadConfig.Y]);
 

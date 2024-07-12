@@ -1,3 +1,4 @@
+var selectedCandidate;
 class VoterGuideScene extends AdditiveScene {
     constructor(prev) {
         super(prev);
@@ -11,6 +12,7 @@ class VoterGuideScene extends AdditiveScene {
         var s = 0.05;
         this.pages = [];
         for(var i=0;i<numCandidates;i++) {
+            
             var btn = new ButtonUI('candidate '+(i+1), x,y,w,h,s, () =>{
                 // this.back();
                 this.driver.setScene(new ConfirmationScene(this,
@@ -18,7 +20,11 @@ class VoterGuideScene extends AdditiveScene {
                     [
                         {
                             name: "yes",
-                            callback: b=>this.back()
+                            callback: b=>{
+                                this.back()
+                                saveCandidate(btn.model);
+                                
+                            }
                         },
                         {
                             name: "no",
@@ -35,6 +41,7 @@ class VoterGuideScene extends AdditiveScene {
             btn.model = model;
             model.body.y = -50
             btn.children.push(model)
+            
             this.addSelectableButton(btn, DIRECTION.right);
             x+=dx;
             y+= dy;

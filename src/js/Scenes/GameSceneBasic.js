@@ -41,6 +41,8 @@ class GameSceneBasic extends Scene {
       this.showGo = false;
       if(model&&model.isPlayer) {
         this.addEntity(this.player = model);
+        this.player.dodging = false;
+        this.player.dodgeTimer = 0;
         this.player.speed = 5;
         this.player.y = this.startingY;
         this.player.x = 100;
@@ -445,24 +447,30 @@ class GameSceneBasic extends Scene {
       if(this.player.item.type) {
         canvas.save();
         canvas.translate(32,CE.height-32);
+        canvas.fillStyle = '#0006';
+        canvas.fillRect(-32,-32,64+32,64);
         this.player.item.type.drawShape(canvas, 0);
         canvas.fillStyle = 'white';
         canvas.textAlign = 'left';
         canvas.textBaseline = 'middle';
         canvas.font = '20px '+ FONT_FAMILY.default;
-        canvas.fillText(this.player.item.count, 32,0);
+        canvas.fillText(this.player.item.count, 32+4,0);
         canvas.restore();
       }
 
       var w = 32;
       var h = 32;
-      var x = CE.width/2
+      var x = CE.width*.3
       canvas.textAlign = 'left';
       canvas.textBaseline = 'middle';
       canvas.fillStyle = '#0006';
-      canvas.fillRect(x,CE.height-h,CE.width/2,h);
+      canvas.fillRect(x,CE.height-h,CE.width-x,h);
       canvas.font = '12px '+ FONT_FAMILY.default;
       canvas.fillStyle = 'white';
+      canvas.drawImage(btnImages[3], x,CE.height-h,w,h);
+      x+=w;
+      canvas.fillText('Interact', x-4,CE.height-h+h/2,w,w);
+      x+=w;
       canvas.drawImage(btnImages[0], x,CE.height-h,w,h);
       x+= w
       canvas.fillText('Jump', x,CE.height-h+h/2);
@@ -473,12 +481,13 @@ class GameSceneBasic extends Scene {
       x+=w;
       canvas.drawImage(btnImages[2], x,CE.height-h,w,h);
       x+= w
+      canvas.fillText('Dodge', x,CE.height-h+h/2,w,w);
+      x+=w;
+      canvas.drawImage(btnImages[4], x,CE.height-h,w,h);
+      x+= w
       canvas.fillText('Throw', x,CE.height-h+h/2);
       x+=w;
-      canvas.drawImage(btnImages[3], x,CE.height-h,w,h);
-      x+=w;
-      canvas.fillText('Interact', x,CE.height-h+h/2);
-      x+=w;
+      
 
       this.dialogueController.draw(canvas);
 

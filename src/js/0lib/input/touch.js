@@ -13,10 +13,10 @@ window.addEventListener('load', function() {
   touchCE.height = CE.height;
 })
 
-var touchOn = false;
+var touchOn = true;
 touchStarts = [];
 var touchDown = false;
-var y = .3;
+var y = .4;
 var touchJoySticks;
 var touchButtons;
 function setButtonsWithShrink(shrinkAmount) {
@@ -69,6 +69,14 @@ function setButtonsWithShrink(shrinkAmount) {
     },{
       name: 'Y',
       x: .95, y:y+.05, r:.1,
+      area: {
+        // x: 0.75, y: 0, w: 0.25, h:1
+        x: .95-.1, y:y+.05-.1, w: .2, h: .2
+      },
+      held: false,
+    },{
+      name: 'R',
+      x: .95, y:y-.1, r:.1,
       area: {
         // x: 0.75, y: 0, w: 0.25, h:1
         x: .95-.1, y:y+.05-.1, w: .2, h: .2

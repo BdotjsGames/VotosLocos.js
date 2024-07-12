@@ -626,6 +626,7 @@ GameSequence = [
         },
         onLoad: scene =>{
             openedDoors = 0;
+            scene.addEntity(new Candidate(300,100));
             // scene.minY = 0;
             var houses = [];
             for(var i=0;i<12;i++) {
@@ -652,16 +653,16 @@ GameSequence = [
                 }
                 house.door.onOpen = house.door.createRefuser
             }
-            for(var i=0;i<4;i++) {
+            for(var i=0;i<2;i++) {
                 scene.addEntity(new Ninja((i+0.5)*50+2000, 500))
             }
-            for(var i=0;i<4;i++) {
+            for(var i=0;i<2;i++) {
                 scene.addEntity(new Bot((i+0.5)*50+2000, 200))
             }
-            for(var i=0;i<8;i++) {
+            for(var i=0;i<6;i++) {
                 scene.addEntity(new Troll((i+0.5)*50+3000, 500))
             }
-            for(var i=0;i<8;i++) {
+            for(var i=0;i<6;i++) {
                 scene.addEntity(new Troll((i+0.5)*50+3000, 200))
             }
             
@@ -675,7 +676,6 @@ GameSequence = [
             {person: LouChalibre, text: "Lets take the bus!"},
             {person: LouChalibre, text: "Many cities have free public buses to the polling location."},
         ],
-        // debugStartWithThisOne: true,
         dontShowGo: true,
         onLoad: (scene) => {
             // var lowRider = scene.addEntity(new ImageDrawable(IMAGES.lowRider, 250,-100))
@@ -725,7 +725,7 @@ GameSequence = [
     },
     {
         name: "Blockade",
-        debugStartWithThisOne: true,
+        // debugStartWithThisOne: true,
 
         onLoad: scene => {
             var bot1;

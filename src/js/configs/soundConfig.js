@@ -11,6 +11,9 @@ SOUNDS.select = new SoundTag('pop1.wav',2,1);
 SOUNDS.hover = new SoundTag('pop2.wav',2,1);
 SOUNDS.press = new SoundTag('pop1.wav',2,1);
 
+SOUNDS.warningBlip = new SoundTag('bfxr/Blip_Select16.wav',2,1);
+
+
 
 // SOUNDS.dramaticMusic = new SoundTag('Dramatic.wav', 1,1);
 // SOUNDS.portalMusic = new SoundTag('PortalSong.wav', 1,1);
@@ -25,6 +28,8 @@ SOUNDS.swishLong = new SoundTag('swish1.wav', 0.8,1);
 SOUNDS.jump2 = new SoundTag('bfxr/Jump2.wav', 1,1);
 SOUNDS.attack = new SoundTag('bfxr/Hit_Hurt1.wav', 1,1);
 SOUNDS.enemyAttack = new SoundTag('hwah.wav', 2,1);
+SOUNDS.throw = new SoundTag('hwah.wav', 2,1);
+SOUNDS.enemyThrow = new SoundTag('hwah.wav', 1,1);
 SOUNDS.keyboardSounds1 = new SoundTag('keyboardSounds1.wav', 1,1);
 SOUNDS.keyboardSounds2 = new SoundTag('keyboardSounds2.wav', 1,1);
 SOUNDS.blowImpact = new SoundTag('blowImpact.wav', 1,1);

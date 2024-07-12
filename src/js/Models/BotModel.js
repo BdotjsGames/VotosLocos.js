@@ -215,5 +215,20 @@ var botanims = {
           {limb: 'legL2', rotation: 0},
         ],time:60
       }
+    ],
+    jumpAway: [
+      {
+        limbs: [],
+        onStart: (self) => {
+          // var dx = player.x>self.x?1:-1;
+          self.parent.mx = - self.parent.dx;
+          self.parent.jump();
+        }, time: 20,
+        // customUpdate: (self) => {
+        //   self.parent.mx - self.parent.dx;
+
+        // }
+      }
     ]
   }
+

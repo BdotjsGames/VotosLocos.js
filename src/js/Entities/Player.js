@@ -11,6 +11,7 @@ class Player extends BeatEmUpper {
     this.buttons.crouch = Buttons.crouch;
     this.buttons.highFive = Buttons.highFive;
     this.buttons.jump = Buttons.jump;
+    this.buttons.useItem = Buttons.R;
     this.networkedState = {};
     this.networkedStateDiff = {};
     this.attackHitbox = {width: 80, height: 70};
@@ -18,6 +19,7 @@ class Player extends BeatEmUpper {
     this.item.type = ITEMS.flag;
     this.item.count = 10;
     this.isPlayer = true;
+    this.health=this.maxHealth=100;
   }
   
   addShoes() {
@@ -83,9 +85,13 @@ class Player extends BeatEmUpper {
       this.setNetworkedStateAttr('unjump', true);
 
     }
+    if(getButtonDown(this.buttons.useItem)) {
+      this.useItem();
+    }
     if(this.crouching = getButtonDown(this.buttons.crouch)) {
       // this.crouch();
-      this.useItem();
+      // this.useItem();
+      this.dodge();
       this.setNetworkedStateAttr('crouch', true);
     } else {
       this.setNetworkedStateAttr('crouch', false);

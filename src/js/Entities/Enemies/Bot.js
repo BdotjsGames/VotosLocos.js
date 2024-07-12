@@ -27,6 +27,18 @@ class Bot extends BeatEmUpper {
         this.attackY = 120
         this.enemySeekRange = 20;
     }
+
+    throwProjectile() {
+        var data = this.item.type;
+        var z = this.z + (-this.model.legLength-20)*2;
+        var proj = this.scene.addEntity(new LaserBeam(this.x+30*this.dx+this.vx,this.y,z,this.dx*10,5, 100,this.enemies));
+        if(data.drawShape)
+            proj.drawShape = data.drawShape;
+        if(data.damage)
+            proj.damage = data.damage;
+        SOUNDS.enemyThrow.play();
+        
+    }
     die() {
         super.die();
         if(Math.random()<.2) {
@@ -45,6 +57,12 @@ class Bot extends BeatEmUpper {
     getHit(args) {
         super.getHit(args);
         this.shootTimer = 0;
+    }
+    update() {
+        if(this.scene.dialogueBlocking) {
+            return;
+        }
+        super.update();
     }
     getInputs() {
         if(this.inputBlocking)return;
@@ -119,3 +137,62 @@ class Bot extends BeatEmUpper {
         // }
     }
 }
+
+
+
+var enemyThrowAnim = [
+    {
+      doLegWalk: true,
+      limbs: [
+        {limb: 'body2', rotation: -Math.PI/10},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI*1.3},
+        {limb: 'arm2', rotation: 0},
+      ],
+      customUpdate: self => {
+        self.parent.mx=0;
+        self.parent.my = 0;
+        self.parent.telegraphProjectile = true;
+      },
+      time: 20,
+    },
+    {
+      doLegWalk: true,
+      limbs: [
+        {limb: 'body2', rotation: Math.PI/10},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI/2},
+        {limb: 'arm2', rotation: 0},
+      ],
+      time: 2,
+      onStart: self => {
+        self.parent.throwProjectile()
+
+      }
+    },
+    {
+      doLegWalk: true,
+      limbs: [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: 0},
+        {limb: 'arm2', rotation: 0},
+      ],
+      time: 20,
+    },
+    {
+      limbs: [],
+      onStart: self => {
+        self.parent.telegraphProjectile = false;
+      }, time: 1
+    }
+  ]

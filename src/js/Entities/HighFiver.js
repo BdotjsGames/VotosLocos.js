@@ -1,7 +1,7 @@
 var highFivers = [];
 class HighFiver extends BeatEmUpper {
-    constructor(x, y) {
-        super(x, y, 20, 40, '#00b', '#006');
+    constructor(x, y,model) {
+        super(x, y, 20, 40, '#00b', '#006',model);
         // this.model.mouth.drawable.image = IMAGES.mouthFrown;
         // this.model.face._y=1;
         // this.canAttack = false;

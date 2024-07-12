@@ -96,6 +96,7 @@ class OptionsScene extends AdditiveScene {
             )
             y+=spacing;
         })
+        
         y+=spacing;
         this.addSelectableButton(
             new SliderOptionUI('Touch Scale',x,y,0.3,0.05,(value,self)=>{

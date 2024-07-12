@@ -15,6 +15,7 @@ class PlatformerModel extends Model {
     this.impactStopTimer=0;
     this.self = this;
     this.anims=anims;
+    this.dodging = false;
     this.attackCombo = [anims.strike, -1,anims.flipKick, anims.groundSlam, anims.armSpinny];
     // this.attackCombo = [anims.throw];
     // this.attackCombo = [anims.armSpinny];
@@ -726,12 +727,14 @@ class PlatformerModel extends Model {
     this.legL._y=0;
   }
   land() {
-    this.doubleJumpTimer = 0;
     if(this.parent.passedOut) {
       SOUNDS.pop.play();
     }
-    this.scaleY = .8;
-    this.scaleX = 1.2+Math.abs(this.parent.vy)/20;
+    if(!this.dodging) {
+      this.doubleJumpTimer = 0;
+      this.scaleY = .8;
+      this.scaleX = 1.2+Math.abs(this.parent.vy)/20;
+    }
     this.doubleJumping = false;
   }
   impactStop(amount) {
@@ -884,7 +887,10 @@ class PlatformerModel extends Model {
       this.attackUpdate();
       return;
     }
-    if(!this.grounded) {
+    if(this.dodging) {
+      this.doubleJumpUpdate();
+    }
+    else if(!this.grounded) {
       if(this.doubleJumping) {
         this.doubleJumpUpdate();
       } else {
@@ -944,6 +950,7 @@ class PlatformerModel extends Model {
       this.attacking = false;
     }
     this.unInteruptable = false;
+    this.parent.telegraphProjectile= false;
     this.wheelchair.rotation = 0;
   }
   animStartFrame(keyFrame) {
@@ -1332,4 +1339,8 @@ var anims = {
       time: 10,
     }
   ]
+}
+
+anims.dodge = {
+
 }

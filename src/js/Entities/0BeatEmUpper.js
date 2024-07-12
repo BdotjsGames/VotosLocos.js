@@ -68,7 +68,7 @@ class BeatEmUpper {
         this.avoidRange = 300;
         this.attackSpeed = 100;
         this.attackTimer = 0;
-        this.hitResistence = 3;
+        this.hitResistence = 2;
         this.item = {type:{}, count: 0};
         this.attackerCount = 0;
     }
@@ -89,7 +89,28 @@ class BeatEmUpper {
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, CE.width, CE.height);
     }
+    dodge() {
+        if(this.dodging)return;
+        this.vz = 5
+        this.dodging = true;
+        this.dodgeTimer = 20;
+        this.model.doubleJump();
+        this.model.dodging = true;
+        this.dodgeMx = this.mx;
+        this.dodgeMy = this.my;
+        if(this.mx==0&&this.my==0) {
+            this.dodgeMx = this.dx;
+        }else {
+            var r = Math.sqrt(this.mx*this.mx+this.my*this.my);
+            this.dodgeMx = this.mx/r;
+            this.dodgeMy = this.my/r;
+        }
+        this.vx = this.dodgeMx*this.speed*20;
+        this.vy = this.dodgeMy*this.speed*20;
+
+    }
     getHit(other) {
+        if(this.dodging)return;
         var damage = other.contactDamage;
         if(other.model)
         if(other.model.anim&&other.model.damage) {
@@ -118,7 +139,7 @@ class BeatEmUpper {
         if(k==undefined) console.log('k is undefined');
         this.vx = -dx * k * 10;
         this.x += this.vx;
-        this.vz = -5;
+        this.vz = -1;
         this.health -= damage;
         this.invul = this.invulTime;
         if(other.model)
@@ -257,6 +278,7 @@ class BeatEmUpper {
             proj.drawShape = data.drawShape;
         if(data.damage)
             proj.damage = data.damage;
+        SOUNDS.throw.play();
     }
     useItem() {
         this.model.throw();
@@ -304,6 +326,14 @@ class BeatEmUpper {
             this.mx = 0;
             this.my = 0;
         }
+        if(this.dodgeTimer>0) {
+            this.dodgeTimer--;
+            this.mx = this.dodgeMx;
+            this.my = this.dodgeMy;
+        } else {
+            this.model.dodging = false;
+            this.dodging = false;
+        }
 
         var terminalSideVelocity = this.speed*2;
         var speed = this.speed;
@@ -322,6 +352,10 @@ class BeatEmUpper {
             if(this.mx==0&&this.my==0) accel = this.groundDeceleration;
             if(!this.grounded)accel *=0.2;
             else if(this.model.skateBoardOn||this.model.inWheelChair)accel *= 0.5;
+            if(this.dodging) {
+                // accel = 1;
+                speed = this.speed*2;
+            }
             this.vx = linearMove(this.vx, this.mx*speed, accel);
             this.vy = linearMove(this.vy, this.my*speed, accel);
             
@@ -576,6 +610,10 @@ class BeatEmUpper {
     jump() {
         if (!this.canJump()) return;
         if (this.model.attacking) return;
+        this.grounded = false;
+        this.dodgeTimer = 0;
+        this.dodging=false;
+        this.model.dodging = false;
         if (this.wallColliding && this.wallJumps) {
             this.vx = -this.dx * 4;
         }
@@ -595,7 +633,7 @@ class BeatEmUpper {
         if(this.mx!=0) {
             this.vx = (this.dx*this.jumpSpeedBoost)
         }
-        this.grounded = false;
+       
     }
     unjump() {
         if (!this.canUnJump) return;
@@ -610,6 +648,20 @@ class BeatEmUpper {
         // canvas.fillRect(this.x,this.y,10,10);
         canvas.save();
         canvas.translate(this.x,this.y);
+        if(this.telegraphProjectile) {
+            canvas.lineWidth = 4;
+            canvas.strokeStyle = '#f00a';
+            canvas.fillStyle = '#d003';
+            var z = 0;//(-this.model.legLength-20)*2
+            var telegraphHeight = 40;
+            canvas.fillRect(0,-telegraphHeight/2+z,this.dx*1000,telegraphHeight)
+            canvas.strokeRect(0,-telegraphHeight/2+z,this.dx*1000,telegraphHeight)
+            canvas.fillStyle = '#f00a';
+            canvas.font= '20px' + FONT_FAMILY.default;
+            canvas.textAlign = 'center';
+            canvas.textBaseline = 'middle';
+            canvas.fillText('!',0+this.dx*500, 0);
+        }
         var sx = 1;
         if(this.model.sliding) sx =2;
         canvas.scale(sx,0.5);
