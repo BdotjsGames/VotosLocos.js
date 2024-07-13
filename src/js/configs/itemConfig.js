@@ -13,7 +13,7 @@ function createItemDrop(x,y,item, count) {
 window.addEventListener('load', function() {
     IMAGES.thrownFlag = ImageLoader.loadImage('Items/flag.png')
     ITEMS.flag = {
-        damage: 5,
+        damage: 10,
         name: 'Flags',
         throwable: true,
         frameCount:0,

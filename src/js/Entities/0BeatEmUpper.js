@@ -18,7 +18,7 @@ class BeatEmUpper {
         this.dz = 1;
         this.dy = 1;
         this.speed = 5;
-        this.grounded = false;
+        this.grounded = true;
         this.terminalVelocity = 20;
         this.crouching = false;
         this.canUnJump = false;
@@ -271,23 +271,23 @@ class BeatEmUpper {
     attack() {
         if (this.canAttack) {
             var anim = null;
-            if(this.model.attacking) {
-                this.spamCounter += 1;
-                if(this.spamCounter>1){
-                    anim = anims.armSpinny
-                }
-            } else {
-                this.spamCounter = 0;
-            }
+            // if(this.model.attacking) {
+            //     this.spamCounter += 1;
+            //     if(this.spamCounter>1){
+            //         anim = anims.armSpinny
+            //     }
+            // } else {
+            //     this.spamCounter = 0;
+            // }
             if(!this.grounded) {
-                if(this.my<0&&this.canJump()) {
+                if(this.vz<-this.jumpStrength*.6&&this.canJump()) {
                     anim=anims.flipKick
                     this.jumpCount++;
 
                 }else if(this.my>0) anim = anims.groundSlam
             }
             if(this.dodging) {
-                anim = -1;
+                anim = anims.armSpinny;
             }
             this.model.attack(anim);
         }
@@ -301,7 +301,7 @@ class BeatEmUpper {
         if(data.drawShape)
             proj.drawShape = data.drawShape;
         if(data.damage)
-            proj.damage = data.damage;
+            proj.contactDamage = data.damage;
         SOUNDS.throw.play();
     }
     useItem() {
@@ -400,12 +400,12 @@ class BeatEmUpper {
             this.model.rotation = 0;
             // this.grounded = true;
             if (this.mx != 0) {
-                var dx = this.dx = this.mx > 0 ? 1 : -1;
+                var dx = this.mx > 0 ? 1 : -1;
+                if(!this.straffing)
+                    this.dx = dx;
                 if(frameCount-this.jumpTimeStamp<5) {
                     this.vx = (this.dx*this.jumpSpeedBoost)
                 }
-                if(!this.straffing)
-                this.dx = dx;
             }
             if(this.my !=0) {
                 this.dy = this.my>0?1:-1;

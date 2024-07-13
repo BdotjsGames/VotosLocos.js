@@ -195,7 +195,7 @@ GameSequence = [
         DialogueData: [], 
         spawnRandom: [
             // [KnockableDoor, 10],
-            [Bot, 3],
+            // [Bot, 3],
             [Putin, 1],
             [TrashCan, 1],
             // [Bot, 10],
@@ -734,9 +734,10 @@ GameSequence = [
                 for(var i=0;i<10;i++) {
                     var x = 400+i*50 + j*15;
                     var y = 0 + j * 50;
-                    bot1 = scene.addEntity(new Bot(x,y));
-                    bot1.dx=-1;
-                    bot1.update();
+                    var bot = scene.addEntity(new Bot(x,y));
+                    bot.dx=-1;
+                    bot.update();
+                    if(j==3&&i==5)bot1 = bot;
                     // bot1.getInputs = ()=>{}
                 }
             }
