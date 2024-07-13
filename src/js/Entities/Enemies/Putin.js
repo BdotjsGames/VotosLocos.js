@@ -7,6 +7,8 @@ class Putin extends Bot {
         this.attackX = 800;
         this.attackY = 60;
         this.noticeDistance = 1000;
+        this.rangeDistance = 600;
+        this.straffing = true;
         this.item.type = ITEMS.beerBottle;
         // this.model.attackCombo.push(putinSpawnAnimation,putinSpawnAnimation,putinSpawnAnimation)
         this.model.attackCombo = [putinSpawnAnimation, putinSpawnAnimation,putinSpawnAnimation, anims.groundSlam, anims.punch1,anims.punch2,enemyJumpAway, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim, botanims.armSpinny]

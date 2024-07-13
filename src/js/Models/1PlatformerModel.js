@@ -16,10 +16,10 @@ class PlatformerModel extends Model {
     this.self = this;
     this.anims=anims;
     this.dodging = false;
-    this.attackCombo = [anims.strike, -1,anims.flipKick, anims.groundSlam, anims.armSpinny];
+    // this.attackCombo = [anims.strike, -1,anims.flipKick, anims.groundSlam, anims.armSpinny];
     // this.attackCombo = [anims.throw];
     // this.attackCombo = [anims.armSpinny];
-    // this.attackCombo = [anims.punch1, anims.punch2, anims.strike];
+    this.attackCombo = [anims.punch1,anims.punch2,anims.strike];
     this.attackComboIndex = 0;
     this.attackAnim = anims.strike;
     this.skirtOn = true;
@@ -503,7 +503,7 @@ class PlatformerModel extends Model {
     this.startAnim(anims.throw);
     this.attackTimer = 15;
   }
-  attack() {
+  attack(anim) {
     // if(this.attacking)return;
     if(this.unInteruptable)return;
     if(this.cooldownTimer>0)return;
@@ -511,15 +511,18 @@ class PlatformerModel extends Model {
     // if(this.anims.flipKick && this.parent.vz <-this.parent.jumpStrength*.9) {
     //   this.startAnim(this.anims.flipKick);
     // } else 
-    {
-      var attack = this.attackCombo[this.attackComboIndex];
+    var attack = anim;
+    if(!anim) {
+      attack = this.attackCombo[this.attackComboIndex];
       this.attackComboIndex += 1;
       if(this.attackComboIndex>=this.attackCombo.length)this.attackComboIndex=0;
-      if(attack==-1) {
-        return this.slide();
-      }
-      this.startAnim(attack);
     }
+    
+    if(attack==-1) {
+      return this.slide();
+    }
+    this.startAnim(attack);
+    
     this.attackSound.play();
     // this.attacking = true;
     // this.startAnim(this.attackAnim);
@@ -634,6 +637,7 @@ class PlatformerModel extends Model {
     this.legL._y=0;
     this.legR._y=0;
     this.body._y=0;
+    this.body2._x=0;
     this.body2._y=0;
   }
   walk(noArms = false) {
@@ -861,7 +865,7 @@ class PlatformerModel extends Model {
         this.getHit();
       }
       if(this.impactStopTimer<=0) {
-        this.wallCollide();
+        // this.wallCollide();
         if(this.isHit) {
           this.mouth.drawable.image = this.mouthType;
         }
@@ -1036,6 +1040,7 @@ var anims = {
         // {limb: 'hips', rotation: Math.PI/4},
       ],
       time: 0, //dx: -6
+      unInteruptable: true,
     },
     { limbs: 
       [
@@ -1050,6 +1055,7 @@ var anims = {
       ],
       onStart: self=>{
         self.attacking=true
+        self.unInteruptable = false;
         self.parent.attackHitbox = self.parent.defaultAttackHitbox;
         var p = self.parent;
         if(!p.grounded && p.mx || p.isBot) {
@@ -1074,6 +1080,7 @@ var anims = {
         {limb: 'body2', rotation: 0},
         // {limb: 'hips', rotation: Math.PI/4},
       ],
+      unInteruptable: true,
       time: 0,// dx: -6
     },
     { limbs: 
@@ -1089,6 +1096,7 @@ var anims = {
       ],
       onStart: self=>{
         self.attacking=true
+        self.unInteruptable = false;
         var p = self.parent;
         if(!p.grounded && p.mx || p.isBot) {
           p.vx = (p.dx*p.jumpSpeedBoost)
@@ -1113,6 +1121,7 @@ var anims = {
         {limb: 'body2', rotation: -Math.PI/4},
         // {limb: 'hips', rotation: Math.PI/4},
       ],
+      unInteruptable: true,
       time: 5, dx: -6
     },
     {limbs:[],time: 3, dx: 12},
@@ -1127,12 +1136,22 @@ var anims = {
         {limb: 'legL2', rotation: Math.PI/4},
         // {limb: 'hips', rotation: -Math.PI/2},
       ],
+      damage: 15,
+
       onStart: self=>{
         self.attacking=true
         var p = self.parent;
         if(!p.grounded && p.mx || p.isBot) {
           p.vx = (p.dx*p.jumpSpeedBoost)
         }
+        spawnAttackParticle(
+          self.parent.scene,
+          self.parent.x+self.parent.dx*80,
+          self.parent.y+2,
+          self.parent.z-(self.legLength+20)*2,
+          0,
+          self.parent.dx<0,0
+        );
       },
       time: 3, dx:12
     },
@@ -1169,8 +1188,15 @@ var anims = {
       ], time: 5,
       onStart: self=> {
         self.attacking = true;
+        self.unInteruptable = false;
         self.parent.attackHitbox = self.parent.defaultAttackHitbox;
         self.knockbackUp = -10;
+        spawnAttackParticle(
+          self.parent.scene,
+          self.parent.x+self.parent.dx*80,
+          self.parent.y+2,self.parent.z-(self.legLength+20)*2,0,
+          self.parent.dx<0,1
+        );
       },
     },
     {
@@ -1244,29 +1270,54 @@ var anims = {
     {
       limbs: [
         {limb: 'body2', rotation: 0},
-        {limb: 'body', rotation: Math.PI/2},
+        {limb: 'body', rotation: Math.PI/2,_y:30},
         {limb: 'head', rotation: 0},
         {limb: 'arm1', rotation: -Math.PI},
         {limb: 'arm2', rotation: -Math.PI},
       ],
+      damage: 15,
       customUpdate: self => {
         self.parent.vz= 40;
+        if(self.parent.grounded) {
+          self.parent.attackHitbox = self.parent.largeHitbox;
+          if(self.unlanded) {
+            self.unlanded = false;
+            spawnDeathParticles(self.parent.scene,self.parent.x,self.parent.y,self.parent.z,250,32)
+            SOUNDS.attack.play();
+          }
+        }
       },
       onStart: self => {
         self.parent.vz = 30;
         self.attacking = true
-        self.parent.attackHitbox = self.parent.largeHitbox;
+        self.unlanded = true;
+        // self.parent.attackHitbox = self.parent.largeHitbox;
         self.knockbackUp = 20;
       },
       time: 20
     },
     {
-      unInteruptable: false,
-      interuptable: true,
+      unInteruptable: true,
+      interuptable: false,
+      limbs: [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: Math.PI/2,_y:30},
+        {limb: 'head', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI},
+        {limb: 'arm2', rotation: -Math.PI},
+      ],
+       time: 10, onStart: self=>{
+        // self.attacking=false;
+        self.knockbackUp = 0;
+      }
+    },
+    {
+      unInteruptable: true,
+      interuptable: false,
       limbs: 
       [
         {limb: 'body2', rotation: 0},
-        {limb: 'body', rotation: 0},
+        {limb: 'body', rotation: 0,_y:0},
         {limb: 'head', rotation: 0},
         {limb: 'legL', rotation: 0},
         {limb: 'legL2', rotation: 0},
@@ -1282,7 +1333,7 @@ var anims = {
   armSpinny: [
     {
       limbs: [],
-      damage: 5,
+      damage: 4,
       customUpdate: self=>{
         var aa = self.arm1.rotation;
         self.attacking = true
@@ -1343,4 +1394,13 @@ var anims = {
 
 anims.dodge = {
 
+}
+
+
+function spawnAttackParticle(scene,x,y,z,rotation=0,flipH, flipV) {
+  var p = scene.addEntity(new ImageParticle(IMAGES.hitEffect1, x,y, 32*6,32*6, 0,0,10,0))
+  p.z = z;
+  p.angle = rotation;
+  if(flipH)p.flipW = -1;
+  if(flipV)p.flipH = -1;
 }

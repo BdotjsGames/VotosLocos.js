@@ -68,9 +68,11 @@ class BeatEmUpper {
         this.avoidRange = 300;
         this.attackSpeed = 100;
         this.attackTimer = 0;
-        this.hitResistence = 2;
-        this.item = {type:{}, count: 0};
+        this.hitResistence = 5;
+        this.item = {type:null, count: 0};
         this.attackerCount = 0;
+        this.straffing = false;
+        this.spamCounter=0;
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -90,6 +92,7 @@ class BeatEmUpper {
         ctx.fillRect(0, 0, CE.width, CE.height);
     }
     dodge() {
+        if(this.model.anim)return;
         if(this.dodging)return;
         this.vz = 5
         this.dodging = true;
@@ -122,11 +125,13 @@ class BeatEmUpper {
             other.model.impactStop(5);
         this.dx = this.x<other.x?1:-1;
         // console.log(this.hitResistence,damage)
-        if(this.hitResistence>damage) {
+        // console.log(this.hitResistence, damage);
+        if(this.hitResistence>=damage) {
             // this.outlineColor = 'yellow'
         } else {
             this.model.impactStop(25);
             this.model.getHit(true);
+            this.vz = -1;
         }
 
         // createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
@@ -139,7 +144,6 @@ class BeatEmUpper {
         if(k==undefined) console.log('k is undefined');
         this.vx = -dx * k * 10;
         this.x += this.vx;
-        this.vz = -1;
         this.health -= damage;
         this.invul = this.invulTime;
         if(other.model)
@@ -265,8 +269,28 @@ class BeatEmUpper {
     }
     getInputs() { }
     attack() {
-        if (this.canAttack)
-            this.model.attack();
+        if (this.canAttack) {
+            var anim = null;
+            if(this.model.attacking) {
+                this.spamCounter += 1;
+                if(this.spamCounter>1){
+                    anim = anims.armSpinny
+                }
+            } else {
+                this.spamCounter = 0;
+            }
+            if(!this.grounded) {
+                if(this.my<0&&this.canJump()) {
+                    anim=anims.flipKick
+                    this.jumpCount++;
+
+                }else if(this.my>0) anim = anims.groundSlam
+            }
+            if(this.dodging) {
+                anim = -1;
+            }
+            this.model.attack(anim);
+        }
     }
     throwProjectile() {
         if(this.item.count <=0 )return;
@@ -380,6 +404,7 @@ class BeatEmUpper {
                 if(frameCount-this.jumpTimeStamp<5) {
                     this.vx = (this.dx*this.jumpSpeedBoost)
                 }
+                if(!this.straffing)
                 this.dx = dx;
             }
             if(this.my !=0) {
@@ -772,12 +797,12 @@ function spawnHitParticles(scene,x,y,z) {
     p.z = z;
 }
 
-function spawnDeathParticles(scene,x,y,z) {
+function spawnDeathParticles(scene,x,y,z,radius=50,amount=12) {
     var f = scene.addEntity(new ImageParticle(IMAGES.whiteFlash, x,y, 32*10,32*10, 0,0,10,0))
     f.z= z;
-        for(var i=0;i<12;i++) {
+        for(var i=0;i<amount;i++) {
             var a = Math.random()*Math.PI*2;
-            var r= Math.random()*50;
+            var r= Math.random()*radius;
             var p  = createFadingParticle(scene,x+Math.cos(a)*r,y+Math.sin(a)*r,0,30)
             p.life+=Math.random()*10;
             p.z = z;

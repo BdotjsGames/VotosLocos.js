@@ -483,10 +483,12 @@ class GameSceneBasic extends Scene {
       x+= w
       canvas.fillText('Dodge', x,CE.height-h+h/2,w,w);
       x+=w;
-      canvas.drawImage(btnImages[4], x,CE.height-h,w,h);
-      x+= w
-      canvas.fillText('Throw', x,CE.height-h+h/2);
-      x+=w;
+      if(this.player.item&& this.player.item.count>0) {
+        canvas.drawImage(btnImages[4], x,CE.height-h,w,h);
+        x+= w
+        canvas.fillText('Throw', x,CE.height-h+h/2);
+        x+=w;
+      }
       
 
       this.dialogueController.draw(canvas);

@@ -45,6 +45,8 @@ class ImageParticle extends Drawable {
     this.life=life;
     this.image = image;
     this.z=0;
+    this.flipW=1;
+    this.flipH=1;
     // this.sortOffset = -15;
     // this.y += this.sortOffset;
     this.trueCoords = true;
@@ -62,7 +64,9 @@ class ImageParticle extends Drawable {
   drawShape(canvas) {
     // canvas.fillStyle = this.color;
     // canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
+    
     canvas.globalAlpha = this.life/this.maxLife;
+    canvas.scale(this.flipW,this.flipH);
     // canvas.beginPath();
     // canvas.arc(this.x,this.y,this.w/2,0,Math.PI*2);
     // canvas.fill();

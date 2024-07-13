@@ -12,6 +12,7 @@ SOUNDS.hover = new SoundTag('pop2.wav',2,1);
 SOUNDS.press = new SoundTag('pop1.wav',2,1);
 
 SOUNDS.warningBlip = new SoundTag('bfxr/Blip_Select16.wav',2,1);
+SOUNDS.powerup = new SoundTag('bfxr/Powerup.wav',2,1);
 
 
 
@@ -32,7 +33,7 @@ SOUNDS.throw = new SoundTag('hwah.wav', 2,1);
 SOUNDS.enemyThrow = new SoundTag('hwah.wav', 1,1);
 SOUNDS.keyboardSounds1 = new SoundTag('keyboardSounds1.wav', 1,1);
 SOUNDS.keyboardSounds2 = new SoundTag('keyboardSounds2.wav', 1,1);
-SOUNDS.blowImpact = new SoundTag('blowImpact.wav', 1,1);
+SOUNDS.blowImpact = new SoundTag('blowImpact.wav', 1,0.5);
 SOUNDS.pickup = new SoundTag('onHover.wav',2,2);
 SOUNDS.hit = new SoundTag('swish1.wav',2,2);
 SOUNDS.glassBreak = new SoundTag('GlassBreak.wav',1,1);

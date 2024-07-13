@@ -416,3 +416,5 @@ IMAGES.inputPromptKeyE = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles
 IMAGES.inputPromptKeyEOff = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0360.png')
 IMAGES.inputPromptKeyF = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles/tile_0123.png')
 
+
+IMAGES.hitEffect1 = ImageLoader.loadImage('effects/hitEffect1.png')

@@ -20,12 +20,14 @@ class Bot extends BeatEmUpper {
         this.attackHitbox = {
             width: 40, height: 40,
         }
-        this.largeHitbox= { width: 70, height: 70};
+        this.largeHitbox= { width: 200, height: 70};
 
         this.noticeDistance = 300
         this.attackX = 240
         this.attackY = 120
         this.enemySeekRange = 20;
+
+        this.rangeDistance = 10;
     }
 
     throwProjectile() {
@@ -104,12 +106,12 @@ class Bot extends BeatEmUpper {
             }
             // this.vy += Math.cos(frameCount*Math.PI/10)*.1;
             // this.vz += ((player.z - 50 - this.z)/50-this.vz)/10
-
             if(this.followY) {
                 if(dy>50)this.my=1;
                 if(dy<-50)this.my=-1;
             }
             if(this.followX) {
+                dx += -this.rangeDistance*this.dx;
                 if(dx>50)this.mx=1;
                 if(dx<-50)this.mx=-1;
             }

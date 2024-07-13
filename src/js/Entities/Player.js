@@ -16,8 +16,8 @@ class Player extends BeatEmUpper {
     this.networkedStateDiff = {};
     this.attackHitbox = {width: 80, height: 70};
     this.interactablesRange = 200;
-    this.item.type = ITEMS.flag;
-    this.item.count = 10;
+    // this.item.type = ITEMS.flag;
+    // this.item.count = 10;
     this.isPlayer = true;
     this.health=this.maxHealth=100;
   }

@@ -36,6 +36,9 @@ class HighFiver extends BeatEmUpper {
         this.avoidHealth = this.maxHealth/4;
         this.isBrawlingMode = false;
     }
+    die() {
+        this.health = 1;
+    }
     startFollow(target, distance) {
         this.playerTarget = target;
         this.isInteractable = false;

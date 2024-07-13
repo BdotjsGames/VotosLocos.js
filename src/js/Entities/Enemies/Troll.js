@@ -9,7 +9,7 @@ class Troll extends Bot {
         this.attackX = 500;
         this.attackY = 60;
         this.noticed = true; 
-        this.health = this.maxHealth = 5;
+        this.health = this.maxHealth = 11;
 
     }
     initModel(w, h, color,color2) {
