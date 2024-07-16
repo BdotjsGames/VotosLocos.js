@@ -23,7 +23,7 @@ class Scene {
       btn.linkButton(this.buttonToLink, DIRECTION.opposite(dir))
     }
     this.buttonToLink = btn;
-    if(!this.selectedButton) {
+    if(!this.selectedButton&&!this.dontAutoSelect) {
       btn.setSelected();
     }
     return btn;

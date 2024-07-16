@@ -5,22 +5,28 @@ class CharacterCustomizerScene extends Scene{
         canvas.backgroundImage = IMAGES.backgroundSky
         this.useTouchAsMouse = true;
         this.prevScene = prevScene; 
+        this.dontAutoSelect=true;
         this.backButton = this.addSelectableButton(new ButtonUI("BACK", 0.15,0.1,0.25,0.1,0.05,() => {
             this.model.scaleBoth=1;
             if(this.prevScene) return this.driver.setScene(this.prevScene)
             this.driver.setScene(new MenuScene(this))
         }).center())
         this.optionsGroup = this.addEntity(new Group(0,0));
-        
-        this.loadModel(model||this.createModel());
         var s = 0.05
+
+        this.randomizeButton = this.addSelectableButton(new ButtonUI("🎲randomize", 0.72,0.15,0.4,0.1,s,() => {
+            this.model.randomize();
+        }).center().setSelected(), DIRECTION.right)
+        this.randomizeButton.linkButton(this.backButton, DIRECTION.up);
+        
+        this.loadModel(model||this.createModel(), 0.25);
+        // var lastBtn = this.buttonToLink;
         this.playButton = this.addSelectableButton(new ButtonUI("PLAY", 0.5,0.9,0.3,0.1,s,() => {
             this.playGame()
         }).center())
 
-        this.playButton = this.addSelectableButton(new ButtonUI("🎲", 0.2,0.9,0.2,0.1,s,() => {
-            this.model.randomize();
-        }).center(), DIRECTION.left)
+        
+        // this.randomizeButton.linkButton(this.playButton.directionallyLinkedButtons[DIRECTION.up], DIRECTION.up);
 
         // this.addEntity(new ButtonUI("⚙️", 0.1,0.1,0.1,0.1,0.05,() => {
         //     this.driver.setScene(new OptionsScene(this))
@@ -74,7 +80,7 @@ class CharacterCustomizerScene extends Scene{
 
                     e.hidden = false;
                     e.disabled = false;
-                    // if(i==0)e.setSelected();
+                    if(i==0)e.setSelected();
                     // i++;
                 }
             }
@@ -159,7 +165,7 @@ class CharacterCustomizerScene extends Scene{
           });
           return this.model;
     }
-    loadModel(model) {
+    loadModel(model, y=0.2) {
         // if(this.model&&this.model!=model) {
         //     this.model.shouldDelete = true;
         // }
@@ -178,7 +184,7 @@ class CharacterCustomizerScene extends Scene{
         var categories = {
 
         }
-        var y = 0.2;
+        // var y = 0.2;
         var x = 0.72;
         var lastSubMenuData;
         model.customizableOptions.forEach((customizableOption) => {
@@ -209,7 +215,7 @@ class CharacterCustomizerScene extends Scene{
                     // ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
                     // );
                     // if(i==0)btn.setSelected();
-                    if(i==0)btn.setSelected();
+                    // if(i==0)btn.setSelected();
                     y +=0.09;
                     i++
                 }
@@ -226,7 +232,7 @@ class CharacterCustomizerScene extends Scene{
                 }
             ).setBounds(0,customizableOption.options.length-1).setValue(customizableOption.index)
             );
-            if(i==0)btn.setSelected();
+            // if(i==0)btn.setSelected();
             y +=0.09;
             i++
             // this.optionsGroup.addEntity(

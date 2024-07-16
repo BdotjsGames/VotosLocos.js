@@ -14,7 +14,8 @@ class Player extends BeatEmUpper {
     this.buttons.useItem = Buttons.R;
     this.networkedState = {};
     this.networkedStateDiff = {};
-    this.attackHitbox = {width: 80, height: 70};
+    this.attackHitbox=
+    this.defaultAttackHitbox = {width: 120, height: 60};
     this.interactablesRange = 200;
     // this.item.type = ITEMS.flag;
     // this.item.count = 10;

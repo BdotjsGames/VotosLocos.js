@@ -1238,6 +1238,7 @@ var anims = {
 
       onStart: self=>{
         self.attacking=true
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox;
         var p = self.parent;
         if(!p.grounded && p.mx || p.isBot) {
           p.vx = (p.dx*p.jumpSpeedBoost)
@@ -1388,6 +1389,9 @@ var anims = {
           }
         }
       },
+      onLeave: self => {
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox
+      },
       onStart: self => {
         self.parent.vz = 30;
         self.attacking = true
@@ -1410,7 +1414,10 @@ var anims = {
        time: 10, onStart: self=>{
         // self.attacking=false;
         self.knockbackUp = 0;
-      }
+      },
+      onLeave: self => {
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox
+      },
     },
     {
       unInteruptable: true,
@@ -1428,6 +1435,7 @@ var anims = {
       ], time: 10, onStart: self=>{
         self.attacking=false;
         self.knockbackUp = 0;
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox
       }
     }
   ],

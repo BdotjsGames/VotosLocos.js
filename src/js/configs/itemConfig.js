@@ -57,11 +57,17 @@ window.addEventListener('load', function() {
         name: 'Shuriken',
         damage: 10,
         throwable: true,
-        image: IMAGES.shuriken = ImageLoader.loadImage('Items/shuriken.png'),
-        drawShape: (canvas, speed=1) => {
+        image: IMAGES.shuriken = ImageLoader.loadImage('Items/shuriken3-2.png'),
+        drawShape(canvas, speed=1){
             var w = 32*2;
             var h = 32*2;
-            canvas.rotate(frameCount*speed*Math.PI/5)
+            var sx = 1;
+            var sy = 1;
+            if(this.vx<0) sx=-1;
+            // var f = Math.floor(this.frameCount*speed/4);
+            // if(f%4>1)sy=-1;
+            canvas.scale(sx,sy)
+            canvas.rotate(frameCount*Math.PI/10*speed)
             canvas.drawImage(IMAGES.shuriken,-w/2,-h/2,w,h);
         }
     }

@@ -30,8 +30,8 @@ class BeatEmUpper {
         this.wallCollidingWith = null;
         this.standingOn = null;
         this.canAttack = true;
-        this.defaultAttackHitbox = {width: 70, height: 70};
-        this.largeHitbox= { width: 200, height: 70};
+        this.defaultAttackHitbox = {width: 70, height: 60};
+        this.largeHitbox= { width: 200, height: 70, both:true};
         this.attackHitbox = this.defaultAttackHitbox;
         if(model) {
             this.model = model;
@@ -285,7 +285,7 @@ class BeatEmUpper {
         this.item.count -= 1;
         var data = this.item.type;
         var z = this.z + (-this.model.legLength-20)*2;
-        var vx = this.dx*10 + this.vx;
+        var vx = this.dx*10 + this.vx/2;
         var proj = this.scene.addEntity(new LaserBeam(this.x+30*this.dx+this.vx,this.y,z,vx,5, 100,this.enemies));
         if(data.drawShape)
             proj.drawShape = data.drawShape;
@@ -559,6 +559,7 @@ class BeatEmUpper {
         var adx = Math.abs(dx);
         var ady = Math.abs(dy);
         var adz = Math.abs(dz);
+        if(this.attackHitbox.both||dx*this.dx>=0)
         if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
             enemy.getHit(this);
             // this.vx = 0;
@@ -669,6 +670,15 @@ class BeatEmUpper {
         if(this.hidden)return;
         // canvas.fillStyle = 'red';
         // canvas.fillRect(this.x,this.y,10,10);
+        if(DEV){
+            canvas.strokeStyle = "red";
+            canvas.strokeRect(
+                this.x+this.attackHitbox.width*(this.dx-1)/2,
+                this.y-this.attackHitbox.height,
+                this.attackHitbox.width,
+                this.attackHitbox.height*2,
+            )
+        }
         canvas.save();
         canvas.translate(this.x,this.y);
         if(this.telegraphProjectile) {

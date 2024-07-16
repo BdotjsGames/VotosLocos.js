@@ -17,7 +17,7 @@ class Bot extends BeatEmUpper {
         this.followX = Math.random()>.5;
         this.noticed = false;
         this.isBot = true;
-        this.attackHitbox = {
+        this.attackHitbox = this.defaultAttackHitbox= {
             width: 40, height: 40,
         }
         this.largeHitbox= { width: 150, height: 70};
@@ -45,7 +45,7 @@ class Bot extends BeatEmUpper {
         super.die();
         this.shouldDelete = true;
         if(Math.random()<.2) {
-            var item = randomFromList([ITEMS.flag, ITEMS.beerBottle,ITEMS.kunai])
+            var item = randomFromList([ITEMS.flag, ITEMS.beerBottle,ITEMS.shuriken])
             this.scene.addEntity(createItemDrop(this.x,this.y,item, 10))
         }
     }
