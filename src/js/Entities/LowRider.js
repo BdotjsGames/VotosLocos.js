@@ -8,6 +8,7 @@ class LowRider {
         this.front = (ImageLoader.loadImage('lowRiderFront.png'));
         this.frontOffset = 0;
         this.flip=false;
+        this.xOffset = x;
     }
     update() {
         // if(this.bouncing) {
@@ -16,7 +17,7 @@ class LowRider {
         // }
     }
     drawWheel(canvas,x,y,angle) {
-        angle = -this.x
+        angle = -(this.x-this.xOffset)
         canvas.save();
         canvas.translate(x+this.wheel.width/2,y+this.wheel.height/2);
         canvas.rotate(angle);
