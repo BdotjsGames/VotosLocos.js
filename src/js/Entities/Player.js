@@ -20,6 +20,11 @@ class Player extends BeatEmUpper {
     // this.item.count = 10;
     this.isPlayer = true;
     this.health=this.maxHealth=100;
+    this.indicatorAlpha = 1;
+  }
+  respawn() {
+    super.respawn();
+    this.indicatorAlpha = 1;
   }
   attack() {
     if (this.canAttack) {
@@ -70,6 +75,11 @@ class Player extends BeatEmUpper {
     this.allies = this.scene.players;
   }
   getInputs() {
+    if(this.indicatorAlpha>0) {
+      this.indicatorAlpha-=.01;
+    } else {
+      this.indicatorAlpha = 0;
+    }
     this.networkedStateDiff = {};
     // this.needsNetworkUpdate = false;
     this.model.outlineColor = this.outlineColor;
@@ -204,6 +214,21 @@ class Player extends BeatEmUpper {
       this.scene.toDeathScene(), 1000);
   }
   draw(canvas) {
+    if(this.indicatorAlpha>.01) {
+      canvas.strokeStyle = 'white';
+      var w = 50;
+      var h = 30;
+      canvas.lineWidth = 5;
+      canvas.save();
+      canvas.globalAlpha = this.indicatorAlpha;
+      canvas.translate(this.x,this.y);
+      canvas.scale(1,0.5);
+      canvas.beginPath();
+      canvas.arc(0,0,20,0,Math.PI*2);
+      canvas.stroke();
+      canvas.restore();
+    }
+    // canvas.strokeRect(this.x-w/2,this.y-h/2,w,h)
     super.draw(canvas);
     if(this.closestInteractable)this.drawInteractPrompt(canvas, this.closestInteractable)
   }

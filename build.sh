@@ -17,7 +17,8 @@ js_files=$(echo $js_files | xargs -n1 | sort | xargs)
 # echo $js_files
 for f in $js_files;
 do
-  echo "<script src='./$f?$TimeNano'></script>" >> html/scripts.html
+  timeStamp=$(date -r $f "+%m-%d-%Y %H:%M:%S")
+  echo "<script src='./$f?$timeStamp'></script>" >> html/scripts.html
 done
 cd ..
 

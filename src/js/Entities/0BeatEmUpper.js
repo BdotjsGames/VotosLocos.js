@@ -92,7 +92,10 @@ class BeatEmUpper {
         ctx.fillRect(0, 0, CE.width, CE.height);
     }
     dodge() {
-        if(this.model.anim)return;
+        if(this.model.anim) {
+            if(this.model.unInteruptable)return;
+            this.model.endAnim();
+        }
         if(this.dodging)return;
         this.vz = 5
         this.dodging = true;
@@ -282,7 +285,8 @@ class BeatEmUpper {
         this.item.count -= 1;
         var data = this.item.type;
         var z = this.z + (-this.model.legLength-20)*2;
-        var proj = this.scene.addEntity(new LaserBeam(this.x+30*this.dx+this.vx,this.y,z,this.dx*10,5, 100,this.enemies));
+        var vx = this.dx*10 + this.vx;
+        var proj = this.scene.addEntity(new LaserBeam(this.x+30*this.dx+this.vx,this.y,z,vx,5, 100,this.enemies));
         if(data.drawShape)
             proj.drawShape = data.drawShape;
         if(data.damage)
@@ -689,10 +693,11 @@ class BeatEmUpper {
         canvas.restore();
             this.model.draw(canvas, this.x, this.y + this.z - this.h / 2);
         if (this.health < this.maxHealth - 1&&!this.dead) {
+            var y = this.y + 20;
             canvas.fillStyle = "black";
-            canvas.fillRect(this.x - 32, this.y - 2, 64, 14);
+            canvas.fillRect(this.x - 32, y - 2, 64, 14);
             canvas.fillStyle = "green";
-            canvas.fillRect(this.x - 30, this.y - 0, 60 * this.health / this.maxHealth, 10);
+            canvas.fillRect(this.x - 30, y - 0, 60 * this.health / this.maxHealth, 10);
         }
         // canvas.fillStyle = 'red';
         // canvas.fillRect(this.x-this.w/2,this.y-this.h/2,this.w,this.h);
@@ -715,6 +720,8 @@ class BeatEmUpper {
     respawn() {
         this.dead = false;
         this.model.undie();
+        this.followersList = [];
+        this.followerCount = 0;
     }
     die() {
         spawnDeathParticles(this.scene,this.x,this.y-20, this.z);

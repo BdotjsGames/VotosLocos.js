@@ -19,7 +19,11 @@ class ItemPickup extends ImageDrawable {
     onInteract(player) {
         this.player = player;
         this.onPickup(player);
-
+        if(!this.itemType) {
+            this.removeSelf();
+        }
+    }
+    removeSelf() {
         this.shouldDelete = true;
         var i = this.scene.interactables.indexOf(this);
         if(i>=0)
@@ -29,21 +33,25 @@ class ItemPickup extends ImageDrawable {
         this.itemType = type;
         this.itemCount = count;
         this.drawShape = type.drawShape;
+        this.itemName = type.name;
         if(type.image)this.image= type.image;
     }
     afterPickup(player) {
         if(this.itemType) {
             if(player.item.type==this.itemType) {
                 player.item.count += this.itemCount;
-                this.shouldDelete = true;
+                this.removeSelf();
                 return;
             }
             var type = player.item.type;
             var count = player.item.count;
             player.item.type = this.itemType;
             player.item.count = this.itemCount;
-            if(count>0) {
+            if(count>0&&type) {
                 this.setItemType(type,count);
+            } else {
+                this.removeSelf();
+
             }
         }
     }

@@ -9,6 +9,7 @@ class LizardPerson extends Bot {
         this.attackX = 500;
         this.attackY = 60;
         this.noticed = true;
+        this.health = this.maxHealth = 50;
         
     }
     initModel(w, h, color,color2) {

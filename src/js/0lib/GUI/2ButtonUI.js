@@ -48,6 +48,7 @@ class ButtonUI extends DrawableText{
     addChild(child) {
       child.parent = this;
       this.children.push(child);
+      return child;
     }
     linkButton(btn, dir) {
       var prev = this.directionallyLinkedButtons[dir]

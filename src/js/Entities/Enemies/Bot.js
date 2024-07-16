@@ -45,7 +45,8 @@ class Bot extends BeatEmUpper {
         super.die();
         this.shouldDelete = true;
         if(Math.random()<.2) {
-            this.scene.addEntity(createItemDrop(this.x,this.y,ITEMS.flag, 10))
+            var item = randomFromList([ITEMS.flag, ITEMS.beerBottle,ITEMS.kunai])
+            this.scene.addEntity(createItemDrop(this.x,this.y,item, 10))
         }
     }
     setScene(scene) {
@@ -164,7 +165,7 @@ var enemyThrowAnim = [
       customUpdate: self => {
         self.parent.mx=0;
         self.parent.my = 0;
-        self.parent.telegraphProjectile = true;
+        // self.parent.telegraphProjectile = true;
       },
       time: 20,
     },

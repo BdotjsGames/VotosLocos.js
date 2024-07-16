@@ -389,6 +389,10 @@ class PlatformerModel extends Model {
     this.hair = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
     this.glasses = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
 
+
+    this.starsPivot = this.headBase.createAfter(0,0);
+    this.stars = this.starsPivot.createAfter(0,-16,new ImageDrawable(IMAGES.stars, 0,0));
+    this.starsPivot.hidden = true;
     // this.eye1 = this.face.createAfter(-3,0,new Circle(0,0,2,'white'));
     // this.eye2 = this.face.createAfter(3,0,new Circle(0,0,2,'white'));
     // var grd = canvas.createRadialGradient(0,0,0,0,0,50);
@@ -415,10 +419,7 @@ class PlatformerModel extends Model {
       this.endAnim();
     this.startAnim(anims.fallen);
 
-    if(!this.stars) {
-      this.starsPivot = this.headBase.createAfter(0,0);
-      this.stars = this.starsPivot.createAfter(0,-16,new ImageDrawable(IMAGES.stars, 0,0));
-    }
+    this.starsPivot.hidden = false;
   }
   undie() {
     this.dead = false;
@@ -531,7 +532,11 @@ class PlatformerModel extends Model {
     if(this.cooldownTimer>0)return;
     if(this.crouching)return this.slide();
     this.doubleJumping=false;
-    this.idle();
+    this.doubleJumpTimer=0;
+    this.body.rotation = 0;
+    this.rotation = 0;
+    // this.walk();
+    // this.idle();
   
     // if(this.anims.flipKick && this.parent.vz <-this.parent.jumpStrength*.9) {
     //   this.startAnim(this.anims.flipKick);
@@ -877,7 +882,7 @@ class PlatformerModel extends Model {
   update() {
     // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
     // this.skirt.rotation = (this.legL.rotation + this.legR.rotation)/2
-    if(this.dead) {
+    if(!this.starsPivot.hidden) {
       this.starsPivot.rotation = -(this.body.rotation+this.body2.rotation+this.head.rotation);
       this.stars.rotation = Math.cos(frameCount*Math.PI/20)*Math.PI/10
     }
@@ -982,6 +987,9 @@ class PlatformerModel extends Model {
     if(this.attacking) {
       this.attacking = false;
     }
+    if(this.animKeyFrame&&this.animKeyFrame.onLeave) {
+      this.animKeyFrame.onLeave(this);
+    }
     this.unInteruptable = false;
     this.parent.telegraphProjectile= false;
     this.wheelchair.rotation = 0;
@@ -1023,6 +1031,9 @@ class PlatformerModel extends Model {
         this.anim = null;
         this.endAnim();
         return;
+      }
+      if(this.animKeyFrame&&this.animKeyFrame.onLeave) {
+        this.animKeyFrame.onLeave(this);
       }
       this.animKeyFrame = this.anim[this.animIndex];
       this.animStartFrame(this.animKeyFrame);
@@ -1069,17 +1080,23 @@ class PlatformerModel extends Model {
 
 var anims = {
   punch1: [
-    { limbs: 
+    {
+      doLegWalk: true,
+      limbs: 
       [
         {limb: 'arm1', rotation: 0},
         {limb: 'arm2', rotation: 0,scaleX:2,scaleY:2},
         {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
         // {limb: 'hips', rotation: Math.PI/4},
       ],
-      time: 0, //dx: -6
+      time: 1, //dx: -6
       unInteruptable: true,
     },
-    { limbs: 
+    { 
+      doLegWalk: true,
+      limbs: 
       [
         {limb: 'arm2', rotation: -Math.PI/2, _x: 2, scaleX: 2, scaleY:2},
         // {limb: 'arm2', rotation: Math.PI*1.2},
@@ -1111,6 +1128,7 @@ var anims = {
       time: 1, dx:5
     },
     {
+      doLegWalk: true,
       limbs:[
         {limb: 'arm2', rotation: -Math.PI/2, _x: 2, scaleX: 1.5, scaleY:1.5},
         // {limb: 'arm2', rotation: Math.PI*1.2},
@@ -1128,17 +1146,23 @@ var anims = {
     }
   ],
   punch2: [
-    { limbs: 
+    { 
+      doLegWalk: true,
+      limbs: 
       [
         {limb: 'arm1', rotation: 0,scaleX:2,scaleY:2},
         {limb: 'arm2', rotation: 0},
         {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: 0},
+        {limb: 'head', rotation: 0},
         // {limb: 'hips', rotation: Math.PI/4},
       ],
       unInteruptable: true,
-      time: 0,// dx: -6
+      time: 1,// dx: -6
     },
-    { limbs: 
+    { 
+      doLegWalk: true,
+      limbs: 
       [
         {limb: 'arm1', rotation: -Math.PI/2, _x: 10, scaleX: 2, scaleY:2},
         {limb: 'arm2', rotation: 0, _x: -10},
@@ -1169,6 +1193,7 @@ var anims = {
       time: 2, dx:5
     },
     {
+      doLegWalk: true,
       limbs:[
         {limb: 'arm1', rotation: -Math.PI/2, _x: 10, scaleX: 1.5, scaleY:1.5},
         {limb: 'arm2', rotation: 0, _x: -10},
@@ -1492,13 +1517,37 @@ var anims = {
         self.rotation = 0;
       }, time: 10,
     }
+  ],
+  dazed: [
+    {
+      limbs: [],
+      unInteruptable: true,
+      customUpdate: self=> {
+        var frq = frameCount*Math.PI/30;
+        var offset = Math.PI/20;
+        var amp = Math.PI/15;
+        self.body.rotation = Math.cos(frq)*amp;
+        self.body2.rotation = Math.cos(frq+offset)*amp;
+        self.head.rotation = Math.cos(frq+offset*2)*amp;
+        self.arm1.rotation = Math.cos(frq+offset*3)*amp;
+        self.arm2.rotation = Math.cos(frq+offset*4)*amp;
+        self.legR.rotation = Math.cos(frq+offset*5)*amp;
+        self.legR2.rotation = (Math.cos(frq+offset*5)+1)*amp;
+        self.legL.rotation = -self.body.rotation;
+        self.legL2.rotation = 0;
+        self.starsPivot.hidden = false;
+      },
+      onLeave: self=> {
+        self.starsPivot.hidden = true;
+      },
+      time: 240,
+    }
   ]
 }
 
 anims.dodge = {
 
 }
-
 
 function spawnAttackParticle(scene,x,y,z,rotation=0,flipH, flipV, img=IMAGES.hitEffect1) {
   var p = scene.addEntity(new ImageParticle(img, x,y, 32*6,32*6, 0,0,10,0))

@@ -46,6 +46,19 @@ class VoterGuideScene extends AdditiveScene {
             x+=dx;
             y+= dy;
             this.pages.push(btn);
+
+            var description = randomFromList([
+                "This candidate likes cheese",
+                "For America!",
+                "Health care for all!",
+                "Tacos for everyone!"
+            ])
+            var text = new DrawableText(description, 0.6,0.2,0.8,0.1,0.03)
+            .setTrueCoords(false)
+            .center()
+            .color(0,0,0)
+            text.update();
+            btn.children.push(text);
         }
         this.pages[0].setSelected()
 

@@ -41,6 +41,11 @@ class CharacterCustomizerScene extends Scene{
         
         this.model.update();
         if(getButtonDown(Buttons.pause)) {
+            if(this.prevScene) {
+                this.model.scaleBoth=1;
+                this.model.modelOptions = this.model.getModelOptions()
+                return this.driver.setScene(this.prevScene);
+            }
             this.driver.setScene(new MenuScene(this));
         }
     }
