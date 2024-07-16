@@ -5,7 +5,7 @@ IMAGES.Purlsey1 = ImageLoader.loadImage('Pursley/Pursley1.png');
 IMAGES.Purlsey1S = ImageLoader.loadImage('Pursley/Pursley1-sharp.png');
 IMAGES.Purlsey2 = ImageLoader.loadImage('Pursley/Pursley2.png');
 IMAGES.Purlsey2S = ImageLoader.loadImage('Pursley/Pursley2-sharp.png');
-canvas.backgroundImage = IMAGES.Purlsey1S;
+canvas.backgroundImage = IMAGES.Purlsey1;
 
 IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
 

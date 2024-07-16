@@ -311,7 +311,7 @@ class DialogueController {
     }
 
     if(event.person) {
-      this.speakerImage = event.person.image;
+      this.speakerImage = IMAGES[event.person.image];
     } else {
       this.speakerImage = null;
     }

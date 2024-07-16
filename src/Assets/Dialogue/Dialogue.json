@@ -1,0 +1,722 @@
+[
+    {
+        "Scene": "Opening Cutscene",
+        "Person": null,
+        "English": null,
+        "notes": "Scene and Person are assumed to be the same as above if not specified"
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "The time to <color red>vote</color> is <wiggle>approaching!",
+        "notes": "You can insert more lines of dialogue"
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "Are you ready to cast your ballot?",
+        "notes": null
+    },
+    {
+        "Scene": "Level 1",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "You're not registered to vote? Today is the last day!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "Hurry! you better get to the Registrar Office!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "Before its <wiggle> <speed 0.3>toooooo late!",
+        "notes": null
+    },
+    {
+        "Scene": "Level 1 - npcTexts",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "You haven't registered to vote yet? Cmon lets go!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "You're not registered yet? Its the last day!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "Lets get you to the registrar office!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "Oh the last day is today?, I need to register to vote too!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "The registrar office? Lets go!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Putin Cutscene",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Putin",
+        "English": "Americans.||||| An impressionable bunch",
+        "notes": "the \"|\" character is used to add pauses"
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "Flood the streets with the opinions of our bots",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "And the election is as good as ours",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "First combat",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "<bam>Uh Oh!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "Watch out for the bots!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "\"Press the [Attack] button to teach 'em a lesson\"",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "\"Registrar Office Reached\"",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "you made it to the Registrar office!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Registrar Office Interior',",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Clerk",
+        "English": "Hi!||| are you here to receive your ballot?",
+        "notes": "the \"|\" character is used to add pauses"
+    },
+    {
+        "Scene": "option1",
+        "Person": "Player",
+        "English": "yes",
+        "notes": "to reponse 1"
+    },
+    {
+        "Scene": "option2",
+        "Person": "Player",
+        "English": "no",
+        "notes": "to response 2"
+    },
+    {
+        "Scene": "response1",
+        "Person": "Clerk",
+        "English": "Wow you were just in time, we were just about to close!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Clerk",
+        "English": "Well, here you go!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "... add dialogue for voter guide",
+        "notes": null
+    },
+    {
+        "Scene": "response2",
+        "Person": "Clerk",
+        "English": "{person: npc, text: \"oh. okay\"}",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "... add dialogue for after selecting candidate between Clerk and Player",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Low Rider Transition",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "\"Hey bud, We're heading to the community rally\"",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "\"Need a ride?\"",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Community Rally Entrance",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "Alright! I'll follow you!,",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "Woo! Lets go!,",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "Yeah!|| Where are we going?,",
+        "notes": null
+    },
+    {
+        "Scene": "Community Rally Fight",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "Alright! I'll follow you!,",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "Woo! Lets go!,",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "Yeah!|| Where are we going?,",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "NPCRandom",
+        "English": "\"Oh no! The community rally is being attacked by trolls!\"",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Rally Table Booth",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Clerk",
+        "English": "Hi!||| Would you like to support our cause?",
+        "notes": null
+    },
+    {
+        "Scene": "option1",
+        "Person": "Player",
+        "English": "yes",
+        "notes": null
+    },
+    {
+        "Scene": "option2",
+        "Person": "Player",
+        "English": "no",
+        "notes": null
+    },
+    {
+        "Scene": "response1",
+        "Person": "Clerk",
+        "English": "Okay cool!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Clerk",
+        "English": "Hey here's some water! Stay hydrated out there!",
+        "notes": null
+    },
+    {
+        "Scene": "response2",
+        "Person": "Clerk",
+        "English": "oh. okay.",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Community Rally Speech",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Candidate",
+        "English": "Community rally speech",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "...",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "...",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "... explain the march",
+        "notes": null
+    },
+    {
+        "Scene": "March",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Crowd",
+        "English": "woo yeah!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "... dialogue for march",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Block Walking",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChailbre",
+        "English": "Lets get the word out!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChailbre",
+        "English": "Knock on some doors to spread the word!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Candidate",
+        "English": "Lets get the word out!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Candidate",
+        "English": "Thanks for helping!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "follower",
+        "Person": "Citizen",
+        "English": "hi",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "lets go!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "refuser",
+        "Person": "Citizen",
+        "English": "hi",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "no thanks",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Bus Transition",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChailbre",
+        "English": "We need to get you to the polling location",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChailbre",
+        "English": "Lets take the bus!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChailbre",
+        "English": "Many cities have free public buses to the polling location",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Blockade",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Bot",
+        "English": "you will never get past our blockade!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "hahaha",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Player",
+        "English": "oh no!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "how will we get through?",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "None",
+        "English": "<color red>*your cell phone rings*'",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "Hola!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "I heard there was some problems at the ballot office!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "We are on our way to help!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "All the friends you made along the way will come help you fight",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "Everyone",
+        "English": "Lets go!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Polling station",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "LouChalibre",
+        "English": "You made it to the polling station!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "DEMO COMPLETE",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": "None",
+        "English": "Congratulations! you made it to the ballot office and completed the demo content so far",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Item Pickup",
+        "Person": "None",
+        "English": "`<color red>you got a ${this.itemName}`",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "\"<color red>Your health is full!\"",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "`<color red>${this.healAmount} hp healed`",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": "Candidates description",
+        "Person": null,
+        "English": null,
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "This candidate likes cheese",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "For America!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "Health care for all!",
+        "notes": null
+    },
+    {
+        "Scene": null,
+        "Person": null,
+        "English": "Tacos for everyone!",
+        "notes": null
+    }
+]

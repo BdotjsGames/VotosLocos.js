@@ -32,7 +32,7 @@ function randomEnemies() {
 
 var LouChalibre = {
     name: "Lou Chalibre",
-    image: IMAGES.LouChalibre,
+    image: "LouChalibre",
     talkSound: SOUNDS.LouTalk,
     every: 3,
 }
@@ -40,7 +40,7 @@ var LouChalibre = {
 
 ImageLoader.onComplete( () => {
     LouChalibre.talkSound = SOUNDS.LouTalk;
-    LouChalibre.image = IMAGES.LouChalibre;
+    // LouChalibre.image = IMAGES.LouChalibre;
 });
 
 // SOUNDS.onComplete( () => {
@@ -192,7 +192,7 @@ GameSequence = [
     },
     {
         name: "1-2",
-        music: SOUNDS.cumbia,
+        music: SOUNDS.bossMusic,
         DialogueData: [], 
         spawnRandom: [
             // [KnockableDoor, 10],
@@ -235,7 +235,7 @@ GameSequence = [
         
     },
     {
-        name: 'Registrar Office Interior',
+        name: 'Registrar Office Combat',
         Goal: "Get your ballot!",
         music: SOUNDS.cumbia,
         environment: Environments.OfficeInterior,
@@ -767,7 +767,7 @@ GameSequence = [
                 {person: LouChalibre, text: "All the friends you made along the way will come help you fight"},
                 // {person: scene.player, doA: "jump",waitFor:10},
                 {onStart: () => {
-                    for(var i=0;i<20;i++) {
+                    for(var i=0;i<8;i++) {
                         var x = 0;
                         var y = Math.random()*scene.maxY + scene.minY;
                         var e = scene.addEntity(new HighFiver(x,y))
@@ -857,3 +857,14 @@ GameSequence = [
 ]
 
 })
+
+
+var Events_table = {
+    "Event_Water": {
+        onStart: dia => {
+            npc.isInteractable = false;
+            scene.showGo = true;
+            scene.addEntity(new WaterBottle(npc.x+100,npc.y+100))
+        }
+    }
+}

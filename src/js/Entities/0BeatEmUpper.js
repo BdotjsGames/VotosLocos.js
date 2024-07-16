@@ -1,6 +1,7 @@
 shadow = canvas.createRadialGradient(0, 0, 5, 0, 0, 20);
 shadow.addColorStop(0, "#000000aa");
 shadow.addColorStop(1, "#00000000");
+var showHitboxes = true;
 
 class BeatEmUpper {
     constructor(x, y, w, h, color,color2,model) {
@@ -670,7 +671,7 @@ class BeatEmUpper {
         if(this.hidden)return;
         // canvas.fillStyle = 'red';
         // canvas.fillRect(this.x,this.y,10,10);
-        if(DEV){
+        if(DEV&&showHitboxes&&this.model.attacking){
             canvas.strokeStyle = "red";
             canvas.strokeRect(
                 this.x+this.attackHitbox.width*(this.dx-1)/2,
