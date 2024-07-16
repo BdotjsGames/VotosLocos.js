@@ -424,6 +424,7 @@ GameSequence = [
                 var y = 1000;
                 scene.addEntity(new Bot(x,y))
             }
+            scene.addEntity(new MagaMarge(1500,1000));
         }
     },
     // {

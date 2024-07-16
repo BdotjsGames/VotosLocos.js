@@ -9,7 +9,7 @@ class MagaMarge extends Bot {
         this.attackX = 500;
         this.attackY = 60;
         this.noticed = true;
-        
+        this.health = this.maxHealth = 100;
     }
     initModel(w, h, color,color2) {
         this.model = new PlatformerModel(w, h, "#3f3f74","#3f3f74", this, null, {
