@@ -881,3 +881,28 @@ var Events_table = {
         }
     }
 }
+
+const convertDialogueJsonToJs = async function() {
+    ImageLoader.imagesToLoad += 1;
+    const resp = await fetch("./src/Assets/Dialogue/Dialogue.json");
+    /**
+     * @type {Array<{
+     *    "Scene": "Opening Cutscene",
+     *    "Person": null,
+     *    "English": null,
+     *    "": null,
+     *    "notes": "Scene and Person are assumed to be the same as above if not specified"
+     * }>
+     * }
+     * */
+    const dialogueArr = await resp.json();
+    window.dispatchEvent(new CustomEvent("finished_loading_dialog", {
+        detail: {
+            dialogue: dialogueArr
+        }
+    }));
+    ImageLoader.onLoad();
+}
+
+convertDialogueJsonToJs();
+
