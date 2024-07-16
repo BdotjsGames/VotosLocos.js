@@ -9,6 +9,8 @@ class ItemPickup extends ImageDrawable {
         this.isInteractable = true;
         this.interactablesRange = 100;
         this.promptOffsetY = -50;
+        this.vx=0;
+        this.frameCount = 0;
     }
     setScene(scene) {
         this.scene=scene;

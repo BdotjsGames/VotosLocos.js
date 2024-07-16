@@ -404,6 +404,11 @@ IMAGES.MagaMargeTorso = ImageLoader.loadImage('enemies/MagaMarge/torso1.png');
 IMAGES.MagaMargeArm = ImageLoader.loadImage('enemies/MagaMarge/arm1.png');
 
 
+IMAGES.LizardPeopleHead = ImageLoader.loadImage('enemies/LizardPeople/head1.png');
+IMAGES.LizardPeopleTorso = ImageLoader.loadImage('enemies/LizardPeople/torso1.png');
+IMAGES.LizardPeopleArm = ImageLoader.loadImage('enemies/LizardPeople/arm1.png');
+
+
 // IMAGES.inputTileMap = ImageLoader.loadImage('kenney_inputPromptsPixel16x/Tilemap/tilemap_packed.png')
 // x: 272, y:0 esc
 
@@ -418,3 +423,7 @@ IMAGES.inputPromptKeyF = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tiles
 
 
 IMAGES.hitEffect1 = ImageLoader.loadImage('effects/hitEffect1.png')
+IMAGES.hitEffect2 = ImageLoader.loadImage('effects/hitEffect2.png')
+
+
+IMAGES.stars = ImageLoader.loadImage('effects/stars.png');

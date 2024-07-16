@@ -9,6 +9,8 @@ class Ninja extends Bot {
         this.attackX = 500;
         this.attackY = 60;
         this.noticed = true;
+        this.item.type = ITEMS.kunai;
+        this.model.attackCombo = [enemyThrowAnim,enemyThrowAnim,enemyThrowAnim, botanims.punch1];
 
     }
     initModel(w, h, color,color2) {

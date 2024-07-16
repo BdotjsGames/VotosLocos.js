@@ -22,8 +22,10 @@ class Putin extends Bot {
         //     proj.drawShape = data.drawShape;
         // if(data.damage)
         //     proj.damage = data.damage;
-        var x = player.x + player.vx * 10;// + (Math.random()*2-1)*100;
-        var y = player.y + player.vy * 10;// + (Math.random()*2-1)*100;
+        var x = player.x + (Math.random()*2-1) * 300;// + (Math.random()*2-1)*100;
+        var y = player.y + (Math.random()*2-1) * 300;// + (Math.random()*2-1)*100;
+        if(y<10)y=10;
+        if(x<0)x=0;
         this.scene.addEntity(new BotSpawnAirStrike(x,y));
     }
     initModel(w, h, color,color2) {
@@ -162,11 +164,11 @@ var putinSpawnAnimation = [
       customUpdate: self => {
         self.parent.vz= -10;
       },
-      time: 8
+      time: 15
     },
     {
       limbs:[],
-      time:8
+      time:10
     },
     {
       limbs: [
@@ -183,7 +185,7 @@ var putinSpawnAnimation = [
       customUpdate: self => {
         self.parent.vz= 0;
       },
-      time: 8
+      time: 10
     },
     {
       limbs: [

@@ -8,7 +8,7 @@ class Bot extends BeatEmUpper {
         this.shootTime = 60;
         this.shootTimer = 60;
         this.regen = 0.01;
-        this.health = this.maxHealth = 30;
+        this.health = this.maxHealth = 20;
         this.contactDamage = 3;
         this.name = 'bot';
         this.talkSound = SOUNDS.botTalk;
@@ -43,6 +43,7 @@ class Bot extends BeatEmUpper {
     }
     die() {
         super.die();
+        this.shouldDelete = true;
         if(Math.random()<.2) {
             this.scene.addEntity(createItemDrop(this.x,this.y,ITEMS.flag, 10))
         }
@@ -83,9 +84,15 @@ class Bot extends BeatEmUpper {
         if(Math.abs(dx)+Math.abs(dy) < this.noticeDistance && this.dx * dx >0) {
             this.noticed = true;
         }
+        if(dx>150) {
+            this.noticed = true;
+        }
         if(!this.noticed) {
             if(Math.random()>.8&&frameCount%10==0)this.dx = this.dx*-1;
             return;
+        }
+        if(dx>500) {
+            this.mx = 1;
         }
         // if(Math.random()>.9&&frameCount%10==0) {
         //     this.mx = Math.random()>.5?-1:1;

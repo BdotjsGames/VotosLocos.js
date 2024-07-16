@@ -12,12 +12,16 @@ class SimpleDialogue {
     this.textFont = "20px " + FONT_FAMILY.default;
     this.personFont = "25px " + FONT_FAMILY.default;
     this.maxLines = 3;
+    this.framesPerCharacter = 2;
+    this.readSpeed = 1;
+    this.timer= 0;
   }
   setText(obj,persist) {
     this.persist = persist;
     this.text = obj.text;
     this.person = obj.person;
     this.index = 0;//this.text.length;
+    this.reset();
     this.impatience = 0;
     this.done = false;
     if(obj.person) {
@@ -56,14 +60,15 @@ class SimpleDialogue {
   }
   reset() {
     this.index = 0;
+    this.readSpeed = 1;
   }
   processTag(tag) {
-    // var args = tag.split(' ');
-    // switch(args[0]) {
-    //   case 'bam':
-
-    //     break;
-    // }
+    var args = tag.split(' ');
+    switch(args[0]) {
+      case 'speed':
+        this.readSpeed = parseFloat(args[1]);
+        break;
+    }
   }
   processChar(char) {
     if(char=="|") {
@@ -97,7 +102,9 @@ class SimpleDialogue {
   }
   update() {
     if(!this.lineCapReached) {
-      if(this.index<this.text.length&&frameCount%2==0) {
+      this.timer += this.readSpeed;
+      if(this.index<this.text.length&&this.timer>=this.framesPerCharacter) {
+        this.timer = 0;
         this.increment();
         if(this.talkSound) {
           if(this.every) {

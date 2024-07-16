@@ -103,6 +103,7 @@ class HighFiver extends BeatEmUpper {
             } else {
                 this.model.neutralFace();
             }
+            this.seeking = false;
         } else {
             this.enemySearchUpdate();
         }
@@ -110,7 +111,14 @@ class HighFiver extends BeatEmUpper {
         if(this.model.attacking)return;
         var target = this.followTarget;
         if(this.followCountIndex>1) {
-            target = this.followTarget.followersList[this.followCountIndex-2]
+            // target = this.followTarget.followersList[this.followCountIndex-2]
+            for(var i=this.followCountIndex-2;i>=0;i--) {
+                var t = this.followTarget.followersList[this.followCountIndex-2]
+                if(t&&!t.dead&&!t.seeking&&!t.running) {
+                    target=t;
+                    break;
+                }
+            }
         }
         var targetX = target.x - this.followOffset.dx * target.dx;
         var dx = targetX - this.x;
@@ -268,7 +276,7 @@ class HighFiver extends BeatEmUpper {
         this.model.face._y=1;
     }
     die() {
-        if (this.shouldDelete) return;
+        if (this.shouldDelete||this.dead) return;
         if(this.following)
         this.stopFollow();
         super.die();

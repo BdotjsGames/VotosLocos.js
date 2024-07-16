@@ -10,6 +10,7 @@ class LaserBeam {
     this.frameCount = 0;
   }
   update() {
+    if(this.scene.dialogueBlocking)return;
     this.x += this.vx;
     this.life --;
     if(this.life<=0) {

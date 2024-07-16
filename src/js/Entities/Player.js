@@ -21,6 +21,31 @@ class Player extends BeatEmUpper {
     this.isPlayer = true;
     this.health=this.maxHealth=100;
   }
+  attack() {
+    if (this.canAttack) {
+      var anim = null;
+      // if(this.model.attacking) {
+      //     this.spamCounter += 1;
+      //     if(this.spamCounter>1){
+      //         anim = anims.armSpinny
+      //     }
+      // } else {
+      //     this.spamCounter = 0;
+      // }
+      if(!this.grounded) {
+          if(this.vz<-this.jumpStrength*.6){
+              //&&this.canJump()) {
+              anim=anims.flipKick
+              // this.jumpCount++;
+
+          }else if(this.my>0) anim = anims.groundSlam
+      }
+      if(this.dodging) {
+          anim = anims.armSpinny;
+      }
+      this.model.attack(anim);
+    }
+  }
   
   addShoes() {
     this.model.addShoes();
@@ -172,7 +197,7 @@ class Player extends BeatEmUpper {
     // console.log(this.networkedStateDiff) 
   }
   die() {
-    if(this.shouldDelete)return;
+    if(this.shouldDelete||this.dead)return;
     super.die();
     SOUNDS.blowImpact.play();
     setTimeout(e=>

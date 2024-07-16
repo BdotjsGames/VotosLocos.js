@@ -56,21 +56,22 @@ var rallyTables = [
 
 
 function rallyScene(scene, x=0) {
+    var y = 180;
     {
         var deskImage =  new ImageDrawable(IMAGES.rallyTableBaseBack, 0,0);
-        deskImage.w *= 3;
-        deskImage.h *= 3;
+        deskImage.w *= 2.5;
+        deskImage.h *= 2.5;
         deskImage.y = -deskImage.h+60;
-        var deskBack = scene.addEntity(new EntityTwoPointFiveD(450+x,160-60,0,deskImage))
+        var deskBack = scene.addEntity(new EntityTwoPointFiveD(450+x,y-60,0,deskImage))
     }
     {
         var deskImage =  new ImageDrawable(randomFromList(IMAGES.rallyTables), 0,0);
-        deskImage.w *= 3;
-        deskImage.h *= 3;
+        deskImage.w *= 2.5;
+        deskImage.h *= 2.5;
         deskImage.y = -deskImage.h;
-        var desk = scene.addEntity(new EntityTwoPointFiveD(450+x,160,0,deskImage))
+        var desk = scene.addEntity(new EntityTwoPointFiveD(450+x,y,0,deskImage))
     }
-    var npc = scene.addEntity(new HighFiver(520+x,100))
+    var npc = scene.addEntity(new HighFiver(520+x,y-40))
     // npc.shouldStartDiaolgueOnProximity = true;
     npc.dx = -1
     npc.getInputs = e=>{}
@@ -121,7 +122,7 @@ GameSequence = [
         DialogueData: [
             {person: LouChalibre, text: "You're not registered to vote? Today is the last day!"},
             {person: LouChalibre, text: "Hurry! you better get to the Registrar Office!"},
-            {person: LouChalibre, text: "Before its <wiggle>too||o|||o|||||o|||o|| l|||a|||t|||e!"},
+            {person: LouChalibre, text: "Before its <wiggle> <speed 0.3>toooooo late!"},
         ],
         npcTexts: [
             "You haven't registered to vote yet? Cmon lets go!",
@@ -166,7 +167,7 @@ GameSequence = [
     },
     {
         name: "1-2",
-        DialogueData: [], //give ballot cutscene
+        DialogueData: [], 
         music: SOUNDS.cumbia,
         spawnRandom: [
             // [KnockableDoor, 10],
@@ -240,7 +241,7 @@ GameSequence = [
         environment: Environments.OfficeInterior,
         spawnRandom: [
             [Ninja, 3],
-            [MagaMarge, 1]
+            [LizardPerson, 1]
         ],
         onLoad: (scene) => {
             scene.minY += 200

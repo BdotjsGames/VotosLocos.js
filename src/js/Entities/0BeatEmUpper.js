@@ -113,6 +113,7 @@ class BeatEmUpper {
 
     }
     getHit(other) {
+        if(this.dead)return;
         if(this.dodging)return;
         var damage = other.contactDamage;
         if(other.model)
@@ -122,7 +123,7 @@ class BeatEmUpper {
         if(!damage)return;
         if (this.invul > 0) return;
         if(other.model)
-            other.model.impactStop(5);
+            other.model.impactStop(6);
         this.dx = this.x<other.x?1:-1;
         // console.log(this.hitResistence,damage)
         // console.log(this.hitResistence, damage);
@@ -158,6 +159,8 @@ class BeatEmUpper {
             this.hitSound.play(-0.1);
             SOUNDS.hitSoundthing.play(-0.5);
             this.die();
+            this.vz -= 10;
+            this.vx += -dx;
         } else {
             this.hitSound.play();
             SOUNDS.hitSoundthing.play();
@@ -172,7 +175,7 @@ class BeatEmUpper {
         this.running = false;
         for(var i=0;i<this.enemies.length;i++) {
             var enemy = this.enemies[i];
-            if(enemy.shouldDelete)continue;
+            if(enemy.shouldDelete||enemy.dead)continue;
 
             var {dx,dy,dz} = vector3Diff(enemy, this);
             var drr = diffSqrd(dx,dy,dz);
@@ -197,7 +200,7 @@ class BeatEmUpper {
         var minDist = this.enemySeekRange*this.enemySeekRange;
         for(var i=0;i<this.enemies.length;i++) {
             var enemy = this.enemies[i];
-            if(enemy.shouldDelete)continue;
+            if(enemy.shouldDelete||enemy.dead)continue;
 
             var {dx,dy,dz} = vector3Diff(enemy, this);
             var drr = diffSqrd(dx,dy,dz);
@@ -271,24 +274,6 @@ class BeatEmUpper {
     attack() {
         if (this.canAttack) {
             var anim = null;
-            // if(this.model.attacking) {
-            //     this.spamCounter += 1;
-            //     if(this.spamCounter>1){
-            //         anim = anims.armSpinny
-            //     }
-            // } else {
-            //     this.spamCounter = 0;
-            // }
-            if(!this.grounded) {
-                if(this.vz<-this.jumpStrength*.6&&this.canJump()) {
-                    anim=anims.flipKick
-                    this.jumpCount++;
-
-                }else if(this.my>0) anim = anims.groundSlam
-            }
-            if(this.dodging) {
-                anim = anims.armSpinny;
-            }
             this.model.attack(anim);
         }
     }
@@ -330,33 +315,42 @@ class BeatEmUpper {
         if(isNaN(this.vx))this.vx = 0;
         if(isNaN(this.vy))this.vy = 0;
         if(isNaN(this.vz))this.vz = 0;
+        // if(this.dead) {
+        //     this.model.update();
+        //     return;
+        // }
         if(this.dx==0) {
             console.log("WTF")
         }
         // if(this.scene.dialogueBlocking)return;
-        if (this.health < 0) {
-            this.die();
-        }
-        if (this.invul > 0) {
-            // if(!this.model.impactStopTimer>0)
-                this.invul--;
-        } else {
-            if (this.health < this.maxHealth) {
-                this.health += this.regen;
+        if(!this.dead) {
+            if (this.health < 0) {
+                this.die();
             }
-        }
-        this.getInputs();
-        if(this.model.moveLocked) {
+            if (this.invul > 0) {
+                // if(!this.model.impactStopTimer>0)
+                    this.invul--;
+            } else {
+                if (this.health < this.maxHealth) {
+                    this.health += this.regen;
+                }
+            }
+            this.getInputs();
+            if(this.model.moveLocked) {
+                this.mx = 0;
+                this.my = 0;
+            }
+            if(this.dodgeTimer>0) {
+                this.dodgeTimer--;
+                this.mx = this.dodgeMx;
+                this.my = this.dodgeMy;
+            } else {
+                this.model.dodging = false;
+                this.dodging = false;
+            }
+        } else {
             this.mx = 0;
             this.my = 0;
-        }
-        if(this.dodgeTimer>0) {
-            this.dodgeTimer--;
-            this.mx = this.dodgeMx;
-            this.my = this.dodgeMy;
-        } else {
-            this.model.dodging = false;
-            this.dodging = false;
         }
 
         var terminalSideVelocity = this.speed*2;
@@ -598,7 +592,7 @@ class BeatEmUpper {
         var closest;
         this.highFiveTarget = null;
         highFivers.forEach(h=> {
-            if(h.shouldDelete)return;
+            if(h.shouldDelete||h.dead)return;
             if(h.following)return;
             if(!h.canHighFive)return;
             if(Math.sign(h.x-this.x) != this.dx)return;
@@ -694,7 +688,7 @@ class BeatEmUpper {
         canvas.fillRect(-30,-30,60,60);
         canvas.restore();
             this.model.draw(canvas, this.x, this.y + this.z - this.h / 2);
-        if (this.health < this.maxHealth - 1) {
+        if (this.health < this.maxHealth - 1&&!this.dead) {
             canvas.fillStyle = "black";
             canvas.fillRect(this.x - 32, this.y - 2, 64, 14);
             canvas.fillStyle = "green";
@@ -718,9 +712,15 @@ class BeatEmUpper {
             .color(0,250,250)
         return textParticle;
     }
+    respawn() {
+        this.dead = false;
+        this.model.undie();
+    }
     die() {
         spawnDeathParticles(this.scene,this.x,this.y-20, this.z);
-        this.shouldDelete = true;
+        this.dead = true;
+        this.model.die();
+        // this.shouldDelete = true;
         var g = 0.2;
         var x = this.x;
         var y = this.y;

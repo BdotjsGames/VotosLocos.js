@@ -1,4 +1,4 @@
-class QAnonShamon extends Bot {
+class LizardPerson extends Bot {
     constructor(x,y) {
         super(x,y);
         this.shootTime = 10;
@@ -9,15 +9,14 @@ class QAnonShamon extends Bot {
         this.attackX = 500;
         this.attackY = 60;
         this.noticed = true;
-        this.model.attackCombo = [putinSlam, botanims.armSpinny];
-        this.item.type = ITEMS.beerBottle;
+        
     }
     initModel(w, h, color,color2) {
-        this.model = new PlatformerModel(w, h, "#cf5c26","#cf5c26", this, null, {
-            headOptions: [IMAGES.QAnonHead],
+        this.model = new PlatformerModel(w, h, "#111","#000", this, null, {
+            headOptions: [IMAGES.LizardPeopleHead],
             hairOptions: [],
-            torsoOptions: [IMAGES.torsoMilitary],
-            armOptions: [IMAGES.armBare],
+            torsoOptions: [IMAGES.LizardPeopleTorso],
+            armOptions: [IMAGES.LizardPeopleArm],
             legOptions:[6],
             glassesOptions: [],
             skinOptions: [],

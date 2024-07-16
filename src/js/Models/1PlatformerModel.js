@@ -388,6 +388,7 @@ class PlatformerModel extends Model {
     // var hairtype = randomFromList(IMAGES.hairOptions);
     this.hair = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
     this.glasses = this.headBase.createAfter(0,0,new ImageDrawable(null, 0,0,27,25));
+
     // this.eye1 = this.face.createAfter(-3,0,new Circle(0,0,2,'white'));
     // this.eye2 = this.face.createAfter(3,0,new Circle(0,0,2,'white'));
     // var grd = canvas.createRadialGradient(0,0,0,0,0,50);
@@ -405,6 +406,27 @@ class PlatformerModel extends Model {
     // this.head.scaleX = 1.2;
     // this.head.scaleY = 1.2;
     
+  }
+  die() {
+    this.dead = true;
+    this.isHit = false;
+    this.rotation = 0;
+    if(this.anim)
+      this.endAnim();
+    this.startAnim(anims.fallen);
+
+    if(!this.stars) {
+      this.starsPivot = this.headBase.createAfter(0,0);
+      this.stars = this.starsPivot.createAfter(0,-16,new ImageDrawable(IMAGES.stars, 0,0));
+    }
+  }
+  undie() {
+    this.dead = false;
+    if(this.starsPivot) 
+      this.starsPivot.hidden = true;
+    
+    if(this.anim)
+      this.endAnim();
   }
   addShoes() {
     if(this.shoe1)return;
@@ -508,6 +530,9 @@ class PlatformerModel extends Model {
     if(this.unInteruptable)return;
     if(this.cooldownTimer>0)return;
     if(this.crouching)return this.slide();
+    this.doubleJumping=false;
+    this.idle();
+  
     // if(this.anims.flipKick && this.parent.vz <-this.parent.jumpStrength*.9) {
     //   this.startAnim(this.anims.flipKick);
     // } else 
@@ -852,6 +877,10 @@ class PlatformerModel extends Model {
   update() {
     // this.wheelchair.rotation = this.hips.rotation+this.legL.rotation-this.body.rotation;
     // this.skirt.rotation = (this.legL.rotation + this.legR.rotation)/2
+    if(this.dead) {
+      this.starsPivot.rotation = -(this.body.rotation+this.body2.rotation+this.head.rotation);
+      this.stars.rotation = Math.cos(frameCount*Math.PI/20)*Math.PI/10
+    }
     if(this.skirtOn) {
       // console.log(this.legR.rotation, this.legL.rotation);
       // console.log(Math.sin(this.legL.rotation)-Math.sin(this.legR.rotation));
@@ -956,6 +985,10 @@ class PlatformerModel extends Model {
     this.unInteruptable = false;
     this.parent.telegraphProjectile= false;
     this.wheelchair.rotation = 0;
+    this.arm1.scaleX = 1;
+    this.arm1.scaleY = 1;
+    this.arm2.scaleX = 1;
+    this.arm2.scaleY = 1;
   }
   animStartFrame(keyFrame) {
     var t = keyFrame.time;
@@ -1009,6 +1042,10 @@ class PlatformerModel extends Model {
       limb._x += limb.d_x;
       limb.y += limb.dy;
       limb._y += limb.d_y;
+      if(limbData.scaleX) {
+        limb.scaleX += (limbData.scaleX-limb.scaleX)*0.5;
+        limb.scaleY += (limbData.scaleX-limb.scaleY)*0.5;
+      }
     })
     if(this.animKeyFrame.dx) {
       this.parent.vx += this.animKeyFrame.dx/time*this.parent.dx;
@@ -1035,7 +1072,7 @@ var anims = {
     { limbs: 
       [
         {limb: 'arm1', rotation: 0},
-        {limb: 'arm2', rotation: 0},
+        {limb: 'arm2', rotation: 0,scaleX:2,scaleY:2},
         {limb: 'body2', rotation: 0},
         // {limb: 'hips', rotation: Math.PI/4},
       ],
@@ -1044,7 +1081,7 @@ var anims = {
     },
     { limbs: 
       [
-        {limb: 'arm2', rotation: -Math.PI/2, _x: 2},
+        {limb: 'arm2', rotation: -Math.PI/2, _x: 2, scaleX: 2, scaleY:2},
         // {limb: 'arm2', rotation: Math.PI*1.2},
         {limb: 'body2', rotation: 0, _x:2},
         {limb: 'body', rotation: 0},
@@ -1061,12 +1098,30 @@ var anims = {
         if(!p.grounded && p.mx || p.isBot) {
           p.vx = (p.dx*p.jumpSpeedBoost)
         }
+        spawnAttackParticle(
+          self.parent.scene,
+          self.parent.x+self.parent.dx*60,
+          self.parent.y+2,
+          self.parent.z-(self.legLength+20)*2,
+          0,
+          self.parent.dx<0,0,
+          IMAGES.hitEffect2
+        );
       },
       time: 1, dx:5
     },
     {
       limbs:[
-        {limb: 'arm2', rotation: -Math.PI/20, _x: 0},
+        {limb: 'arm2', rotation: -Math.PI/2, _x: 2, scaleX: 1.5, scaleY:1.5},
+        // {limb: 'arm2', rotation: Math.PI*1.2},
+        {limb: 'body2', rotation: 0, _x:2},
+        {limb: 'body', rotation: 0},
+      ],
+      time: 5
+    },
+    {
+      limbs:[
+        {limb: 'arm2', rotation: -Math.PI/20, _x: 0, scaleX: 1, scaleY:1},
         {limb: 'body2', rotation: Math.PI/20, _x: 0},
       ],
       time: 8
@@ -1075,7 +1130,7 @@ var anims = {
   punch2: [
     { limbs: 
       [
-        {limb: 'arm1', rotation: 0},
+        {limb: 'arm1', rotation: 0,scaleX:2,scaleY:2},
         {limb: 'arm2', rotation: 0},
         {limb: 'body2', rotation: 0},
         // {limb: 'hips', rotation: Math.PI/4},
@@ -1085,7 +1140,7 @@ var anims = {
     },
     { limbs: 
       [
-        {limb: 'arm1', rotation: -Math.PI/2, _x: 10},
+        {limb: 'arm1', rotation: -Math.PI/2, _x: 10, scaleX: 2, scaleY:2},
         {limb: 'arm2', rotation: 0, _x: -10},
         {limb: 'body2', rotation: 0, _x:5},
         {limb: 'body', rotation: 0},
@@ -1101,12 +1156,30 @@ var anims = {
         if(!p.grounded && p.mx || p.isBot) {
           p.vx = (p.dx*p.jumpSpeedBoost)
         }
+        spawnAttackParticle(
+          self.parent.scene,
+          self.parent.x+self.parent.dx*60,
+          self.parent.y+2,
+          self.parent.z-(self.legLength+20)*2,
+          0,
+          self.parent.dx<0,0,
+          IMAGES.hitEffect2
+        );
       },
       time: 2, dx:5
     },
     {
       limbs:[
-        {limb: 'arm1', rotation: -Math.PI/20, _x: 0},
+        {limb: 'arm1', rotation: -Math.PI/2, _x: 10, scaleX: 1.5, scaleY:1.5},
+        {limb: 'arm2', rotation: 0, _x: -10},
+        {limb: 'body2', rotation: 0, _x:5},
+        {limb: 'body', rotation: 0},
+      ],
+      time: 5
+    },
+    {
+      limbs:[
+        {limb: 'arm1', rotation: -Math.PI/20, _x: 0, scaleX: 1, scaleY:1},
         {limb: 'arm2', rotation: -Math.PI/20, _x: 0},
         {limb: 'body2', rotation: Math.PI/20, _x: 0},
       ],
@@ -1116,8 +1189,8 @@ var anims = {
   strike: [
     { limbs: 
       [
-        {limb: 'arm1', rotation: Math.PI},
-        {limb: 'arm2', rotation: Math.PI},
+        {limb: 'arm1', rotation: Math.PI,scaleX:1.5,scaleY:1.5},
+        {limb: 'arm2', rotation: Math.PI,scaleX:1.5,scaleY:1.5},
         {limb: 'body2', rotation: -Math.PI/4},
         // {limb: 'hips', rotation: Math.PI/4},
       ],
@@ -1127,8 +1200,8 @@ var anims = {
     {limbs:[],time: 3, dx: 12},
     { limbs: 
       [
-        {limb: 'arm1', rotation: Math.PI*1.2},
-        {limb: 'arm2', rotation: Math.PI*1.2},
+        {limb: 'arm1', rotation: Math.PI*1.2,scaleX:2,scaleY:2},
+        {limb: 'arm2', rotation: Math.PI*1.2,scaleX:2,scaleY:2},
         {limb: 'body2', rotation: Math.PI/4},
         {limb: 'body', rotation: Math.PI/4},
         {limb: 'head', rotation: -Math.PI/8},
@@ -1156,7 +1229,10 @@ var anims = {
       time: 3, dx:12
     },
     {
-      limbs:[],
+      limbs:[
+        {limb: 'arm1', rotation: Math.PI*1.2,scaleX:1,scaleY:1},
+        {limb: 'arm2', rotation: Math.PI*1.2,scaleX:1,scaleY:1},
+      ],
       time: 12
     }
   ],
@@ -1208,7 +1284,7 @@ var anims = {
         {limb: 'arm2', rotation: -Math.PI/3},
 
       ],time: 7,
-      onStart: self=>self.parent.vz -= 8,
+      // onStart: self=>self.parent.vz -= 8,
     },
     {
       limbs: 
@@ -1244,11 +1320,11 @@ var anims = {
       customUpdate: self => {
         self.parent.vz= -10;
       },
-      time: 8
+      time: 10
     },
     {
       limbs:[],
-      time:8
+      time:15
     },
     {
       limbs: [
@@ -1389,6 +1465,33 @@ var anims = {
       ],
       time: 10,
     }
+  ],
+  fallen: [
+    {
+      unInteruptable: true,
+      interuptable: false,
+      limbs: [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: -Math.PI/2,_y:40},
+        {limb: 'head', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI},
+        {limb: 'arm2', rotation: -Math.PI},
+      ], time: 10,
+    },
+    {
+      limbs: [],
+      limbs: [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: -Math.PI/2,_y:40},
+        {limb: 'head', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI},
+        {limb: 'arm2', rotation: -Math.PI},
+      ],
+      customUpdate: self => {
+        self.animFrameCount = 0;
+        self.rotation = 0;
+      }, time: 10,
+    }
   ]
 }
 
@@ -1397,8 +1500,8 @@ anims.dodge = {
 }
 
 
-function spawnAttackParticle(scene,x,y,z,rotation=0,flipH, flipV) {
-  var p = scene.addEntity(new ImageParticle(IMAGES.hitEffect1, x,y, 32*6,32*6, 0,0,10,0))
+function spawnAttackParticle(scene,x,y,z,rotation=0,flipH, flipV, img=IMAGES.hitEffect1) {
+  var p = scene.addEntity(new ImageParticle(img, x,y, 32*6,32*6, 0,0,10,0))
   p.z = z;
   p.angle = rotation;
   if(flipH)p.flipW = -1;

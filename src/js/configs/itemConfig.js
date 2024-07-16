@@ -18,10 +18,11 @@ window.addEventListener('load', function() {
         throwable: true,
         frameCount:0,
         image: IMAGES.thrownFlag,
-        drawShape: (canvas, speed=1) => {
+        drawShape(canvas, speed=1){
             var sx = 1;
             var sy = 1;
             if(this.vx<0) sx=-1;
+
             var f = Math.floor(this.frameCount*speed/4);
             if(f%4>1)sy=-1;
             canvas.scale(sx,sy)
@@ -42,6 +43,7 @@ window.addEventListener('load', function() {
     }
     ITEMS.beerBottle = {
         name: 'Beer Bottle',
+        damage: 10,
         throwable: true,
         image: IMAGES.beerBottle = ImageLoader.loadImage('Items/beerBottle.png'),
         drawShape: (canvas, speed=1) => {
@@ -49,6 +51,35 @@ window.addEventListener('load', function() {
             var h = 32*2;
             canvas.rotate(frameCount*speed*Math.PI/5)
             canvas.drawImage(IMAGES.beerBottle,-w/2,-h/2,w,h);
+        }
+    }
+    ITEMS.shuriken = {
+        name: 'Shuriken',
+        damage: 10,
+        throwable: true,
+        image: IMAGES.shuriken = ImageLoader.loadImage('Items/shuriken.png'),
+        drawShape: (canvas, speed=1) => {
+            var w = 32*2;
+            var h = 32*2;
+            canvas.rotate(frameCount*speed*Math.PI/5)
+            canvas.drawImage(IMAGES.shuriken,-w/2,-h/2,w,h);
+        }
+    }
+    ITEMS.kunai = {
+        name: 'Kunai',
+        throwable: true,
+        damage: 10,
+        image: IMAGES.kunai = ImageLoader.loadImage('Items/kunai.png'),
+        drawShape(canvas, speed=1) {
+            var w = 32*2;
+            var h = 32*2;
+            var sx = 1;
+            var sy = 1;
+            if(this.vx<0) sx=-1;
+            // var f = Math.floor(this.frameCount*speed/4);
+            // if(f%4>1)sy=-1;
+            canvas.scale(sx,sy)
+            canvas.drawImage(IMAGES.kunai,-w/2,-h/2,w,h);
         }
     }
 })

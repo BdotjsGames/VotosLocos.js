@@ -48,7 +48,9 @@ class GameSceneBasic extends Scene {
         this.player.x = 100;
         this.player.inputBlocked = false;
         this.player.z = 0;
+        this.player.respawn();
       } else {
+        model.undie();
         this.addEntity(this.player = new Player(100,this.startingY,model));
       }
       // this.addEntity(this.player.networkTester = new PlayerNetworked(80,this.startingY, model.getModelOptions()))

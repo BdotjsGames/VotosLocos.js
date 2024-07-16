@@ -16,7 +16,6 @@ function loadCandidateModel() {
     console.log(savedString);
     var data = JSON.parse(savedString)
     var model = new PlatformerModel(20,40,'#bbb', '#666',null, data);
-    console.log(model)
     return model;
   }
 
