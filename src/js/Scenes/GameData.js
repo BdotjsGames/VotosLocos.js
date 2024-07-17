@@ -902,6 +902,15 @@ const convertDialogueJsonToJs = async function() {
 	if (!lastSceneDetected) throw("First scene is not");
 
 	for (const info of dialogueArr) {
+		// check if this is an empty line in csv
+		let hasData = false;
+		for (const key in info) {
+			hasData = info[key];
+			if (hasData) break;
+		}
+
+		if (!hasData) continue;
+
 		lastSceneDetected = (info.Scene || lastSceneDetected || "").replaceAll('"', "");
 		dialogueIndexedByScene[lastSceneDetected] = dialogueIndexedByScene[lastSceneDetected] || [];
 		dialogueIndexedByScene[lastSceneDetected].push(info);
