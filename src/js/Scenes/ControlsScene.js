@@ -34,7 +34,7 @@ class ControlsScene extends AdditiveScene {
         var buttons = [
             {name: 'Jump', buttons: Buttons.A},
             {name: 'Attack', buttons: Buttons.B},
-            {name: 'Crouch', buttons: Buttons.X},
+            {name: 'Dodge', buttons: Buttons.X},
             {name: 'Interact', buttons: Buttons.Y},
             {name: 'Use Item', buttons: Buttons.R},
             {name: '[UI] Confirm', buttons: Buttons.Confirm},

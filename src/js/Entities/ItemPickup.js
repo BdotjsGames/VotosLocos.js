@@ -1,3 +1,4 @@
+var skipItemPromptsFor = {}
 class ItemPickup extends ImageDrawable {
     constructor(itemName, image, x,y,w,h) {
         if(!w)w=image.width;
@@ -58,6 +59,11 @@ class ItemPickup extends ImageDrawable {
     onPickup(player) {
         var count = 'a';
         if(this.itemCount)count=this.itemCount;
+        SOUNDS.powerup.play();
+        if(skipItemPromptsFor[this.itemName]) {
+            return this.afterPickup(player);
+        }
+        skipItemPromptsFor[this.itemName] = true;
         this.scene.playDialogue(
             [
                 {text: "<color red>you got "+count+" " + this.itemName, zoom: 2},
@@ -65,7 +71,7 @@ class ItemPickup extends ImageDrawable {
                 // {person: this, text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in congue erat. Suspendisse nunc ligula, sollicitudin sit amet varius ut, laoreet nec eros. Sed nec leo rutrum, volutpat felis a, varius tellus. Vivamus eu facilisis quam. Nam laoreet sodales commodo. Nunc in semper odio. Ut auctor eros volutpat urna feugiat, tempus auctor urna bibendum. Cras sodales justo non volutpat vestibulum. Morbi vitae tincidunt odio. Curabitur gravida magna non dignissim mollis. Etiam blandit mauris ut sapien venenatis, quis ultrices diam tristique. Proin metus arcu, sagittis ac laoreet at, bibendum non odio."}
             ],true, ()=>this.afterPickup(player)
         )
-        SOUNDS.powerup.play();
+
     }
     // update() {
     //     this.scene.players.forEach(p => {

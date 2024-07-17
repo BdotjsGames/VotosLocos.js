@@ -3,6 +3,7 @@ class Putin extends Bot {
     constructor(x,y) {
         super(x,y);
         this.health = this.maxHealth = 100;
+        this.health = this.maxHealth = 1;
         this.hitResistence = 100;
         this.attackX = 800;
         this.attackY = 60;
@@ -10,9 +11,33 @@ class Putin extends Bot {
         this.rangeDistance = 600;
         this.straffing = true;
         this.item.type = ITEMS.beerBottle;
+        this.name = "Putin";
         // this.model.attackCombo.push(putinSpawnAnimation,putinSpawnAnimation,putinSpawnAnimation)
         this.model.attackCombo = [putinSpawnAnimation, putinSpawnAnimation,putinSpawnAnimation, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim]
         // this.model.attackCombo = [enemyJumpAway, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim, botanims.armSpinny]
+    }
+    die() {
+      if(this.dead)return;
+      this.obj = this;
+      var horse;
+      this.x = this.scene.level.width/2;
+      this.y = 0;
+      this.model.endAnim();
+      this.shouldStealCamera = true;
+      this.scene.playDialogue([
+        {person: this, zoom:2, text: "Oh no. It is time to make escape"},
+        {onStart: () => {
+          super.die();
+          // this.shouldDelete = true;
+          horse = this.scene.addEntity(new PutinOnAHorse(this.x,this.y))
+        }},
+        {person: this, text: "Good luck with bots"},
+        {person: this, text: "hahahaha"},
+        {onStart: () => {
+          horse.mx = 1;
+        }}
+      ])
+
     }
     spawnBot() {
         // var data = this.item.type;

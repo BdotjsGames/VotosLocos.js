@@ -43,8 +43,11 @@ class KnockableDoor extends DrawableImage {
     }
     createEnemies() {
       var enemies = []
-      for(var i=0;i<3;i++) {
-        var troll =this.scene.addEntity(new Troll(this.x+20+i*5,this.y-10))
+      var enemyType = randomFromList([
+        [Troll,3], [LizardPerson,1], [QAnonShamon, 1]
+      ])
+      for(var i=0;i<enemyType[1];i++) {
+        var troll =this.scene.addEntity(new enemyType[0](this.x+20+i*5,this.y-10))
         troll.inputBlocking = true;
         troll.my = .4
         troll.mx = (i-1)*.4

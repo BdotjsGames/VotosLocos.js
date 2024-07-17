@@ -6,6 +6,10 @@ class WaterBottle extends ItemPickup{
     }
     onPickup(player) {
         this.player = player;
+        if(skipItemPromptsFor[this.itemName]) {
+            return this.afterPickup(player);
+        }
+        skipItemPromptsFor[this.itemName] = true;
         this.scene.playDialogue(
             [
                 {text: `<color red>you got a ${this.itemName}`, zoom: 2},

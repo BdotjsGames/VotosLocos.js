@@ -426,7 +426,7 @@ class BeatEmUpper {
             this.grounded = true;
         }
         if(this.shouldSceneCollide)
-        this.scene.collideCheck(this);
+            this.scene.collideCheck(this);
         //   var grav = this.grav * 0.4;
         //   // if(this.wallColliding&&this.vy>0) {
         //   //   grav *= this.wallSlide;

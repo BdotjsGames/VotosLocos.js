@@ -42,7 +42,7 @@ window.addEventListener('load', function() {
         drawShape: drawImage
     }
     ITEMS.beerBottle = {
-        name: 'Beer Bottles',
+        name: 'Soda Bottles',
         damage: 10,
         throwable: true,
         image: IMAGES.beerBottle = ImageLoader.loadImage('Items/beerBottle.png'),

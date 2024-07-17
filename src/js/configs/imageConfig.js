@@ -413,3 +413,5 @@ IMAGES.hitEffect2 = ImageLoader.loadImage('effects/hitEffect2.png')
 
 
 IMAGES.stars = ImageLoader.loadImage('effects/stars.png');
+
+IMAGES.horse = ImageLoader.loadImage('horse/horse.png');
