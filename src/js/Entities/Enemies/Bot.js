@@ -45,7 +45,7 @@ class Bot extends BeatEmUpper {
         super.die();
         this.shouldDelete = true;
         if(Math.random()<.2) {
-            var item = randomFromList([ITEMS.flag, ITEMS.beerBottle,ITEMS.shuriken])
+            var item = randomFromList([ITEMS.flag, ITEMS.sodaBottle,ITEMS.shuriken])
             this.scene.addEntity(createItemDrop(this.x,this.y,item, 10))
         }
     }

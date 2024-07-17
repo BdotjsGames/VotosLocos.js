@@ -12,6 +12,7 @@ class GameSceneBasic extends Scene {
       this.hitables = [];
       this.players = [];
       this.interactables = [];
+      this.specialActors = [];
       this.items = [];
       this.cameraLerpSpeed = 10;
       canvas.backgroundImage = IMAGES.backgroundSky
@@ -167,6 +168,9 @@ class GameSceneBasic extends Scene {
         ), true)
       );
       this.goal = data.Goal;
+      if(data.preLoad) {
+        data.preLoad(this);
+      }
       if(data.showGo)this.showGo = true;
       if(data.DialogueData && data.DialogueData.length>0 && !dialogueSkip) {
         this.playDialogue(data.DialogueData, !data.notBlocking, b=>{
@@ -238,6 +242,9 @@ class GameSceneBasic extends Scene {
         }
       };
       this.entities.push(entity);
+      if(entity.specialName) {
+        this.specialActors[entity.specialName] = entity;
+      }
       return entity;
     }
     spawnRandom(className, num) {

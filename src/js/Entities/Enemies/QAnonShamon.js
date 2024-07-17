@@ -10,7 +10,7 @@ class QAnonShamon extends Bot {
         this.attackY = 60;
         this.noticed = true;
         this.model.attackCombo = [putinSlam, botanims.armSpinny];
-        this.item.type = ITEMS.beerBottle;
+        this.item.type = ITEMS.sodaBottle;
     }
     initModel(w, h, color,color2) {
         this.model = new PlatformerModel(w, h, "#cf5c26","#cf5c26", this, null, {

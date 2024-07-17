@@ -65,7 +65,7 @@ function rallyScene(scene, x=0) {
         var deskBack = scene.addEntity(new EntityTwoPointFiveD(450+x,y-60,0,deskImage))
     }
     {
-        var deskImage =  new ImageDrawable(randomFromList(IMAGES.rallyTables), 0,0);
+        var deskImage =  new ImageDrawable(randomFromListAndRemove(IMAGES.availableRallyTables), 0,0);
         deskImage.w *= 2.5;
         deskImage.h *= 2.5;
         deskImage.y = -deskImage.h;
@@ -200,6 +200,18 @@ GameSequence = [
             [Putin, 1],
             [TrashCan, 1],
             // [Bot, 10],
+        ]
+    },
+    {
+        name: "Putin Run away",
+        preLoad: scene => {
+            var putin = scene.addEntity(new PutinOnAHorse(scene.level.width*.7,100));
+            putin.dx = -1;
+        },
+        DialogueData: [
+            {personString: "Putin", text:"Oh no. Time to make escape"},
+            {personString: "Putin", text:"Good luck with bots", doA: 'getOnHorse'},
+            {personString: "Putin", text:"hahahaha", doA: 'moveRight'},
         ]
     },
     {
@@ -400,6 +412,7 @@ GameSequence = [
 
         width: 5000,
         onLoad: (scene) => {
+            IMAGES.availableRallyTables = IMAGES.rallyTables.map(a=>a);
             rallyScene(scene,-100);
             rallyScene(scene, 400);
             rallyScene(scene, 900);

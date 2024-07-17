@@ -15,6 +15,14 @@ function randomFromList(list) {
   return list[Math.floor(Math.random()*list.length)]
 }
 
+
+function randomFromListAndRemove(list) {
+  var index = Math.floor(Math.random()*list.length)
+  var value = list[index];
+  list.splice(i,1);
+  return  value;
+}
+
 function sqrDist(a,b) {
   var dx = a.x-b.x;
   var dy = a.y-b.y;

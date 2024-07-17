@@ -3,14 +3,13 @@ class Putin extends Bot {
     constructor(x,y) {
         super(x,y);
         this.health = this.maxHealth = 100;
-        this.health = this.maxHealth = 1;
         this.hitResistence = 100;
         this.attackX = 800;
         this.attackY = 60;
         this.noticeDistance = 1000;
         this.rangeDistance = 600;
         this.straffing = true;
-        this.item.type = ITEMS.beerBottle;
+        this.item.type = ITEMS.sodaBottle;
         this.name = "Putin";
         // this.model.attackCombo.push(putinSpawnAnimation,putinSpawnAnimation,putinSpawnAnimation)
         this.model.attackCombo = [putinSpawnAnimation, putinSpawnAnimation,putinSpawnAnimation, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim]
@@ -18,6 +17,8 @@ class Putin extends Bot {
     }
     die() {
       if(this.dead)return;
+      this.scene.loadNextLevel();
+      return;
       this.obj = this;
       var horse;
       this.x = this.scene.level.width/2;

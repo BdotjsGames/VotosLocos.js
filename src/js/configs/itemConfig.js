@@ -41,16 +41,16 @@ window.addEventListener('load', function() {
         image: IMAGES.taco = ImageLoader.loadImage('Items/Taco3.png'),
         drawShape: drawImage
     }
-    ITEMS.beerBottle = {
+    ITEMS.sodaBottle = {
         name: 'Soda Bottles',
         damage: 10,
         throwable: true,
-        image: IMAGES.beerBottle = ImageLoader.loadImage('Items/beerBottle.png'),
+        image: IMAGES.sodaBottle = ImageLoader.loadImage('Items/sodaBottle.png'),
         drawShape: (canvas, speed=1) => {
             var w = 32*2;
             var h = 32*2;
             canvas.rotate(frameCount*speed*Math.PI/5)
-            canvas.drawImage(IMAGES.beerBottle,-w/2,-h/2,w,h);
+            canvas.drawImage(IMAGES.sodaBottle,-w/2,-h/2,w,h);
         }
     }
     ITEMS.shuriken = {

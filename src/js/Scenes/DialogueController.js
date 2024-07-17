@@ -309,7 +309,9 @@ class DialogueController {
     if(event.fourthWall !=undefined) {
       this.fourthWall = event.fourthWall;
     }
-
+    if(event.personString) {
+      event.person = this.gameScene.specialActors[event.personString];
+    }
     if(event.person) {
       this.speakerImage = IMAGES[event.person.image];
     } else {
@@ -329,6 +331,9 @@ class DialogueController {
         this.simpleDialogue.progress();
         this.next();
       }
+    }
+    if(event.clearTarget) {
+      this.gameScene.camera.target = this.gameScene.player;
     }
 
     if(event.options) {
