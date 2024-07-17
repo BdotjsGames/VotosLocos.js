@@ -11,25 +11,25 @@ function setControlsScheme(index) {
     switch(index) {
         case CONTROL_SCHEMES.WASD:
         case CONTROL_SCHEMES.ARROW:
-            btnImages[0] =  getKenneyTileImageFromKeycode(Buttons.A.keys[index])
-            btnImages[1] =  getKenneyTileImageFromKeycode(Buttons.B.keys[index])
-            btnImages[2] =  getKenneyTileImageFromKeycode(Buttons.X.keys[index])
-            btnImages[3] =  getKenneyTileImageFromKeycode(Buttons.Y.keys[index])
-            btnImages[4] =  getKenneyTileImageFromKeycode(Buttons.R.keys[index])
+            btnImages[0] =  getKeyboardKenneyTileSpriteFromKeycode(Buttons.A.keys[index])
+            btnImages[1] =  getKeyboardKenneyTileSpriteFromKeycode(Buttons.B.keys[index])
+            btnImages[2] =  getKeyboardKenneyTileSpriteFromKeycode(Buttons.X.keys[index])
+            btnImages[3] =  getKeyboardKenneyTileSpriteFromKeycode(Buttons.Y.keys[index])
+            btnImages[4] =  getKeyboardKenneyTileSpriteFromKeycode(Buttons.R.keys[index])
             break;
         case CONTROL_SCHEMES.GAMEPAD:
-            btnImages[0] =  IMAGES.inputPromptButtonA
-            btnImages[2] =  IMAGES.inputPromptButtonB
-            btnImages[1] =  IMAGES.inputPromptButtonY
-            btnImages[3] =  IMAGES.inputPromptButtonX
-            btnImages[4] =  IMAGES.inputPromptButtonR
+            btnImages[0] =  KeyTiles.inputPromptButtonA
+            btnImages[2] =  KeyTiles.inputPromptButtonB
+            btnImages[1] =  KeyTiles.inputPromptButtonY
+            btnImages[3] =  KeyTiles.inputPromptButtonX
+            btnImages[4] =  KeyTiles.inputPromptButtonR
             break;
         case CONTROL_SCHEMES.TOUCH:
-            btnImages[0] =  IMAGES.inputPromptButtonA
-            btnImages[1] =  IMAGES.inputPromptButtonB
-            btnImages[2] =  IMAGES.inputPromptButtonX
-            btnImages[3] =  IMAGES.inputPromptButtonY
-            btnImages[4] =  IMAGES.inputPromptButtonR
+            btnImages[0] =  KeyTiles.inputPromptButtonA
+            btnImages[1] =  KeyTiles.inputPromptButtonB
+            btnImages[2] =  KeyTiles.inputPromptButtonX
+            btnImages[3] =  KeyTiles.inputPromptButtonY
+            btnImages[4] =  KeyTiles.inputPromptButtonR
             break;
     }
 }

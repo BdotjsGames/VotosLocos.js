@@ -204,7 +204,7 @@ class BeatEmUpper {
         var minDist = this.enemySeekRange*this.enemySeekRange;
         for(var i=0;i<this.enemies.length;i++) {
             var enemy = this.enemies[i];
-            if(enemy.shouldDelete||enemy.dead)continue;
+            if(enemy.shouldDelete||enemy.dead||enemy.dodging)continue;
 
             var {dx,dy,dz} = vector3Diff(enemy, this);
             var drr = diffSqrd(dx,dy,dz);

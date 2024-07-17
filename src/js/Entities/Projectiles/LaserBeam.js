@@ -18,6 +18,7 @@ class LaserBeam {
     }
     this.frameCount += 1;
     this.enemies.forEach(enemy=>{
+      if(enemy.dead||enemy.dodging||enemy.shouldDelete)return;
       var dx = Math.abs(enemy.x-this.x);
       var dy = Math.abs(enemy.y-this.y);
       var dz = Math.abs(enemy.z-this.z);

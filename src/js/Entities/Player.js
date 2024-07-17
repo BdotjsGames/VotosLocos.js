@@ -234,28 +234,11 @@ class Player extends BeatEmUpper {
     if(this.closestInteractable)this.drawInteractPrompt(canvas, this.closestInteractable)
   }
   drawInteractPrompt(canvas,obj) {
-    canvas.font = '40px' + FONT_FAMILY.default;
-    canvas.fillStyle = 'white';
-    canvas.textAlign='center';
-    var interactPrompt = [
-      `[${Buttons.Y.keys[0].keyDisplay}]`,
-      `[${Buttons.Y.keys[1].keyDisplay}]`,
-      '(Y)','[Y]'][SelectedSchemeIndex]
-    // var interactPromptImage = [
-    //   IMAGES.inputPromptKeyE,
-    //   IMAGES.inputPromptKeyF,
-    //   IMAGES.inputPromptButtonX,
-    //   IMAGES.inputPromptButtonY,
-    // ][SelectedSchemeIndex];
     var interactPromptImage = btnImages[3];
-    var w = interactPromptImage.width;
-    var h = interactPromptImage.height;
+    var w = 16;
+    var h = 16;
     w*=3;
     h*=3;
-    canvas.drawImage(interactPromptImage, obj.x-w/2,-h/2+obj.y+obj.z-obj.h+(obj.promptOffsetY||0),w,h);
-    // canvas.lineWidth = 2;
-    // canvas.strokeStyle = 'black';
-    // canvas.strokeText(interactPrompt, obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
-    // canvas.fillText(interactPrompt, obj.x,obj.y+obj.z-obj.h+(obj.promptOffsetY||0))
+    drawTileSprite(canvas, interactPromptImage, obj.x-w/2,-h/2+obj.y+obj.z-obj.h+(obj.promptOffsetY||0),w,h);
   }
 }

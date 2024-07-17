@@ -31,6 +31,43 @@ function getTileNumber(char) {
     return 0;
 }
 
+IMAGES.inputTileMap = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tilemap/tilemap_packed.png')
+
+var KeyTiles = {}
+
+KeyTiles.inputPromptButtonA = getKenneyTileSprite(  4);
+KeyTiles.inputPromptButtonB = getKenneyTileSprite(  5);
+KeyTiles.inputPromptButtonX = getKenneyTileSprite(  6);
+KeyTiles.inputPromptButtonY = getKenneyTileSprite(  7);
+KeyTiles.inputPromptButtonR = getKenneyTileSprite(628);
+KeyTiles.inputPromptKeyE    = getKenneyTileSprite( 87);
+KeyTiles.inputPromptKeyF    = getKenneyTileSprite(123);
+
+
+
+function drawTileSprite(canvas, tile, x,y,w,h) {
+    canvas.drawImage(tile.image, tile.x,tile.y,tile.w,tile.h,x,y,w,h);
+}
+
+function getKenneyTileSprite(index) {
+    var tn = index;
+    var x = (tn%34)*16;
+    var y = Math.floor(tn/34)*16;
+    return {
+        x,y,w:16,h:16,image:IMAGES.inputTileMap,
+    }
+}
+
+function getKeyboardKenneyTileSprite(char) {
+    var tn = getTileNumber(char)
+    var x = (tn%34)*16;
+    var y = Math.floor(tn/34)*16;
+    return {
+        x,y,w:16,h:16,image:IMAGES.inputTileMap,
+    }
+}
+
+
 function getKenneyTileImage(char) {
     var tn = getTileNumber(char)
     if(!tn)return;
@@ -39,6 +76,6 @@ function getKenneyTileImage(char) {
     return IMAGES["kenney_"+tn] || (IMAGES["kenney_"+tn] = ImageLoader.loadImage(`kenney_inputPromptsPixel16/Tiles/tile_${tn}.png`))
 }
 
-function getKenneyTileImageFromKeycode(code) {
-    return getKenneyTileImage(keyDisplay(code).toLowerCase());
+function getKeyboardKenneyTileSpriteFromKeycode(code) {
+    return getKeyboardKenneyTileSprite(keyDisplay(code).toLowerCase());
 }

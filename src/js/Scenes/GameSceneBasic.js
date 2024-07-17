@@ -469,24 +469,24 @@ class GameSceneBasic extends Scene {
       canvas.fillRect(x,CE.height-h,CE.width-x,h);
       canvas.font = '12px '+ FONT_FAMILY.default;
       canvas.fillStyle = 'white';
-      canvas.drawImage(btnImages[3], x,CE.height-h,w,h);
+      drawTileSprite(canvas, btnImages[3], x, CE.height-h,w,h);
       x+=w;
       canvas.fillText('Interact', x-4,CE.height-h+h/2,w,w);
       x+=w;
-      canvas.drawImage(btnImages[0], x,CE.height-h,w,h);
+      drawTileSprite(canvas, btnImages[0], x,CE.height-h,w,h);;
       x+= w
       canvas.fillText('Jump', x,CE.height-h+h/2);
       x+=w;
-      canvas.drawImage(btnImages[1], x,CE.height-h,w,h);
+      drawTileSprite(canvas, btnImages[1], x,CE.height-h,w,h);;
       x+= w
       canvas.fillText('Attack', x,CE.height-h+h/2);
       x+=w;
-      canvas.drawImage(btnImages[2], x,CE.height-h,w,h);
+      drawTileSprite(canvas, btnImages[2], x,CE.height-h,w,h);;
       x+= w
       canvas.fillText('Dodge', x,CE.height-h+h/2,w,w);
       x+=w;
       if(this.player.item&& this.player.item.count>0) {
-        canvas.drawImage(btnImages[4], x,CE.height-h,w,h);
+        drawTileSprite(canvas, btnImages[4], x,CE.height-h,w,h);;
         x+= w
         canvas.fillText('Throw', x,CE.height-h+h/2);
         x+=w;
