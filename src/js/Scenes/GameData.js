@@ -883,25 +883,37 @@ var Events_table = {
 }
 
 const convertDialogueJsonToJs = async function() {
-    ImageLoader.imagesToLoad += 1;
-    const resp = await fetch("./src/Assets/Dialogue/Dialogue.json");
-    /**
-     * @type {Array<{
-     *    "Scene": "Opening Cutscene",
-     *    "Person": null,
-     *    "English": null,
-     *    "": null,
-     *    "notes": "Scene and Person are assumed to be the same as above if not specified"
-     * }>
-     * }
-     * */
-    const dialogueArr = await resp.json();
-    window.dispatchEvent(new CustomEvent("finished_loading_dialog", {
-        detail: {
-            dialogue: dialogueArr
-        }
-    }));
-    ImageLoader.onLoad();
+	ImageLoader.imagesToLoad += 1;
+	const resp = await fetch("./src/Assets/Dialogue/Dialogue.json");
+	/**
+	 * @type {Array<{
+	 *	"Scene": String || null,
+	 *	"Person": null,
+	 *	"English": null,
+	 *	"": null,
+	 *	"notes": "Scene and Person are assumed to be the same as above if not specified"
+	 * }>
+	 * }
+	 * */
+	const dialogueArr = await resp.json();
+
+	const dialogueIndexedByScene = {};
+	const lastSceneDetected = dialogueArr[0].Scene;
+	if (lastSceneDetected) throw("First scene is not");
+
+	for (const info of dialogueArr) {
+		lastSceneDetected = info.Scene || lastSceneDetected;
+		dialogueIndexedByScene[lastSceneDetected] = dialogueIndexedByScene[lastSceneDetected] || [];
+		dialogueIndexedByScene[lastSceneDetected].push(info);
+	}
+
+	window.dispatchEvent(new CustomEvent("finished_loading_dialog", {
+		detail: {
+			dialogue: dialogueArr,
+			dialogueIndexedByScene,
+		}
+	}));
+	ImageLoader.onLoad();
 }
 
 convertDialogueJsonToJs();
