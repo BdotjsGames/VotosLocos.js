@@ -887,7 +887,7 @@ const convertDialogueJsonToJs = async function() {
 	const resp = await fetch("./src/Assets/Dialogue/Dialogue.json");
 	/**
 	 * @type {Array<{
-	 *	"Scene": String || null,
+	 *	"Scene": String,
 	 *	"Person": null,
 	 *	"English": null,
 	 *	"": null,
@@ -898,7 +898,7 @@ const convertDialogueJsonToJs = async function() {
 	const dialogueArr = await resp.json();
 
 	const dialogueIndexedByScene = {};
-	const lastSceneDetected = dialogueArr[0].Scene;
+	let lastSceneDetected = dialogueArr[0].Scene;
 	if (!lastSceneDetected) throw("First scene is not");
 
 	for (const info of dialogueArr) {
