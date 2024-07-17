@@ -899,7 +899,7 @@ const convertDialogueJsonToJs = async function() {
 
 	const dialogueIndexedByScene = {};
 	const lastSceneDetected = dialogueArr[0].Scene;
-	if (lastSceneDetected) throw("First scene is not");
+	if (!lastSceneDetected) throw("First scene is not");
 
 	for (const info of dialogueArr) {
 		lastSceneDetected = info.Scene || lastSceneDetected;
