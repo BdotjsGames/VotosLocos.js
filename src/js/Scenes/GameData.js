@@ -881,3 +881,49 @@ var Events_table = {
         }
     }
 }
+
+const convertDialogueJsonToJs = async function() {
+	ImageLoader.imagesToLoad += 1;
+	const resp = await fetch("./src/Assets/Dialogue/Dialogue.json");
+	/**
+	 * @type {Array<{
+	 *	"Scene": String,
+	 *	"Person": null,
+	 *	"English": null,
+	 *	"": null,
+	 *	"notes": "Scene and Person are assumed to be the same as above if not specified"
+	 * }>
+	 * }
+	 * */
+	const dialogueArr = await resp.json();
+
+	const dialogueIndexedByScene = {};
+	let lastSceneDetected = dialogueArr[0].Scene;
+	if (!lastSceneDetected) throw("First scene is not");
+
+	for (const info of dialogueArr) {
+		// check if this is an empty line in csv
+		let hasData = false;
+		for (const key in info) {
+			hasData = info[key];
+			if (hasData) break;
+		}
+
+		if (!hasData) continue;
+
+		lastSceneDetected = (info.Scene || lastSceneDetected || "").replaceAll('"', "");
+		dialogueIndexedByScene[lastSceneDetected] = dialogueIndexedByScene[lastSceneDetected] || [];
+		dialogueIndexedByScene[lastSceneDetected].push(info);
+	}
+
+	window.dispatchEvent(new CustomEvent("finished_loading_dialog", {
+		detail: {
+			dialogue: dialogueArr,
+			dialogueIndexedByScene,
+		}
+	}));
+	ImageLoader.onLoad();
+}
+
+convertDialogueJsonToJs();
+
