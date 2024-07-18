@@ -884,7 +884,7 @@ var Events_table = {
 
 const convertDialogueJsonToJs = async function() {
 	ImageLoader.imagesToLoad += 1;
-	const resp = await fetch("./src/Assets/Dialogue/Dialogue.json");
+	const resp = await fetch(`${ROOT_DIR}Assets/Dialogue/Dialogue.json`);
 	/**
 	 * @type {Array<{
 	 *	"Scene": String,

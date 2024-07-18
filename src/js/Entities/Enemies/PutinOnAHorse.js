@@ -17,7 +17,7 @@
             this.jump();
             this.unjump();
             setTimeout(() => {
-                this.model.horse = this.model.hips.createBefore(3,0,new ImageDrawable(IMAGES.horse,3,3),0)
+                this.model.horse = this.model.legL.createBefore(3+2,0,new ImageDrawable(IMAGES.horse,3,3),0)
             }, 150);
         }
         initModel(w, h) {
