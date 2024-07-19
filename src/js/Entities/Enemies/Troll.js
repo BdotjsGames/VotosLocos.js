@@ -10,7 +10,6 @@ class Troll extends Bot {
         this.attackY = 60;
         this.noticed = true; 
         this.health = this.maxHealth = 30;
-
     }
     initModel(w, h, color,color2) {
         this.model = new TrollModel(w, h, "#333","#000", this);

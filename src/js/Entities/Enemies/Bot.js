@@ -16,9 +16,10 @@ class Bot extends BeatEmUpper {
         this.followY = true;//Math.random()>.5;
         this.followX = Math.random()>.5;
         this.noticed = false;
+        this.isEnemy = true;
         this.isBot = true;
         this.attackHitbox = this.defaultAttackHitbox= {
-            width: 40, height: 40,
+            width: 40, height: 40, zheight: 100
         }
         this.largeHitbox= { width: 150, height: 70};
 
@@ -63,7 +64,7 @@ class Bot extends BeatEmUpper {
         this.shootTimer = 0;
     }
     update() {
-        if(this.scene.dialogueBlocking) {
+        if(this.scene.dialogueBlocking&&!this.animDuringCutscene) {
             return;
         }
         super.update();

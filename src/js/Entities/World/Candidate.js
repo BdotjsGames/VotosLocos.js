@@ -2,10 +2,12 @@ class Candidate extends HighFiver {
     constructor(x,y,model) {
         if(!model)model = loadCandidateModel();
         super(x,y,model);
+        this.name = "Candidate";
         this.dialogue = [
             {person: this, text: "Lets get the word out!"},
             {person: this, text: "Thanks for helping!"},
         ]
+        this.shouldSceneCollide = false
         this.onAfterDialogue = () => {}
     }
 }

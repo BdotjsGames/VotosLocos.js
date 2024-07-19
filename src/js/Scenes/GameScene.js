@@ -25,6 +25,17 @@ class GameScene extends Scene {
     this.dialogueController = new DialogueController(null,this);
     this.preProcessLevel();
   }
+  getCameraBoundsTL() {
+    var {x,y,zoom} = this.camera;
+    var w = CE.width  / zoom;
+    var h = CE.height / zoom;
+    return {
+      x: x-w/2,
+      y: y-h/2,
+      w: w,
+      h: h,
+    }
+  }
   dialogueProcess(name) {
     var dialogue = GetDialogueData(this,name);
     if(dialogue) {
@@ -90,6 +101,7 @@ class GameScene extends Scene {
     if(this.camera.y+screenh> this.level.height) {
       this.camera.y = this.level.height-screenh;
     }
+    this.cameraBounds = this.getCameraBoundsTL();
 
     if(this.player.y>this.level.cellHeight*this.level.rows) {
       this.player.die();

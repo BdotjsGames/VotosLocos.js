@@ -42,6 +42,7 @@ class GameSceneBasic extends Scene {
       this.showGo = false;
       if(model&&model.isPlayer) {
         this.addEntity(this.player = model);
+        this.player.hidden = false;
         this.player.dodging = false;
         this.player.dodgeTimer = 0;
         this.player.speed = 5;
@@ -111,25 +112,25 @@ class GameSceneBasic extends Scene {
       }
     }
     addBuildings() {
-      for(var i=0;i<17;i++) {
-        var x = Math.random()*this.ground.w;
-        var y = this.startingY - this.groundHeight/2-75-Math.random()*100;
-        var w = 100 + Math.random()*100;
-        var h = 50+200*Math.random();
-        this.backgrounds.push(new BackgroundBuilding(x,y, w,h,'white')); 
-      }
+      // for(var i=0;i<17;i++) {
+      //   var x = Math.random()*this.ground.w;
+      //   var y = this.startingY - this.groundHeight/2-75-Math.random()*100;
+      //   var w = 100 + Math.random()*100;
+      //   var h = 50+200*Math.random();
+      //   this.backgrounds.push(new BackgroundBuilding(x,y, w,h,'white')); 
+      // }
       var wx = this.ground.w;
       for(var x=wx;x>-300;) {
-        var x = wx;
+        // var x = wx;
         var y = this.startingY - this.groundHeight/2;
         // var h = 50+200*Math.random();
         // this.addEntity(new BackgroundBuilding(x,y, 100,h,'white')); 
         var buildingImage = randomFromList(IMAGES.buildings);
         var w = buildingImage.width*2;
         var h = buildingImage.height*2;
-        wx -= w;///2+Math.random()*w;
+        x -= w;///2+Math.random()*w;
         // wx -= Math.random()*200;
-        this.backgrounds.push(new ImageDrawable(buildingImage, x,y-h/2, w,h));
+        this.backgrounds.push(new ImageDrawable(buildingImage, x+w/2,y-h/2, w,h));
       }
     }
     addUI(ui) {
@@ -281,8 +282,13 @@ class GameSceneBasic extends Scene {
     //   return this.level.collides(...args);
     }
     collideCheck(e) {
-      if(e.x<0)e.x=0;
-      if(e.x>this.level.width+1)e.x = this.level.width+1
+      var minX = 100;
+      if(e.x<minX)e.x=minX;
+      var mx = this.level.width+1;
+      if(e.isEnemy) {
+        mx -= 100;
+      }
+      if(e.x>mx)e.x = mx;
         if(e.y<this.minY) e.y = this.minY;
         if(e.y>this.maxY) e.y = this.maxY;
     }
@@ -397,6 +403,7 @@ class GameSceneBasic extends Scene {
       
     }
     loadNextLevel(skipTransition) {
+      this.player.hidden = true;
       this.player.vx = 0;
       this.player.vy = 0;
       this.player.vz = 0;

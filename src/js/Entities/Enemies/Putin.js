@@ -2,8 +2,10 @@
 class Putin extends Bot {
     constructor(x,y) {
         super(x,y);
-        this.health = this.maxHealth = 100;
-        this.hitResistence = 100;
+        this.health = this.maxHealth = 200;
+        // if(DEV)this.health = 1;
+        // this.hitResistence = 100;
+        this.getknockBack = 2
         this.attackX = 800;
         this.attackY = 60;
         this.noticeDistance = 1000;
@@ -12,19 +14,44 @@ class Putin extends Bot {
         this.item.type = ITEMS.sodaBottle;
         this.name = "Putin";
         // this.model.attackCombo.push(putinSpawnAnimation,putinSpawnAnimation,putinSpawnAnimation)
-        this.model.attackCombo = [putinSpawnAnimation, putinSpawnAnimation,putinSpawnAnimation, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim]
+        this.model.attackCombo = [putinSpawnAnimation, putinSpawnAnimation,putinSpawnAnimation, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim, putinSlam]
         // this.model.attackCombo = [enemyJumpAway, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim, botanims.armSpinny]
+        this.model.scaleBoth = 1.2;
+        this.phase=1;
+    }
+    update() {
+      super.update();
+      if(this.dead) {
+        var tx = this.scene.level.width*.75;
+        this.x += (tx-this.x) * .01;
+      }
+      if(this.health<this.maxHealth/2&&this.phase==1) {
+        this.phase=2;
+        // this.dodge();
+        this.hitResistence = 100;
+        this.getknockBack = 4;
+        this.model.outlineColor = 'yellow'
+        this.startShield();
+      }
     }
     die() {
       if(this.dead)return;
-      this.scene.loadNextLevel();
-      return;
+      // return;
+      this.animDuringCutscene = true;
+      this.dead = true;
+      this.model.endAnim();
+      this.model.die();
       this.obj = this;
       var horse;
-      this.x = this.scene.level.width/2;
+      // this.x = this.scene.level.width/2;
       this.y = 0;
-      this.model.endAnim();
       this.shouldStealCamera = true;
+      // this.vx = (this.scene.level.width/2-this.x) / 10;
+      this.vz = -1;
+      this.scene.playDialogue([
+        {person: this, zoom: 2, text: " "}
+      ], true, () => this.scene.loadNextLevel())
+      return;
       this.scene.playDialogue([
         {person: this, zoom:2, text: "Oh no. It is time to make escape"},
         {onStart: () => {
@@ -187,6 +214,9 @@ var putinSpawnAnimation = [
         {limb: 'arm2', rotation: -Math.PI},
       ],
       unInteruptable: true,
+      onStart: self=> {
+        self.parent.startShield();
+      },
       customUpdate: self => {
         self.parent.vz= -10;
       },
@@ -225,6 +255,7 @@ var putinSpawnAnimation = [
       customUpdate: self => {
         self.parent.vz= 40;
         if(self.parent.grounded) {
+          self.parent.stopShield();
           self.parent.attackHitbox = self.parent.largeHitbox;
           if(self.unlanded) {
             self.unlanded = false;
@@ -252,7 +283,7 @@ var putinSpawnAnimation = [
         {limb: 'arm1', rotation: -Math.PI},
         {limb: 'arm2', rotation: -Math.PI},
       ],
-       time: 80, onStart: self=>{
+       time: 120, onStart: self=>{
         self.attacking=false;
         self.knockbackUp = 0;
       }

@@ -4,13 +4,13 @@ class BotSpawnAirStrike {
         this.y=y;
         this.z=y;
         this.enemyClass = enemyClass;
-        this.timer = 60;
+        this.timer = 120;
         this.image = IMAGES.groundTarget;
         this.spawned =false;
     }
     update() {
         this.timer -= 1;
-        if(!this.spawned) {
+        if(!this.spawned&&this.timer<60) {
             this.spawned = true;
             var enemy = this.scene.addEntity(new this.enemyClass(this.x,this.y))
             enemy.z = -300;

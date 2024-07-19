@@ -16,9 +16,13 @@
         getOnHorse() {
             this.jump();
             this.unjump();
+
+            this.model.horse = this.model.legR.createAfter(3+2,0,new ImageDrawable(IMAGES.horse,3,3),0)
+            this.model.legR.rotation = 0;//-Math.PI/5;
             setTimeout(() => {
-                this.model.horse = this.model.legL.createBefore(3+2,0,new ImageDrawable(IMAGES.horse,3,3),0)
-            }, 150);
+
+                this.model.legR.rotation = -Math.PI/5;
+            }, 200);
         }
         initModel(w, h) {
             this.model = new PutinModel(w, h,"#f6e1c5", "#d3a684", this);
@@ -31,7 +35,8 @@
                 this.model.horse.rotation = Math.cos(this.x*Math.PI/100)*Math.PI/20;
                 this.rotation = Math.cos(this.x*Math.PI/100)*Math.PI/20;
                 this.model.legL.rotation = Math.PI/5;
-                this.model.legR.rotation = Math.PI/5;
+                if(this.mx!=0)
+                this.model.legR.rotation = 0;
                 this.model.arm1.rotation =-Math.PI/5;
                 this.model.arm2.rotation =-Math.PI/5;
             }

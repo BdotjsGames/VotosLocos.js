@@ -31,7 +31,7 @@ function getTileNumber(char) {
     return 0;
 }
 
-IMAGES.inputTileMap = ImageLoader.loadImage('kenney_inputPromptsPixel16/Tilemap/tilemap_packed.png')
+IMAGES.inputTileMap = ImageLoader.loadImage('kenney_tiles/tilemap_packed.png')
 
 var KeyTiles = {}
 

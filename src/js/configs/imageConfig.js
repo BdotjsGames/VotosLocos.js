@@ -1,6 +1,7 @@
 IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo2.png');
 
 IMAGES.backgroundSky = ImageLoader.loadImage('backgroundSky.png');
+IMAGES.backgroundCity = ImageLoader.loadImage('skylines/cityBackground.png');
 IMAGES.Purlsey1 = ImageLoader.loadImage('Pursley/Pursley1.png');
 IMAGES.Purlsey1S = ImageLoader.loadImage('Pursley/Pursley1-sharp.png');
 IMAGES.Purlsey2 = ImageLoader.loadImage('Pursley/Pursley2.png');
@@ -35,7 +36,7 @@ ArabAmericans,       VietNow,
 BlackVotesMatterv2,  VoteBlueDemon,
 ClimateAction,       YoungAmericans,
 GrrrlVote,           getOutTheVote,
-KeepOnCrossin,       getOutTheVote`
+KeepOnCrossin`
 
 IMAGES.rallyTables = tablesNames.split(',').map(src=>src.trim()).map(src => IMAGES[src] = ImageLoader.loadImage('rallyTables/'+src+'.png'))
 // IMAGES.rallyTables = [
@@ -330,6 +331,14 @@ IMAGES.buildings = [
     IMAGES.buildingBlock = ImageLoader.loadImage("buildingBlock.png"),
     IMAGES.buildingBlock2 = ImageLoader.loadImage("buildingBlock2.png"),
     IMAGES.buildingBlock3 = ImageLoader.loadImage("buildingBlock3.png"),
+    IMAGES.tree1 = ImageLoader.loadImage("Tree/Tree2.png"),
+    IMAGES.tree1 = ImageLoader.loadImage("Tree/Tree3.png"),
+    IMAGES.downB = ImageLoader.loadImage("Buildings/DownB.png"),
+    IMAGES.downB2 = ImageLoader.loadImage("Buildings/DownB2.png"),
+    IMAGES.Building1 = ImageLoader.loadImage("Buildings/Building.png"),
+    IMAGES.Building2 = ImageLoader.loadImage("Buildings/Building2.png"),
+    IMAGES.Building3 = ImageLoader.loadImage("Buildings/Building3.png"),
+    IMAGES.Building4 = ImageLoader.loadImage("Buildings/Building4.png"),
     // createHouse(),
 ]
 // IMAGES.backgroundTileStreetSidewalk    = ImageLoader.loadImage("backgroundTileStreetSidewalk.png")
@@ -415,3 +424,13 @@ IMAGES.hitEffect2 = ImageLoader.loadImage('effects/hitEffect2.png')
 IMAGES.stars = ImageLoader.loadImage('effects/stars.png');
 
 IMAGES.horse = ImageLoader.loadImage('horse/horse.png');
+
+
+IMAGES.tacosLocos = ImageLoader.loadImage('rallyTables/TacosLocos.png');
+IMAGES.tacosLocosBack = ImageLoader.loadImage('rallyTables/TacosLocosBack.png');
+IMAGES.tacosLocosBack = ImageLoader.loadImage('rallyTables/TacosLocosBack.png');
+IMAGES.CarumbaHead = ImageLoader.loadImage('CarumbaHead.png');
+
+
+IMAGES.parkStage = ImageLoader.loadImage('parkStage.png');
+

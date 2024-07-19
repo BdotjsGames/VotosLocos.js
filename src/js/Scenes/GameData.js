@@ -55,17 +55,16 @@ var rallyTables = [
 ]
 
 
-function rallyScene(scene, x=0) {
-    var y = 180;
+function rallyScene(scene, x=0, y=180, imgFront, imgback) {
     {
-        var deskImage =  new ImageDrawable(IMAGES.rallyTableBaseBack, 0,0);
+        var deskImage =  new ImageDrawable(imgback || IMAGES.rallyTableBaseBack, 0,0);
         deskImage.w *= 2.5;
         deskImage.h *= 2.5;
         deskImage.y = -deskImage.h+60;
         var deskBack = scene.addEntity(new EntityTwoPointFiveD(450+x,y-60,0,deskImage))
     }
     {
-        var deskImage =  new ImageDrawable(randomFromListAndRemove(IMAGES.availableRallyTables), 0,0);
+        var deskImage =  new ImageDrawable(imgFront || randomFromListAndRemove(IMAGES.availableRallyTables), 0,0);
         deskImage.w *= 2.5;
         deskImage.h *= 2.5;
         deskImage.y = -deskImage.h;
@@ -179,7 +178,7 @@ GameSequence = [
         ]
     },
     {
-        name: "tacos",
+        name: "Tacos",
         showGo: true,
         music: SOUNDS.norteno,
         DialogueData: [], 
@@ -188,7 +187,59 @@ GameSequence = [
             [TrashCan, 1],
             [Taco, 3],
             // [Bot, 10],
-        ]
+        ],
+        onLoad: scene => {
+            var x = 600;
+            var y = 50;
+            {
+                var deskImage =  new ImageDrawable(IMAGES.tacosLocosBack, 0,0);
+                deskImage.w *= 2.5;
+                deskImage.h *= 2.5;
+                deskImage.y = -deskImage.h+60;
+                var deskBack = scene.addEntity(new EntityTwoPointFiveD(450+x,y-60,0,deskImage))
+            }
+            {
+                var deskImage =  new ImageDrawable(IMAGES.tacosLocos, 0,0);
+                deskImage.w *= 2.5;
+                deskImage.h *= 2.5;
+                deskImage.y = -deskImage.h;
+                var desk = scene.addEntity(new EntityTwoPointFiveD(450+x,y,0,deskImage))
+            }
+            var npc = scene.addEntity(new HighFiver(520+x,y-40))
+            // npc.shouldStartDiaolgueOnProximity = true;
+            npc.dx = -1
+            npc.getInputs = e=>{}
+            npc.beHappy();
+            npc.name = "Carumba"
+            npc.canHighFive = false;
+            npc.lookingAt = scene.players[0]
+            npc.interactablesRange = 200;
+            npc.model.headBase.drawable.image = IMAGES.CarumbaHead;
+            npc.model.glasses.drawable.image = null;
+            npc.model.hair.drawable.image = null;
+            npc.model.face.drawable.image = null;
+            npc.model.mouth.hidden = true;
+            npc.model.face.hidden = true;
+            npc.onAfterDialogue = e=> {
+            }
+            npc.dialogue = [
+                {person: npc, text: "Taco?", zoom:2},
+                {options:[
+                    {text: 'yes', sequence:[
+                        {person: npc, text: "Heres Taco!"},
+                        {onStart: dia => {
+                            // npc.isInteractable = false;
+                            scene.showGo = true;
+                            var taco = scene.addEntity(new Taco(npc.x+150,npc.y+50))
+                            taco.z += -80
+                        }}
+                    ]},
+                    {text: 'no', sequence:[{
+                        person: npc, text: "oh. okay"
+                    }]},
+                ]},
+            ]
+        }
     },
     {
         name: "1-2",
@@ -210,8 +261,20 @@ GameSequence = [
         },
         DialogueData: [
             {personString: "Putin", text:"Oh no. Time to make escape"},
-            {personString: "Putin", text:"Good luck with bots", doA: 'getOnHorse'},
+            {personString: "Putin", text:"Good luck with vote", doA: 'getOnHorse'},
             {personString: "Putin", text:"hahahaha", doA: 'moveRight'},
+            // {
+            //     onStart: dc => {
+            //         var scene = dc.gameScene;
+            //         for(var i =0;i<12;i++) {
+            //             this.setTimeout(()=>{
+            //                 var x = 200+Math.random()*1000;
+            //                 var y = 0+Math.random()*300;
+            //                 var t = scene.addEntity(new BotSpawnAirStrike(x,y));
+            //             }, i*200)
+            //         }
+            //     }
+            // }
         ]
     },
     {
@@ -412,6 +475,12 @@ GameSequence = [
 
         width: 5000,
         onLoad: (scene) => {
+            var stage = new ImageDrawable(IMAGES.parkStage, 2000,0)
+            scene.backgrounds.push(stage);
+            stage.w *= 3;
+            stage.h *= 3;
+            stage.y = scene.minY-stage.h
+            scene.addEntity(new Candidate(stage.x+stage.w/2,stage.y+stage.h/2));
             IMAGES.availableRallyTables = IMAGES.rallyTables.map(a=>a);
             rallyScene(scene,-100);
             rallyScene(scene, 400);
@@ -927,3 +996,37 @@ const convertDialogueJsonToJs = async function() {
 
 convertDialogueJsonToJs();
 
+
+/* example output
+{
+  "Opening Cutscene": [
+    {
+      "Scene": "Opening Cutscene",
+      "Person": null,
+      "English": null,
+      "": null,
+      "notes": "Scene and Person are assumed to be the same as above if not specified"
+    },
+    {
+      "Scene": "Opening Cutscene",
+      "Person": "LouChalibre",
+      "English": "The time to <color red>vote</color> is <wiggle>approaching!",
+      "": null,
+      "notes": "You can insert more lines of dialogue"
+    },
+    {
+      "Scene": "Opening Cutscene",
+      "Person": "LouChalibre",
+      "English": "Are you ready to cast your ballot?",
+      "": null,
+      "notes": null
+    },
+    {
+      "Scene": null,
+      "Person": null,
+      "English": "blah blah blah",
+      "": null,
+      "notes": null
+    }
+  ],
+  **/

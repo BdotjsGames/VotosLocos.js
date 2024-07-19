@@ -31,8 +31,8 @@ class BeatEmUpper {
         this.wallCollidingWith = null;
         this.standingOn = null;
         this.canAttack = true;
-        this.defaultAttackHitbox = {width: 70, height: 60};
-        this.largeHitbox= { width: 200, height: 70, both:true};
+        this.defaultAttackHitbox = {width: 70, height: 60, zheight: 100};
+        this.largeHitbox= { width: 200, height: 70, both:true, zheight: 100};
         this.attackHitbox = this.defaultAttackHitbox;
         if(model) {
             this.model = model;
@@ -74,6 +74,15 @@ class BeatEmUpper {
         this.attackerCount = 0;
         this.straffing = false;
         this.spamCounter=0;
+        this.shielding = false;
+    }
+    startShield() {
+        this.shielding = true;
+        this.model.outlineColor='blue';
+    }
+    stopShield() {
+        this.shielding = false;
+        this.model.outlineColor='black';
     }
     lightDraw(ctx, cx, cy, zoom) {
         // var dx = this.x+cx;
@@ -119,6 +128,11 @@ class BeatEmUpper {
     getHit(other) {
         if(this.dead)return;
         if(this.dodging)return;
+        if(this.shielding) {
+            var dx = this.x<other.x?1:-1;
+            other.vx += dx*2;
+            return;
+        }
         var damage = other.contactDamage;
         if(other.model)
         if(other.model.anim&&other.model.damage) {
@@ -133,11 +147,14 @@ class BeatEmUpper {
         // console.log(this.hitResistence, damage);
         if(this.hitResistence>=damage) {
             // this.outlineColor = 'yellow'
+            // this.model.impactStop(5);
+            this.vz = -.1;
         } else {
             this.model.impactStop(25);
             this.model.getHit(true);
-            this.vz = -1;
+            this.vz = -.1;
         }
+
 
         // createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
         spawnHitParticles(this.scene,(other.x+this.x)/2,(this.y+other.y)/2-10, (this.z+other.z)/2-30)
@@ -147,14 +164,14 @@ class BeatEmUpper {
         var dx = other.x - this.x > 0 ? 1 : -1;
         if(dx==undefined) console.log('dx is undefined');
         if(k==undefined) console.log('k is undefined');
-        this.vx = -dx * k * 10;
+        this.vx = -dx * k * 1;
         this.x += this.vx;
         this.health -= damage;
         this.invul = this.invulTime;
         if(other.model)
         if(other.model.knockbackUp) {
             this.vz = other.model.knockbackUp;
-            other.vz = other.model.knockbackUp;
+            // other.vz = other.model.knockbackUp;
         }
         // this.vz += other.vz*2;
         // this.vz = -20;
@@ -261,7 +278,7 @@ class BeatEmUpper {
     }
     collide(other) {
         if (this.model.attacking) {
-            this.vx = 0;
+            // this.vx = 0;
             other.getHit(this);
             
             // this.model.wallCollide();
@@ -389,6 +406,7 @@ class BeatEmUpper {
             if(this.model.doubleJumping) {
                 // this.vx = this.dx*this.model.doubleJumpTimer/2;
             }
+        }
 
             this.x += this.vx;
             this.y += this.vy;
@@ -415,7 +433,7 @@ class BeatEmUpper {
             }
             this.vz += this.grav;
             this.z += this.vz;
-        }
+        // }
         if (this.z >= 0) {
             this.vz = 0;
             this.z = 0;
@@ -561,7 +579,7 @@ class BeatEmUpper {
         var ady = Math.abs(dy);
         var adz = Math.abs(dz);
         if(this.attackHitbox.both||dx*this.dx>=0)
-        if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<100) {
+        if(adx<this.attackHitbox.width && ady<this.attackHitbox.height&&adz<this.attackHitbox.zheight) {
             enemy.getHit(this);
             // this.vx = 0;
             if(this.jumpCount !=0) this.jumpCount = 1
@@ -675,7 +693,20 @@ class BeatEmUpper {
             canvas.strokeStyle = "red";
             canvas.strokeRect(
                 this.x+this.attackHitbox.width*(this.dx-1)/2,
-                this.y-this.attackHitbox.height,
+                this.y-this.attackHitbox.height+this.z,
+                this.attackHitbox.width,
+                this.attackHitbox.height*2,
+            )
+            canvas.strokeStyle = "#f003";
+            canvas.strokeRect(
+                this.x+this.attackHitbox.width*(this.dx-1)/2,
+                this.y-this.attackHitbox.height+this.z+this.attackHitbox.zheight,
+                this.attackHitbox.width,
+                this.attackHitbox.height*2,
+            )
+            canvas.strokeRect(
+                this.x+this.attackHitbox.width*(this.dx-1)/2,
+                this.y-this.attackHitbox.height+this.z-this.attackHitbox.zheight,
                 this.attackHitbox.width,
                 this.attackHitbox.height*2,
             )
