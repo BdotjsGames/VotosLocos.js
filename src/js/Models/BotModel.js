@@ -30,6 +30,116 @@ class BotModel extends PlatformerModel {
 
 
 var botanims = {
+  groundSlam: [
+    {
+      limbs: [
+        {limb: 'body2', rotation: -Math.PI/4},
+        {limb: 'body', rotation: -Math.PI/4},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: Math.PI/6},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'legR', rotation: -Math.PI/6},
+        {limb: 'legR2', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI},
+        {limb: 'arm2', rotation: -Math.PI},
+      ],
+      unInteruptable: true,
+      customUpdate: self => {
+        self.parent.vz= -10;
+      },
+      time: 10
+    },
+    {
+      limbs:[],
+      time:15
+    },
+    {
+      limbs: [
+        {limb: 'body2', rotation: Math.PI/4},
+        {limb: 'body', rotation: Math.PI/2},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: Math.PI/6},
+        {limb: 'legL2', rotation: Math.PI/2},
+        {limb: 'legR', rotation: -Math.PI/6},
+        {limb: 'legR2', rotation: Math.PI/2},
+        {limb: 'arm1', rotation: -Math.PI/2},
+        {limb: 'arm2', rotation: -Math.PI/2},
+      ],
+      customUpdate: self => {
+        self.parent.vz= 0;
+      },
+      time: 8
+    },
+    {
+      limbs: [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: Math.PI/2,_y:30},
+        {limb: 'head', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI},
+        {limb: 'arm2', rotation: -Math.PI},
+      ],
+      // damage: 15,
+      customUpdate: self => {
+        self.parent.vz= 40;
+        if(self.parent.grounded) {
+          self.parent.attackHitbox = self.parent.largeHitbox;
+          if(self.unlanded) {
+            self.unlanded = false;
+            spawnDeathParticles(self.parent.scene,self.parent.x,self.parent.y,self.parent.z,250,32)
+            SOUNDS.attack.play();
+          }
+        }
+      },
+      onLeave: self => {
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox
+      },
+      onStart: self => {
+        self.parent.vz = 30;
+        self.attacking = true
+        self.unlanded = true;
+        // self.parent.attackHitbox = self.parent.largeHitbox;
+        self.knockbackUp = 20;
+      },
+      time: 20
+    },
+    {
+      unInteruptable: true,
+      interuptable: false,
+      limbs: [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: Math.PI/2,_y:30},
+        {limb: 'head', rotation: 0},
+        {limb: 'arm1', rotation: -Math.PI},
+        {limb: 'arm2', rotation: -Math.PI},
+      ],
+       time: 10, onStart: self=>{
+        // self.attacking=false;
+        self.knockbackUp = 0;
+      },
+      onLeave: self => {
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox
+      },
+    },
+    {
+      unInteruptable: true,
+      interuptable: false,
+      limbs: 
+      [
+        {limb: 'body2', rotation: 0},
+        {limb: 'body', rotation: 0,_y:0},
+        {limb: 'head', rotation: 0},
+        {limb: 'legL', rotation: 0},
+        {limb: 'legL2', rotation: 0},
+        {limb: 'arm1', rotation: 0},
+        {limb: 'arm2', rotation: 0},
+        // {limb: 'hips', rotation: -Math.PI/2},
+      ], time: 10, onStart: self=>{
+        self.attacking=false;
+        self.knockbackUp = 0;
+        self.parent.attackHitbox = self.parent.defaultAttackHitbox
+      }
+    }
+  ],
     punch1: [
       { limbs: 
         [

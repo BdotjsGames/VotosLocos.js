@@ -282,7 +282,10 @@ class GameSceneBasic extends Scene {
     //   return this.level.collides(...args);
     }
     collideCheck(e) {
-      var minX = 100;
+      var minX = 0;
+      if(e.isEnemy) {
+        minX = 100;
+      }
       if(e.x<minX)e.x=minX;
       var mx = this.level.width+1;
       if(e.isEnemy) {

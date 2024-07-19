@@ -10,6 +10,9 @@ class Candidate extends HighFiver {
         this.shouldSceneCollide = false
         this.onAfterDialogue = () => {}
     }
+    getInputs() {
+       
+    }
 }
 
 function loadCandidateModel() {

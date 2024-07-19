@@ -1,7 +1,7 @@
 shadow = canvas.createRadialGradient(0, 0, 5, 0, 0, 20);
 shadow.addColorStop(0, "#000000aa");
 shadow.addColorStop(1, "#00000000");
-var showHitboxes = true;
+var showHitboxes = false;
 
 class BeatEmUpper {
     constructor(x, y, w, h, color,color2,model) {
@@ -145,6 +145,7 @@ class BeatEmUpper {
         this.dx = this.x<other.x?1:-1;
         // console.log(this.hitResistence,damage)
         // console.log(this.hitResistence, damage);
+        var wasDazed = this.model.anim&&this.model.animKeyFrame?.dazed;
         if(this.hitResistence>=damage) {
             // this.outlineColor = 'yellow'
             // this.model.impactStop(5);
@@ -154,7 +155,9 @@ class BeatEmUpper {
             this.model.getHit(true);
             this.vz = -.1;
         }
-
+        if(!wasDazed&&other.model&&other.model.animKeyFrame&&other.model.animKeyFrame.dazes) {
+            this.model.startAnim(anims.dazed);
+        }
 
         // createFadingParticleCluster(this.scene,(other.x+this.x)/2,(this.y+other.y + this.z+other.z)/2,50, 15)
         spawnHitParticles(this.scene,(other.x+this.x)/2,(this.y+other.y)/2-10, (this.z+other.z)/2-30)
@@ -358,7 +361,7 @@ class BeatEmUpper {
                 }
             }
             this.getInputs();
-            if(this.model.moveLocked) {
+            if(this.model.moveLocked||(this.model.anim&&this.model.animKeyFrame.dazed)) {
                 this.mx = 0;
                 this.my = 0;
             }
@@ -598,6 +601,7 @@ class BeatEmUpper {
         })
     }
     canJump() {
+        if(this.model.anims&&this.model.animKeyFrame?.dazed)return false;
         return this.jumpCount < this.numJumps;
     }
     onJump() { }
@@ -691,10 +695,18 @@ class BeatEmUpper {
         // canvas.fillRect(this.x,this.y,10,10);
         if(DEV&&showHitboxes&&this.model.attacking){
             canvas.strokeStyle = "red";
+            var w = this.attackHitbox.width;
+            var dx = 0;
+            if(this.attackHitbox.both) {
+                dx=-w;
+                w=w*2;
+            } else {
+                dx=w*(this.dx-1)/2;
+            }
             canvas.strokeRect(
-                this.x+this.attackHitbox.width*(this.dx-1)/2,
+                this.x+dx,
                 this.y-this.attackHitbox.height+this.z,
-                this.attackHitbox.width,
+                w,
                 this.attackHitbox.height*2,
             )
             canvas.strokeStyle = "#f003";

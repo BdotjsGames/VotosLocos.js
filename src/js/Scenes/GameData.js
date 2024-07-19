@@ -878,6 +878,7 @@ GameSequence = [
                         highFivers.forEach(h=>{
                             h.mx=1,
                         h.enemySeekRange=1000;
+                        h.avoidHealth = h.maxHealth/4
 
                     })
                     }, waitFor: 20

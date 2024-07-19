@@ -21,7 +21,7 @@ class Bot extends BeatEmUpper {
         this.attackHitbox = this.defaultAttackHitbox= {
             width: 40, height: 40, zheight: 100
         }
-        this.largeHitbox= { width: 150, height: 70};
+        this.largeHitbox= { width: 150, height: 120, zheight: 50};
 
         this.noticeDistance = 300
         this.attackX = 240

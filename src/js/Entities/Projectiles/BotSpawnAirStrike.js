@@ -14,7 +14,7 @@ class BotSpawnAirStrike {
             this.spawned = true;
             var enemy = this.scene.addEntity(new this.enemyClass(this.x,this.y))
             enemy.z = -300;
-            enemy.model.startAnim(anims.groundSlam);
+            enemy.model.startAnim(putinSlam);
             enemy.health *= 0.5;
         }
         if(this.timer<-60) {

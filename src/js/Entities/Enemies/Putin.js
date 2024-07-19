@@ -19,18 +19,30 @@ class Putin extends Bot {
         this.model.scaleBoth = 1.2;
         this.phase=1;
     }
+    getHit(other) {
+      super.getHit(other)
+      if(this.model.animKeyFrame&&this.model.animKeyFrame.vulnerable) {
+        this.model.startAnim(anims.dazed)
+      }
+    }
     update() {
       super.update();
       if(this.dead) {
         var tx = this.scene.level.width*.75;
         this.x += (tx-this.x) * .01;
       }
-      if(this.health<this.maxHealth/2&&this.phase==1) {
+      if(this.health<this.maxHealth*2/3&&this.phase==1) {
         this.phase=2;
+        this.jump();
+        this.startShield();
+      }
+      if(this.health<this.maxHealth/3&&this.phase==2) {
+        this.phase=3;
+        this.jump();
         // this.dodge();
         this.hitResistence = 100;
         this.getknockBack = 4;
-        this.model.outlineColor = 'yellow'
+        // this.model.outlineColor = 'yellow'
         this.startShield();
       }
     }
@@ -106,7 +118,7 @@ class Putin extends Bot {
       if(Math.abs(dx)<100) { 
         // this.model.attack(anims.punch1);
         this.mx = (this.scene.level.width/2-this.x)>0?1:-1
-        this.jump();
+        // this.jump();
       }
       if(Math.abs(dx)>600) {
         this.mx=0;
@@ -276,6 +288,7 @@ var putinSpawnAnimation = [
     {
       unInteruptable: true,
       interuptable: false,
+      vulnerable: true,
       limbs: [
         {limb: 'body2', rotation: 0},
         {limb: 'body', rotation: Math.PI/2,_y:30},
@@ -291,6 +304,7 @@ var putinSpawnAnimation = [
     {
       unInteruptable: true,
       interuptable: false,
+      vulnerable: true,
       limbs: 
       [
         {limb: 'body2', rotation: 0},

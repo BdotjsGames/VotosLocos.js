@@ -973,6 +973,7 @@ class PlatformerModel extends Model {
     }
   }
   startAnim(anim) {
+    if(this.anim)this.endAnim();
     this.unInteruptable = false;
     this.anim = anim;
     this.animIndex = 0;
@@ -1377,7 +1378,8 @@ var anims = {
         {limb: 'arm1', rotation: -Math.PI},
         {limb: 'arm2', rotation: -Math.PI},
       ],
-      damage: 15,
+      dazes: true,
+      // damage: 15,
       customUpdate: self => {
         self.parent.vz= 40;
         if(self.parent.grounded) {
@@ -1404,6 +1406,7 @@ var anims = {
     {
       unInteruptable: true,
       interuptable: false,
+      dazes: true,
       limbs: [
         {limb: 'body2', rotation: 0},
         {limb: 'body', rotation: Math.PI/2,_y:30},
@@ -1530,6 +1533,7 @@ var anims = {
     {
       limbs: [],
       unInteruptable: true,
+      dazed: true,
       customUpdate: self=> {
         var frq = frameCount*Math.PI/30;
         var offset = Math.PI/20;
@@ -1544,11 +1548,13 @@ var anims = {
         self.legL.rotation = -self.body.rotation;
         self.legL2.rotation = 0;
         self.starsPivot.hidden = false;
+        self.parent.mx=0;
+        self.parent.my=0;
       },
       onLeave: self=> {
         self.starsPivot.hidden = true;
       },
-      time: 240,
+      time: 120,
     }
   ]
 }
@@ -1563,4 +1569,36 @@ function spawnAttackParticle(scene,x,y,z,rotation=0,flipH, flipV, img=IMAGES.hit
   p.angle = rotation;
   if(flipH)p.flipW = -1;
   if(flipV)p.flipH = -1;
+}
+
+
+function dazedAnim(time=120) {
+  return [
+    {
+      limbs: [],
+      unInteruptable: true,
+      dazed: true,
+      customUpdate: self=> {
+        var frq = frameCount*Math.PI/30;
+        var offset = Math.PI/20;
+        var amp = Math.PI/15;
+        self.body.rotation = Math.cos(frq)*amp;
+        self.body2.rotation = Math.cos(frq+offset)*amp;
+        self.head.rotation = Math.cos(frq+offset*2)*amp;
+        self.arm1.rotation = Math.cos(frq+offset*3)*amp;
+        self.arm2.rotation = Math.cos(frq+offset*4)*amp;
+        self.legR.rotation = Math.cos(frq+offset*5)*amp;
+        self.legR2.rotation = (Math.cos(frq+offset*5)+1)*amp;
+        self.legL.rotation = -self.body.rotation;
+        self.legL2.rotation = 0;
+        self.starsPivot.hidden = false;
+        self.parent.mx=0;
+        self.parent.my=0;
+      },
+      onLeave: self=> {
+        self.starsPivot.hidden = true;
+      },
+      time: time,
+    }
+  ]
 }
