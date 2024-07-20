@@ -316,7 +316,7 @@ GameSequence = [
         environment: Environments.OfficeInterior,
         spawnRandom: [
             [Ninja, 3],
-            [LizardPerson, 1]
+            [LizardPerson, 3]
         ],
         onLoad: (scene) => {
             scene.minY += 200

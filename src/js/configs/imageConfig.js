@@ -2,7 +2,7 @@ IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo2.png');
 
 IMAGES.backgroundSky = ImageLoader.loadImage('backgroundSky.png');
 IMAGES.backgroundCity = ImageLoader.loadImage('skylines/cityBackground.png');
-IMAGES.Purlsey1 = ImageLoader.loadImage('Pursley/Pursley1.png');
+IMAGES.Purlsey1 = ImageLoader.loadImage('Pursley/VotosCover_04.png');
 IMAGES.Purlsey1S = ImageLoader.loadImage('Pursley/Pursley1-sharp.png');
 IMAGES.Purlsey2 = ImageLoader.loadImage('Pursley/Pursley2.png');
 IMAGES.Purlsey2S = ImageLoader.loadImage('Pursley/Pursley2-sharp.png');
