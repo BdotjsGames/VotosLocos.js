@@ -194,7 +194,7 @@ class HighFiver extends BeatEmUpper {
             return;
         }
         if(this.following)this.followUpdate();
-        else if(this.health<this.avoidHealth) {
+        else if(this.health<this.avoidHealth&&!this.scene.dialogueBlocking) {
             this.enemyAvoidUpdate();
         }
         if(this.shouldStartDiaolgueOnProximity) {

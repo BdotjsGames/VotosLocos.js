@@ -653,15 +653,17 @@ GameSequence = [
     //     continueOnDialogueFinish: true,
     // },
     {
-        name: "Rally March Transition",
+        name: "March Transition",
+        environment: Environments.Grass,
+        music: SOUNDS.norteno,
+        continueOnDialogueFinish: true,
+    },
+    {
+        name: "March",
         environment: Environments.Grass,
         notBlocking: true,
         music: SOUNDS.marchMusic,
         continueOnDialogueFinish: true,
-        DialogueData: [
-            {text: "wooo yeahh"},
-            {waitFor: 620},
-        ],
         // continueOnDialogueFinish: true,
         onLoad: scene => {
             scene.showGo = true;
@@ -692,12 +694,9 @@ GameSequence = [
         }
     },
     {
-        name: "Rally March Transition-2",
+        name: "March - 2",
         notBlocking: true,
-        DialogueData: [
-            {waitFor: 120},
-        ],
-        // continueOnDialogueFinish: true,
+        continueOnDialogueFinish: true,
         onLoad: scene => {
             var w = scene.level.width/2;
             var h = (scene.maxY - scene.minY)*.8;
@@ -728,7 +727,7 @@ GameSequence = [
         }
     },
     {
-        name :"Block Walking Introduction",
+        name :"Block Walking",
         musicOff: true,
         Goal: 'knock on every door 3 times',
         // music: SOUNDS.norteno,
@@ -747,7 +746,8 @@ GameSequence = [
         },
         onLoad: scene =>{
             openedDoors = 0;
-            scene.addEntity(new Candidate(300,100));
+            var candidate = scene.addEntity(new Candidate(300,100));
+            candidate.dialogue = dialogueIndexedByScene["candidate block walking"]
             // scene.minY = 0;
             var houses = [];
             for(var i=0;i<12;i++) {

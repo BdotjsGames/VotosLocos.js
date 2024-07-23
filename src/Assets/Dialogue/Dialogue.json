@@ -101,6 +101,17 @@
     {
         "Scene": "Level 1",
         "type": null,
+        "Person": "LouChalibre",
+        "English": "And be sure to pick up handy items to throw and also grab a taco to keep your health up!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Level 1",
+        "type": null,
         "Person": null,
         "English": null,
         "doA": null,
@@ -114,7 +125,7 @@
         "type": "NPCRandom",
         "Person": "Citizen",
         "English": "You haven't registered to vote yet? C'mon lets go!",
-        "doA": "You haven't registered to vote yet? C'mon lets go!",
+        "doA": "startFollow",
         "notes": null,
         "waitFor": null,
         "set": null,
@@ -674,7 +685,7 @@
         "Scene": null,
         "type": null,
         "Person": null,
-        "English": "... add dialogue for after selecting candidate between Clerk and Player",
+        "English": null,
         "doA": null,
         "notes": null,
         "waitFor": null,
@@ -1122,7 +1133,7 @@
         "entity": null
     },
     {
-        "Scene": null,
+        "Scene": "March Transition",
         "type": null,
         "Person": null,
         "English": null,
@@ -1137,6 +1148,17 @@
         "type": null,
         "Person": "LouChalibre",
         "English": "Glad you made it to the rally to learn about the candidate and make new friends! Those friends will come in handy and keep you informed during the race! Let's join the campaign!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "Looks like the march is about to begin. Lets go!",
         "doA": null,
         "notes": null,
         "waitFor": null,
@@ -1199,7 +1221,7 @@
         "entity": null
     },
     {
-        "Scene": null,
+        "Scene": "March - 2",
         "type": null,
         "Person": "Crowd",
         "English": "The Times They Are A'changin'!",
@@ -1287,7 +1309,7 @@
         "entity": null
     },
     {
-        "Scene": null,
+        "Scene": "Candidate Block Walking",
         "type": null,
         "Person": "Candidate",
         "English": "This is the most important election ever. We're counting on your vote!",
@@ -1730,7 +1752,7 @@
         "Scene": null,
         "type": null,
         "Person": "None",
-        "English": "Congratulations! you made it to the ballot office and completed the demo content so far",
+        "English": "Congratulations! You cast your vote and did your part to save democracy! Don't forget to spread the word and get your friends to register, vote and get involved!",
         "doA": null,
         "notes": null,
         "waitFor": null,

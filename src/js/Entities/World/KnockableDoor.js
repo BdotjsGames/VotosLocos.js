@@ -81,25 +81,18 @@ class KnockableDoor extends DrawableImage {
     }
     createRefuser() {
       var npc = this.createNpc();
-      this.scene.playDialogue([
-        {person: npc, text: 'hi'},
-        {person: npc, text: 'no thanks'},
-        {onStart: ()=>npc.shouldDelete = true}
-      ], true, () => {
+      this.scene.playDialogue(
+        dialogueIndexedByScene["refuser"],
+      true, () => {
+        npc.shouldDelete = true
         this.image = IMAGES.door;
       })
     }
     createFollower() {
       var npc = this.createNpc();
-      this.scene.playDialogue([
-        {person: npc, text: 'hi'},
-        {person: npc, text: 'lets go!'},
-        {person: npc, set: {my: 1}, waitFor: 20},
-        {onStart: ()=> {
-          npc.startFollow(this.player, 80);
-          npc.shouldSceneCollide = true;
-        }}
-      ], true, () => {
+      this.scene.playDialogue(dialogueIndexedByScene['follower'], true, () => {
+        npc.startFollow(this.player, 80);
+        npc.shouldSceneCollide = true;
         this.image = IMAGES.door;
       })
     }
