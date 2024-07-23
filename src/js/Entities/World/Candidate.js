@@ -3,6 +3,7 @@ class Candidate extends HighFiver {
         if(!model)model = loadCandidateModel();
         super(x,y,model);
         this.name = "Candidate";
+        this.specialName = "Candidate";
         this.dialogue = [
             {person: this, text: "Lets get the word out!"},
             {person: this, text: "Thanks for helping!"},

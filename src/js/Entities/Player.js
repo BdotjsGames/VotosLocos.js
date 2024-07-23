@@ -2,6 +2,7 @@ class Player extends BeatEmUpper {
   constructor(x,y,model) {
     super(x,y,20,40,'darkgray','black',model);
     // this.canAttack = false;
+    this.name = "You"
     this.outlineColor = "black";
     this.invulTime = 40;
     // window.player = this;

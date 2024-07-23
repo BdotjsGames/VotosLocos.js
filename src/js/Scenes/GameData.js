@@ -79,25 +79,33 @@ function rallyScene(scene, x=0, y=180, imgFront, imgback) {
     npc.canHighFive = false;
     npc.lookingAt = scene.players[0]
     npc.interactablesRange = 200;
+    npc.avoidHealth = 0;
     npc.onAfterDialogue = e=> {
     }
-    npc.dialogue = [
-        {person: npc, text: "Hi!||| would you like to support our cause?", zoom:2},
-        {options:[
-            {text: 'yes', sequence:[
-                {person: npc, text: "Okay cool!"},
-                {person: npc, text: "Hey heres some water! Stay hydrated out there!"},
-                {onStart: dia => {
-                    npc.isInteractable = false;
-                    scene.showGo = true;
-                    scene.addEntity(new WaterBottle(npc.x+100,npc.y+100))
-                }}
-            ]},
-            {text: 'no', sequence:[{
-                person: npc, text: "oh. okay"
-            }]},
-        ]},
-    ]
+    npc.giveItem = () => {
+        npc.isInteractable = false;
+        scene.showGo = true;
+        scene.addEntity(new WaterBottle(npc.x+100,npc.y+100))
+    }
+    npc.dialogue = dialogueIndexedByScene["Rally Table Booth".toLowerCase()]
+    npc.dialogue[0].zoom=2;
+    // npc.dialogue = [
+    //     {person: npc, text: "Hi!||| would you like to support our cause?", zoom:2},
+    //     {options:[
+    //         {text: 'yes', sequence:[
+    //             {person: npc, text: "Okay cool!"},
+    //             {person: npc, text: "Hey heres some water! Stay hydrated out there!"},
+    //             {onStart: dia => {
+    //                 npc.isInteractable = false;
+    //                 scene.showGo = true;
+    //                 scene.addEntity(new WaterBottle(npc.x+100,npc.y+100))
+    //             }}
+    //         ]},
+    //         {text: 'no', sequence:[{
+    //             person: npc, text: "oh. okay"
+    //         }]},
+    //     ]},
+    // ]
 }
 
 var GameSequence;
@@ -222,23 +230,32 @@ GameSequence = [
             npc.model.face.hidden = true;
             npc.onAfterDialogue = e=> {
             }
-            npc.dialogue = [
-                {person: npc, text: "Taco?", zoom:2},
-                {options:[
-                    {text: 'yes', sequence:[
-                        {person: npc, text: "Heres Taco!"},
-                        {onStart: dia => {
-                            // npc.isInteractable = false;
-                            scene.showGo = true;
-                            var taco = scene.addEntity(new Taco(npc.x+150,npc.y+50))
-                            taco.z += -80
-                        }}
-                    ]},
-                    {text: 'no', sequence:[{
-                        person: npc, text: "oh. okay"
-                    }]},
-                ]},
-            ]
+            scene.specialActors.Carumba = npc;
+            npc.giveItem = () => {
+                // npc.isInteractable = false;
+                scene.showGo = true;
+                var taco = scene.addEntity(new Taco(npc.x+150,npc.y+50))
+                taco.z += -80
+            }
+            npc.dialogue = dialogueIndexedByScene["taco stand"];
+
+            // npc.dialogue = [
+            //     {person: npc, text: "Taco?", zoom:2},
+            //     {options:[
+            //         {text: 'yes', sequence:[
+            //             {person: npc, text: "Heres Taco!"},
+            //             {onStart: dia => {
+                            // // npc.isInteractable = false;
+                            // scene.showGo = true;
+                            // var taco = scene.addEntity(new Taco(npc.x+150,npc.y+50))
+                            // taco.z += -80
+            //             }}
+            //         ]},
+            //         {text: 'no', sequence:[{
+            //             person: npc, text: "oh. okay"
+            //         }]},
+            //     ]},
+            // ]
         }
     },
     {
@@ -342,34 +359,52 @@ GameSequence = [
             npc.getInputs = e=>{}
             npc.beHappy();
             npc.name = "Clerk"
+            scene.specialActors.Clerk = npc;
             npc.canHighFive = false;
             npc.lookingAt = scene.players[0]
-            npc.dialogue = [
-                {person: npc, text: "Hi!||| are you here to receive your ballot?", zoom:2},
-                {options:[
-                    {text: 'yes', sequence:[
-                        {person: npc, text: "Wow you were just in time, we were just about to close!"},
-                        {person: npc, text: "Well, here you go!"},
-                        {onStart: dia => {
-                            npc.isInteractable = false;
-                            var ballot = scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 500,250,64,64))
-                            // npc.shouldStartDiaolgueOnProximity = false;
-                            ballot.afterPickup = e=>{
-                                scene.showGo = true;
-                                scene.driver.setScene(new VoterGuideScene(scene))
-                            }
-                        }}
-                    ]},
-                    {text: 'no', sequence:[{
-                        person: npc, text: "oh. okay"
-                    }]},
-                ]},
-            ]
+            npc.giveItem = () => {
+                npc.isInteractable = false;
+                var ballot = scene.addEntity(new ItemPickup('Voter Guide', IMAGES.ballotItem, 500,250,64,64))
+                // npc.shouldStartDiaolgueOnProximity = false;
+                ballot.afterPickup = e=>{
+                    scene.showGo = true;
+                    scene.driver.setScene(new VoterGuideScene(scene))
+                }
+            }
+            npc.dialogue = dialogueIndexedByScene["Registrar Office Interior NPC".toLocaleLowerCase()]
+            // npc.dialogue = [
+            //     {person: npc, text: "Hi!||| are you here to receive your ballot?", zoom:2},
+            //     {options:[
+            //         {text: 'yes', sequence:[
+            //             {person: npc, text: "Wow you were just in time, we were just about to close!"},
+            //             {person: npc, text: "Well, here you go!"},
+            //             {onStart: dia => {
+                            // npc.isInteractable = false;
+                            // var ballot = scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 500,250,64,64))
+                            // // npc.shouldStartDiaolgueOnProximity = false;
+                            // ballot.afterPickup = e=>{
+                            //     scene.showGo = true;
+                            //     scene.driver.setScene(new VoterGuideScene(scene))
+                            // }
+            //             }}
+            //         ]},
+            //         {text: 'no', sequence:[{
+            //             person: npc, text: "oh. okay"
+            //         }]},
+            //     ]},
+            // ]
             npc.onAfterDialogue = e=> {
             //     var ballot = scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 500,250,64,64))
             //     ballot.afterPickup = e=>{
             //         scene.showGo = true;
             //     }
+                npc.isInteractable = false;
+                var ballot = scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 500,250,64,64))
+                // npc.shouldStartDiaolgueOnProximity = false;
+                ballot.afterPickup = e=>{
+                    scene.showGo = true;
+                    scene.driver.setScene(new VoterGuideScene(scene))
+                }
             }
 
             // scene.maxY -= 100
@@ -418,7 +453,7 @@ GameSequence = [
         // night: true,
     },
     {
-        name: "Go to Community Rally",
+        name: "Community Rally Entrance",
         Goal: "Enter the Community Rally",
         environment: Environments.Street,
         levelData: {},
@@ -480,7 +515,9 @@ GameSequence = [
             stage.w *= 3;
             stage.h *= 3;
             stage.y = scene.minY-stage.h
-            scene.addEntity(new Candidate(stage.x+stage.w/2,stage.y+stage.h/2));
+            var candidate = scene.addEntity(new Candidate(stage.x+stage.w/2,stage.y+stage.h/2));
+            candidate.avoidHealth = 0;
+            candidate.dialogue = dialogueIndexedByScene["community rally speech"]
             IMAGES.availableRallyTables = IMAGES.rallyTables.map(a=>a);
             rallyScene(scene,-100);
             rallyScene(scene, 400);
@@ -808,7 +845,7 @@ GameSequence = [
         ]
     },
     {
-        name: "Blockade",
+        name: "Blockade Entrance",
         // debugStartWithThisOne: true,
 
         onLoad: scene => {
@@ -818,72 +855,156 @@ GameSequence = [
                 for(var i=0;i<10;i++) {
                     var x = 400+i*50 + j*15;
                     var y = 0 + j * 50;
-                    var bot = scene.addEntity(new Bot(x,y));
+                    var bot = scene.addEntity( new Bot(x,y));
                     bot.dx=-1;
                     bot.update();
                     if(j==3&&i==5)bot1 = bot;
                     // bot1.getInputs = ()=>{}
                 }
             }
+            for(var j=0;j<6;j++) {
+                for(var i=0;i<8;i++) {
+                    var x = 900+i*50 + j*15;
+                    var y = 0 + j * 50;
+                    var bot = scene.addEntity( new Troll(x,y));
+                    bot.dx=-1;
+                    bot.update();
+                    // bot1.getInputs = ()=>{}
+                }
+            }
+            for(var j=0;j<3;j++) {
+                for(var i=0;i<1;i++) {
+                    var x = 900+i*50+8*50 + j*30;
+                    var y = 0 + j * 50;
+                    var bot = scene.addEntity( new QAnonShamon(x,y));
+                    bot.dx=-1;
+                    bot.update();
+                    // bot1.getInputs = ()=>{}
+                }
+            }
+            for(var j=0;j<6;j++) {
+                for(var i=0;i<1;i++) {
+                    var x = 900+i*50+9*50 + j*15;
+                    var y = 0 + j * 50;
+                    var bot = scene.addEntity( new LizardPerson(x,y));
+                    bot.dx=-1;
+                    bot.update();
+                    // bot1.getInputs = ()=>{}
+                }
+            }
+            for(var j=0;j<1;j++) {
+                for(var i=0;i<3;i++) {
+                    var x = 900+i*50+10*50 + j*30;
+                    var y = 0 + j * 50;
+                    var bot = scene.addEntity( new LizardPerson(x,y));
+                    bot.dx=-1;
+                    bot.update();
+                    // bot1.getInputs = ()=>{}
+                }
+            }
             bot1.obj = bot1;
             bot1.shouldStealCamera = true;
+            scene.specialActors.Bot = bot1;
             scene.player.obj = scene.player;
             scene.player.name = "";
             scene.player.model.mouth.drawable.image = IMAGES.mouthFrown;
-            scene.playDialogue([
-                {person: bot1, text: 'you will never get past our blockade!'},
-                {person: bot1, text: 'hahaha'},
-                {person: scene.player, text: "oh no!"},
-                {person: scene.player, text: "how will we get through?"},
-                {person: scene.player, set:{mx:1}, waitFor: 20},
-                {person: scene.player, set:{mx:0}, waitFor: 20},
-                {person: scene.player, set:{mx:0, dx:-1}, waitFor: 20},
-                {person: scene.player, set:{mx:0, dx:1}, waitFor: 20},
-                {person: scene.player, text: '<color red>*your cell phone rings*'},
-                {person: LouChalibre, text: "Hola!", onStart: () => {
-                    scene.player.model.mouth.drawable.image = IMAGES.mouthSmile;
-                    scene.player.jump();
-                }},
-                {person: LouChalibre, text: "I heard there was some problems at the ballot office!"},
-                {person: LouChalibre, text: "We are on our way to help!"},
-                {person: LouChalibre, text: "All the friends you made along the way will come help you fight"},
-                // {person: scene.player, doA: "jump",waitFor:10},
-                {onStart: () => {
-                    for(var i=0;i<8;i++) {
-                        var x = 0;
-                        var y = Math.random()*scene.maxY + scene.minY;
-                        var e = scene.addEntity(new HighFiver(x,y))
-                        e.startFollow(scene.player,80)
-                        e.contactDamage = 5;
-                        e.mx = Math.random();
-                        e.isBrawlingMode = true;
-                    }
-                }, waitFor: 20},
-                {
-                    onStart: () => {
-                        highFivers.forEach(h=>h.mx=0)
-                    }, waitFor: 20
-                },
-                {
-                    person: {name: "Everyone", obj: scene.player},
-                    text: "Lets go!",
-                    onStart: () => {
-                        highFivers.forEach(h=> {
-                            h.highFive();
+            scene.specialActors.Everyone = scene.player;
+            var dialogue = dialogueIndexedByScene["blockade"];
+            if(!dialogue.edited) {
+                dialogue.push(
+                    {onStart: () => {
+                        for(var i=0;i<8;i++) {
+                            var x = 0;
+                            var y = Math.random()*scene.maxY + scene.minY;
+                            var e = scene.addEntity(new HighFiver(x,y))
+                            e.startFollow(scene.player,80)
+                            e.contactDamage = 5;
+                            e.mx = Math.random();
+                            e.isBrawlingMode = true;
+                        }
+                    }, waitFor: 20},
+                    {
+                        onStart: () => {
+                            highFivers.forEach(h=>h.mx=0)
+                        }, waitFor: 20
+                    },
+                    {
+                        person: {name: "Everyone", obj: scene.player},
+                        text: "Lets go!",
+                        onStart: () => {
+                            highFivers.forEach(h=> {
+                                h.highFive();
+                            })
+                        }
+                    },
+                    {
+                        onStart: () => {
+                            highFivers.forEach(h=>{
+                                h.mx=1,
+                            h.enemySeekRange=1000;
+                            h.avoidHealth = h.maxHealth/4
+    
                         })
-                    }
-                },
-                {
-                    onStart: () => {
-                        highFivers.forEach(h=>{
-                            h.mx=1,
-                        h.enemySeekRange=1000;
-                        h.avoidHealth = h.maxHealth/4
+                        }, waitFor: 20
+                    },
+                )
+                dialogue.edited = true
+            }
+            scene.playDialogue(dialogue, true, )
+            // scene.playDialogue([
+            //     {person: bot1, text: 'you will never get past our blockade!'},
+            //     {person: bot1, text: 'hahaha'},
+            //     {person: scene.player, text: "oh no!"},
+            //     {person: scene.player, text: "how will we get through?"},
+            //     {person: scene.player, set:{mx:1},       waitFor: 20},
+            //     {person: scene.player, set:{mx:0},       waitFor: 20},
+            //     {person: scene.player, set:{mx:0, dx:-1}, waitFor: 20},
+            //     {person: scene.player, set:{mx:0, dx:1}, waitFor: 20},
+            //     {person: scene.player, text: '<color red>*your cell phone rings*'},
+            //     {person: LouChalibre, text: "Hola!", onStart: () => {
+            //         scene.player.model.mouth.drawable.image = IMAGES.mouthSmile;
+            //         scene.player.jump();
+            //     }},
+            //     {person: LouChalibre, text: "I heard there was some problems at the ballot office!"},
+            //     {person: LouChalibre, text: "We are on our way to help!"},
+            //     {person: LouChalibre, text: "All the friends you made along the way will come help you fight"},
+            //     // {person: scene.player, doA: "jump",waitFor:10},
+            //     {onStart: () => {
+            //         for(var i=0;i<8;i++) {
+            //             var x = 0;
+            //             var y = Math.random()*scene.maxY + scene.minY;
+            //             var e = scene.addEntity(new HighFiver(x,y))
+            //             e.startFollow(scene.player,80)
+            //             e.contactDamage = 5;
+            //             e.mx = Math.random();
+            //             e.isBrawlingMode = true;
+            //         }
+            //     }, waitFor: 20},
+            //     {
+            //         onStart: () => {
+            //             highFivers.forEach(h=>h.mx=0)
+            //         }, waitFor: 20
+            //     },
+            //     {
+            //         person: {name: "Everyone", obj: scene.player},
+            //         text: "Lets go!",
+            //         onStart: () => {
+            //             highFivers.forEach(h=> {
+            //                 h.highFive();
+            //             })
+            //         }
+            //     },
+            //     {
+            //         onStart: () => {
+            //             highFivers.forEach(h=>{
+            //                 h.mx=1,
+            //             h.enemySeekRange=1000;
+            //             h.avoidHealth = h.maxHealth/4
 
-                    })
-                    }, waitFor: 20
-                },
-            ], true, )
+            //         })
+            //         }, waitFor: 20
+            //     },
+            // ], true,  )
             
         },
         // DialogueData: [
@@ -918,6 +1039,16 @@ GameSequence = [
                         scene.camera.offsetY = -200
                     }), 350,0))
             
+                for(var i=0;i<8;i++) {
+                    var x = 0;
+                    var y = Math.random()*scene.maxY + scene.minY;
+                    var e = scene.addEntity(new HighFiver(x,y))
+                    e.startFollow(scene.player,80)
+                    e.contactDamage = 5;
+                    e.mx = Math.random();
+                    // e.isBrawlingMode = true;
+                }
+            
         }
         
     },
@@ -951,6 +1082,7 @@ var Events_table = {
         }
     }
 }
+const dialogueIndexedByScene = {};
 
 const convertDialogueJsonToJs = async function() {
 	ImageLoader.imagesToLoad += 1;
@@ -967,10 +1099,10 @@ const convertDialogueJsonToJs = async function() {
 	 * */
 	const dialogueArr = await resp.json();
 
-	const dialogueIndexedByScene = {};
 	let lastSceneDetected = dialogueArr[0].Scene;
 	if (!lastSceneDetected) throw("First scene is not");
-
+    var lastType = "";
+    var lastDialogue = null;
 	for (const info of dialogueArr) {
 		// check if this is an empty line in csv
 		let hasData = false;
@@ -980,10 +1112,24 @@ const convertDialogueJsonToJs = async function() {
 		}
 
 		if (!hasData) continue;
+        if(info.Scene) {
+            lastType = "";
+        }
+        if(info.set) {
+            var correctJson = info.set.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": ');
+            info.set = JSON.parse(correctJson);
 
-		lastSceneDetected = (info.Scene || lastSceneDetected || "").replaceAll('"', "");
-		dialogueIndexedByScene[lastSceneDetected] = dialogueIndexedByScene[lastSceneDetected] || [];
-		dialogueIndexedByScene[lastSceneDetected].push(info);
+        }
+		lastSceneDetected = (info.Scene || lastSceneDetected || "").replaceAll('"', "").toLowerCase();
+        var type=((info.type||"") || lastType).toLowerCase()
+        lastType = type;
+        var key = lastSceneDetected + type;
+        info.dialogueKey = key
+        if(!info.English && !info.doA&&!info.set) continue;
+		dialogueIndexedByScene[key] = dialogueIndexedByScene[key] || [];
+		dialogueIndexedByScene[key].push(info);
+        lastDialogue = info;
+        
 	}
 
 	window.dispatchEvent(new CustomEvent("finished_loading_dialog", {

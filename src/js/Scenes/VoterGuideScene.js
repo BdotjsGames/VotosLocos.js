@@ -4,13 +4,15 @@ class VoterGuideScene extends AdditiveScene {
         super(prev);
         var numCandidates = 4;
         var x = 0.5;
-        var y = 0.5;
+        var y = 0.4;
         var dx = 0.5;
         var dy = 0;
         var w = 0.5;
         var h = 0.1
         var s = 0.05;
         this.pages = [];
+        this.addEntity((new Drawable(0,0,100,100)
+        .setTrueCoords(false).center().color(255,255,255)))
         for(var i=0;i<numCandidates;i++) {
             
             var btn = new ButtonUI('candidate '+(i+1), x,y,w,h,s, () =>{
@@ -45,23 +47,31 @@ class VoterGuideScene extends AdditiveScene {
             this.addSelectableButton(btn, DIRECTION.right);
             x+=dx;
             y+= dy;
-            this.pages.push(btn);
-
-            var description = randomFromList([
-                "This candidate likes cheese",
-                "For America!",
-                "Health care for all!",
-                "Tacos for everyone!"
-            ])
-            var text = new DrawableText(description, 0.6,0.2,0.8,0.1,0.03)
-            .setTrueCoords(false)
-            .center()
-            .color(0,0,0)
-            text.update();
-            btn.children.push(text);
+            this.pages.push(btn);   
+            
+            var description = randomFromList(dialogueIndexedByScene["candidates description"]).English;
+            // var description = randomFromList([
+            //     "This candidate likes cheese",
+            //     "For America!",
+            //     "Health care for all!",
+            //     "Tacos for everyone!"
+            // ])
+            var yy = 0.2;
+            btn.children.push(new Drawable(0,0,100,100)
+                .setTrueCoords(false).center().color(255,255,255))
+            
+            description.split(',').forEach(line => {
+                var text = new DrawableText(line, 0.6,yy,0.8,0.1,0.03)
+                .setTrueCoords(false)
+                .center()
+                .color(0,0,0)
+                text.update();
+                btn.children.push(text);
+                yy+=0.07;
+            })
+            
         }
         this.pages[0].setSelected()
-
     }
     setSelected(btn) {
         super.setSelected(btn);

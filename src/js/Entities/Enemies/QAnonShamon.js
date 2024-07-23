@@ -9,7 +9,7 @@ class QAnonShamon extends Bot {
         this.attackX = 500;
         this.attackY = 60;
         this.noticed = true;
-        this.model.attackCombo = [putinSlam, botanims.armSpinny];
+        this.model.attackCombo = [anims.groundSlam, botanims.armSpinny];
         this.item.type = ITEMS.sodaBottle;
     }
     initModel(w, h, color,color2) {

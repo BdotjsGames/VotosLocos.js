@@ -1,722 +1,1894 @@
 [
     {
         "Scene": "Opening Cutscene",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": "Scene and Person are assumed to be the same as above if not specified"
+        "doA": null,
+        "notes": "Scene and Person are assumed to be the same as above if not specified",
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": null,
+        "Scene": "Opening Cutscene",
+        "type": null,
         "Person": "LouChalibre",
-        "English": "The time to <color red>vote</color> is <wiggle>approaching!",
-        "notes": "You can insert more lines of dialogue"
+        "English": "The <color red>election</color> is fast <wiggle>approaching!",
+        "doA": null,
+        "notes": "You can insert more lines of dialogue",
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": null,
+        "Scene": "Opening Cutscene",
+        "type": null,
         "Person": "LouChalibre",
         "English": "Are you ready to cast your ballot?",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Level 1",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": null,
+        "Scene": "Level 1",
+        "type": null,
         "Person": "LouChalibre",
         "English": "You're not registered to vote? Today is the last day!",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": null,
-        "Person": null,
-        "English": "Hurry! you better get to the Registrar Office!",
-        "notes": null
+        "Scene": "Level 1",
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "Hurry! You better get to the Registrar of Voter's Office…",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": null,
-        "Person": null,
+        "Scene": "Level 1",
+        "type": null,
+        "Person": "LouChalibre",
         "English": "Before its <wiggle> <speed 0.3>toooooo late!",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": "Level 1 - npcTexts",
+        "Scene": "Level 1",
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "Remember to bring your ID!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Level 1",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": null,
-        "Person": "NPCRandom",
-        "English": "You haven't registered to vote yet? Cmon lets go!",
-        "notes": null
+        "Scene": "Level 1",
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "You haven't registered to vote yet? C'mon lets go!",
+        "doA": "You haven't registered to vote yet? C'mon lets go!",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": null,
-        "Person": "NPCRandom",
+        "Scene": "Level 1",
+        "type": "NPCRandom",
+        "Person": "Citizen",
         "English": "You're not registered yet? Its the last day!",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Level 1",
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "Thanks. I already registered to vote by mail.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Level 1",
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "You can find the Registrar's address on their website.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Level 1",
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "Remember to update your voter registration if you moved or changed your name!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Level 1",
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "Where can I get a good taco around here? I'm famished!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "NPCRandom",
-        "English": "Lets get you to the registrar office!",
-        "notes": null
-    },
-    {
-        "Scene": null,
-        "Person": "NPCRandom",
-        "English": "Oh the last day is today?, I need to register to vote too!",
-        "notes": null
-    },
-    {
-        "Scene": null,
-        "Person": "NPCRandom",
-        "English": "The registrar office? Lets go!",
-        "notes": null
-    },
-    {
-        "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Putin Cutscene",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": null,
+        "Scene": "Putin Cutscene",
+        "type": null,
         "Person": "Putin",
-        "English": "Americans.||||| An impressionable bunch",
-        "notes": "the \"|\" character is used to add pauses"
+        "English": "Americans, Peh!||||| They are such fools!",
+        "doA": null,
+        "notes": "the \"|\" character is used to add pauses",
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Putin Cutscene",
+        "type": null,
+        "Person": "Putin",
+        "English": "Our bots flood their heads with misinformation. They get mad at who we tell them! So easy to divide!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Putin Cutscene",
+        "type": null,
+        "Person": "Putin",
+        "English": "The suckers don’t even bother to check facts! They are no match for my bots!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Putin Cutscene",
+        "type": null,
+        "Person": "Putin",
+        "English": "The election is as good as ours! Hohot! Hohot! Hohot!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "Flood the streets with the opinions of our bots",
-        "notes": null
-    },
-    {
-        "Scene": null,
-        "Person": null,
-        "English": "And the election is as good as ours",
-        "notes": null
-    },
-    {
-        "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "First combat",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "LouChalibre",
-        "English": "<bam>Uh Oh!",
-        "notes": null
+        "English": "<bam>Oh no!</> Watch out for the Russian bots!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "LouChalibre",
-        "English": "Watch out for the bots!",
-        "notes": null
+        "English": "Big Bad Vlad is working overtime to confuse you! Good thing you check rumors on different news sources!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "LouChalibre",
-        "English": "\"Press the [Attack] button to teach 'em a lesson\"",
-        "notes": null
+        "English": "Press the [Attack] button to teach 'em a lesson and doublececk your news sources!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Taco Stand",
+        "type": null,
+        "Person": "Carumba",
+        "English": "Taco?",
+        "doA": null,
+        "notes": "Explain to player how to use healing items",
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": null,
-        "notes": null
-    },
-    {
-        "Scene": "\"Registrar Office Reached\"",
-        "Person": null,
-        "English": null,
-        "notes": null
-    },
-    {
-        "Scene": null,
-        "Person": "LouChalibre",
-        "English": "you made it to the Registrar office!",
-        "notes": null
-    },
-    {
-        "Scene": null,
-        "Person": null,
-        "English": null,
-        "notes": null
-    },
-    {
-        "Scene": "Registrar Office Interior',",
-        "Person": null,
-        "English": null,
-        "notes": null
-    },
-    {
-        "Scene": null,
-        "Person": "Clerk",
-        "English": "Hi!||| are you here to receive your ballot?",
-        "notes": "the \"|\" character is used to add pauses"
-    },
-    {
-        "Scene": "option1",
+        "type": "option1",
         "Person": "Player",
-        "English": "yes",
-        "notes": "to reponse 1"
+        "English": "Yes",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
-        "Scene": "option2",
+        "Scene": null,
+        "type": "option2",
         "Person": "Player",
-        "English": "no",
-        "notes": "to response 2"
-    },
-    {
-        "Scene": "response1",
-        "Person": "Clerk",
-        "English": "Wow you were just in time, we were just about to close!",
-        "notes": null
-    },
-    {
-        "Scene": null,
-        "Person": "Clerk",
-        "English": "Well, here you go!",
-        "notes": null
+        "English": "No",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "... add dialogue for voter guide",
-        "notes": null
-    },
-    {
-        "Scene": "response2",
-        "Person": "Clerk",
-        "English": "{person: npc, text: \"oh. okay\"}",
-        "notes": null
+        "type": "option1-response1",
+        "Person": "Carumba",
+        "English": "Here's your taco!",
+        "doA": "giveItem",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": "option2-response1",
+        "Person": "Carumba",
+        "English": "Oh. Okay.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Putin Spawn",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Putin Run away",
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Putin",
+        "English": "Chert voz'mi! This one is strong like moose. Is time to make escape!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Putin",
+        "English": "My bots will stay and make you pay!",
+        "doA": "getOnHorse",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Putin",
+        "English": "Hohot! Hohot! Hohot!",
+        "doA": "moveRight",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Registrar Office Reached",
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "You made it to the Registrar of Voter's office!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": "Get in there and register!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Registrar Office Interior NPC",
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Clerk",
+        "English": "Hi!||| are you here to register?",
+        "doA": null,
+        "notes": "the \"|\" character is used to add pauses",
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Clerk",
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Clerk",
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1",
+        "Person": "Player",
+        "English": "Yes",
+        "doA": null,
+        "notes": "to reponse 1",
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option2",
+        "Person": "Player",
+        "English": "No",
+        "doA": null,
+        "notes": "to response 2",
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1-response1",
+        "Person": "Clerk",
+        "English": "You're just in time. We were about to close!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1-response1",
+        "Person": "Clerk",
+        "English": "But remember, you can also register by mail and most states offer online registration.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1-response1",
+        "Person": "Clerk",
+        "English": "The deadline to register is typically 30 days before the election.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1-response1",
+        "Person": "Clerk",
+        "English": "You can get information and forms for all the states at vote.gov/register",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Clerk",
+        "English": "Remember to update your voter registration if you move, change your name or change your party!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Clerk",
+        "English": "Now that you've registered, here is your Voter Guide!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Clerk",
+        "English": "Be sure to look it over to see what the candidates stand for!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Player",
+        "English": "How am I supposed to know who to vote for?",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option2-response1",
+        "Person": "Clerk",
+        "English": "oh. okay",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": null,
         "English": "... add dialogue for after selecting candidate between Clerk and Player",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Low Rider Transition",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "LouChalibre",
-        "English": "\"Hey bud, We're heading to the community rally\"",
-        "notes": null
+        "English": "Hey Buddy, We're heading to the community rally!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "LouChalibre",
-        "English": "\"Need a ride?\"",
-        "notes": null
+        "English": "The candidate will be there!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "Need a ride? Roll with me!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Community Rally Entrance",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "NPCRandom",
-        "English": "Alright! I'll follow you!,",
-        "notes": null
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "Can't wait to see all the cool community organizations here!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "NPCRandom",
-        "English": "Woo! Lets go!,",
-        "notes": null
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "The candidate is speaking at the stage! Let's see what he has to say!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "NPCRandom",
-        "English": "Yeah!|| Where are we going?,",
-        "notes": null
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "I want to join the campaign and make a difference!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Community Rally Fight",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "NPCRandom",
+        "type": "NPCRandom",
+        "Person": "Citizen",
         "English": "Alright! I'll follow you!,",
-        "notes": null
+        "doA": "startFollow",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "NPCRandom",
-        "English": "Woo! Lets go!,",
-        "notes": null
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "They really need our vote this year!",
+        "doA": "startFollow",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "NPCRandom",
+        "type": "NPCRandom",
+        "Person": "Citizen",
         "English": "Yeah!|| Where are we going?,",
-        "notes": null
+        "doA": "startFollow",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "NPCRandom",
-        "English": "\"Oh no! The community rally is being attacked by trolls!\"",
-        "notes": null
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "Oh no! The community rally is being attacked by internet trolls! All they do is cause fights!",
+        "doA": "startFollow",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "I know that troll! He's a jerk!",
+        "doA": "startFollow",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "NPCRandom",
+        "Person": "Citizen",
+        "English": "Internet trolls are the worst! I just ignore them!",
+        "doA": "startFollow",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Rally Table Booth",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "Clerk",
         "English": "Hi!||| Would you like to support our cause?",
-        "notes": null
-    },
-    {
-        "Scene": "option1",
-        "Person": "Player",
-        "English": "yes",
-        "notes": null
-    },
-    {
-        "Scene": "option2",
-        "Person": "Player",
-        "English": "no",
-        "notes": null
-    },
-    {
-        "Scene": "response1",
-        "Person": "Clerk",
-        "English": "Okay cool!",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": "option1",
+        "Person": "Player",
+        "English": "Yes",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option2",
+        "Person": "Player",
+        "English": "No",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1-response1",
+        "Person": "Clerk",
+        "English": "Okay, cool!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": "Clerk",
         "English": "Hey here's some water! Stay hydrated out there!",
-        "notes": null
-    },
-    {
-        "Scene": "response2",
-        "Person": "Clerk",
-        "English": "oh. okay.",
-        "notes": null
+        "doA": "giveItem",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1-response2",
+        "Person": "Clerk",
+        "English": "Okay, cool!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Clerk",
+        "English": "Be sure to check out all the great groups here.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Clerk",
+        "English": "I hope you hear what the candidate has to say.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option2-response1",
+        "Person": "Clerk",
+        "English": "Oh, okay!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Community Rally Speech",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "Candidate",
-        "English": "Community rally speech",
-        "notes": null
+        "English": "I was raised in this community, and I will fight for you!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "...",
-        "notes": null
+        "type": null,
+        "Person": "Candidate",
+        "English": "My fellow Americans! Your vote can save democracy!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "...",
-        "notes": null
+        "type": null,
+        "Person": "Candidate",
+        "English": "My opponent is supported by special interests and dark money!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
+        "Person": "Candidate",
+        "English": "Don't believe the lies! If it smells fishy, check the facts!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Candidate",
+        "English": "I will fight for you and for your rights!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Candidate",
+        "English": "Get involved in a campaign and make a difference!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Candidate",
+        "English": "People Power can win this race!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "LouChalibre",
-        "English": "... explain the march",
-        "notes": null
+        "English": "Glad you made it to the rally to learn about the candidate and make new friends! Those friends will come in handy and keep you informed during the race! Let's join the campaign!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "March",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "Crowd",
-        "English": "woo yeah!",
-        "notes": null
+        "English": "The People Have The Power!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "... dialogue for march",
-        "notes": null
+        "type": null,
+        "Person": "Crowd",
+        "English": "We're Not Gonna Take It!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
+        "Person": "Crowd",
+        "English": "Won't Get Fooled Again!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Crowd",
+        "English": "This Land Is Your Land! This Land Is My Land!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Crowd",
+        "English": "The Times They Are A'changin'!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Crowd",
+        "English": "We Will Rock You!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Crowd",
+        "English": "Don't Stop Believin'!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Block Walking",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "LouChailbre",
+        "type": null,
+        "Person": "LouChalibre",
         "English": "Lets get the word out!",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "LouChailbre",
-        "English": "Knock on some doors to spread the word!",
-        "notes": null
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "Knock three times on all the doors to spread the word!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "Candidate",
-        "English": "Lets get the word out!",
-        "notes": null
+        "English": "This is the most important election ever. We're counting on your vote!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "Candidate",
-        "English": "Thanks for helping!",
-        "notes": null
+        "English": "Thanks for your support! We'll see you at the polls!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "follower",
+        "type": null,
         "Person": "Citizen",
-        "English": "hi",
-        "notes": null
+        "English": "Yes?",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "lets go!",
-        "notes": null
+        "type": null,
+        "Person": "Citizen",
+        "English": "Sure, I'll support that candidate!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "refuser",
+        "type": null,
         "Person": "Citizen",
-        "English": "hi",
-        "notes": null
+        "English": "Hi.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "no thanks",
-        "notes": null
+        "type": null,
+        "Person": "Citizen",
+        "English": "No thanks. I'm not interested.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": null,
-        "notes": null
+        "type": null,
+        "Person": "Citizen",
+        "English": "Thanks. I'm still undecided. I'll learn more about your candidate.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Bus Transition",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "LouChailbre",
+        "type": null,
+        "Person": "LouChalibre",
         "English": "We need to get you to the polling location",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "LouChailbre",
+        "type": null,
+        "Person": "LouChalibre",
         "English": "Lets take the bus!",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": "LouChailbre",
-        "English": "Many cities have free public buses to the polling location",
-        "notes": null
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "Many cities have free public buses to the polling location.",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "As long as you're in line before the polls close, you can vote!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "Also, 30 states require access to ballot drop boxes, and 8 states allow voting by mail. Check your Secretary of State website for your info and rules!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Blockade",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "Bot",
-        "English": "you will never get past our blockade!",
-        "notes": null
+        "English": "You vill never get past our bot blockade!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "hahaha",
-        "notes": null
+        "type": null,
+        "Person": "Bot",
+        "English": "Hohot! Hohot! Hohot!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "Player",
-        "English": "oh no!",
-        "notes": null
+        "English": "Oh, no!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
+        "Person": "Player",
+        "English": "How will we get through?",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": null,
-        "English": "how will we get through?",
-        "notes": null
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": "20",
+        "set": "{mx:1}",
+        "entity": "Player"
     },
     {
         "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": "20",
+        "set": "{mx:0}",
+        "entity": "Player"
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": "20",
+        "set": "{mx:0, dx:-1}",
+        "entity": "Player"
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Player",
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": "20",
+        "set": "{mx:0, dx:1}",
+        "entity": "Player"
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": "None",
-        "English": "<color red>*your cell phone rings*'",
-        "notes": null
+        "English": "<color red>*Your cell phone rings*'",
+        "doA": "jump",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": "Player"
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "LouChalibre",
         "English": "Hola!",
-        "notes": null
+        "doA": "beHappy",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": "Player"
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "I heard there was some problems at the ballot office!",
-        "notes": null
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "I heard there were some problems at the ballot office!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "Be sure to document any intimidation, delays or irregularities!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "LouChalibre",
         "English": "We are on our way to help!",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "All the friends you made along the way will come help you fight",
-        "notes": null
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "All the friends you made along the way will come help you fight!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
+        "Person": "LouChalibre",
+        "English": "It's your right to vote!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
         "Person": "Everyone",
         "English": "Lets go!",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Polling station",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "LouChalibre",
-        "English": "You made it to the polling station!",
-        "notes": null
+        "English": "We made it to the polling station!",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "DEMO COMPLETE",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": "None",
         "English": "Congratulations! you made it to the ballot office and completed the demo content so far",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
-    },
-    {
-        "Scene": "Item Pickup",
-        "Person": "None",
-        "English": "`<color red>you got a ${this.itemName}`",
-        "notes": null
-    },
-    {
-        "Scene": null,
-        "Person": null,
-        "English": "\"<color red>Your health is full!\"",
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
-        "Person": null,
-        "English": "`<color red>${this.healAmount} hp healed`",
-        "notes": null
-    },
-    {
-        "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": "Make sure to check the other sheets down below",
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": "Candidates description",
+        "type": null,
         "Person": null,
         "English": null,
-        "notes": null
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
-        "English": "This candidate likes cheese",
-        "notes": null
+        "English": "Education, Clean Environment, Police Accountability, Free Pizza",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
-        "English": "For America!",
-        "notes": null
+        "English": "Unions, Gun Control, Global Warming, We Want the Funk",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
-        "English": "Health care for all!",
-        "notes": null
+        "English": "Health Care for All, Environmental Protections, Women's Rights, More Discos",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     },
     {
         "Scene": null,
+        "type": null,
         "Person": null,
-        "English": "Tacos for everyone!",
-        "notes": null
+        "English": "Affordable Housing, Raise the Minimum Wage, Dreamers, Taco Tuesday Everyday",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": "Infrastructure, Amnesty, Tax the Rich, Create Department of Rock and Roll",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": "Strong Economy, Civil Rights, Supreme Court Ethics, More Treats for Dogs",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": null,
+        "English": "Dictatorship, Round Up Enemies, Destroy Constitution, Deport Cats",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
     }
 ]

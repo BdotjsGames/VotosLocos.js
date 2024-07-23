@@ -12,7 +12,7 @@ class MagaMarge extends Bot {
         this.health = this.maxHealth = 100;
         this.getknockBack = 3;
         this.hitResistence = 10;
-        this.knockBack = 30;
+        // this.knockBack = 30;
         this.knockBackUp = -5;
         this.attackHitbox = this.defaultAttackHitbox= {
             width: 120, height: 50, zheight: 100

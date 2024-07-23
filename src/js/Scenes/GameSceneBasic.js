@@ -13,6 +13,7 @@ class GameSceneBasic extends Scene {
       this.players = [];
       this.interactables = [];
       this.specialActors = [];
+      this.specialActors.LouChalibre = LouChalibre;
       this.items = [];
       this.cameraLerpSpeed = 10;
       canvas.backgroundImage = IMAGES.backgroundSky
@@ -55,6 +56,7 @@ class GameSceneBasic extends Scene {
         model.undie();
         this.addEntity(this.player = new Player(100,this.startingY,model));
       }
+      this.specialActors.Player = this.player;
       // this.addEntity(this.player.networkTester = new PlayerNetworked(80,this.startingY, model.getModelOptions()))
       window.player = this.player;
       // this.addEntity(new Knight(100,-100));
@@ -156,7 +158,7 @@ class GameSceneBasic extends Scene {
     }
     processLevelData(data) {
       this.levelName = data.name;
-      this.npcTexts = data.npcTexts;
+      this.npcTexts = dialogueIndexedByScene[(data.name+"NPCRandom").toLowerCase()] || data.npcTexts;
       this.addUI(new DrawableText(data.name, 0,0,1,.1,.03)
         .setTrueCoords(false)
         .setAttr('textAlign', 'left')
@@ -173,6 +175,10 @@ class GameSceneBasic extends Scene {
         data.preLoad(this);
       }
       if(data.showGo)this.showGo = true;
+      var dialogueFromJSON = dialogueIndexedByScene[data.name.toLowerCase()]
+      if(dialogueFromJSON) {
+        data.DialogueData = dialogueFromJSON
+      }
       if(data.DialogueData && data.DialogueData.length>0 && !dialogueSkip) {
         this.playDialogue(data.DialogueData, !data.notBlocking, b=>{
           if(data.continueOnDialogueFinish) {

@@ -205,5 +205,8 @@ var enemyThrowAnim = [
       onStart: self => {
         self.parent.telegraphProjectile = false;
       }, time: 1
-    }
+    },
+    
   ]
+
+  

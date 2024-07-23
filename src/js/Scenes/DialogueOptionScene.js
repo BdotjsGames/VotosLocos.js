@@ -20,6 +20,7 @@ class DialogueOptionScene extends AdditiveScene {
             }
             var x = 0.05
             var yy = y + (i-this.options.length+1) * .12;
+            if(option.English)option.text=option.English;
             var btn = this.addSelectableButton(new ButtonUI(
                 option.text, x, yy, bw,0.1,0.04,b=>{
                     dialogueController.selectOption(i,b);

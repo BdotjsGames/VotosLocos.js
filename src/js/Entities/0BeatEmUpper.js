@@ -213,8 +213,13 @@ class BeatEmUpper {
                 this.mx = -dx/r;
                 this.my = -dy/r;
                 this.running=true;
-                return;
+                break;
             }
+        }
+        if(this.running) {
+            this.model.fear();
+        } else {
+            this.model.neutralFace();
         }
     }
     enemySearchUpdate() {
@@ -275,6 +280,9 @@ class BeatEmUpper {
             this.my = dy/r;
             this.seeking=true;
             closest.attackerCount += 1;
+            if(r<100) {
+                this.mx=0;this.my=0;
+            }
             return;
         }
         this.attacking = false;
@@ -776,6 +784,14 @@ class BeatEmUpper {
         this.model.undie();
         this.followersList = [];
         this.followerCount = 0;
+    }
+    beHappy() {
+        this.model.mouth.drawable.image = IMAGES.mouthSmile;
+        this.model.face._y=0;
+    }
+    beSad() {
+        this.model.mouth.drawable.image = IMAGES.mouthFrown;
+        this.model.face._y=1;
     }
     die() {
         spawnDeathParticles(this.scene,this.x,this.y-20, this.z);

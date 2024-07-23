@@ -5,10 +5,11 @@ class HighFiver extends BeatEmUpper {
         // this.model.mouth.drawable.image = IMAGES.mouthFrown;
         // this.model.face._y=1;
         // this.canAttack = false;
-        this.isEnemy = true;
+        // this.isEnemy = true;
         this.outlineColor = "black";
         this.invulTime = 40;
         this.speed = 2;
+        this.regen = .05;
         this.isHighFiver = true;
         this.canHighFive = true;
         highFivers.push(this);
@@ -17,11 +18,11 @@ class HighFiver extends BeatEmUpper {
         this.groundAcceleration = 0.2;
         this.groundAcceleration = 0.5;
         this.highFivesNeeded = randomFromList([1,3,5])
-        this.name = 'citizen';
+        this.name = 'Citizen';
         this.talkSound = SOUNDS.citizenTalk;
         this.onAfterDialogue = e=> {
-            this.startFollow(player, 80);
-            this.jump();
+            // this.startFollow(player, 80);
+            // this.jump();
         }
         this.shouldStartDiaolgueOnProximity = false;
         this.lookingAt = null;
@@ -40,6 +41,8 @@ class HighFiver extends BeatEmUpper {
         this.health = 1;
     }
     startFollow(target, distance) {
+        if(!distance)distance = 80;
+        if(!target)target=player;
         this.playerTarget = target;
         this.isInteractable = false;
         this.following = true;
@@ -61,9 +64,9 @@ class HighFiver extends BeatEmUpper {
         this.following = false;
         if(!this.followTarget) return;
         this.followTarget.followersCount -= 1;
-        var index = arrayRemoveItem(target.followersList, this);
-        for(var i =index;i<target.followersList;i++) {
-            target.followersList[i].followCountIndex -= 1;
+        var index = arrayRemoveItem(this.followTarget.followersList, this);
+        for(var i =index;i<this.followTarget.followersList;i++) {
+            this.followTarget.followersList[i].followCountIndex -= 1;
         }
     }
     //actually this is very dumb
@@ -191,6 +194,9 @@ class HighFiver extends BeatEmUpper {
             return;
         }
         if(this.following)this.followUpdate();
+        else if(this.health<this.avoidHealth) {
+            this.enemyAvoidUpdate();
+        }
         if(this.shouldStartDiaolgueOnProximity) {
             this.scene.players.forEach(p=>{
                 var w = 100
@@ -233,23 +239,36 @@ class HighFiver extends BeatEmUpper {
         }
     }
     onInteract(player) {
+        this.player= player;
         this.startDialogueToPlayer(player);
     }
     startDialogueToPlayer(player){
+        this.scene.specialActors[this.name]=this;
         this.mx = 0;
         this.my = 0;
         this.lookingAt = player;
         this.dx = (player.x>this.x)?1:-1;
         this.inputBlocking = true;
-        var texts = this.scene.npcTexts || [
-            "Alright! I'll follow you!",
-            "Woo! Lets go!",
-            "Yeah!|| Where are we going?",
-        ]
-        var text = this.text || randomFromList(texts);
-        var dialogue = this.dialogue || [
-            {person: this, text, zoom:2}
-        ]
+        var dialogue;
+        if(this.text) {
+            dialogue = {person: this, text: this.text, zoom: 2}
+        }else 
+        if(this.dialogue) {
+            dialogue = this.dialogue;
+        } else if(this.scene.npcTexts) {
+            dialogue = [randomFromList(this.scene.npcTexts)];
+            dialogue[0].zoom=2;
+        } else {
+            dialogue = [{person: this, text: randomFromList([
+                "Alright! I'll follow you!",
+                "Woo! Lets go!",
+                "Yeah!|| Where are we going?",
+            ])}]
+        }
+        this.scene.specialActors.Citizen = this;
+        // var dialogue = this.dialogue || [
+        //     {person: this, text, zoom:2}
+        // ]
 
         this.scene.playDialogue(
             dialogue, true, this.onAfterDialogue
@@ -267,19 +286,12 @@ class HighFiver extends BeatEmUpper {
             this.startDialogueToPlayer(by);
         }
     }
-    beHappy() {
-        this.model.mouth.drawable.image = IMAGES.mouthSmile;
-        this.model.face._y=0;
-    }
-    beSad() {
-        this.model.mouth.drawable.image = IMAGES.mouthFrown;
-        this.model.face._y=1;
-    }
+    
     die() {
         if (this.shouldDelete||this.dead) return;
-        if(this.following)
-        this.stopFollow();
         super.die();
+        if(this.following)
+            this.stopFollow();
         // SOUNDS.blowImpact.play();
     }
 }

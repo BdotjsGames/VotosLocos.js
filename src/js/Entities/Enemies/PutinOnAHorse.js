@@ -6,7 +6,7 @@
             this.model.fear();
             this.speed = 7;
             this.specialName = "Putin";
-            this.name = "Putin";
+            this.name = "Big Bad Vlad";
             this.shouldStealCamera = true;
             this.grav = 1
         }
@@ -26,6 +26,7 @@
         }
         initModel(w, h) {
             this.model = new PutinModel(w, h,"#f6e1c5", "#d3a684", this);
+            this.model.scaleBoth = 1.2;
         }
         update() {
             // this.mx=1;

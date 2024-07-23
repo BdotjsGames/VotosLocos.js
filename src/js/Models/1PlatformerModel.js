@@ -772,6 +772,7 @@ class PlatformerModel extends Model {
     this.doubleJumping = false;
   }
   impactStop(amount) {
+    if(this.impactStopTimer<=0)
     this.impactStopTimer = amount;
   }
   wallCollide() {
@@ -885,6 +886,10 @@ class PlatformerModel extends Model {
     if(!this.starsPivot.hidden) {
       this.starsPivot.rotation = -(this.body.rotation+this.body2.rotation+this.head.rotation);
       this.stars.rotation = Math.cos(frameCount*Math.PI/20)*Math.PI/10
+      if(this.anim) {
+        this.animProcessor();
+        return;
+      }
     }
     if(this.skirtOn) {
       // console.log(this.legR.rotation, this.legL.rotation);

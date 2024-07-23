@@ -278,6 +278,16 @@ class DialogueController {
   selectOption(index) {
     var option = this.options[index];
     if(option.onSelected)option.onSelected(this);
+    if(option.dialogueKey) {
+      var possibleReponses = [];
+      for(var i=1;i<=4;i++ ){
+        var response = dialogueIndexedByScene[option.dialogueKey + "-response" + i];
+        if(!response)break;
+        possibleReponses.push(response);
+      }
+      if(possibleReponses.length>0)
+        option.sequence = randomFromList(possibleReponses)
+    }
     if(option.sequence) {
       this.setSequence(option.sequence, this.callback)
     } else if(option.setIndex) {
@@ -300,6 +310,7 @@ class DialogueController {
     this.processData(this.sequence[0]);
   }
   processData(event) {
+    this.event = event;
     if(event.onStart) {
       event.onStart(this);
     }
@@ -309,6 +320,9 @@ class DialogueController {
     if(event.fourthWall !=undefined) {
       this.fourthWall = event.fourthWall;
     }
+    if(event.Person) {
+      event.person = this.gameScene.specialActors[event.Person];
+    }
     if(event.personString) {
       event.person = this.gameScene.specialActors[event.personString];
     }
@@ -316,6 +330,9 @@ class DialogueController {
       this.speakerImage = IMAGES[event.person.image];
     } else {
       this.speakerImage = null;
+    }
+    if(event.English) {
+      event.text = event.English
     }
     if(event.text) {
       this.simpleDialogue.setText(event, event.persist)
@@ -335,11 +352,19 @@ class DialogueController {
     if(event.clearTarget) {
       this.gameScene.camera.target = this.gameScene.player;
     }
-
-    if(event.options) {
-      this.options = event.options;
-      this.gameScene.driver.setScene(new DialogueOptionScene(this.gameScene.driver.scene, event.options, this),0)
+    if(event.dialogueKey && this.index==this.sequence.length-1) {
+      var options = [];
+      for(var i=1;i<=4;i++) {
+        var option = dialogueIndexedByScene[event.dialogueKey+"option" + i];
+        if(!option)break;
+        options.push(option[0]);
+      }
+      if(options.length)event.options=options;
     }
+    // if(event.options) {
+    //   this.options = event.options;
+    //   this.gameScene.driver.setScene(new DialogueOptionScene(this.gameScene.driver.scene, event.options, this),0)
+    // }
     if(event.speakerImage) {
       this.speakerImage = event.speakerImage;
     }
@@ -457,6 +482,9 @@ class DialogueController {
       if(this.current.done) {
         this.next()
       }
+      // if(this.current.lineCapReached) {
+
+      // }
     }
     // if(this.index >= this.sequence.length) {
     //   this.done = true;
@@ -473,6 +501,11 @@ class DialogueController {
     // }
   }
   next() {
+    if(this.event.options) {
+      this.options = this.event.options;
+      this.gameScene.driver.setScene(new DialogueOptionScene(this.gameScene.driver.scene, this.event.options, this),0)
+      return;
+    }
     if(this.lastSpeaker) {
       this.lastSpeaker.isTalking = false;
     }

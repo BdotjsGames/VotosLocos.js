@@ -12,7 +12,7 @@ class Putin extends Bot {
         this.rangeDistance = 600;
         this.straffing = true;
         this.item.type = ITEMS.sodaBottle;
-        this.name = "Putin";
+        this.name = "Big Bad Vlad";
         // this.model.attackCombo.push(putinSpawnAnimation,putinSpawnAnimation,putinSpawnAnimation)
         this.model.attackCombo = [putinSpawnAnimation, putinSpawnAnimation,putinSpawnAnimation, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim, putinSlam]
         // this.model.attackCombo = [enemyJumpAway, enemyThrowAnim,enemyThrowAnim,enemyThrowAnim, botanims.armSpinny]
