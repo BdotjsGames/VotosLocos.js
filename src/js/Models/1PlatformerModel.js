@@ -411,6 +411,11 @@ class PlatformerModel extends Model {
     // this.head.scaleY = 1.2;
     
   }
+  addPicketSign() {
+    this.picketSign = this.arm2.createBefore(4,16, new ImageDrawable(IMAGES.picketSign,0,-16,64,64))
+    this.picketSign.createAfter(0,0,new DrawableText("test", 0,0,32,32,10).setTrueCoords(true).color(0,0,0))
+    // this.picketSign = this.arm1.createAfter(0,0, new ImageDrawable(IMAGES.picketSign,0,0,64,64))
+  }
   die() {
     this.dead = true;
     this.isHit = false;
@@ -968,6 +973,13 @@ class PlatformerModel extends Model {
     }
     // this.scaleX = Math.sign(this.parent.dx);
     this.flip = this.parent.dx<0;
+
+    if(this.picketSign) {
+      this.picketSign.parent.rotation = -Math.PI/2;
+      var tr = -this.picketSign.parent.rotation;
+      this.picketSign.rotation += (tr-this.picketSign.rotation) * 0.5;
+      this.picketSign.scaleX = (this.flip?-1:1)
+    }
   }
   faceUpdate() {
     // this.face._x += Math.round((this.parent.dx*5-this.face._x)/3);

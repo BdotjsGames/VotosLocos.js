@@ -275,6 +275,15 @@ GameSequence = [
         preLoad: scene => {
             var putin = scene.addEntity(new PutinOnAHorse(scene.level.width*.7,100));
             putin.dx = -1;
+            putin.afterDialogue = () => {
+                for(var i =0;i<12;i++) {
+                    this.setTimeout(()=>{
+                        var x = 200+Math.random()*1000;
+                        var y = 0+Math.random()*300;
+                        var t = scene.addEntity(new BotSpawnAirStrike(x,y));
+                    }, i*200)
+                }
+            }
         },
         DialogueData: [
             {personString: "Putin", text:"Oh no. Time to make escape"},
@@ -283,13 +292,13 @@ GameSequence = [
             // {
             //     onStart: dc => {
             //         var scene = dc.gameScene;
-            //         for(var i =0;i<12;i++) {
-            //             this.setTimeout(()=>{
-            //                 var x = 200+Math.random()*1000;
-            //                 var y = 0+Math.random()*300;
-            //                 var t = scene.addEntity(new BotSpawnAirStrike(x,y));
-            //             }, i*200)
-            //         }
+                    // for(var i =0;i<12;i++) {
+                    //     this.setTimeout(()=>{
+                    //         var x = 200+Math.random()*1000;
+                    //         var y = 0+Math.random()*300;
+                    //         var t = scene.addEntity(new BotSpawnAirStrike(x,y));
+                    //     }, i*200)
+                    // }
             //     }
             // }
         ]
@@ -681,6 +690,9 @@ GameSequence = [
                         continue;
                     };
                     var npc = scene.addEntity(new HighFiver(x,y))
+                    if(Math.random()>.6) {
+                        npc.model.addPicketSign();
+                    }
                     npc.shouldSceneCollide = false;
                     npc.getInputs = ()=>{}
                     npc.mx = 0.5;
@@ -714,6 +726,9 @@ GameSequence = [
                         continue;
                     };
                     var npc = scene.addEntity(new HighFiver(x,y))
+                    if(Math.random()>.6) {
+                        npc.model.addPicketSign();
+                    }
                     npc.shouldSceneCollide = false;
                     npc.getInputs = ()=>{}
                     npc.mx = 0.5;
@@ -847,7 +862,7 @@ GameSequence = [
     {
         name: "Blockade Entrance",
         // debugStartWithThisOne: true,
-
+        width: 5000,
         onLoad: scene => {
             var bot1;
             scene.showGoOnEnemiesDefeated = true;
@@ -864,7 +879,7 @@ GameSequence = [
             }
             for(var j=0;j<6;j++) {
                 for(var i=0;i<8;i++) {
-                    var x = 900+i*50 + j*15;
+                    var x = 1900+i*50 + j*15;
                     var y = 0 + j * 50;
                     var bot = scene.addEntity( new Troll(x,y));
                     bot.dx=-1;
@@ -874,7 +889,7 @@ GameSequence = [
             }
             for(var j=0;j<3;j++) {
                 for(var i=0;i<1;i++) {
-                    var x = 900+i*50+8*50 + j*30;
+                    var x = 2900+i*50+8*50 + j*30;
                     var y = 0 + j * 50;
                     var bot = scene.addEntity( new QAnonShamon(x,y));
                     bot.dx=-1;
@@ -884,9 +899,9 @@ GameSequence = [
             }
             for(var j=0;j<6;j++) {
                 for(var i=0;i<1;i++) {
-                    var x = 900+i*50+9*50 + j*15;
+                    var x = 3900+i*50+9*50 + j*15;
                     var y = 0 + j * 50;
-                    var bot = scene.addEntity( new LizardPerson(x,y));
+                    var bot = scene.addEntity( new MagaMarge(x,y));
                     bot.dx=-1;
                     bot.update();
                     // bot1.getInputs = ()=>{}
@@ -894,7 +909,7 @@ GameSequence = [
             }
             for(var j=0;j<1;j++) {
                 for(var i=0;i<3;i++) {
-                    var x = 900+i*50+10*50 + j*30;
+                    var x = 3900+i*50+10*50 + j*30;
                     var y = 0 + j * 50;
                     var bot = scene.addEntity( new LizardPerson(x,y));
                     bot.dx=-1;
@@ -910,19 +925,30 @@ GameSequence = [
             scene.player.model.mouth.drawable.image = IMAGES.mouthFrown;
             scene.specialActors.Everyone = scene.player;
             var dialogue = dialogueIndexedByScene["blockade"];
+            LouChalibre.spawnFriends = () => {
+                for(var i=0;i<8;i++) {
+                    var x = 0;
+                    var y = Math.random()*scene.maxY + scene.minY;
+                    var e = scene.addEntity(new HighFiver(x,y))
+                    e.startFollow(scene.player,80)
+                    e.contactDamage = 5;
+                    e.mx = Math.random();
+                    e.isBrawlingMode = true;
+                }
+            }
             if(!dialogue.edited) {
                 dialogue.push(
-                    {onStart: () => {
-                        for(var i=0;i<8;i++) {
-                            var x = 0;
-                            var y = Math.random()*scene.maxY + scene.minY;
-                            var e = scene.addEntity(new HighFiver(x,y))
-                            e.startFollow(scene.player,80)
-                            e.contactDamage = 5;
-                            e.mx = Math.random();
-                            e.isBrawlingMode = true;
-                        }
-                    }, waitFor: 20},
+                    // {onStart: () => {
+                    //     for(var i=0;i<8;i++) {
+                    //         var x = 0;
+                    //         var y = Math.random()*scene.maxY + scene.minY;
+                    //         var e = scene.addEntity(new HighFiver(x,y))
+                    //         e.startFollow(scene.player,80)
+                    //         e.contactDamage = 5;
+                    //         e.mx = Math.random();
+                    //         e.isBrawlingMode = true;
+                    //     }
+                    // }, waitFor: 20},
                     {
                         onStart: () => {
                             highFivers.forEach(h=>h.mx=0)
@@ -1054,9 +1080,15 @@ GameSequence = [
     },
     {
         name: "DEMO COMPLETE",
+        continueOnDialogueFinish: true,
+        showGo: false,
+        environment: Environments.OfficeInterior,
         DialogueData: [
             {text: "Congratulations! you made it to the ballot office and completed the demo content so far"},
-        ]
+        ],
+        onLoad: scene => {
+            scene.player.hidden = true;
+        }
     },
     // {
     //     name: "Boss cutscene"

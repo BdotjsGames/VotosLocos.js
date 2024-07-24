@@ -4,9 +4,14 @@ SOUNDASSETS='Assets/sounds/';
 if(ROOT_DIR) SOUNDASSETS = ROOT_DIR + SOUNDASSETS
 
 SOUNDS.norteno = new Music('music/Votos_Locos_8Bit_Norteno.mp3')
-SOUNDS.cumbia  = new Music('music/Votos_Locos_8Bit_Cumbia.mp3')
+// SOUNDS.cumbia  = new Music('music/Votos_Locos_8Bit_Cumbia.mp3')
 SOUNDS.marchMusic  = new Music('music/Votos_Locos_March.mp3')
 SOUNDS.bossMusic  = new Music('music/Votos_Locos_Final_Boss.mp3')
+
+SOUNDS.cumbia2  = new Music('music/8BitCumbia2.mp3')
+SOUNDS.cumbia  = new Music('music/8BitCumbia.mp3')
+SOUNDS.ballotPickup  = new Music('music/BallotPickup.mp3')
+
 
 SOUNDS.select = new SoundTag('pop1.wav',2,1);
 SOUNDS.hover = new SoundTag('pop2.wav',2,1);

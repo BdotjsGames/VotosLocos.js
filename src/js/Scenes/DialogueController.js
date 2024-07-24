@@ -400,6 +400,8 @@ class DialogueController {
       entity = this.gameScene.specialActors[event.entity];
     } else if(event.person&&event.person.obj) {
       entity = event.person.obj
+    } else if(event.person) {
+      entity = event.person;
     }
     if(event.set) {
       // var e = (event.person && event.person.obj)||this.gameScene.specialActors[event.entity];

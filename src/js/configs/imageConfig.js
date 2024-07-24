@@ -19,6 +19,8 @@ IMAGES.wheelchairWheelFront = ImageLoader.loadImage('wheelchairWheelFront.png');
 
 IMAGES.skateBoard = ImageLoader.loadImage('skateBoard.png');
 
+IMAGES.picketSign = ImageLoader.loadImage('Items/PicketSign.png');
+
 IMAGES.ballotItem = ImageLoader.loadImage('ballotItem.png')
 // IMAGES.registrarOffice = ImageLoader.loadImage('RegistrarOffice.png')
 IMAGES.rallyBackgroundEntrance = ImageLoader.loadImage('RallyBackgroundEntrance.png')

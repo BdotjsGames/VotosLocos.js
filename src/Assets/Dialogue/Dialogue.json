@@ -429,6 +429,17 @@
         "entity": null
     },
     {
+        "Scene": null,
+        "type": null,
+        "Person": "Putin",
+        "English": null,
+        "doA": "afterDialogue",
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
         "Scene": "Registrar Office Reached",
         "type": null,
         "Person": null,
@@ -453,7 +464,7 @@
     {
         "Scene": null,
         "type": null,
-        "Person": null,
+        "Person": "LouChalibre",
         "English": "Get in there and register!",
         "doA": null,
         "notes": null,
@@ -1354,7 +1365,18 @@
     },
     {
         "Scene": null,
-        "type": null,
+        "type": "option1",
+        "Person": "Player",
+        "English": "Would you like to support our candidate?",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1-response1",
         "Person": "Citizen",
         "English": "Sure, I'll support that candidate!",
         "doA": null,
@@ -1387,7 +1409,18 @@
     },
     {
         "Scene": null,
-        "type": null,
+        "type": "option1",
+        "Person": "Player",
+        "English": "Would you like to support our candidate?",
+        "doA": null,
+        "notes": null,
+        "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": "option1-response1",
         "Person": "Citizen",
         "English": "No thanks. I'm not interested.",
         "doA": null,
@@ -1398,7 +1431,7 @@
     },
     {
         "Scene": null,
-        "type": null,
+        "type": "option1-response2",
         "Person": "Citizen",
         "English": "Thanks. I'm still undecided. I'll learn more about your candidate.",
         "doA": null,
@@ -1657,6 +1690,17 @@
         "doA": null,
         "notes": null,
         "waitFor": null,
+        "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "LouChalibre",
+        "English": null,
+        "doA": "spawnFriends",
+        "notes": null,
+        "waitFor": "20",
         "set": null,
         "entity": null
     },
