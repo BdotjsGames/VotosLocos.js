@@ -81,6 +81,7 @@ class KnockableDoor extends DrawableImage {
     }
     createRefuser() {
       var npc = this.createNpc();
+      // this.scene.specialCharacters["Citizen"] = npc;
       this.scene.playDialogue(
         dialogueIndexedByScene["refuser"],
       true, () => {
@@ -90,11 +91,20 @@ class KnockableDoor extends DrawableImage {
     }
     createFollower() {
       var npc = this.createNpc();
-      this.scene.playDialogue(dialogueIndexedByScene['follower'], true, () => {
+      // this.scene.specialCharacters["Citizen"] = npc;
+      npc.dialogue = dialogueIndexedByScene['follower'];
+      npc.onAfterDialogue = () => {
         npc.startFollow(this.player, 80);
         npc.shouldSceneCollide = true;
         this.image = IMAGES.door;
-      })
+      }
+      npc.startDialogueToPlayer(this.scene.player);
+      // this.scene.playDialogue(dialogueIndexedByScene['follower'], true, () => {
+      //   npc.startFollow(this.player, 80);
+      //   npc.shouldSceneCollide = true;
+      //   this.image = IMAGES.door;
+      // })
+
     }
     onInteract(player) {
       // if(this.knocking)return;

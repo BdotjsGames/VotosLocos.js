@@ -278,7 +278,7 @@
         "Scene": null,
         "type": null,
         "Person": "LouChalibre",
-        "English": "<bam>Oh no!</> Watch out for the Russian bots!",
+        "English": "Oh no! Watch out for the Russian bots!",
         "doA": null,
         "notes": null,
         "waitFor": null,
@@ -1383,6 +1383,17 @@
         "notes": null,
         "waitFor": null,
         "set": null,
+        "entity": null
+    },
+    {
+        "Scene": null,
+        "type": null,
+        "Person": "Citizen",
+        "English": null,
+        "doA": null,
+        "notes": null,
+        "waitFor": "20",
+        "set": "{my: 1}",
         "entity": null
     },
     {

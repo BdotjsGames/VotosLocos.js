@@ -743,9 +743,9 @@ GameSequence = [
     },
     {
         name :"Block Walking",
-        musicOff: true,
+        // musicOff: true,
         Goal: 'knock on every door 3 times',
-        // music: SOUNDS.norteno,
+        music: SOUNDS.norteno,
         environment: Environments.Street,
         dontShowGo: true,
         width: 5000,

@@ -11,7 +11,6 @@ class DialogueOptionScene extends AdditiveScene {
         //     .color(255,255,255)
         y+=.15;
         var buttonsPerRow = 1;
-        var bw = 0.6;
         this.options = options;
         this.options.forEach((option,i) => {
             var buttonsPerThisRow = buttonsPerRow;
@@ -21,8 +20,15 @@ class DialogueOptionScene extends AdditiveScene {
             var x = 0.05
             var yy = y + (i-this.options.length+1) * .12;
             if(option.English)option.text=option.English;
+            var bw = 0.6;
+            var s = 0.04;
+            // if(option.text.length>10) bw = 0.9;
+            if(option.text.length>10) {
+                s=0.03
+                bw = 0.7
+            }
             var btn = this.addSelectableButton(new ButtonUI(
-                option.text, x, yy, bw,0.1,0.04,b=>{
+                option.text, x, yy, bw,0.1,s,b=>{
                     dialogueController.selectOption(i,b);
                     // this.back();
                     this.driver.setScene(this.prevScene,0);
