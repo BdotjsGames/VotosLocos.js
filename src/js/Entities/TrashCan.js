@@ -56,7 +56,7 @@ class TrashCan extends EntityTwoPointFiveD {
             if(Math.random()<.5)
                 this.scene.addEntity(createItemDrop(this.x,this.y,ITEMS.sodaBottle, 10))
         }
-        this.dead = false;
+        this.dead = true;
         this.drawable.image = IMAGES.trashCanSmashed
         this.vz = -10;
     }

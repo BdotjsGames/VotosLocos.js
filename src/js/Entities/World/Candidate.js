@@ -20,14 +20,13 @@ class Candidate extends HighFiver {
 function loadCandidateModel() {
     var savedString = localStorage.getItem("candidateModel");
     if(!savedString)return null;
-    console.log(savedString);
+    // console.log(savedString);
     var data = JSON.parse(savedString)
     var model = new PlatformerModel(20,40,'#bbb', '#666',null, data);
     return model;
   }
 
 function saveCandidate(model) {
-    console.log('saving candidate');
     var data = model.getModelOptions();
     localStorage.setItem('candidateModel', JSON.stringify(data));
 }

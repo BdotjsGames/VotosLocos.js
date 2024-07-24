@@ -35,9 +35,9 @@ class Bot extends BeatEmUpper {
         var data = this.item.type;
         var z = this.z + (-this.model.legLength-20)*2;
         var proj = this.scene.addEntity(new LaserBeam(this.x+30*this.dx+this.vx,this.y,z,this.dx*10,5, 100,this.enemies));
-        if(data.drawShape)
+        if(data?.drawShape)
             proj.drawShape = data.drawShape;
-        if(data.damage)
+        if(data?.damage)
             proj.damage = data.damage;
         SOUNDS.enemyThrow.play();
         

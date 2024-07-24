@@ -8,7 +8,8 @@ class Ground{
         var tile = IMAGES.backgroundTileStreetSidewalk;
         this.tile = tile;
     }
-    update() {}
+    update() {
+    }
     draw(canvas) {
         canvas.fillStyle = "#444";
         var {x,z,w,h, tile} = this;

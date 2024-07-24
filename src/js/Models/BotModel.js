@@ -6,9 +6,9 @@ class BotModel extends PlatformerModel {
         this.anims = botanims;
         // this.attackSound = {play(){}}
         this.attackAnim = this.anims.punch1;
-        this.attackCombo = [this.anims.punch1];
+        // this.attackCombo = [this.anims.punch1];
         // if(Math.random()>.5) {
-            this.attackCombo = [this.anims.punch2];
+            this.attackCombo = [this.anims.punch2, enemyThrowAnim];
             this.body2.drawable.image = IMAGES.botTorso1;
         // }
     }

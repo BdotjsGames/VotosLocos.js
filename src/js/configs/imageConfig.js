@@ -2,11 +2,15 @@ IMAGES.VotosLocosLogo = ImageLoader.loadImage('VotosLocosLogo2.png');
 
 IMAGES.backgroundSky = ImageLoader.loadImage('backgroundSky.png');
 IMAGES.backgroundCity = ImageLoader.loadImage('skylines/cityBackground.png');
-IMAGES.Purlsey1 = ImageLoader.loadImage('Pursley/VotosCover_04.png');
+IMAGES.Purlsey1 = ImageLoader.loadImage('Pursley/VotosCover.png');
 IMAGES.Purlsey1S = ImageLoader.loadImage('Pursley/Pursley1-sharp.png');
 IMAGES.Purlsey2 = ImageLoader.loadImage('Pursley/Pursley2.png');
 IMAGES.Purlsey2S = ImageLoader.loadImage('Pursley/Pursley2-sharp.png');
 canvas.backgroundImage = IMAGES.Purlsey1;
+
+IMAGES.votingBooth = ImageLoader.loadImage('World/VotingBooth.png');
+IMAGES.ballotBox = ImageLoader.loadImage('World/BallotBox4.png');
+
 
 IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
 
@@ -432,7 +436,36 @@ IMAGES.tacosLocos = ImageLoader.loadImage('rallyTables/TacosLocos.png');
 IMAGES.tacosLocosBack = ImageLoader.loadImage('rallyTables/TacosLocosBack.png');
 IMAGES.tacosLocosBack = ImageLoader.loadImage('rallyTables/TacosLocosBack.png');
 IMAGES.CarumbaHead = ImageLoader.loadImage('CarumbaHead.png');
+IMAGES.CarumbaTorso = ImageLoader.loadImage('NPCs/Carumba/CarumbaTorso.png');
+IMAGES.CarumbaArm = ImageLoader.loadImage('NPCs/Carumba/CarumbaArm.png');
 
+
+IMAGES.VictorOptions = {
+    headOptions: [ImageLoader.loadImage('NPCs/Victor/VictorHeadNoGlasses.png')],
+    hairOptions: [],
+    torsoOptions: [ImageLoader.loadImage('NPCs/Victor/VictorTorso.png')],
+    armOptions: [ImageLoader.loadImage('NPCs/Victor/VictorArm.png')],
+    legOptions:[10],
+    glassesOptions: [],
+    widthOptions: [0],
+    skinOptions: [],
+    skirtOptions: [],
+    canWheelchair: false,
+}
+
+
+IMAGES.PochaOptions = {
+    headOptions: [ImageLoader.loadImage('NPCs/Pocha/PochaHead.png')],
+    hairOptions: [],
+    torsoOptions: [ImageLoader.loadImage('NPCs/Pocha/PochaTorso.png')],
+    armOptions: [ImageLoader.loadImage('NPCs/Pocha/PochaArm.png')],
+    widthOptions: [0],
+    legOptions:[10],
+    glassesOptions: [],
+    skinOptions: [],
+    skirtOptions: [ImageLoader.loadImage('NPCs/Pocha/PochaSkirt.png')],
+    canWheelchair: false,
+}
 
 IMAGES.parkStage = ImageLoader.loadImage('parkStage.png');
 

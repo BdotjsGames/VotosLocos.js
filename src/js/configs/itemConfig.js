@@ -88,4 +88,20 @@ window.addEventListener('load', function() {
             canvas.drawImage(IMAGES.kunai,-w/2,-h/2,w,h);
         }
     }
+    ITEMS.ballot = {
+        name: "Ballot",
+        throwable: true,
+        damage: 0,
+        image: IMAGES.ballotItem,
+        onThrow: (proj, thrower) => {
+            proj.vx = 0;
+            proj.vz = -20;
+            proj.grav = 1;
+            proj.dt = Math.PI/10;
+            proj.shouldUpdateInDialogue=true;
+            proj.y-=20
+            proj.life = 50;
+        },
+        drawShape: drawImage
+    }
 })

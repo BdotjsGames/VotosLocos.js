@@ -213,7 +213,7 @@ GameSequence = [
                 deskImage.y = -deskImage.h;
                 var desk = scene.addEntity(new EntityTwoPointFiveD(450+x,y,0,deskImage))
             }
-            var npc = scene.addEntity(new HighFiver(520+x,y-40))
+            var npc = scene.addEntity(new Carumba(520+x,y-40))
             // npc.shouldStartDiaolgueOnProximity = true;
             npc.dx = -1
             npc.getInputs = e=>{}
@@ -222,12 +222,6 @@ GameSequence = [
             npc.canHighFive = false;
             npc.lookingAt = scene.players[0]
             npc.interactablesRange = 200;
-            npc.model.headBase.drawable.image = IMAGES.CarumbaHead;
-            npc.model.glasses.drawable.image = null;
-            npc.model.hair.drawable.image = null;
-            npc.model.face.drawable.image = null;
-            npc.model.mouth.hidden = true;
-            npc.model.face.hidden = true;
             npc.onAfterDialogue = e=> {
             }
             scene.specialActors.Carumba = npc;
@@ -238,6 +232,7 @@ GameSequence = [
                 taco.z += -80
             }
             npc.dialogue = dialogueIndexedByScene["taco stand"];
+
 
             // npc.dialogue = [
             //     {person: npc, text: "Taco?", zoom:2},
@@ -526,7 +521,9 @@ GameSequence = [
             stage.y = scene.minY-stage.h
             var candidate = scene.addEntity(new Candidate(stage.x+stage.w/2,stage.y+stage.h/2));
             candidate.avoidHealth = 0;
+            candidate.shouldStealCamera = true;
             candidate.dialogue = dialogueIndexedByScene["community rally speech"]
+            candidate.isInteractable = false;
             IMAGES.availableRallyTables = IMAGES.rallyTables.map(a=>a);
             rallyScene(scene,-100);
             rallyScene(scene, 400);
@@ -541,11 +538,30 @@ GameSequence = [
                 var y = 1000;
                 scene.addEntity(new HighFiver(x,y))
             }
+            var troll = scene.addEntity(new Troll(stage.x+stage.w, stage.y+400))
+            scene.specialActors.Troll = troll;
+            troll.obj = troll;
+            troll.dx=-1
+            troll.shouldSceneCollide= false;
+            troll.update();
+            troll.shouldSceneCollide = true;
+            troll.shouldStealCamera = true;
+
+            for(var i=0;i<5;i++) {
+                var x = stage.x + stage.w +i*50+50
+                var y = stage.y+400;
+                troll = scene.addEntity(new Troll(x,y))
+                troll.dx=-1
+                troll.shouldSceneCollide= false;
+                troll.update();
+                troll.shouldSceneCollide = true;
+            }
 
             for(var i=0;i<5;i++) {
                 var x = Math.random()*1000+2000;
                 var y = 1000;
                 scene.addEntity(new Troll(x,y))
+                
             }
             for(var i=0;i<5;i++) {
                 var x = Math.random()*500+2500;
@@ -553,6 +569,7 @@ GameSequence = [
                 scene.addEntity(new Bot(x,y))
             }
             scene.addEntity(new MagaMarge(1500,1000));
+            candidate.startDialogueToPlayer(scene.player);
         }
     },
     // {
@@ -851,20 +868,116 @@ GameSequence = [
         name: "To The Polling Station",
         Goal: "Get to the Polling Station!",
         showGo: true,
+        onLoad: scene => {
+            var x = 600;
+            var y = 50;
+            {
+                var deskImage =  new ImageDrawable(IMAGES.tacosLocosBack, 0,0);
+                deskImage.w *= 2.5;
+                deskImage.h *= 2.5;
+                deskImage.y = -deskImage.h+60;
+                var deskBack = scene.addEntity(new EntityTwoPointFiveD(450+x,y-60,0,deskImage))
+            }
+            {
+                var deskImage =  new ImageDrawable(IMAGES.tacosLocos, 0,0);
+                deskImage.w *= 2.5;
+                deskImage.h *= 2.5;
+                deskImage.y = -deskImage.h;
+                var desk = scene.addEntity(new EntityTwoPointFiveD(450+x,y,0,deskImage))
+            }
+            var npc = scene.addEntity(new Carumba(520+x,y-40))
+            // npc.shouldStartDiaolgueOnProximity = true;
+            npc.dx = -1
+            npc.getInputs = e=>{}
+            npc.beHappy();
+            npc.name = "Carumba"
+            npc.canHighFive = false;
+            npc.lookingAt = scene.players[0]
+            npc.interactablesRange = 200;
+            // npc.model.headBase.drawable.image = IMAGES.CarumbaHead;
+            // npc.model.glasses.drawable.image = null;
+            // npc.model.hair.drawable.image = null;
+            npc.onAfterDialogue = e=> {
+            }
+            scene.specialActors.Carumba = npc;
+            npc.giveItem = () => {
+                // npc.isInteractable = false;
+                scene.showGo = true;
+                var taco = scene.addEntity(new Taco(npc.x+150,npc.y+50))
+                taco.z += -80
+            }
+            npc.dialogue = dialogueIndexedByScene["taco stand 2"];
 
-        encounters: [
-            BusStop, 
-            {name: "blockade"},
-            {name: "enemy swarm"},
-            {name: "polling station"},
-        ]
+            scene.addEntity(new Victor(300,0))
+            scene.addEntity(new Pocha(250,0))
+        }
     },
     {
         name: "Blockade Entrance",
         // debugStartWithThisOne: true,
-        width: 5000,
+        // width: 5000,
+        winCondition: scene => {
+            if(scene.phase == 3) return true;
+            if(scene.enemies.length==0) {
+                scene.phase += 1;
+                switch(scene.phase) {
+                    case (1) :
+                        scene.level.width = 3000
+                        scene.ground.w = 3000;
+                        for(var j=0;j<6;j++) {
+                            for(var i=0;i<8;i++) {
+                                var x = 1900+i*50 + j*15;
+                                var y = 0 + j * 50;
+                                var bot = scene.addEntity( new Troll(x,y));
+                                bot.dx=-1;
+                                bot.update();
+                                // bot1.getInputs = ()=>{}
+                            }
+                        }
+                    break;
+                    case 2:
+                    scene.level.width = 5000
+                    scene.ground.w = 5000;
+                        for(var j=0;j<3;j++) {
+                            for(var i=0;i<1;i++) {
+                                var x = 2900+i*50+8*50 + j*30;
+                                var y = 0 + j * 50;
+                                var bot = scene.addEntity( new QAnonShamon(x,y));
+                                bot.dx=-1;
+                                bot.update();
+                                // bot1.getInputs = ()=>{}
+                            }
+                        }
+                        for(var j=0;j<6;j++) {
+                            for(var i=0;i<1;i++) {
+                                var x = 3900+i*50+9*50 + j*15;
+                                var y = 0 + j * 50;
+                                var bot = scene.addEntity( new MagaMarge(x,y));
+                                bot.dx=-1;
+                                bot.update();
+                                // bot1.getInputs = ()=>{}
+                            }
+                        }
+                        for(var j=0;j<1;j++) {
+                            for(var i=0;i<3;i++) {
+                                var x = 3900+i*50+10*50 + j*30;
+                                var y = 0 + j * 50;
+                                var bot = scene.addEntity( new LizardPerson(x,y));
+                                bot.dx=-1;
+                                bot.update();
+                                // bot1.getInputs = ()=>{}
+                            }
+                        }
+                        break;
+                    case 3:
+                        break;
+                }
+            }
+            return scene.player.x < scene.level.width-1000 && !scene.dialogueBlocking;
+        },
         onLoad: scene => {
             var bot1;
+            scene.phase = 0;
             scene.showGoOnEnemiesDefeated = true;
             for(var j=0;j<6;j++) {
                 for(var i=0;i<10;i++) {
@@ -877,46 +990,46 @@ GameSequence = [
                     // bot1.getInputs = ()=>{}
                 }
             }
-            for(var j=0;j<6;j++) {
-                for(var i=0;i<8;i++) {
-                    var x = 1900+i*50 + j*15;
-                    var y = 0 + j * 50;
-                    var bot = scene.addEntity( new Troll(x,y));
-                    bot.dx=-1;
-                    bot.update();
-                    // bot1.getInputs = ()=>{}
-                }
-            }
-            for(var j=0;j<3;j++) {
-                for(var i=0;i<1;i++) {
-                    var x = 2900+i*50+8*50 + j*30;
-                    var y = 0 + j * 50;
-                    var bot = scene.addEntity( new QAnonShamon(x,y));
-                    bot.dx=-1;
-                    bot.update();
-                    // bot1.getInputs = ()=>{}
-                }
-            }
-            for(var j=0;j<6;j++) {
-                for(var i=0;i<1;i++) {
-                    var x = 3900+i*50+9*50 + j*15;
-                    var y = 0 + j * 50;
-                    var bot = scene.addEntity( new MagaMarge(x,y));
-                    bot.dx=-1;
-                    bot.update();
-                    // bot1.getInputs = ()=>{}
-                }
-            }
-            for(var j=0;j<1;j++) {
-                for(var i=0;i<3;i++) {
-                    var x = 3900+i*50+10*50 + j*30;
-                    var y = 0 + j * 50;
-                    var bot = scene.addEntity( new LizardPerson(x,y));
-                    bot.dx=-1;
-                    bot.update();
-                    // bot1.getInputs = ()=>{}
-                }
-            }
+            // for(var j=0;j<6;j++) {
+            //     for(var i=0;i<8;i++) {
+            //         var x = 1900+i*50 + j*15;
+            //         var y = 0 + j * 50;
+            //         var bot = scene.addEntity( new Troll(x,y));
+            //         bot.dx=-1;
+            //         bot.update();
+            //         // bot1.getInputs = ()=>{}
+            //     }
+            // }
+            // for(var j=0;j<3;j++) {
+            //     for(var i=0;i<1;i++) {
+            //         var x = 2900+i*50+8*50 + j*30;
+            //         var y = 0 + j * 50;
+            //         var bot = scene.addEntity( new QAnonShamon(x,y));
+            //         bot.dx=-1;
+            //         bot.update();
+            //         // bot1.getInputs = ()=>{}
+            //     }
+            // }
+            // for(var j=0;j<6;j++) {
+            //     for(var i=0;i<1;i++) {
+            //         var x = 3900+i*50+9*50 + j*15;
+            //         var y = 0 + j * 50;
+            //         var bot = scene.addEntity( new MagaMarge(x,y));
+            //         bot.dx=-1;
+            //         bot.update();
+            //         // bot1.getInputs = ()=>{}
+            //     }
+            // }
+            // for(var j=0;j<1;j++) {
+            //     for(var i=0;i<3;i++) {
+            //         var x = 3900+i*50+10*50 + j*30;
+            //         var y = 0 + j * 50;
+            //         var bot = scene.addEntity( new LizardPerson(x,y));
+            //         bot.dx=-1;
+            //         bot.update();
+            //         // bot1.getInputs = ()=>{}
+            //     }
+            // }
             bot1.obj = bot1;
             bot1.shouldStealCamera = true;
             scene.specialActors.Bot = bot1;
@@ -1064,6 +1177,7 @@ GameSequence = [
                         // scene.camera.zoom = 0.5
                         scene.camera.offsetY = -200
                     }), 350,0))
+            scene.addEntity(new DrawableImage(office.x+650,0, IMAGES.ballotBox,1.5))
             
                 for(var i=0;i<8;i++) {
                     var x = 0;
@@ -1080,14 +1194,68 @@ GameSequence = [
     },
     {
         name: "DEMO COMPLETE",
-        continueOnDialogueFinish: true,
+        // continueOnDialogueFinish: true,
         showGo: false,
         environment: Environments.OfficeInterior,
         DialogueData: [
             {text: "Congratulations! you made it to the ballot office and completed the demo content so far"},
         ],
+        winCondition: scene => {
+            scene.player.inputBlocked = true;
+            return false
+        },
         onLoad: scene => {
             scene.player.hidden = true;
+            scene.minY += 200
+
+            for(var i=0;i<10;i++) {
+                for(var j=0;j<2;j++) {
+                    var x = i * 100 + j*50;
+                    var y = 150+j*100;
+                    scene.addEntity(new DrawableImage(x,y,IMAGES.votingBooth, 2))
+                }
+            }
+            frameCount = 0;
+            scene.camera.target.y += 500
+            for(var i=0;i<10;i++) {
+                for(var j=0;j<2;j++) {
+                var hf = scene.addEntity(new HighFiver(-i*100+j*50-i*10,100+j*100))
+                hf.isInteractable = false;
+                hf.shouldSceneCollide = false;
+                hf.state = 0
+                hf.timer = -i*10;
+                hf.mx = 1;
+                hf.item.type = ITEMS.ballot;
+                hf.item.count = 1;
+                hf.getInputs = function() {
+                    // if(frameCount%40==0) {
+                        // this.state = (this.state+1)%3;
+                        this.timer +=1;
+                        switch(this.state) {
+                            case 0:
+                                this.mx = 1;
+                                if(this.timer>240) {this.state =1; this.timer = 0}
+                                break;
+                            case 1:
+                                this.mx =0
+                                if(this.timer>40){this.state = 2; this.timer = 0;}
+                                break;
+                            case 2:
+                                // this.model.throw();
+                                this.useItem();
+                                this.state++;
+                                this.timer=0;
+                            break;
+                            case 3:
+                                if(this.timer>80){this.state++;this.timer = 0;}
+                                break;
+                            case 4:
+                                this.mx = 1;
+                                if(this.timer > 500) this.scene.loadNextLevel()
+                        }
+                    // }
+                }
+            }}
         }
     },
     // {
@@ -1157,7 +1325,7 @@ const convertDialogueJsonToJs = async function() {
         lastType = type;
         var key = lastSceneDetected + type;
         info.dialogueKey = key
-        if(!info.English && !info.doA&&!info.set) continue;
+        if(!info.English && !info.doA&&!info.set&&!info.waitFor) continue;
 		dialogueIndexedByScene[key] = dialogueIndexedByScene[key] || [];
 		dialogueIndexedByScene[key].push(info);
         lastDialogue = info;

@@ -31,6 +31,7 @@ class HighFiver extends BeatEmUpper {
         this.interactablesRange = 100;
         this.promptOffsetY = -100;
         this.attackRange = 150;
+        this.attackSpeed = 30;
         this.avoidRange = 200;
         this.enemySeekRange = 200;
         this.contactDamage = 1;

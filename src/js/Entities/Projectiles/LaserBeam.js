@@ -4,13 +4,17 @@ class LaserBeam {
     this.h = 8; 
     this.x=x;this.y=y;this.vx=vx;
     this.z=z;
+    this.vz = 0;
+    this.grav = 0;
     this.life=life;
     this.contactDamage = damage;
     this.enemies = enemies;
     this.frameCount = 0;
+    this.rotation = 0;
+    this.dt = 0;
   }
   update() {
-    if(this.scene.dialogueBlocking)return;
+    if(this.scene.dialogueBlocking&&!this.shouldUpdateInDialogue)return;
     this.x += this.vx;
     this.life --;
     if(this.life<=0) {
@@ -27,6 +31,13 @@ class LaserBeam {
         this.shouldDelete = true;
       }
     })
+    this.vz+=this.grav;
+    this.z += this.vz;
+    if(this.z>0) {
+      this.z = 0
+      this.vz = 0;
+    }
+    this.rotation += this.dt;
     // var player = this.scene.player;
     // if(!player)return;
     // var dx = Math.abs(player.x-this.x);
@@ -45,6 +56,7 @@ class LaserBeam {
   draw(canvas) {
     canvas.save();
     canvas.translate(this.x,this.y+this.z);
+    canvas.rotate(this.rotation);
     this.drawShape(canvas);
     canvas.restore();
   }

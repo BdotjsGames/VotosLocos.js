@@ -262,7 +262,7 @@ class BeatEmUpper {
                 return;
             }
             if(drr< minDist) {
-                minDist = drr + enemy.attackerCount * 1000;
+                minDist = drr + enemy.attackerCount * 10000;
                 closest = enemy;
             }
             
@@ -316,10 +316,14 @@ class BeatEmUpper {
         var z = this.z + (-this.model.legLength-20)*2;
         var vx = this.dx*10 + this.vx/2;
         var proj = this.scene.addEntity(new LaserBeam(this.x+30*this.dx+this.vx,this.y,z,vx,5, 100,this.enemies));
+        proj.image = data.image;
         if(data.drawShape)
             proj.drawShape = data.drawShape;
         if(data.damage)
             proj.contactDamage = data.damage;
+        if(data.onThrow) {
+            data.onThrow(proj, this)
+        }
         SOUNDS.throw.play();
     }
     useItem() {

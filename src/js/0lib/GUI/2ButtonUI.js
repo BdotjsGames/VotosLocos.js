@@ -172,11 +172,13 @@ class ButtonUI extends DrawableText{
 
       canvas.strokeStyle = "#000";
       canvas.strokeRect(0,0,this._w, this._h);
-      canvas.fillStyle = "#bbb";
-      canvas.fillRect(0,0,this._w,this._h);
       if(this.backColor) {
         canvas.fillStyle = this.backColor;
         canvas.fillRect(0,0,this._w, this._h);
+      } else {
+
+        canvas.fillStyle = "#bbb";
+        canvas.fillRect(0,0,this._w,this._h);
       }
       if(this.selected) {
         canvas.fillStyle = "#fff";

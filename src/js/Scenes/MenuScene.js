@@ -20,8 +20,8 @@ class MenuScene extends Scene {
     //   // .center()
     //   .color(0,255,0)
     //   .Stroke(20,'#000');
-    this.addEntity(new DrawableImage(0.5,0.35, IMAGES.VotosLocosLogo,4))
-      .setTrueCoords(false)
+    // this.addEntity(new DrawableImage(0.5,0.35, IMAGES.VotosLocosLogo,4))
+    //   .setTrueCoords(false)
     var x = 0.3
     var savedGame = localStorage.getItem('savedGame') 
     if(savedGame){
@@ -51,5 +51,9 @@ class MenuScene extends Scene {
     )
 
     
+  }
+  addSelectableButton(b) {
+    b.backColor = "#bbb6";
+    return super.addSelectableButton(b);
   }
 }

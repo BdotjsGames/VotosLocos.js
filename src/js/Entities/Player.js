@@ -18,7 +18,7 @@ class Player extends BeatEmUpper {
     this.attackHitbox=
     this.defaultAttackHitbox = {width: 120, height: 60, zheight: 100};
     this.interactablesRange = 200;
-    // this.item.type = ITEMS.flag;
+    // this.item.type = ITEMS.ballot;
     // this.item.count = 10;
     this.isPlayer = true;
     this.health=this.maxHealth=100;

@@ -20,6 +20,7 @@ class GameSceneBasic extends Scene {
       
       this.backgrounds = [];
       this.backgrounds.push(this.ground=new Ground(0,this.startingY-this.groundHeight/2,2000,this.groundHeight));
+      this.ground.scene=this;
       // for(var i=0;i<10;i++) {
       //   var x = Math.random()*this.ground.w;
       //   var y = Math.random()*this.groundHeight + this.startingY - this.groundHeight/2;
