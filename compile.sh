@@ -6,6 +6,9 @@ compiledjs=${build}/compiled.js
 
 cp -r src/Assets ${build}/Assets/
 
+cp -r src/html/manifest.json ${build}/manifest.json
+cp -r src/html/sw.js ${build}/sw.js
+
 cp src/html/skeletonProd.html ${index}
 TimeNano=$(date +%s%N)
 rm ./src/html/scripts.html

@@ -1,0 +1,17 @@
+{
+    "name": "Votos Locos",
+    "short_name": "Votos Locos",
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone",
+	"start_url": "./",
+	"scope": "./",
+    "description": "2D Brawler to educate the public on how a democrative voting process works",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "/src/Assets/images/votoslocosIcon@1x.png",
+            "sizes": "288x288"
+        }
+    ]
+}
