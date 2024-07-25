@@ -3,23 +3,10 @@ var touchAsMouseEnabled = false;
 
 var touchCE = document.getElementById("touch-canvas");
 var touchCanvas = touchCE.getContext('2d');
-touchCanvas.imageSmoothingEnabled = false;
-touchCanvas.mozImageSmoothingEnabled=false;
-touchCanvas.msImageSmoothingEnabled = false;
-touchCanvas.oImageSmoothingEnabled=false;
-touchCanvas.webkitImageSmoothingEnabled=false;
-window.addEventListener('resize', function() {
-  touchCanvas.imageSmoothingEnabled = false;
-  touchCanvas.mozImageSmoothingEnabled=false;
-  touchCanvas.msImageSmoothingEnabled = false;
-  touchCanvas.oImageSmoothingEnabled=false;
-  touchCanvas.webkitImageSmoothingEnabled=false;
-})
 
 window.addEventListener('load', function() {
   touchCE.width = CE.width;
   touchCE.height = CE.height;
-  console.log(touchCE.width);
   touchCanvas.imageSmoothingEnabled = false;
   touchCanvas.mozImageSmoothingEnabled=false;
   touchCanvas.msImageSmoothingEnabled = false;
