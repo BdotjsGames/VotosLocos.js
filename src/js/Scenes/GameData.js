@@ -708,9 +708,9 @@ GameSequence = [
                         continue;
                     };
                     var npc = scene.addEntity(new HighFiver(x,y))
-                    if(Math.random()>.8) {
-                        npc.model.addPicketSign();
-                    }
+                    // if(Math.random()>.8) {
+                    //     npc.model.addPicketSign();
+                    // }
                     npc.shouldSceneCollide = false;
                     npc.getInputs = ()=>{}
                     npc.mx = 0.5;
@@ -744,9 +744,9 @@ GameSequence = [
                         continue;
                     };
                     var npc = scene.addEntity(new HighFiver(x,y))
-                    if(Math.random()>.8) {
-                        npc.model.addPicketSign();
-                    }
+                    // if(Math.random()>.8) {
+                    //     npc.model.addPicketSign();
+                    // }
                     npc.shouldSceneCollide = false;
                     npc.getInputs = ()=>{}
                     npc.mx = 0.5;
