@@ -516,6 +516,7 @@ GameSequence = [
         width: 5000,
         onLoad: (scene) => {
             var stage = new ImageDrawable(IMAGES.parkStage, 2000,0)
+            scene.showGoOnEnemiesDefeated = true;
             scene.backgrounds.push(stage);
             stage.w *= 3;
             stage.h *= 3;
