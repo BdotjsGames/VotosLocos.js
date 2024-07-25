@@ -6,7 +6,7 @@ class MenuScene extends Scene {
     canvas.backgroundImage = IMAGES.Purlsey1
     this.useTouchAsMouse = true;
     MusicHandler.resume();
-    MusicHandler.playMusic(SOUNDS.norteno);
+    MusicHandler.playMusic(SOUNDS.cumbia2);
     // for(var i=0;i<10;i++) {
     //   var x = CE.width*Math.random();
     //   var y = CE.height*Math.random()/4;
@@ -64,6 +64,11 @@ class MenuScene extends Scene {
       sticker.pivotX = 0;
       sticker.pivotY = 0;
     }    
+
+    this.addEntity(new DrawableText("v 1.1",0.02,0.98,0.8,0.02,0.02))
+      .setTrueCoords(false)
+      // .center()
+      .color(0,0,0)
   }
   addSelectableButton(b) {
     b.backColor = "#bbb6";

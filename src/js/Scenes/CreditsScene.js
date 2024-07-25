@@ -30,7 +30,7 @@ class CreditsScene extends Scene {
       .setTrueCoords(false)
       // .center()
       .color(255,255,2555)
-      .Stroke(20,'#000').addMorph("", new Morph(null, {}, {y: 0.3}, 400, MorphType.linear), true)
+      .Stroke(20,'#000').addMorph("", new Morph(null, {}, {y: 0.5}, 400, MorphType.linear), true)
 
       frameCount = 0;
     }

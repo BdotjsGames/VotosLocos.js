@@ -918,7 +918,7 @@ GameSequence = [
         // debugStartWithThisOne: true,
         // width: 5000,
         winCondition: scene => {
-            if(scene.phase == 4) return true;
+            if(scene.phase == 5) return true;
             if(scene.enemies.length==0) {
                 scene.phase += 1;
                 switch(scene.phase) {
@@ -937,11 +937,50 @@ GameSequence = [
                         }
                     break;
                     case 2:
-                    scene.level.width = 5000
-                    scene.ground.w = 5000;
+                        scene.level.width = 4000
+                        scene.ground.w = 4000;
+                        var x = 3100;
+                        var y = 50;
+                        {
+                            var deskImage =  new ImageDrawable(IMAGES.tacosLocosBack, 0,0);
+                            deskImage.w *= 2.5;
+                            deskImage.h *= 2.5;
+                            deskImage.y = -deskImage.h+60;
+                            var deskBack = scene.addEntity(new EntityTwoPointFiveD(450+x,y-60,0,deskImage))
+                        }
+                        {
+                            var deskImage =  new ImageDrawable(IMAGES.tacosLocos, 0,0);
+                            deskImage.w *= 2.5;
+                            deskImage.h *= 2.5;
+                            deskImage.y = -deskImage.h;
+                            var desk = scene.addEntity(new EntityTwoPointFiveD(450+x,y,0,deskImage))
+                        }
+                        var npc = scene.addEntity(new Carumba(520+x,y-40))
+                        // npc.shouldStartDiaolgueOnProximity = true;
+                        npc.dx = -1
+                        npc.getInputs = e=>{}
+                        npc.beHappy();
+                        npc.name = "Carumba"
+                        npc.canHighFive = false;
+                        npc.lookingAt = scene.players[0]
+                        npc.interactablesRange = 200;
+                        npc.onAfterDialogue = e=> {
+                        }
+                        scene.specialActors.Carumba = npc;
+                        npc.giveItem = () => {
+                            // npc.isInteractable = false;
+                            scene.showGo = true;
+                            var taco = scene.addEntity(new Taco(npc.x+150,npc.y+50))
+                            taco.z += -80
+                        }
+                        npc.dialogue = dialogueIndexedByScene["taco stand"];
+                        break;
+                    case 3:
+                    scene.level.width = 5500
+                    scene.ground.w = 5500;
                         for(var j=0;j<3;j++) {
                             for(var i=0;i<1;i++) {
-                                var x = 2900+i*50+8*50 + j*30;
+                                var x = 3900+i*50+8*50 + j*30;
                                 var y = 0 + j * 50;
                                 var bot = scene.addEntity( new QAnonShamon(x,y));
                                 bot.dx=-1;
@@ -949,9 +988,9 @@ GameSequence = [
                                 // bot1.getInputs = ()=>{}
                             }
                         }
-                        for(var j=0;j<6;j++) {
+                        for(var j=0;j<3;j++) {
                             for(var i=0;i<1;i++) {
-                                var x = 3900+i*50+9*50 + j*15;
+                                var x = 4200+i*50+9*50 + j*15;
                                 var y = 0 + j * 50;
                                 var bot = scene.addEntity( new MagaMarge(x,y));
                                 bot.dx=-1;
@@ -970,13 +1009,16 @@ GameSequence = [
                             }
                         }
                         break;
-                    case 3:
+                    case 4:
                         scene.addEntity(new Putin(5000,200))
                         break;
                 }
             }
             return scene.player.x < scene.level.width-1000 && !scene.dialogueBlocking;
         },
+        spawnRandom: [
+            [Taco, 3],
+        ],
         onLoad: scene => {
             var bot1;
             scene.phase = 0;
@@ -1198,6 +1240,7 @@ GameSequence = [
         name: "DEMO COMPLETE",
         continueOnDialogueFinish: true,
         showGo: false,
+        music: SOUNDS.cumbia2,
         environment: Environments.OfficeInterior,
         DialogueData: [
             {text: "Congratulations! you made it to the ballot office and completed the demo content so far"},

@@ -118,7 +118,11 @@ class Putin extends Bot {
       }
       if(Math.abs(dx)<100) { 
         // this.model.attack(anims.punch1);
-        this.mx = (this.scene.level.width/2-this.x)>0?1:-1
+        var tx = this.scene.level.width/2;
+        if(this.scene.level.width>5000) {
+          tx= this.scene.level.width - 1000;
+        }
+        this.mx = (tx-this.x)>0?1:-1
         // this.jump();
       }
       if(Math.abs(dx)>600) {

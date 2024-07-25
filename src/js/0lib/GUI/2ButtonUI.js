@@ -3,14 +3,14 @@ class ButtonUI extends DrawableText{
       super(text, x,y,w,h,size);
       this.trueCoords=false;
       this.addMorph('hoverOn', new Morph(null, {}, {
-        scaleW: 1.2, scaleH:1.2
+        scaleW: 1.05, scaleH:1.05
       },5, MorphType.easeOutQuad));
       this.addMorph('hoverOff', new Morph(null, {}, {
         scaleW: 1, scaleH: 1
       }, 5));
       this.addMorph('heldOn', new Morph(null, {}, {
         alpha: 0.5, 
-        scaleW: 1.1, scaleH: 1.1
+        scaleW: 1.03, scaleH: 1.03
       }, 10));    
       this.addMorph('heldOff', new Morph(null, {}, 
         {alpha: 1}, 10)); 

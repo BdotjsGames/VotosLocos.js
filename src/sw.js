@@ -1,4 +1,12 @@
 self.addEventListener("install", function(event) {
+	
+	self.addEventListener("fetch", function(event) {
+		event.respondWith(checkResponse(event.request).catch(function() {
+			return returnFromCache(event.request);
+		}));
+		event.waitUntil(addToCache(event.request));
+	});
+
 	event.waitUntil(preLoad());
 });
 
@@ -8,13 +16,6 @@ let preLoad = async function(){
 	console.log("caching index and important routes");
 	return await cache.addAll(["/src/Assets/", "/src/Assets", "/src/js", "./index.html"]);
 };
-
-self.addEventListener("fetch", function(event) {
-	event.respondWith(checkResponse(event.request).catch(function() {
-		return returnFromCache(event.request);
-	}));
-	event.waitUntil(addToCache(event.request));
-});
 
 let checkResponse = function(request){
 	return new Promise(function(fulfill, reject) {

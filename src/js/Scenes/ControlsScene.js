@@ -17,9 +17,9 @@ class ControlsScene extends AdditiveScene {
         this.addEntity(new DrawableText('Controls Scheme', 0.5,0.1,0.4,0.05,0.08))
          .setTrueCoords(false)
         var btn = this.addSelectableButton(new BackAndForther(
-            ['WASD', 'Arrows', 'Controller', 'touch'][SelectedSchemeIndex],
+            ['WASD', 'Arrows', 'Controller', 'Touch'][SelectedSchemeIndex],
              0.5,0.2,0.3,0.08,value=>{
-                btn.text = ['WASD', 'Arrows', 'Controller', 'touch'][value];
+                btn.text = ['WASD', 'Arrows', 'Controller', 'Touch'][value];
                 setControlsScheme(value)
                 localStorage.setItem('controlsScheme', value)
             },

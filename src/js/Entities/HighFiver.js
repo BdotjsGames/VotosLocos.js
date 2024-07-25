@@ -180,17 +180,22 @@ class HighFiver extends BeatEmUpper {
     update(){
         super.update();
         if(this.isBrawlingMode) {
-            this.model.neutralFace();
-            if(this.health<this.avoidHealth) {
-                this.enemyAvoidUpdate();
-                if(this.running) {
-                    this.model.fear();
-                    return;
-                } else {
-                    this.model.neutralFace();
-                }
-            } else {
-                this.enemySearchUpdate();
+            if((this.x-this.scene.camera.x) > CE.width/2/this.scene.camera.zoom*1.1)return;
+            // this.model.neutralFace();
+            // if(this.health<this.avoidHealth) {
+            //     this.enemyAvoidUpdate();
+            //     if(this.running) {
+            //         this.model.fear();
+            //         return;
+            //     } else {
+            //         this.model.neutralFace();
+            //     }
+            // } else {
+            //     this.enemySearchUpdate();
+            // }
+            this.followUpdate()
+            if(this.x > this.scene.player.x+100) {
+                this.mx = 0;
             }
             return;
         }

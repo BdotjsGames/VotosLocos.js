@@ -64,6 +64,7 @@ class Bot extends BeatEmUpper {
         this.shootTimer = 0;
     }
     update() {
+        if(this.x-this.scene.camera.x > CE.width/2/this.scene.camera.zoom*1.1)return;
         if(this.scene.dialogueBlocking&&!this.animDuringCutscene) {
             return;
         }

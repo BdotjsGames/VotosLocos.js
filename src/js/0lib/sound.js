@@ -196,6 +196,7 @@ class SoundSource {
       try {
         this.disconnect(gain);
       } catch(e) {
+        if(DEV)
         console.log(e);
       }
     };
@@ -206,6 +207,7 @@ class SoundSource {
       try {
         this.disconnect(gain);
       } catch(e) {
+        if(DEV)
         console.log(e);
       }
       this.paused = true;

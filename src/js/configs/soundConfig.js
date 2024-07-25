@@ -5,6 +5,7 @@ if(ROOT_DIR) SOUNDASSETS = ROOT_DIR + SOUNDASSETS
 
 // SOUNDS.norteno = new Music('music/Votos_Locos_8Bit_Norteno.mp3')
 SOUNDS.norteno = new Music('music/8BitNortenoOGTempo.mp3')
+SOUNDS.nortenoFast = new Music('music/8BitNortenoFast.mp3')
 // SOUNDS.cumbia  = new Music('music/Votos_Locos_8Bit_Cumbia.mp3')
 SOUNDS.marchMusic  = new Music('music/Votos_Locos_March.mp3')
 SOUNDS.bossMusic  = new Music('music/BattleMusic.mp3')
