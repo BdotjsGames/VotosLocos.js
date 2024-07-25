@@ -2,12 +2,12 @@
 <html>
   <head>
     <!-- $head.html -->
-    <title>$name-DEV</title>
+    <title>$name</title>
   </head>
   <body>
     <!-- $body.html -->
     <script>
-      var DEV = true;
+      var DEV =  (new URLSearchParams(window.location.search)).get("DEV");
       var ROOT_DIR = "./"
     </script>
     <!-- $scripts -->

@@ -31,7 +31,7 @@ let checkResponse = function(request){
 let addToCache = async function(request){
 	const cache = await caches.open("offline");
 	const response = await fetch(request);
-	console.log(response.url + " was cached");
+	// console.log(response.url + " was cached");
 	return await cache.put(request, response);
 };
 
