@@ -181,7 +181,7 @@ class ButtonUI extends DrawableText{
         canvas.fillRect(0,0,this._w,this._h);
       }
       if(this.selected) {
-        canvas.fillStyle = "#fff";
+        canvas.fillStyle = this.selectedBack || "#fff";
         canvas.fillRect(0,0,this._w, this._h);
       }
       if((this.hover) && this.outlineOnHover) {

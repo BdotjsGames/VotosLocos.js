@@ -413,7 +413,7 @@ class PlatformerModel extends Model {
   }
   addPicketSign() {
     this.picketSign = this.arm2.createBefore(4,16, new ImageDrawable(IMAGES.picketSign,0,-16,64,64))
-    this.picketSign.createAfter(0,0,new DrawableText("test", 0,0,32,32,10).setTrueCoords(true).color(0,0,0))
+    // this.picketSign.createAfter(0,0,new DrawableText("test", 0,0,32,32,10).setTrueCoords(true).color(0,0,0))
     // this.picketSign = this.arm1.createAfter(0,0, new ImageDrawable(IMAGES.picketSign,0,0,64,64))
   }
   die() {

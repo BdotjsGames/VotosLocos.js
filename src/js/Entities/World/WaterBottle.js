@@ -9,6 +9,7 @@ class WaterBottle extends ItemPickup{
         if(skipItemPromptsFor[this.itemName]) {
             return this.afterPickup(player);
         }
+        SOUNDS.powerup.play();
         skipItemPromptsFor[this.itemName] = true;
         this.scene.playDialogue(
             [

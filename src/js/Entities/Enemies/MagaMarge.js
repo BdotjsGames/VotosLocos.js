@@ -26,6 +26,7 @@ class MagaMarge extends Bot {
             armOptions: [IMAGES.MagaMargeArm],
             legOptions:[6],
             glassesOptions: [],
+            widthOptions: [0],
             skinOptions: [],
             skirtOptions: [],
             canWheelchair: false,

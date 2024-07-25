@@ -59,6 +59,7 @@ class ItemPickup extends ImageDrawable {
     onPickup(player) {
         var count = 'a';
         if(this.itemCount)count=this.itemCount;
+        console.log('playing sound??')
         SOUNDS.powerup.play();
         if(skipItemPromptsFor[this.itemName]) {
             return this.afterPickup(player);

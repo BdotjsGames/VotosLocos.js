@@ -54,7 +54,7 @@ window.addEventListener('load', function() {
         }
     }
     ITEMS.shuriken = {
-        name: 'Shuriken',
+        name: 'Ninja Stars',
         damage: 10,
         throwable: true,
         image: IMAGES.shuriken = ImageLoader.loadImage('Items/shuriken3-2.png'),

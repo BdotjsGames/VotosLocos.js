@@ -21,14 +21,14 @@ var MainDriver = {
     this.fadeDir=0;
     this.fadeCallback = callback;
   },
-  transitionToScene(scene) {
+  transitionToScene(scene, fadeOut = 30, fadeIn = 30) {
     if(this.fadeTimer>0) {
       console.log("already transitioning");
       // return;
     }
-    this.fadeToBlack(30, e => {
+    this.fadeToBlack(fadeOut, e => {
       this.setScene(scene)
-      this.fadeIn(30);
+      this.fadeIn(fadeIn);
     })
   },
   startWithScene(scene) {

@@ -369,13 +369,14 @@ GameSequence = [
             npc.giveItem = () => {
                 npc.isInteractable = false;
                 var ballot = scene.addEntity(new ItemPickup('Voter Guide', IMAGES.ballotItem, 500,250,64,64))
+                console.log(ballot.itemName)
                 // npc.shouldStartDiaolgueOnProximity = false;
                 ballot.afterPickup = e=>{
                     scene.showGo = true;
                     scene.driver.setScene(new VoterGuideScene(scene))
                 }
             }
-            npc.dialogue = dialogueIndexedByScene["Registrar Office Interior NPC".toLocaleLowerCase()]
+            npc.dialogue = dialogueIndexedByScene["Registrar Office Interior NPC".toLowerCase()]
             // npc.dialogue = [
             //     {person: npc, text: "Hi!||| are you here to receive your ballot?", zoom:2},
             //     {options:[
@@ -403,7 +404,7 @@ GameSequence = [
             //         scene.showGo = true;
             //     }
                 npc.isInteractable = false;
-                var ballot = scene.addEntity(new ItemPickup('Ballot', IMAGES.ballotItem, 500,250,64,64))
+                var ballot = scene.addEntity(new ItemPickup('Voter Guide', IMAGES.ballotItem, 500,250,64,64))
                 // npc.shouldStartDiaolgueOnProximity = false;
                 ballot.afterPickup = e=>{
                     scene.showGo = true;
@@ -506,7 +507,7 @@ GameSequence = [
     {
         name: "Community Rally Fight",
         environment: Environments.Grass,
-        music: SOUNDS.cumbia,
+        music: SOUNDS.cumbia2,
         spawnRandom: [
             // [Troll, 4],
             [TrashCan, 2],
@@ -707,7 +708,7 @@ GameSequence = [
                         continue;
                     };
                     var npc = scene.addEntity(new HighFiver(x,y))
-                    if(Math.random()>.6) {
+                    if(Math.random()>.8) {
                         npc.model.addPicketSign();
                     }
                     npc.shouldSceneCollide = false;
@@ -743,7 +744,7 @@ GameSequence = [
                         continue;
                     };
                     var npc = scene.addEntity(new HighFiver(x,y))
-                    if(Math.random()>.6) {
+                    if(Math.random()>.8) {
                         npc.model.addPicketSign();
                     }
                     npc.shouldSceneCollide = false;
@@ -917,7 +918,7 @@ GameSequence = [
         // debugStartWithThisOne: true,
         // width: 5000,
         winCondition: scene => {
-            if(scene.phase == 3) return true;
+            if(scene.phase == 4) return true;
             if(scene.enemies.length==0) {
                 scene.phase += 1;
                 switch(scene.phase) {
@@ -970,6 +971,7 @@ GameSequence = [
                         }
                         break;
                     case 3:
+                        scene.addEntity(new Putin(5000,200))
                         break;
                 }
             }
@@ -1194,7 +1196,7 @@ GameSequence = [
     },
     {
         name: "DEMO COMPLETE",
-        // continueOnDialogueFinish: true,
+        continueOnDialogueFinish: true,
         showGo: false,
         environment: Environments.OfficeInterior,
         DialogueData: [
@@ -1251,7 +1253,7 @@ GameSequence = [
                                 break;
                             case 4:
                                 this.mx = 1;
-                                if(this.timer > 500) this.scene.loadNextLevel()
+                                // if(this.timer > 500) this.scene.loadNextLevel()
                         }
                     // }
                 }

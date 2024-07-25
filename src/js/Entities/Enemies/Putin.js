@@ -48,6 +48,7 @@ class Putin extends Bot {
     }
     die() {
       if(this.dead)return;
+      if(this.shouldRegularDie)return super.die();
       // return;
       this.animDuringCutscene = true;
       this.dead = true;

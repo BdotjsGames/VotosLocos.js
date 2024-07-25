@@ -15,6 +15,7 @@ class Carumba extends HighFiver {
             armOptions: [IMAGES.CarumbaArm],
             legOptions:[6],
             glassesOptions: [],
+            widthOptions: [4],
             skinOptions: [],
             skirtOptions: [],
             canWheelchair: false,

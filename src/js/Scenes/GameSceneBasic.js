@@ -405,7 +405,7 @@ class GameSceneBasic extends Scene {
       if(levelNumber<0)levelNumber=0;
       if(levelNumber>=GameSequence.length) {
         localStorage.setItem("difficultyCompleted" + this.difficulty, 1);
-        this.driver.transitionToScene(new MenuScene());
+        this.driver.transitionToScene(new CreditsScene());
         return;
       }
       if(skipTransition)
