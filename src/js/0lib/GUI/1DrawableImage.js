@@ -9,5 +9,6 @@ class DrawableImage extends Drawable{
         // canvas.fillStyle = "#f00a";
         // canvas.fillRect(-this.image.width/2,-this.image.height,this.image.width,this.image.height);
         canvas.drawImage(this.image,-this.image.width/2,-this.image.height)
+        // canvas.drawImage(this.image,0,0)
     }
   }

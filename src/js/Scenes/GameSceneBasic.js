@@ -16,6 +16,7 @@ class GameSceneBasic extends Scene {
       this.specialActors.LouChalibre = LouChalibre;
       this.items = [];
       this.cameraLerpSpeed = 10;
+      this.difficulty = 1;
       canvas.backgroundImage = IMAGES.backgroundSky
       
       this.backgrounds = [];
@@ -403,6 +404,7 @@ class GameSceneBasic extends Scene {
       highFivers = [];
       if(levelNumber<0)levelNumber=0;
       if(levelNumber>=GameSequence.length) {
+        localStorage.setItem("difficultyCompleted" + this.difficulty, 1);
         this.driver.transitionToScene(new MenuScene());
         return;
       }

@@ -1,3 +1,5 @@
+
+
 class MenuScene extends Scene {
   constructor() {
     super();
@@ -50,7 +52,14 @@ class MenuScene extends Scene {
       [Buttons.cheatForward, b=>this.driver.setScene(new CharacterCustomizerScene())],
     )
 
-    
+    if(localStorage.getItem("difficultyCompleted1")) {
+      var sticker = this.addEntity(new DrawableImage(520,70,IMAGES.IVotedSticker, 1.5)).addMorph('bam', new MorphGroup(null, [
+        [{alpha: 0.5, scaleW: 3, scaleH: 3, dy: -50}, 1],
+        [{scaleW: 1, scaleH:1, alpha: 1, dy: 0}, 10, MorphType.easeInQuad],
+      ]), true)
+      sticker.pivotX = 0;
+      sticker.pivotY = 0;
+    }    
   }
   addSelectableButton(b) {
     b.backColor = "#bbb6";

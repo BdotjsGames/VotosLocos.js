@@ -11,6 +11,8 @@ canvas.backgroundImage = IMAGES.Purlsey1;
 IMAGES.votingBooth = ImageLoader.loadImage('World/VotingBooth.png');
 IMAGES.ballotBox = ImageLoader.loadImage('World/BallotBox4.png');
 
+IMAGES.IVotedSticker = ImageLoader.loadImage("UI/IVotedSticker.png")
+
 
 IMAGES.cloud = ImageLoader.loadImage('cloud2.png');
 
