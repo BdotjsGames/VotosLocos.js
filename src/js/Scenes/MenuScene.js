@@ -65,7 +65,7 @@ class MenuScene extends Scene {
       sticker.pivotY = 0;
     }    
 
-    this.addEntity(new DrawableText("v 1.1",0.02,0.98,0.8,0.02,0.02))
+    this.addEntity(new DrawableText("v 1.2",0.02,0.98,0.8,0.02,0.02))
       .setTrueCoords(false)
       // .center()
       .color(0,0,0)
