@@ -702,6 +702,7 @@ class BeatEmUpper {
         this.vy = this.vy / 2;
     }
     draw(canvas) {
+        if(this.x-this.scene.camera.x > CE.width/2/this.scene.camera.zoom*1.1)return;
         if(this.hidden)return;
         // canvas.fillStyle = 'red';
         // canvas.fillRect(this.x,this.y,10,10);
