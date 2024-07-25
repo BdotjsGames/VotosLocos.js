@@ -129,9 +129,11 @@ function createTouchButton(name,position,rect) {
 }
 
 var lastTouchPosition;
-function getTouchPosition(touch, e) {
+function getTouchPosition(touch, e, reff) {
   var ref = CE;
   if(!(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled))ref = touchCE;
+  if(reff)ref=reff;
+  // ref= e.target;
   var boundingClientRect = ref.getBoundingClientRect();    
   var x = touch.pageX-boundingClientRect.left;
   var y = touch.pageY-boundingClientRect.top - document.body.scrollTop;
@@ -162,6 +164,7 @@ function touchdraw(canvas) {
     canvas.translate(joyStick.x*CE.width, joyStick.y*CE.height);
     var img = IMAGES.touchDpad;
     if(joyStick.held)img= IMAGES.touchDpadRed
+    if(!MainDriver.scene.dialogueBlocking)
     canvas.drawImage(img, -w,-w,w*2,w*2);
     // canvas.rotate(angle+Math.PI/2);
     // var color = 'rgba(255,255,255,0.5)';
@@ -212,18 +215,18 @@ function touchstart(e) {
   e.stopImmediatePropagation();
   for(var i=0;i<touches.length;i++) {
     var touch = e.changedTouches[i];
-    var {x, y} = this.getTouchPosition(touch, e);
-    if(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled) {
-      mouse.x = x*CE.width;
-      mouse.y = y*CE.height;
-      // mouse.down = true;
-      if(!touchDown) {
-        touchDown = true;
-        mouse.down = true;
-      }
-      mouse.held = true;
-      return;
-    }
+    var {x, y} = this.getTouchPosition(touch, e, touchCE);
+    // if(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled) {
+    //   mouse.x = x*CE.width;
+    //   mouse.y = y*CE.height;
+    //   // mouse.down = true;
+    //   if(!touchDown) {
+    //     touchDown = true;
+    //     mouse.down = true;
+    //   }
+    //   mouse.held = true;
+    //   return;
+    // }
     touchStarts.push({x,y});
     for(var j=0;j<touchJoySticks.length;j++) {
       var joyStick = touchJoySticks[j];
@@ -260,7 +263,7 @@ function touchend(e) {
   e.stopImmediatePropagation();
   for(var i=0;i<touches.length;i++) {
     var touch = e.changedTouches[i];
-    var {x, y} = this.getTouchPosition(touch, e);
+    var {x, y} = this.getTouchPosition(touch, e, touchCE);
     if(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled) {
       mouse.x = x*CE.width;
       mouse.y = y*CE.height;
@@ -282,16 +285,62 @@ function touchend(e) {
   }
 }
 
+
+function touchendForMouse(e) {
+  // if(this.scene.startGame)this.scene.startGame();
+  // if(this.scene.time)this.scene.time=0;
+  touchDown = false;
+  var touches = e.changedTouches;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  for(var i=0;i<touches.length;i++) {
+    var touch = e.changedTouches[i];
+    var {x, y} = this.getTouchPosition(touch, e, CE);
+      mouse.x = x*CE.width;
+      mouse.y = y*CE.height;
+      mouse.held = false;
+      return;
+  }
+}
+
 function touchStartForMouse() {
   // touchDown = true;
   if(MainDriver.scene.useTouchAsMouse&&touchAsMouseEnabled)
     mouse.down = true;
+  setControlsScheme(CONTROL_SCHEMES.TOUCH)
+  initializeSound();
+  touchOn = true;
+  // if(this.scene.startGame)this.scene.startGame();
+  // if(this.scene.time)this.scene.time=0;
+  var touches = e.changedTouches;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  for(var i=0;i<touches.length;i++) {
+    var touch = e.changedTouches[i];
+    var {x, y} = this.getTouchPosition(touch, e, CE);
+      mouse.x = x*CE.width;
+      mouse.y = y*CE.height;
+      // mouse.down = true;
+      if(!touchDown) {
+        touchDown = true;
+        mouse.down = true;
+      }
+      mouse.held = true;
+      return;
+  }
 }
 
 window.addEventListener('load', e=> {
   window.addEventListener('touchstart', touchstart,{ passive: false });
-  window.addEventListener('touchstart', touchStartForMouse,{ passive: false });
   window.addEventListener('touchmove', touchstart,{ passive: false });
   window.addEventListener('touchend', touchend);
   window.addEventListener('touchcancel', touchend);
+
+
+  // canvas.addEventListener('touchstart', touchstart,{ passive: false });
+  CE.addEventListener('touchstart', touchStartForMouse,{ passive: false });
+  CE.addEventListener('touchend', touchendForMouse,{ passive: false });
+  // canvas.addEventListener('touchmove', touchstart,{ passive: false });
+  // canvas.addEventListener('touchend', touchend);
+  // canvas.addEventListener('touchcancel', touchend);
 })

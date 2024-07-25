@@ -1,6 +1,6 @@
 var frameCount = 0;
 var dialogueSkip = false;
-var AUTOPAUSE = (localStorage.getItem("autopause")=='true')||false;
+var AUTOPAUSE = (localStorage.getItem("autopause")=='true')||true;
 var MainDriver = {
   scene: null,
   started: false,
