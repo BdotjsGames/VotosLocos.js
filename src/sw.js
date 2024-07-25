@@ -1,13 +1,12 @@
 self.addEventListener("install", function(event) {
-	
-	self.addEventListener("fetch", function(event) {
-		event.respondWith(checkResponse(event.request).catch(function() {
-			return returnFromCache(event.request);
-		}));
-		event.waitUntil(addToCache(event.request));
-	});
-
 	event.waitUntil(preLoad());
+});
+
+self.addEventListener("fetch", function(event) {
+	event.respondWith(checkResponse(event.request).catch(function() {
+		return returnFromCache(event.request);
+	}));
+	event.waitUntil(addToCache(event.request));
 });
 
 let preLoad = async function(){
