@@ -142,6 +142,7 @@ class GameSceneBasic extends Scene {
       return ui;
     }
     setGoal(goal) {
+      if(DEV)
       if(!this.goalText) {
         this.goalText = this.addUI(new DrawableText(goal, 0,0.05,1,.1,.03)
         .setTrueCoords(false)
@@ -161,6 +162,7 @@ class GameSceneBasic extends Scene {
     processLevelData(data) {
       this.levelName = data.name;
       this.npcTexts = dialogueIndexedByScene[(data.name+"NPCRandom").toLowerCase()] || data.npcTexts;
+      if(DEV)
       this.addUI(new DrawableText(data.name, 0,0,1,.1,.03)
         .setTrueCoords(false)
         .setAttr('textAlign', 'left')
