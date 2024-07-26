@@ -6,7 +6,7 @@ class MenuScene extends Scene {
     canvas.backgroundImage = IMAGES.Purlsey1
     this.useTouchAsMouse = true;
     MusicHandler.resume();
-    MusicHandler.playMusic(SOUNDS.cumbia2);
+    MusicHandler.playMusic(SOUNDS.menuMusic);
     // for(var i=0;i<10;i++) {
     //   var x = CE.width*Math.random();
     //   var y = CE.height*Math.random()/4;

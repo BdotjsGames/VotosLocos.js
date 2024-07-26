@@ -572,6 +572,7 @@ GameSequence = [
             }
             scene.addEntity(new MagaMarge(1500,1000));
             candidate.startDialogueToPlayer(scene.player);
+            scene.player.inputBlocked = true;
         }
     },
     // {

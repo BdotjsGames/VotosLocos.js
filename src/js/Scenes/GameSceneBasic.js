@@ -313,6 +313,7 @@ class GameSceneBasic extends Scene {
       if(this.winCondition)this.showGo = this.winCondition(this);
       if(this.transitioningOut) return;
       super.update();
+      if(this.transitioningOut)return;
       // this.entities.forEach(function(e) {e.update()});
       // this.entities = this.entities.filter(function(e){
       //   if(e.shouldDelete&&e.onDelete)e.onDelete();
@@ -321,7 +322,6 @@ class GameSceneBasic extends Scene {
       // this.buttonsDown.forEach(b=>{
       //   if(getButtonDown(b[0]))b[1]();
       // })
-
       if(DEV) {
         if(getButtonDown(Buttons.cheatForward)) {
           this.loadNextLevel(true);
