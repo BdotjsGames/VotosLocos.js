@@ -1,3 +1,7 @@
+/**
+ * Service Worker needs to exists for PWA to work.
+ */
+
 self.addEventListener("install", function(event) {
 	event.waitUntil(preLoad());
 });
