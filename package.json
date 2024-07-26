@@ -6,7 +6,7 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "deploy": "node ./scripts/deploy.js"
+    "build": "node ./scripts/build.copyToDist.js"
   },
   "author": "",
   "license": "UNLICENSED"
