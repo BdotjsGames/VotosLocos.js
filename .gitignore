@@ -2,3 +2,4 @@
 src (2).zip
 node_modules/*
 .env
+.DS_Store

@@ -1,0 +1,13 @@
+{
+  "name": "votoslocos",
+  "description": "after adding any new js files run the build script\r `./build.sh`\r this creates a new src/index.html file that automatically includes all .js files in the project, in alphabetical order.",
+  "version": "0.0.1",
+  "main": "dist/index.html",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "deploy": "node ./scripts/deploy.js"
+  },
+  "author": "",
+  "license": "UNLICENSED"
+}
