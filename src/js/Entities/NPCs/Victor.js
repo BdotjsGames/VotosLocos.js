@@ -3,7 +3,7 @@ class Victor extends HighFiver {
         super(x,y);
         this.speed = 0;
         this.name = "Victor";
-        this.isInteractable = false;
+        this.dialogue = dialogueIndexedByScene["victor"];
     }
     initModel(w, h, color,color2) {
         this.model = new PlatformerModel(w, h, "#222","#000", this, null, IMAGES.VictorOptions)

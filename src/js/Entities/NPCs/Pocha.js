@@ -3,7 +3,8 @@ class Pocha extends HighFiver {
         super(x,y);
         this.speed = 0;
         this.name = "Pocha";
-        this.isInteractable = false;
+        this.obj = this;
+        this.dialogue = dialogueIndexedByScene["pocha"];
     }
     initModel(w, h, color,color2) {
         this.model = new PlatformerModel(w, h, "#222","#000", this, null, IMAGES.PochaOptions)
