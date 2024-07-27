@@ -572,6 +572,7 @@ GameSequence = [
             }
             scene.addEntity(new MagaMarge(1500,1000));
             candidate.startDialogueToPlayer(scene.player);
+            scene.player.inputBlocked = true;
         }
     },
     // {
@@ -1222,7 +1223,9 @@ GameSequence = [
                         // scene.camera.zoom = 0.5
                         scene.camera.offsetY = -200
                     }), 350,0))
-            scene.addEntity(new DrawableImage(office.x+650,0, IMAGES.ballotBox,1.5))
+            // scene.addEntity(new DrawableImage(office.x+650,0, IMAGES.ballotBox,1.5))
+            scene.addEntity(new ExplodingBallotBox(office.x+200,20))
+            scene.addEntity(new ExplodingBallotBox(office.x+800,20))
             
                 for(var i=0;i<8;i++) {
                     var x = 0;

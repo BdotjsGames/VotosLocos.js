@@ -9,6 +9,7 @@ SOUNDS.nortenoFast = new Music('music/8BitNortenoFast.mp3')
 // SOUNDS.cumbia  = new Music('music/Votos_Locos_8Bit_Cumbia.mp3')
 SOUNDS.marchMusic  = new Music('music/Votos_Locos_March.mp3')
 SOUNDS.bossMusic  = new Music('music/BattleMusic.mp3')
+SOUNDS.menuMusic  = new Music('music/Tittle_Menu_Screen.mp3')
 
 SOUNDS.cumbia2  = new Music('music/8Bit-Cumbia2.mp3')
 SOUNDS.cumbia  = new Music('music/8BitCumbia.mp3')
