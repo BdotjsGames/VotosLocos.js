@@ -18,10 +18,15 @@ function setControlsScheme(index) {
             btnImages[4] =  getKeyboardKenneyTileSpriteFromKeycode(Buttons.R.keys[index])
             break;
         case CONTROL_SCHEMES.GAMEPAD:
+            // btnImages[0] =  KeyTiles.inputPromptButtonA
+            // btnImages[2] =  KeyTiles.inputPromptButtonB
+            // btnImages[1] =  KeyTiles.inputPromptButtonY
+            // btnImages[3] =  KeyTiles.inputPromptButtonX
+            // btnImages[4] =  KeyTiles.inputPromptButtonR
             btnImages[0] =  KeyTiles.inputPromptButtonA
-            btnImages[2] =  KeyTiles.inputPromptButtonB
-            btnImages[1] =  KeyTiles.inputPromptButtonY
-            btnImages[3] =  KeyTiles.inputPromptButtonX
+            btnImages[1] =  KeyTiles.inputPromptButtonB
+            btnImages[2] =  KeyTiles.inputPromptButtonX
+            btnImages[3] =  KeyTiles.inputPromptButtonY
             btnImages[4] =  KeyTiles.inputPromptButtonR
             break;
         case CONTROL_SCHEMES.TOUCH:

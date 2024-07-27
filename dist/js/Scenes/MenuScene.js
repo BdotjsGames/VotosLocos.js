@@ -6,7 +6,7 @@ class MenuScene extends Scene {
     canvas.backgroundImage = IMAGES.Purlsey1
     this.useTouchAsMouse = true;
     MusicHandler.resume();
-    MusicHandler.playMusic(SOUNDS.cumbia2);
+    MusicHandler.playMusic(SOUNDS.menuMusic);
     // for(var i=0;i<10;i++) {
     //   var x = CE.width*Math.random();
     //   var y = CE.height*Math.random()/4;
@@ -65,7 +65,7 @@ class MenuScene extends Scene {
       sticker.pivotY = 0;
     }    
 
-    this.addEntity(new DrawableText("v 1.2",0.02,0.98,0.8,0.02,0.02))
+    this.addEntity(new DrawableText("v 1.22",0.02,0.98,0.8,0.02,0.02))
       .setTrueCoords(false)
       // .center()
       .color(0,0,0)

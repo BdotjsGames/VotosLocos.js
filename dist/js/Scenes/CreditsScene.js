@@ -32,6 +32,8 @@ class CreditsScene extends Scene {
       .color(255,255,2555)
       .Stroke(20,'#000').addMorph("", new Morph(null, {}, {y: 0.5}, 400, MorphType.linear), true)
 
+      // this.addEntity(new ExplodingBallotBox(100,CE.height));
+
       frameCount = 0;
     }
     update() {
