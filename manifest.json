@@ -10,7 +10,7 @@
     "orientation": "any",
     "icons": [
         {
-            "src": "./Assets/images/votoslocosIcon@1x.png",
+            "src": "./src/Assets/images/votoslocosIcon@1x.png",
             "sizes": "288x288"
         }
     ]
