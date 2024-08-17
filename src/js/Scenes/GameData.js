@@ -1374,7 +1374,7 @@ const convertDialogueJsonToJs = async function() {
         lastType = type;
         var key = lastSceneDetected + type;
         info.dialogueKey = key
-        if(!info.English && !info.doA&&!info.set&&!info.waitFor) continue;
+        if(!info[languageString] && !info.doA&&!info.set&&!info.waitFor) continue;
 		dialogueIndexedByScene[key] = dialogueIndexedByScene[key] || [];
 		dialogueIndexedByScene[key].push(info);
         lastDialogue = info;

@@ -49,7 +49,7 @@ class VoterGuideScene extends AdditiveScene {
             y+= dy;
             this.pages.push(btn);   
             
-            var description = randomFromList(dialogueIndexedByScene["candidates description"]).English;
+            var description = randomFromList(dialogueIndexedByScene["candidates description"])[languageString];
             // var description = randomFromList([
             //     "This candidate likes cheese",
             //     "For America!",

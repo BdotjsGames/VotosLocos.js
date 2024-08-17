@@ -19,7 +19,7 @@ class DialogueOptionScene extends AdditiveScene {
             }
             var x = 0.05
             var yy = y + (i-this.options.length+1) * .12;
-            if(option.English)option.text=option.English;
+            if(option[languageString])option.text=option[languageString];
             var bw = 0.6;
             var s = 0.04;
             // if(option.text.length>10) bw = 0.9;

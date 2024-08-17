@@ -331,8 +331,8 @@ class DialogueController {
     } else {
       this.speakerImage = null;
     }
-    if(event.English) {
-      event.text = event.English
+    if(event[languageString]) {
+      event.text = event[languageString]
     }
     if(event.text) {
       this.simpleDialogue.setText(event, event.persist)
