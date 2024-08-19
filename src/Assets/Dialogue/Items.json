@@ -1,0 +1,67 @@
+[
+    {
+        "Key": "itemPickup",
+        "English": "you got a ${this.itemName}",
+        "Spanish": null
+    },
+    {
+        "Key": "itemsPickup",
+        "English": "you got ${count} ${this.itemName}",
+        "Spanish": null
+    },
+    {
+        "Key": "fullHealth",
+        "English": "Your health is full!",
+        "Spanish": null
+    },
+    {
+        "Key": "amountHealed",
+        "English": "${this.healAmount} hp healed",
+        "Spanish": null
+    },
+    {
+        "Key": null,
+        "English": null,
+        "Spanish": null
+    },
+    {
+        "Key": "Taco",
+        "English": "Taco",
+        "Spanish": "Taco"
+    },
+    {
+        "Key": "Tacos",
+        "English": "Tacos",
+        "Spanish": null
+    },
+    {
+        "Key": "Water Bottle",
+        "English": "Water Bottle",
+        "Spanish": null
+    },
+    {
+        "Key": "Flags",
+        "English": "Flags",
+        "Spanish": null
+    },
+    {
+        "Key": "Soda Bottles",
+        "English": "Soda Bottles",
+        "Spanish": null
+    },
+    {
+        "Key": "Ninja Stars",
+        "English": "Ninja Stars",
+        "Spanish": null
+    },
+    {
+        "Key": "Ballot",
+        "English": "Ballot",
+        "Spanish": null
+    },
+    {
+        "Key": "Voter Guide",
+        "English": "Voter Guide",
+        "Spanish": null
+    }
+]

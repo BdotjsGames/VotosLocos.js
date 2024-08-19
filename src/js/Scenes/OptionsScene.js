@@ -2,7 +2,7 @@ var toggles = [];
 window.addEventListener('load', function(e) {
     toggles = [
         {
-            text: 'Auto Pause ' ,
+            text: 'Auto Pause' ,
             startingValue: AUTOPAUSE,
             callback: b=>{
                 AUTOPAUSE = !AUTOPAUSE;
@@ -30,7 +30,7 @@ class OptionsScene extends AdditiveScene {
         this.useTouchAsMouse = true;
         this.isOptionsScene = true;
         var x = 0.4
-        var y = 0.2;
+        var y = 0.1;
         var spacing = 0.1;
         var w = 0.5;
         var fontSize = 0.04;
@@ -84,7 +84,7 @@ class OptionsScene extends AdditiveScene {
             //     .setAttr("outlineOnHover", false)
             // )
             this.addSelectableButton(
-                new ButtonUI("  "+toggle.text,x,y,w,h,fontSize,b=>{
+                new ButtonUI(""+toggle.text,x,y,w,h,fontSize,b=>{
                     toggle.callback(b);
                     // check.text = check.value?'☑':'☐'
                 })
@@ -108,8 +108,14 @@ class OptionsScene extends AdditiveScene {
             }).setTrueCoords(false).setBounds(0.1,1.2).setValue(shrink)
         )
         y+=spacing;
-        
-        
+        if(DEV) {
+            this.addSelectableButton(
+                new ButtonUI('Language',x,y,w,h,fontSize,(b)=>{
+                    this.driver.setScene(new LanguageSelectScene(this))
+                })
+            )
+            y+=spacing;
+        }
     }
     update() {
         super.update();

@@ -75,9 +75,11 @@ var MainDriver = {
     canvas.textAlign = 'center';
     canvas.lineWidth = 5;
     canvas.miterLimit = 2;
-    canvas.strokeText("click to resume", CE.width/2,CE.height/2);
+    var text = 'click to resume';
+    if(languageString&& menuItemsTranslations[text]) text = menuItemsTranslations[text][languageString]
+    canvas.strokeText(text, CE.width/2,CE.height/2);
     // canvas.fillStyle = "white";
-    canvas.fillText("click to resume", CE.width/2,CE.height/2);
+    canvas.fillText(text, CE.width/2,CE.height/2);
     MusicHandler.pause();
   },
   unPause() {

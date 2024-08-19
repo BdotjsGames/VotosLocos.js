@@ -21,7 +21,9 @@ window.addEventListener('load', function(e) {
                 }
               }
             if(!controlsScheme)
-              MainDriver.setScene(new ControlsSchemeSelectScene());
+              if(DEV)
+                MainDriver.setScene(new LanguageSelectScene(new ControlsSchemeSelectScene()))
+              else MainDriver.setScene(new ControlsSchemeSelectScene());
             else {
               MainDriver.setScene(new MenuScene());
             }

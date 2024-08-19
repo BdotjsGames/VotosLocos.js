@@ -28,12 +28,14 @@ class DrawableText extends Drawable{
       canvas.font = this.fontSize*ps.W +'px ' + this.fontFamily;
       canvas.textAlign = this.textAlign;
       canvas.textBaseline=this.textBaseline;
+      var text = this.text;
+      if(languageString&&menuItemsTranslations[text.toLowerCase()]) text = menuItemsTranslations[text.toLowerCase()][languageString]||text
       if(this.shouldStroke) {
         canvas.lineWidth = this.lineWidth;
         canvas.strokeStyle = this.strokeStyle;
-        canvas.strokeText(this.text,this.textPosition, h/2,w);
+        canvas.strokeText(text,this.textPosition, h/2,w);
       }
-      canvas.fillText(this.text,this.textPosition, h/2,w);
+      canvas.fillText(text,this.textPosition, h/2,w);
       
     }
   }
