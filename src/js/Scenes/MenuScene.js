@@ -69,6 +69,15 @@ class MenuScene extends Scene {
       .setTrueCoords(false)
       // .center()
       .color(0,0,0)
+
+    if(DEV) {
+      ["English", "Spanish", 'l33t'].forEach((lang,i) => {
+        this.addSelectableButton(new ButtonUI(lang, 0.5+i*0.2, 0.95, 0.2, 0.05,0.03,e=>{
+          setLanguage(lang);
+        })).center().color(250,250,250)
+      })
+      
+    }
   }
   addSelectableButton(b) {
     b.backColor = "#bbb6";

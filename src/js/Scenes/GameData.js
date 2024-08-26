@@ -762,6 +762,10 @@ GameSequence = [
         }
     },
     {
+        name: "March Over",
+        continueOnDialogueFinish: true,
+    },
+    {
         name :"Block Walking",
         // musicOff: true,
         Goal: 'knock on every door 3 times',
