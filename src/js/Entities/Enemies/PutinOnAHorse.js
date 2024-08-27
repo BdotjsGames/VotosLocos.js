@@ -6,7 +6,7 @@
             this.model.fear();
             this.speed = 7;
             this.specialName = "Putin";
-            this.name = "Big Bad Vlad";
+            this.name = "Putin";
             this.shouldStealCamera = true;
             this.grav = 1
         }
