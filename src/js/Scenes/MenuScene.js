@@ -72,16 +72,18 @@ class MenuScene extends Scene {
 
     if(DEV) {
       ["English", "Spanish", 'l33t'].forEach((lang,i) => {
-        this.addSelectableButton(new ButtonUI(lang, 0.5+i*0.2, 0.95, 0.2, 0.05,0.03,e=>{
-          setLanguage(lang);
-        })).center().color(250,250,250)
+        this.addSelectableButton(
+          new ButtonUI(lang, 0.5+i*0.2, 0.95, 0.2, 0.05,0.03,e=>{
+              setLanguage(lang);
+            }
+          ), i>0?DIRECTION.right:DIRECTION.down).center().color(250,250,250)
       })
       
     }
   }
-  addSelectableButton(b) {
+  addSelectableButton(b,dir) {
     b.backColor = "#bbb6";
     b.selectedBack = "#fff6";
-    return super.addSelectableButton(b);
+    return super.addSelectableButton(b,dir);
   }
 }

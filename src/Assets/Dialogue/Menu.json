@@ -9,182 +9,182 @@
     {
         "Key": "Continue",
         "English": "Continue",
-        "Spanish": null,
+        "Spanish": "Continuar",
         "": null,
         "notes": null
     },
     {
         "Key": "Play",
         "English": "Play",
-        "Spanish": null,
+        "Spanish": "Jugar",
         "": null,
         "notes": null
     },
     {
         "Key": "Options",
         "English": "Options",
-        "Spanish": null,
+        "Spanish": "Opciones",
         "": null,
         "notes": null
     },
     {
         "Key": "back",
         "English": "back",
-        "Spanish": null,
+        "Spanish": "Regresar",
         "": null,
         "notes": null
     },
     {
         "Key": "volume",
         "English": "volume",
-        "Spanish": null,
+        "Spanish": "Volumen",
         "": null,
         "notes": null
     },
     {
         "Key": "sound effects",
         "English": "sound effects",
-        "Spanish": null,
+        "Spanish": "Efectos Sonoros",
         "": null,
         "notes": null
     },
     {
         "Key": "music",
         "English": "music",
-        "Spanish": null,
+        "Spanish": "Musica",
         "": null,
         "notes": null
     },
     {
         "Key": "controls",
         "English": "controls",
-        "Spanish": null,
+        "Spanish": "Controles",
         "": null,
         "notes": null
     },
     {
         "Key": "auto pause",
         "English": "auto pause",
-        "Spanish": null,
+        "Spanish": "Pausa Automática",
         "": null,
         "notes": "(pauses the game when you click outside of the window)"
     },
     {
         "Key": "touch as mouse",
         "English": "touch as mouse",
-        "Spanish": null,
+        "Spanish": "Tocar como Ratón de Computadora",
         "": null,
         "notes": "(uses touch as mouse in ui menus instead of as controller)"
     },
     {
         "Key": "touch scale",
         "English": "touch scale",
-        "Spanish": null,
+        "Spanish": "Escala Táctil",
         "": null,
         "notes": null
     },
     {
         "Key": "Controls Scheme",
         "English": "Controls Scheme",
-        "Spanish": null,
+        "Spanish": "Esquema de Controles",
         "": null,
         "notes": null
     },
     {
         "Key": "WASD",
         "English": "WASD",
-        "Spanish": null,
+        "Spanish": "WASD",
         "": null,
         "notes": null
     },
     {
         "Key": "Arrows",
         "English": "Arrows",
-        "Spanish": null,
+        "Spanish": "Flechas",
         "": null,
         "notes": null
     },
     {
         "Key": "Arrow Keys",
         "English": "Arrow Keys",
-        "Spanish": null,
+        "Spanish": "Teclas de Flecha",
         "": null,
         "notes": null
     },
     {
         "Key": "Touch",
         "English": "Touch",
-        "Spanish": null,
+        "Spanish": "Tocar",
         "": null,
         "notes": null
     },
     {
         "Key": "Touchscreen",
         "English": "Touchscreen",
-        "Spanish": null,
+        "Spanish": "Pantalla Táctil",
         "": null,
         "notes": null
     },
     {
         "Key": "Controller",
         "English": "Controller",
-        "Spanish": null,
+        "Spanish": "Controlador",
         "": null,
         "notes": null
     },
     {
         "Key": "Jump",
         "English": "Jump",
-        "Spanish": null,
+        "Spanish": "Brincar",
         "": null,
         "notes": null
     },
     {
         "Key": "Attack",
         "English": "Attack",
-        "Spanish": null,
+        "Spanish": "Atacar",
         "": null,
         "notes": null
     },
     {
         "Key": "Dodge",
         "English": "Dodge",
-        "Spanish": null,
+        "Spanish": "Esquivar",
         "": null,
         "notes": null
     },
     {
         "Key": "Interact",
         "English": "Interact",
-        "Spanish": null,
+        "Spanish": "Interactuar",
         "": null,
         "notes": null
     },
     {
         "Key": "Use Item",
         "English": "Use Item",
-        "Spanish": null,
+        "Spanish": "Usar Artículo",
         "": null,
         "notes": null
     },
     {
         "Key": "Throw",
         "English": "Throw",
-        "Spanish": null,
+        "Spanish": "Tirar",
         "": null,
         "notes": null
     },
     {
         "Key": "[UI] Confirm",
         "English": "[UI] Confirm",
-        "Spanish": null,
+        "Spanish": "[UI] Confirmar",
         "": null,
         "notes": null
     },
     {
         "Key": "save",
         "English": "save",
-        "Spanish": null,
+        "Spanish": "Guardar",
         "": null,
         "notes": null
     },
@@ -198,119 +198,119 @@
     {
         "Key": "BACK",
         "English": "BACK",
-        "Spanish": null,
+        "Spanish": "ATRÁS",
         "": null,
         "notes": null
     },
     {
         "Key": "🎲randomize",
         "English": "🎲randomize",
-        "Spanish": null,
+        "Spanish": "Aleatorizar",
         "": null,
         "notes": null
     },
     {
         "Key": "SKIN",
         "English": "SKIN",
-        "Spanish": null,
+        "Spanish": "PIEL",
         "": null,
         "notes": null
     },
     {
         "Key": "HEAD",
         "English": "HEAD",
-        "Spanish": null,
+        "Spanish": "CABEZA",
         "": null,
         "notes": null
     },
     {
         "Key": "BODY",
         "English": "BODY",
-        "Spanish": null,
+        "Spanish": "CUERPO",
         "": null,
         "notes": null
     },
     {
         "Key": "PLAY",
         "English": "PLAY",
-        "Spanish": null,
+        "Spanish": "JUGAR",
         "": null,
         "notes": null
     },
     {
         "Key": "FACE",
         "English": "FACE",
-        "Spanish": null,
+        "Spanish": "CARA",
         "": null,
         "notes": null
     },
     {
         "Key": "HAIR",
         "English": "HAIR",
-        "Spanish": null,
+        "Spanish": "PELO",
         "": null,
         "notes": null
     },
     {
         "Key": "HAIR COLOR",
         "English": "HAIR COLOR",
-        "Spanish": null,
+        "Spanish": "COLOR DE PELO",
         "": null,
         "notes": null
     },
     {
         "Key": "GLASSES",
         "English": "GLASSES",
-        "Spanish": null,
+        "Spanish": "LENTES",
         "": null,
         "notes": null
     },
     {
         "Key": "HAT",
         "English": "HAT",
-        "Spanish": null,
+        "Spanish": "SOMBRERO",
         "": null,
         "notes": "(not yet implemented)"
     },
     {
         "Key": "FACIAL HAIR",
         "English": "FACIAL HAIR",
-        "Spanish": null,
+        "Spanish": "PELO DE CARA",
         "": null,
         "notes": "(not yet implemented)"
     },
     {
         "Key": "Next",
         "English": "Next",
-        "Spanish": null,
+        "Spanish": "Próxima",
         "": null,
         "notes": null
     },
     {
         "Key": "TORSO",
         "English": "TORSO",
-        "Spanish": null,
+        "Spanish": "TORSO",
         "": null,
         "notes": null
     },
     {
         "Key": "WIDTH",
         "English": "WIDTH",
-        "Spanish": null,
+        "Spanish": "ANCHO",
         "": null,
         "notes": "(body width)"
     },
     {
         "Key": "LEGS",
         "English": "LEGS",
-        "Spanish": null,
+        "Spanish": "PIERNAS",
         "": null,
         "notes": null
     },
     {
         "Key": "HEIGHT",
         "English": "HEIGHT",
-        "Spanish": null,
+        "Spanish": "ALTURA",
         "": null,
         "notes": null
     },
@@ -324,77 +324,77 @@
     {
         "Key": "Resume",
         "English": "Resume",
-        "Spanish": null,
+        "Spanish": "Reanudar",
         "": null,
         "notes": null
     },
     {
         "Key": "Customize",
         "English": "Customize",
-        "Spanish": null,
+        "Spanish": "Personalizar",
         "": null,
         "notes": null
     },
     {
         "Key": "Save Game",
         "English": "Save Game",
-        "Spanish": null,
+        "Spanish": "Guardar Juego",
         "": null,
         "notes": null
     },
     {
         "Key": "Quit to Menu",
         "English": "Quit to Menu",
-        "Spanish": null,
+        "Spanish": "Salir al menú",
         "": null,
         "notes": null
     },
     {
         "Key": "Quit to Menu?",
         "English": "Quit to Menu?",
-        "Spanish": null,
+        "Spanish": "¿Salir al menú?",
         "": null,
         "notes": null
     },
     {
         "Key": "Yes",
         "English": "Yes",
-        "Spanish": null,
+        "Spanish": "Sí",
         "": null,
         "notes": null
     },
     {
         "Key": "No",
         "English": "No",
-        "Spanish": null,
+        "Spanish": "No",
         "": null,
         "notes": null
     },
     {
         "Key": "Select this Candidate?",
         "English": "Select this Candidate?",
-        "Spanish": null,
+        "Spanish": "¿Seleccione este candidato?",
         "": null,
         "notes": null
     },
     {
         "Key": "Language",
         "English": "Language",
-        "Spanish": null,
+        "Spanish": "Idioma",
         "": null,
         "notes": null
     },
     {
         "Key": "Select Language",
         "English": "Select Language",
-        "Spanish": null,
+        "Spanish": "Escoger Idioma",
         "": null,
         "notes": null
     },
     {
         "Key": "Select Controls Scheme",
         "English": "Select Controls Scheme",
-        "Spanish": null,
+        "Spanish": "Seleccionar esquema de controles",
         "": null,
         "notes": null
     },
@@ -408,7 +408,7 @@
     {
         "Key": "Controls can be customized in the options",
         "English": "Controls can be customized in the options",
-        "Spanish": null,
+        "Spanish": "Los controles se pueden personalizar en las opciones.",
         "": null,
         "notes": null
     },
@@ -422,7 +422,7 @@
     {
         "Key": "click to resume",
         "English": "click to resume",
-        "Spanish": null,
+        "Spanish": "Haga clic para reanudar",
         "": null,
         "notes": null
     },
@@ -436,28 +436,28 @@
     {
         "Key": "candidate 1",
         "English": "candidate 1",
-        "Spanish": null,
+        "Spanish": "candidato 1",
         "": null,
         "notes": null
     },
     {
         "Key": "candidate 2",
         "English": "candidate 2",
-        "Spanish": null,
+        "Spanish": "candidato 2",
         "": null,
         "notes": null
     },
     {
         "Key": "candidate 3",
         "English": "candidate 3",
-        "Spanish": null,
+        "Spanish": "candidato 3",
         "": null,
         "notes": null
     },
     {
         "Key": "candidate 4",
         "English": "candidate 4",
-        "Spanish": null,
+        "Spanish": "candidato 4",
         "": null,
         "notes": null
     },
@@ -471,14 +471,14 @@
     {
         "Key": "you fell down the rabbit hole",
         "English": "you fell down the rabbit hole",
-        "Spanish": null,
+        "Spanish": "Caíste en la hoyo de conejo",
         "": null,
         "notes": null
     },
     {
         "Key": "retry",
         "English": "retry",
-        "Spanish": null,
+        "Spanish": "Reintentar",
         "": null,
         "notes": null
     },
@@ -499,7 +499,7 @@
     {
         "Key": "CONGRATULATIONS",
         "English": "CONGRATULATIONS",
-        "Spanish": null,
+        "Spanish": "FELICIDADES",
         "": null,
         "notes": null
     }
