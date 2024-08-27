@@ -8,6 +8,10 @@ function setLanguage(type) {
     languageString = type;
     localStorage.setItem('language', type);
 }
+function getTranslatedMenuText(text) {
+    if(languageString&& menuItemsTranslations[text.toLowerCase()]) text = menuItemsTranslations[text.toLowerCase()][languageString]
+    return text;
+}
 
 class LanguageSelectScene extends ConfirmationSceneVertical {
     constructor(prevScene) {

@@ -498,6 +498,7 @@ class GameSceneBasic extends Scene {
       }
 
       var w = 32;
+      var s = 42;
       var h = 32;
       var x = CE.width*.3
       canvas.textAlign = 'left';
@@ -508,24 +509,24 @@ class GameSceneBasic extends Scene {
       canvas.fillStyle = 'white';
       drawTileSprite(canvas, btnImages[3], x, CE.height-h,w,h);
       x+=w;
-      canvas.fillText('Interact', x-4,CE.height-h+h/2,w,w);
-      x+=w;
+      canvas.fillText(getTranslatedMenuText('Interact'), x-4,CE.height-h+h/2,s,w);
+      x+=s;
       drawTileSprite(canvas, btnImages[0], x,CE.height-h,w,h);;
       x+= w
-      canvas.fillText('Jump', x,CE.height-h+h/2);
-      x+=w;
+      canvas.fillText(getTranslatedMenuText('Jump'), x,CE.height-h+h/2);
+      x+=s;
       drawTileSprite(canvas, btnImages[1], x,CE.height-h,w,h);;
       x+= w
-      canvas.fillText('Attack', x,CE.height-h+h/2);
-      x+=w;
+      canvas.fillText(getTranslatedMenuText('Attack'), x,CE.height-h+h/2);
+      x+=s;
       drawTileSprite(canvas, btnImages[2], x,CE.height-h,w,h);;
       x+= w
-      canvas.fillText('Dodge', x,CE.height-h+h/2,w,w);
-      x+=w;
+      canvas.fillText(getTranslatedMenuText('Dodge'), x,CE.height-h+h/2,s,w);
+      x+=s;
       if(this.player.item&& this.player.item.count>0) {
         drawTileSprite(canvas, btnImages[4], x,CE.height-h,w,h);;
         x+= w
-        canvas.fillText('Throw', x,CE.height-h+h/2);
+        canvas.fillText(getTranslatedMenuText('Throw'), x,CE.height-h+h/2);
         x+=w;
       }
       
