@@ -2,22 +2,22 @@
     {
         "Key": "itemPickup",
         "English": "you got a ${this.itemName}",
-        "Spanish": null
+        "Spanish": "tienes un ${this.itemName}"
     },
     {
         "Key": "itemsPickup",
         "English": "you got ${count} ${this.itemName}",
-        "Spanish": null
+        "Spanish": "tienes ${count} ${this.itemName}"
     },
     {
         "Key": "fullHealth",
         "English": "Your health is full!",
-        "Spanish": null
+        "Spanish": "¡Tu salud es lleno!"
     },
     {
         "Key": "amountHealed",
         "English": "${this.healAmount} hp healed",
-        "Spanish": null
+        "Spanish": "${this.healAmount} puntos de salud añadidos"
     },
     {
         "Key": null,
@@ -32,36 +32,36 @@
     {
         "Key": "Tacos",
         "English": "Tacos",
-        "Spanish": null
+        "Spanish": "Tacos"
     },
     {
         "Key": "Water Bottle",
         "English": "Water Bottle",
-        "Spanish": null
+        "Spanish": "Botella de Agua"
     },
     {
         "Key": "Flags",
         "English": "Flags",
-        "Spanish": null
+        "Spanish": "Banderas"
     },
     {
         "Key": "Soda Bottles",
         "English": "Soda Bottles",
-        "Spanish": null
+        "Spanish": "Botellas de Soda"
     },
     {
         "Key": "Ninja Stars",
         "English": "Ninja Stars",
-        "Spanish": null
+        "Spanish": "Estrellas de Ninja"
     },
     {
         "Key": "Ballot",
         "English": "Ballot",
-        "Spanish": null
+        "Spanish": "Papaleta de Votar"
     },
     {
         "Key": "Voter Guide",
         "English": "Voter Guide",
-        "Spanish": null
+        "Spanish": "Guía para Votantes"
     }
 ]
