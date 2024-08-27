@@ -762,6 +762,10 @@ GameSequence = [
         }
     },
     {
+        name: "March Over",
+        continueOnDialogueFinish: true,
+    },
+    {
         name :"Block Walking",
         // musicOff: true,
         Goal: 'knock on every door 3 times',
@@ -1332,6 +1336,63 @@ var Events_table = {
     }
 }
 const dialogueIndexedByScene = {};
+const characterNamesTranslations = {};
+const menuItemsTranslations = {};
+const itemPickupTranslations = {};
+
+
+function leetify(text) {
+    text = text.replace("${this.itemName}", "434343")
+    text = text.replace("${this.count}", "454545")
+    text = text.replace("${this.healAmount}", "565656")
+    text = text.replace(/e|E/g,3).replace(/o|O/g,'()').replace(/a|A/g,4).replace(/i|I/g,1).replace(/l|L/g,1)
+    text = text.replace( "434343","${this.itemName}")
+    text = text.replace( "454545","${this.count}")
+    text = text.replace("565656","${this.healAmount}")
+    return text;
+}
+
+const loadItemPickupTranslations = async function() {
+	ImageLoader.imagesToLoad += 1;
+    const resp = await fetch(`${ROOT_DIR}Assets/Dialogue/Items.json`)
+    const arr = await resp.json();
+    for( const info of arr) {
+        if(!info.Key)continue;
+        itemPickupTranslations[info.Key.toLowerCase()] = info;
+        info.Gibberish = "fdlkasjf"
+        info.l33t = leetify(info.English);
+    }
+	ImageLoader.onLoad();
+}
+
+const loadCharacterNames = async function() {
+	ImageLoader.imagesToLoad += 1;
+    const resp = await fetch(`${ROOT_DIR}Assets/Dialogue/CharacterNames.json`)
+    const arr = await resp.json();
+    for( const info of arr) {
+        if(!info.Key)continue;
+        characterNamesTranslations[info.Key.toLowerCase()] = info;
+        info.Gibberish = "fdlkasjf"
+        info.l33t = leetify(info.English);
+    }
+	ImageLoader.onLoad();
+}
+
+
+const loadMenuItemsTranslations = async function() {
+	ImageLoader.imagesToLoad += 1;
+    const resp = await fetch(`${ROOT_DIR}Assets/Dialogue/Menu.json`)
+    const arr = await resp.json();
+    for( const info of arr) {
+        if(!info.Key)continue;
+        menuItemsTranslations[info.Key.toLowerCase()] = info;
+        info.Gibberish = "fjdlksfjs"
+        info.l33t = info.English.replace(/e|E/g,3).replace(/o|O/g,'()').replace(/a|A/g,4).replace(/i|I/g,1).replace(/l|L/g,1)
+
+
+    }
+	ImageLoader.onLoad();
+}
 
 const convertDialogueJsonToJs = async function() {
 	ImageLoader.imagesToLoad += 1;
@@ -1374,11 +1435,12 @@ const convertDialogueJsonToJs = async function() {
         lastType = type;
         var key = lastSceneDetected + type;
         info.dialogueKey = key
-        if(!info.English && !info.doA&&!info.set&&!info.waitFor) continue;
+        if(!info[languageString] && !info.doA&&!info.set&&!info.waitFor) continue;
 		dialogueIndexedByScene[key] = dialogueIndexedByScene[key] || [];
 		dialogueIndexedByScene[key].push(info);
         lastDialogue = info;
-        
+        if(info.English)
+        info.l33t = leetify(info.English)
 	}
 
 	window.dispatchEvent(new CustomEvent("finished_loading_dialog", {
@@ -1391,6 +1453,9 @@ const convertDialogueJsonToJs = async function() {
 }
 
 convertDialogueJsonToJs();
+loadCharacterNames();
+loadMenuItemsTranslations();
+loadItemPickupTranslations();
 
 
 /* example output

@@ -106,7 +106,9 @@ class SliderOptionUI extends ButtonUI {
         canvas.font = this.fontSize*ps.W +'px ' + this.fontFamily;
         canvas.textAlign = 'center';
         canvas.textBaseline='middle';
-        canvas.fillText(this.text,w/2, -h/2,w);
+        var text = this.text;
+        if(languageString&&menuItemsTranslations[text.toLowerCase()]) text = menuItemsTranslations[text.toLowerCase()][languageString]||text
+        canvas.fillText(text,w/2, -h/2,w);
 
         canvas.fillStyle = Color.darken(this, .8).color;
         canvas.fillRect(0,0,this._w,this._h);

@@ -1,33 +1,3 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <!-- $head.html -->
-<link rel="manifest" href="./manifest.json" />
-<link rel="stylesheet" href="./Assets/style.css?5">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta charset="UTF-8">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />    <title>Votos Locos</title>
-  </head>
-  <body>
-    <!-- $body.html -->
-<div class="webgl-content" id="canvas-wrapper">
-  <canvas id="gc"></canvas>
-  <div class="footer b-js-webgl-footer">
-    <div class="webgl-logo"></div>
-    <div class="fullscreen b-js-fullscreen-btn"></div>
-    <div class="title">Votos Locos</div>
-  </div>
-</div>
-<canvas id="touch-canvas"></canvas>
-    <script>
-      var DEV =  (new URLSearchParams(window.location.search)).get("DEV");
-      var ROOT_DIR = "./"
-    </script>
-    <!-- $scripts -->
 
 <script src='./js/0imageGen/HouseImageGen.js?08-16-2024 19:26:53'></script>
 <script src='./js/0imageGen/TorsoImageGen.js?06-21-2024 15:16:11'></script>
@@ -161,14 +131,3 @@
 <script src='./js/configs/soundConfig.js?08-16-2024 19:26:53'></script>
 <script src='./js/main.js?08-16-2024 19:26:53'></script>
 <script src='./js/start.js?08-16-2024 19:26:53'></script>
-    
-  </body>
-  <script>
-  if((new URLSearchParams(window.location.search)).get("webApp"))
-	if (!navigator.serviceWorker.controller) {
-		navigator.serviceWorker.register("./sw.js").then(function(reg) {
-			console.log("Service worker has been registered for scope: " + reg.scope);
-		});
-	}
-   </script>
-</html>

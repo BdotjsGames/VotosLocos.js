@@ -460,7 +460,7 @@ IMAGES.VictorOptions = {
 
 IMAGES.PochaOptions = {
     headOptions: [ImageLoader.loadImage('NPCs/Pocha/PochaHead.png')],
-    hairOptions: [],
+    hairOptions: [ImageLoader.loadImage('NPCs/Pocha/PochaHair.png')],
     torsoOptions: [ImageLoader.loadImage('NPCs/Pocha/PochaTorso.png')],
     armOptions: [ImageLoader.loadImage('NPCs/Pocha/PochaArm.png')],
     widthOptions: [0],

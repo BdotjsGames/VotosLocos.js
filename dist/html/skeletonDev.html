@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- $head.html -->
+    <title>$name</title>
+  </head>
+  <body>
+    <!-- $body.html -->
+    <script>
+      var DEV =  (new URLSearchParams(window.location.search)).get("DEV");
+      var ROOT_DIR = "./"
+    </script>
+    <!-- $scripts -->
+    
+  </body>
+  <script>
+  if((new URLSearchParams(window.location.search)).get("webApp"))
+	if (!navigator.serviceWorker.controller) {
+		navigator.serviceWorker.register("./sw.js").then(function(reg) {
+			console.log("Service worker has been registered for scope: " + reg.scope);
+		});
+	}
+   </script>
+</html>

@@ -178,7 +178,9 @@ class SimpleDialogue {
     canvas.font = this.personFont;
     canvas.textAlign = "left";
     if(this.person) {
-      canvas.fillText(this.person.name, CE.width/50,y-tagHeight+CE.height*.02);
+      var pname = this.person.name;
+      if(characterNamesTranslations[pname.toLowerCase()]) pname = characterNamesTranslations[pname.toLowerCase()][languageString]
+      canvas.fillText(pname, CE.width/50,y-tagHeight+CE.height*.02);
     }
     canvas.font = this.textFont;
     // var text = this.text.substring(0,this.index);
@@ -331,8 +333,8 @@ class DialogueController {
     } else {
       this.speakerImage = null;
     }
-    if(event.English) {
-      event.text = event.English
+    if(event[languageString]) {
+      event.text = event[languageString]
     }
     if(event.text) {
       this.simpleDialogue.setText(event, event.persist)

@@ -14,6 +14,7 @@ class ConfirmationSceneVertical extends AdditiveScene {
         var x = 0.5;
         this.options = options;
         this.options.forEach((option,i) => {
+            if(!option)return;
             var buttonsPerThisRow = buttonsPerRow;
             if(Math.floor(i/buttonsPerRow)==Math.floor(this.options.length/buttonsPerRow)){
                 buttonsPerThisRow = this.options.length % buttonsPerRow;
