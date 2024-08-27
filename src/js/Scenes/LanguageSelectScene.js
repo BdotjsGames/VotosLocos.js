@@ -3,6 +3,7 @@ var LANGUANGES = {
 }
 var language = LANGUANGES.English;
 var languageString = localStorage.getItem("language") || "English";
+var languageOptions = ["English", "Spanish"];//"Vietnamese"
 function setLanguage(type) {
     languageString = type;
     localStorage.setItem('language', type);

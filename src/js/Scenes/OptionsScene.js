@@ -108,14 +108,12 @@ class OptionsScene extends AdditiveScene {
             }).setTrueCoords(false).setBounds(0.1,1.2).setValue(shrink)
         )
         y+=spacing;
-        if(DEV) {
-            this.addSelectableButton(
-                new ButtonUI('Language',x,y,w,h,fontSize,(b)=>{
-                    this.driver.setScene(new LanguageSelectScene(this))
-                })
-            )
-            y+=spacing;
-        }
+        this.addSelectableButton(
+            new ButtonUI('Language',x,y,w,h,fontSize,(b)=>{
+                this.driver.setScene(new LanguageSelectScene(this))
+            })
+        )
+        y+=spacing;
     }
     update() {
         super.update();

@@ -70,8 +70,7 @@ class MenuScene extends Scene {
       // .center()
       .color(0,0,0)
 
-    if(DEV) {
-      ["English", "Spanish", 'l33t'].forEach((lang,i) => {
+      languageOptions.forEach((lang,i) => {
         this.addSelectableButton(
           new ButtonUI(lang, 0.5+i*0.2, 0.95, 0.2, 0.05,0.03,e=>{
               setLanguage(lang);
@@ -79,7 +78,6 @@ class MenuScene extends Scene {
           ), i>0?DIRECTION.right:DIRECTION.down).center().color(250,250,250)
       })
       
-    }
   }
   addSelectableButton(b,dir) {
     b.backColor = "#bbb6";
