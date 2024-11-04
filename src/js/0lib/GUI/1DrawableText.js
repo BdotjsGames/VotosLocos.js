@@ -30,6 +30,7 @@ class DrawableText extends Drawable{
       canvas.textBaseline=this.textBaseline;
       var text = this.text;
       if(languageString&&menuItemsTranslations[text.toLowerCase()]) text = menuItemsTranslations[text.toLowerCase()][languageString]||text
+      w=w*.65
       if(this.shouldStroke) {
         canvas.lineWidth = this.lineWidth;
         canvas.strokeStyle = this.strokeStyle;

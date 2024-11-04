@@ -2,66 +2,79 @@
     {
         "Key": "itemPickup",
         "English": "you got a ${this.itemName}",
-        "Spanish": "tienes un ${this.itemName}"
+        "Spanish": "tienes un ${this.itemName}",
+        "Vietnamese": "Bạn có một ${this.itemName}"
     },
     {
         "Key": "itemsPickup",
         "English": "you got ${count} ${this.itemName}",
-        "Spanish": "tienes ${count} ${this.itemName}"
+        "Spanish": "tienes ${count} ${this.itemName}",
+        "Vietnamese": "Bạn có  ${count} ${this.itemName}"
     },
     {
         "Key": "fullHealth",
         "English": "Your health is full!",
-        "Spanish": "¡Tu salud es lleno!"
+        "Spanish": "¡Tu salud es lleno!",
+        "Vietnamese": "Sức khỏe của bạn đang tốt!"
     },
     {
         "Key": "amountHealed",
         "English": "${this.healAmount} hp healed",
-        "Spanish": "${this.healAmount} puntos de salud añadidos"
+        "Spanish": "${this.healAmount} puntos de salud añadidos",
+        "Vietnamese": "${this.healAmount} điểm sức khỏe đã được chữa lành"
     },
     {
         "Key": null,
         "English": null,
-        "Spanish": null
+        "Spanish": null,
+        "Vietnamese": null
     },
     {
         "Key": "Taco",
         "English": "Taco",
-        "Spanish": "Taco"
+        "Spanish": "Taco",
+        "Vietnamese": "Bánh taco"
     },
     {
         "Key": "Tacos",
         "English": "Tacos",
-        "Spanish": "Tacos"
+        "Spanish": "Tacos",
+        "Vietnamese": "Bánh taco"
     },
     {
         "Key": "Water Bottle",
         "English": "Water Bottle",
-        "Spanish": "Botella de Agua"
+        "Spanish": "Botella de Agua",
+        "Vietnamese": "Bình đựng nước"
     },
     {
         "Key": "Flags",
         "English": "Flags",
-        "Spanish": "Banderas"
+        "Spanish": "Banderas",
+        "Vietnamese": "Cờ"
     },
     {
         "Key": "Soda Bottles",
         "English": "Soda Bottles",
-        "Spanish": "Botellas de Soda"
+        "Spanish": "Botellas de Soda",
+        "Vietnamese": "Chai nước ngọt"
     },
     {
         "Key": "Ninja Stars",
         "English": "Ninja Stars",
-        "Spanish": "Estrellas de Ninja"
+        "Spanish": "Estrellas de Ninja",
+        "Vietnamese": "Phi tiêu ninja"
     },
     {
         "Key": "Ballot",
         "English": "Ballot",
-        "Spanish": "Papaleta de Votar"
+        "Spanish": "Papaleta de Votar",
+        "Vietnamese": "Phiếu bầu"
     },
     {
         "Key": "Voter Guide",
         "English": "Voter Guide",
-        "Spanish": "Guía para Votantes"
+        "Spanish": "Guía para Votantes",
+        "Vietnamese": "Hướng dẫn bỏ phiếu"
     }
 ]

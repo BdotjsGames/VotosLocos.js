@@ -3,7 +3,7 @@ var LANGUANGES = {
 }
 var language = LANGUANGES.English;
 var languageString = localStorage.getItem("language") || "English";
-var languageOptions = ["English", "Spanish"];//"Vietnamese"
+var languageOptions = ["English", "Spanish", "Vietnamese"];//"Vietnamese"
 function setLanguage(type) {
     languageString = type;
     localStorage.setItem('language', type);
@@ -22,6 +22,10 @@ class LanguageSelectScene extends ConfirmationSceneVertical {
             },
             {
                 name: "Spanish",
+                callback: b=>this.selectOption(b.text)
+            },
+            {
+                name: "Vietnamese",
                 callback: b=>this.selectOption(b.text)
             },
             DEV&&{
